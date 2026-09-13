@@ -35,7 +35,7 @@ const ProjectVillaPrangins = lazy(
 );
 
 function ScrollToTop() {
-  const { pathname, key } = useLocation();
+  const { pathname, key, hash } = useLocation();
 
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
@@ -44,12 +44,16 @@ function ScrollToTop() {
   }, []);
 
   useLayoutEffect(() => {
+    // When we intentionally return to a homepage anchor (for example
+    // #réalisations), let HomePage perform the section scroll instead of
+    // forcing the window back to the top.
+    if (hash) return;
+
     const html = document.documentElement;
     const body = document.body;
     const previousHtmlAnchor = html.style.overflowAnchor;
     const previousBodyAnchor = body.style.overflowAnchor;
 
-    // Prevent late-loading project media from restoring/anchoring the old scroll position.
     html.style.overflowAnchor = "none";
     body.style.overflowAnchor = "none";
 
@@ -82,7 +86,7 @@ function ScrollToTop() {
       html.style.overflowAnchor = previousHtmlAnchor;
       body.style.overflowAnchor = previousBodyAnchor;
     };
-  }, [pathname, key]);
+  }, [pathname, key, hash]);
 
   return null;
 }
