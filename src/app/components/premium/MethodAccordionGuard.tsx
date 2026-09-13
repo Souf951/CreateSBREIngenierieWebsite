@@ -29,9 +29,9 @@ const methodSteps = [
 
 export default function MethodAccordionGuard() {
   useEffect(() => {
-    const applyContent = () => {
-      const section = document.querySelector<HTMLElement>(".method-section");
-      if (!section) return false;
+    const wireSection = (section: HTMLElement) => {
+      if (section.dataset.sbreMethodEnhanced === "true") return;
+      section.dataset.sbreMethodEnhanced = "true";
 
       const eyebrow = section.querySelector<HTMLElement>(".method-intro .eyebrow");
       const heading = section.querySelector<HTMLElement>(".method-intro h2");
@@ -39,18 +39,14 @@ export default function MethodAccordionGuard() {
       const button = section.querySelector<HTMLButtonElement>(".method-intro .button");
 
       if (eyebrow) eyebrow.textContent = "04 / LA MÉTHODE SBRE";
-      if (heading) {
-        heading.innerHTML = "Structurer. Budgéter.<br><em>Réaliser. Exiger.</em>";
-      }
+      if (heading) heading.innerHTML = "Structurer. Budgéter.<br><em>Réaliser. Exiger.</em>";
       if (intro) {
         intro.textContent =
           "Une méthode simple à lire et exigeante à exécuter : organiser, maîtriser les coûts, conduire les travaux et livrer sans compromis sur la qualité.";
       }
       if (button) button.textContent = "Parlons de votre opération ↗";
 
-      const details = Array.from(
-        section.querySelectorAll<HTMLDetailsElement>(".method-list details"),
-      );
+      const details = Array.from(section.querySelectorAll<HTMLDetailsElement>(".method-list details"));
 
       details.forEach((item, index) => {
         const step = methodSteps[index];
@@ -63,62 +59,48 @@ export default function MethodAccordionGuard() {
         const foot = item.querySelector<HTMLElement>("div > small");
 
         if (summary) {
-          summary.childNodes.forEach((node) => {
+          Array.from(summary.childNodes).forEach((node) => {
             if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
               node.textContent = ` ${step.title} `;
             }
           });
         }
         if (number) number.textContent = `0${index + 1}`;
-        if (plus) plus.textContent = item.open ? "×" : "+";
         if (body) body.textContent = step.body;
         if (foot) foot.textContent = step.foot;
-      });
+        if (plus) plus.textContent = item.open ? "×" : "+";
 
-      return details.length > 0;
-    };
-
-    let cleanups: Array<() => void> = [];
-
-    const wireAccordion = () => {
-      cleanups.forEach((cleanup) => cleanup());
-      cleanups = [];
-
-      const details = Array.from(
-        document.querySelectorAll<HTMLDetailsElement>(".method-list details"),
-      );
-
-      cleanups = details.map((item) => {
         const onToggle = () => {
-          const plus = item.querySelector<HTMLElement>("summary b");
           if (plus) plus.textContent = item.open ? "×" : "+";
           if (!item.open) return;
-
           details.forEach((other) => {
             if (other !== item) other.open = false;
           });
         };
-
         item.addEventListener("toggle", onToggle);
-        return () => item.removeEventListener("toggle", onToggle);
+      });
+
+      // Start with one clear step only.
+      details.forEach((item, index) => {
+        item.open = index === 0;
+        const plus = item.querySelector<HTMLElement>("summary b");
+        if (plus) plus.textContent = index === 0 ? "×" : "+";
       });
     };
 
-    const initialise = () => {
-      if (!applyContent()) return;
-      wireAccordion();
+    const apply = () => {
+      const section = document.querySelector<HTMLElement>(".method-section");
+      if (section) wireSection(section);
     };
 
-    const raf = requestAnimationFrame(initialise);
-    const timers = [100, 350, 900].map((delay) =>
-      window.setTimeout(initialise, delay),
-    );
+    apply();
 
-    return () => {
-      cancelAnimationFrame(raf);
-      timers.forEach((timer) => window.clearTimeout(timer));
-      cleanups.forEach((cleanup) => cleanup());
-    };
+    // Route changes remount HomePage without remounting this global helper.
+    // Enhance each newly mounted section once instead of relying on timers.
+    const observer = new MutationObserver(() => apply());
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
   }, []);
 
   return null;
