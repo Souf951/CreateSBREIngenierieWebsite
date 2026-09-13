@@ -23,6 +23,7 @@ import MethodAccordionGuard from "./components/premium/MethodAccordionGuard";
 import TeamProfilesGuard from "./components/premium/TeamProfilesGuard";
 import FooterEnhancer from "./components/premium/FooterEnhancer";
 import CaseSectionVideoBackground from "./components/premium/CaseSectionVideoBackground";
+import MethodSectionVideoBackground from "./components/premium/MethodSectionVideoBackground";
 import ContactSectionPhotoGuard from "./components/premium/ContactSectionPhotoGuard";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
@@ -184,6 +185,7 @@ export default function App() {
           <FooterEnhancer />
           <ControlBannerVideo />
           <CaseSectionVideoBackground />
+          <MethodSectionVideoBackground />
           <ContactSectionPhotoGuard />
           <Suspense
             fallback={
