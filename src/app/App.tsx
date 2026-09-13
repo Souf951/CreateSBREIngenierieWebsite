@@ -29,6 +29,7 @@ import "../styles/small-text-pass.css";
 import "../styles/project-gallery-premium.css";
 import "../styles/footer-premium.css";
 import "../styles/team-section-premium.css";
+import "../styles/responsive-pass.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
