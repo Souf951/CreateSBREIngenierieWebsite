@@ -23,6 +23,7 @@ import MethodAccordionGuard from "./components/premium/MethodAccordionGuard";
 import TeamProfilesGuard from "./components/premium/TeamProfilesGuard";
 import FooterEnhancer from "./components/premium/FooterEnhancer";
 import CaseSectionVideoBackground from "./components/premium/CaseSectionVideoBackground";
+import ContactSectionPhotoGuard from "./components/premium/ContactSectionPhotoGuard";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
 import "../styles/dark-logo.css";
@@ -33,6 +34,7 @@ import "../styles/team-section-premium.css";
 import "../styles/responsive-pass.css";
 import "../styles/principles-center.css";
 import "../styles/case-video-background.css";
+import "../styles/contact-section-photo.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
@@ -182,6 +184,7 @@ export default function App() {
           <FooterEnhancer />
           <ControlBannerVideo />
           <CaseSectionVideoBackground />
+          <ContactSectionPhotoGuard />
           <Suspense
             fallback={
               <div style={{ padding: "15vh 8%", color: "#0a5c3d" }}>
