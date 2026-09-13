@@ -168,16 +168,15 @@ export default function BuildingScene({
     let raf = 0,
       visible = true,
       previous = 0,
-      settled = 0,
-      targetX = 0;
+      targetPointer = 0,
+      pointerOffset = 0,
+      rotationAngle = 0;
     const move = (e: PointerEvent) => {
       const rect = container.getBoundingClientRect();
-      targetX = ((e.clientX - rect.left) / rect.width - 0.5) * 0.12;
-      start();
+      targetPointer = ((e.clientX - rect.left) / rect.width - 0.5) * 0.12;
     };
     const leave = () => {
-      targetX = 0;
-      start();
+      targetPointer = 0;
     };
     container.addEventListener("pointermove", move);
     container.addEventListener("pointerleave", leave);
@@ -186,7 +185,6 @@ export default function BuildingScene({
       if (!visible || document.hidden) return;
       const dt = Math.min((now - previous) / 1000, 0.05);
       previous = now;
-      let moving = false;
       groups.forEach((g, i) => {
         const target = i <= phaseRef.current ? 1 : 0;
         const current = g.scale.y;
@@ -194,16 +192,19 @@ export default function BuildingScene({
         g.scale.y = Math.max(0.001, next);
         g.visible = next > 0.01;
         g.position.y = (1 - next) * -0.3;
-        if (Math.abs(next - target) > 0.002) moving = true;
       });
-      villa.rotation.y = THREE.MathUtils.damp(villa.rotation.y, targetX, 6, dt);
-      if (Math.abs(villa.rotation.y - targetX) > 0.001) moving = true;
+
+      // Continuous, very slow architectural turntable with a subtle floating motion.
+      rotationAngle = (rotationAngle + dt * 0.055) % (Math.PI * 2);
+      pointerOffset = THREE.MathUtils.damp(pointerOffset, targetPointer, 5, dt);
+      villa.rotation.y = rotationAngle + pointerOffset;
+      villa.position.y = 0.1 + Math.sin(now * 0.00125) * 0.1;
+      villa.rotation.z = Math.sin(now * 0.0007) * 0.004;
+
       renderer.render(scene, camera);
-      // Stop drawing when settled. Phase changes are watched by the small timer below.
-      if (moving || settled++ < 3) raf = requestAnimationFrame(render);
+      raf = requestAnimationFrame(render);
     };
     function start() {
-      settled = 0;
       if (!raf && visible && !document.hidden) {
         previous = performance.now();
         raf = requestAnimationFrame(render);
@@ -213,6 +214,7 @@ export default function BuildingScene({
     const io = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       if (visible) start();
+      else cancelAnimationFrame(raf);
     });
     io.observe(container);
     const resume = () => {
