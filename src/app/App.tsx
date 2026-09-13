@@ -19,6 +19,7 @@ import HomePage from "./components/HomePage";
 import IntroLoader from "./components/IntroLoader";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
+import "../styles/dark-logo.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
