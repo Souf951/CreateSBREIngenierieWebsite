@@ -5,6 +5,8 @@ export default function CaseSectionVideoBackground() {
   const { pathname } = useLocation();
 
   useEffect(() => {
+    if (pathname !== "/") return;
+
     let cancelled = false;
     let timer = 0;
 
