@@ -5,9 +5,10 @@ import "../../../styles/architecture-switch.css";
 
 const VillaScene = lazy(() => import("./BuildingScene"));
 const OvalScene = lazy(() => import("./OvalBuildingScene"));
+const PublicWorksScene = lazy(() => import("./PublicWorksScene"));
 
 export const phases = ["Fondations", "Structure", "Enveloppe", "Finitions"];
-export type ArchitectureKind = "villa" | "immeuble";
+export type ArchitectureKind = "villa" | "immeuble" | "travaux-publics";
 
 export default function Architecture({
   phase = 3,
@@ -40,8 +41,19 @@ export default function Architecture({
     setFailed(false);
   }, [kind]);
 
-  const Scene = kind === "immeuble" ? OvalScene : VillaScene;
-  const sceneLabel = kind === "immeuble" ? "IMMEUBLE COURBE · SBRE" : "VILLA CONTEMPORAINE · SBRE";
+  const Scene =
+    kind === "immeuble"
+      ? OvalScene
+      : kind === "villa"
+        ? VillaScene
+        : PublicWorksScene;
+
+  const sceneLabel =
+    kind === "immeuble"
+      ? "IMMEUBLE COURBE · SBRE"
+      : kind === "villa"
+        ? "VILLA CONTEMPORAINE · SBRE"
+        : "AMÉNAGEMENT ROUTIER · SBRE";
 
   return (
     <div className={`architecture ${compact ? "architecture-compact" : ""}`}>
@@ -62,6 +74,13 @@ export default function Architecture({
             onClick={() => setKind("villa")}
           >
             <span>02</span> Villa
+          </button>
+          <button
+            type="button"
+            aria-pressed={kind === "travaux-publics"}
+            onClick={() => setKind("travaux-publics")}
+          >
+            <span>03</span> Travaux publics
           </button>
         </div>
       )}
