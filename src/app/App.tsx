@@ -24,6 +24,7 @@ import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
 import "../styles/dark-logo.css";
 import "../styles/small-text-pass.css";
+import "../styles/project-gallery-premium.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
