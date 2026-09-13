@@ -141,63 +141,49 @@ export default function BuildingScene({
       sphere(g, x - 0.28 * s, 1.4 * s, z - 0.08 * s, 0.34 * s, mat.foliage);
     }
 
-    // 01 — Foundations: generous plot, retaining slab and stepped plinth.
     box(groups[0], 0, -0.16, 0, 15.2, 0.28, 11.6, mat.concrete);
     box(groups[0], -0.6, 0.05, -0.35, 10.8, 0.22, 7.0, mat.limestone);
     box(groups[0], 4.9, 0.0, 0.8, 3.8, 0.18, 7.4, mat.concrete);
 
-    // 02 — Structure: cleaner aligned walls, continuous slabs and cantilever.
     box(groups[1], -0.5, 1.55, -0.25, 9.2, 0.24, 6.0, mat.concrete);
     box(groups[1], -5.0, 1.56, 0.1, 0.3, 2.72, 5.3, mat.concrete);
     box(groups[1], 4.0, 1.56, -0.65, 0.3, 2.72, 3.85, mat.concrete);
     box(groups[1], -0.5, 2.94, -0.25, 9.3, 0.24, 6.05, mat.concrete);
     for (const x of [-4.2, -1.6, 1.2, 3.2]) box(groups[1], x, 1.48, 2.66, 0.19, 2.7, 0.19, mat.concrete);
-
     box(groups[1], 1.05, 4.35, -0.35, 7.55, 2.55, 4.9, mat.ivory);
     box(groups[1], -3.15, 4.35, 0.45, 0.3, 2.55, 3.4, mat.concrete);
     box(groups[1], 4.78, 4.35, -0.15, 0.3, 2.55, 4.3, mat.concrete);
     box(groups[1], 1.05, 5.72, -0.35, 8.0, 0.18, 5.35, mat.dark);
 
-    // 03 — Envelope: coherent facade composition.
     box(groups[2], -0.28, 1.55, 2.78, 8.9, 2.58, 0.08, mat.glass);
     for (let x = -4.3; x <= 4.0; x += 1.03) box(groups[2], x, 1.55, 2.82, 0.055, 2.65, 0.09, mat.dark);
     box(groups[2], 3.96, 1.55, -0.2, 0.08, 2.58, 5.2, mat.glass);
     for (let z = -2.45; z <= 2.3; z += 0.95) box(groups[2], 4.01, 1.55, z, 0.09, 2.65, 0.055, mat.dark);
-
     box(groups[2], 1.08, 4.35, 2.12, 7.15, 2.26, 0.08, mat.glass);
     for (let x = -2.1; x <= 4.2; x += 1.02) box(groups[2], x, 4.35, 2.16, 0.055, 2.36, 0.09, mat.dark);
     box(groups[2], 4.75, 4.35, -0.3, 0.08, 2.26, 4.5, mat.glass);
     for (let z = -2.15; z <= 1.75; z += 0.9) box(groups[2], 4.79, 4.35, z, 0.09, 2.36, 0.055, mat.dark);
-
     box(groups[2], -4.78, 1.52, -0.5, 0.35, 2.58, 4.35, mat.warmStone);
     for (let i = 0; i < 17; i++) box(groups[2], -4.98, 0.34 + i * 0.16, -0.5, 0.04, 0.04, 4.4, mat.bronze);
     for (let i = 0; i < 19; i++) box(groups[2], -2.55 + i * 0.17, 4.35, -2.72, 0.055, 2.18, 0.12, mat.wood);
 
-    // 04 — Finishes: garden, infinity pool, furniture, landscaping and family life.
-    // lawn plates
     box(groups[3], -4.35, 0.17, -3.9, 5.7, 0.12, 2.5, mat.lawn);
     box(groups[3], 4.8, 0.17, 3.2, 4.1, 0.12, 3.5, mat.lawn);
     box(groups[3], 5.35, 0.17, -3.15, 2.6, 0.12, 3.4, mat.lawn);
-
-    // terraces
     box(groups[3], -2.0, 0.32, 3.65, 5.8, 0.14, 2.2, mat.wood);
     box(groups[3], 2.55, 0.30, 3.65, 2.5, 0.14, 2.2, mat.limestone);
     box(groups[3], 4.65, 0.26, 0.8, 2.3, 0.15, 6.0, mat.limestone);
-
-    // infinity pool with stone coping
     box(groups[3], -0.7, 0.15, -3.6, 7.25, 0.24, 2.45, mat.concrete);
     box(groups[3], -0.7, 0.29, -3.6, 6.82, 0.07, 2.04, mat.water);
     box(groups[3], -0.7, 0.3, -4.63, 7.0, 0.07, 0.12, mat.glass);
     box(groups[3], -4.38, 0.31, -3.6, 0.12, 0.12, 2.25, mat.limestone);
     box(groups[3], 2.98, 0.31, -3.6, 0.12, 0.12, 2.25, mat.limestone);
 
-    // children playing in pool — intentionally stylised, architectural-scale figures.
     const childA = person(groups[3], -1.55, 0.28, -3.45, mat.coral, 0.72);
     const childB = person(groups[3], 0.25, 0.28, -3.75, mat.yellow, 0.68);
     const childC = person(groups[3], 1.45, 0.28, -3.35, mat.blue, 0.64);
     const childFigures = [childA, childB, childC];
 
-    // colourful pool toys
     const ring = new THREE.Mesh(new THREE.TorusGeometry(0.34, 0.08, 10, 24), mat.yellow);
     ring.rotation.x = Math.PI / 2;
     ring.position.set(-0.3, 0.38, -3.05);
@@ -205,23 +191,19 @@ export default function BuildingScene({
     groups[3].add(ring);
     sphere(groups[3], 1.9, 0.44, -4.0, 0.22, mat.coral);
 
-    // pergola with aligned posts and timber rafters
     for (const x of [-3.8, -1.9, 0.0]) box(groups[3], x, 1.55, 3.5, 0.11, 2.45, 0.11, mat.bronze);
     box(groups[3], -1.9, 2.78, 3.5, 4.05, 0.12, 0.12, mat.bronze);
     for (let i = 0; i < 11; i++) box(groups[3], -3.78 + i * 0.38, 2.78, 3.5, 0.07, 0.07, 1.55, mat.wood);
 
-    // outdoor lounge furniture
     box(groups[3], -3.0, 0.52, 3.9, 1.45, 0.22, 0.72, mat.whiteFabric);
     box(groups[3], -3.0, 0.85, 4.22, 1.45, 0.55, 0.18, mat.whiteFabric);
     box(groups[3], -1.1, 0.52, 3.9, 1.45, 0.22, 0.72, mat.whiteFabric);
     cylinder(groups[3], -2.05, 0.48, 3.1, 0.42, 0.08, mat.bronze, 32);
 
-    // balcony and frameless guard
     box(groups[3], 1.25, 3.03, 2.62, 7.35, 0.12, 0.48, mat.limestone);
     box(groups[3], 1.25, 3.42, 2.83, 7.0, 0.72, 0.045, mat.glass);
     for (let x = -1.95; x <= 4.35; x += 1.28) box(groups[3], x, 3.42, 2.85, 0.04, 0.72, 0.05, mat.dark);
 
-    // planters and clipped hedges
     box(groups[3], -5.55, 0.3, -0.2, 0.75, 0.36, 5.6, mat.limestone);
     box(groups[3], -5.55, 0.58, -0.2, 0.6, 0.26, 5.35, mat.hedge);
     box(groups[3], 5.65, 0.3, -1.85, 2.5, 0.36, 0.72, mat.limestone);
@@ -232,7 +214,6 @@ export default function BuildingScene({
     tree(groups[3], 6.15, -3.65, 0.9);
     tree(groups[3], 4.45, 4.65, 0.72);
 
-    // stepping stones through lawn
     for (let i = 0; i < 5; i++) box(groups[3], 4.45 + i * 0.42, 0.26, 2.0 - i * 0.52, 0.5, 0.08, 0.32, mat.limestone);
 
     const ground = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.ShadowMaterial({ opacity: 0.2 }));
@@ -274,14 +255,72 @@ export default function BuildingScene({
     let targetPointer = 0;
     let pointerOffset = 0;
     let rotationAngle = -0.38;
+    let manualOffset = 0;
+    let dragging = false;
+    let lastPointerX = 0;
+    let activePointerId: number | null = null;
 
-    const move = (e: PointerEvent) => {
-      const rect = container.getBoundingClientRect();
-      targetPointer = ((e.clientX - rect.left) / rect.width - 0.5) * 0.15;
+    const pointerDown = (e: PointerEvent) => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      dragging = true;
+      lastPointerX = e.clientX;
+      activePointerId = e.pointerId;
+      targetPointer = 0;
+      pointerOffset = 0;
+      container.setPointerCapture?.(e.pointerId);
+      container.style.cursor = "grabbing";
+      start();
     };
-    const leave = () => { targetPointer = 0; };
-    container.addEventListener("pointermove", move);
+
+    const pointerMove = (e: PointerEvent) => {
+      if (dragging && (activePointerId === null || e.pointerId === activePointerId)) {
+        const dx = e.clientX - lastPointerX;
+        lastPointerX = e.clientX;
+        manualOffset += dx * 0.0085;
+        start();
+        return;
+      }
+      const rect = container.getBoundingClientRect();
+      targetPointer = ((e.clientX - rect.left) / rect.width - 0.5) * 0.11;
+    };
+
+    const endDrag = () => {
+      if (!dragging) return;
+      dragging = false;
+      if (activePointerId !== null) {
+        try { container.releasePointerCapture?.(activePointerId); } catch { /* no-op */ }
+      }
+      activePointerId = null;
+      lastPointerX = 0;
+      targetPointer = 0;
+      container.style.cursor = "grab";
+      start();
+    };
+
+    const leave = () => {
+      if (!dragging) targetPointer = 0;
+    };
+
+    const keyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        manualOffset -= 0.18;
+        e.preventDefault();
+        start();
+      } else if (e.key === "ArrowRight") {
+        manualOffset += 0.18;
+        e.preventDefault();
+        start();
+      }
+    };
+
+    container.style.cursor = "grab";
+    container.style.touchAction = "pan-y";
+    container.addEventListener("pointerdown", pointerDown);
+    container.addEventListener("pointermove", pointerMove);
+    container.addEventListener("pointerup", endDrag);
+    container.addEventListener("pointercancel", endDrag);
     container.addEventListener("pointerleave", leave);
+    container.addEventListener("keydown", keyDown);
 
     const render = (now: number) => {
       raf = 0;
@@ -297,9 +336,9 @@ export default function BuildingScene({
         g.position.y = (1 - next) * -0.32;
       });
 
-      rotationAngle = (rotationAngle + dt * 0.038) % (Math.PI * 2);
+      if (!dragging) rotationAngle = (rotationAngle + dt * 0.038) % (Math.PI * 2);
       pointerOffset = THREE.MathUtils.damp(pointerOffset, targetPointer, 5, dt);
-      villa.rotation.y = rotationAngle + pointerOffset;
+      villa.rotation.y = rotationAngle + manualOffset + pointerOffset;
       villa.position.y = 0.08 + Math.sin(now * 0.00115) * 0.08;
       villa.rotation.z = Math.sin(now * 0.00062) * 0.0025;
 
@@ -355,8 +394,12 @@ export default function BuildingScene({
       ro.disconnect();
       io.disconnect();
       document.removeEventListener("visibilitychange", resume);
-      container.removeEventListener("pointermove", move);
+      container.removeEventListener("pointerdown", pointerDown);
+      container.removeEventListener("pointermove", pointerMove);
+      container.removeEventListener("pointerup", endDrag);
+      container.removeEventListener("pointercancel", endDrag);
       container.removeEventListener("pointerleave", leave);
+      container.removeEventListener("keydown", keyDown);
       renderer.domElement.removeEventListener("webglcontextlost", lost);
       scene.traverse((o) => {
         if (o instanceof THREE.Mesh) {
@@ -375,7 +418,8 @@ export default function BuildingScene({
       ref={host}
       className="building-canvas"
       role="img"
-      aria-label={`Villa contemporaine haut de gamme avec jardin et piscine en trois dimensions — phase ${phase + 1} sur 4`}
+      tabIndex={0}
+      aria-label={`Villa contemporaine haut de gamme avec jardin et piscine en trois dimensions — phase ${phase + 1} sur 4. Glissez horizontalement pour la faire pivoter.`}
     />
   );
 }
