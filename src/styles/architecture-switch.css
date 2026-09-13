@@ -40,6 +40,49 @@
   color: #f5f5ee;
 }
 
+.architecture-watermark {
+  position: absolute;
+  right: 18px;
+  top: 18px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0.5;
+  mix-blend-mode: multiply;
+}
+
+.architecture-watermark img {
+  width: 54px;
+  height: 26px;
+  object-fit: contain;
+  filter: saturate(0.8) contrast(1.05);
+}
+
+.architecture-watermark span {
+  font: 600 8px/1 Inter, Arial, sans-serif;
+  letter-spacing: 0.14em;
+  color: #173d31;
+  white-space: nowrap;
+}
+
+.architecture-watermark-center {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  z-index: 2;
+  transform: translate(-50%, -50%) rotate(-18deg);
+  pointer-events: none;
+  user-select: none;
+  color: #173d31;
+  opacity: 0.06;
+  font: 700 clamp(20px, 2.7vw, 38px)/1 Inter, Arial, sans-serif;
+  letter-spacing: 0.18em;
+  white-space: nowrap;
+}
+
 .theme-dark .architecture-kind-switch {
   background: rgba(11, 16, 14, 0.82);
   border-color: rgba(255, 255, 255, 0.14);
@@ -58,6 +101,24 @@
   color: #0b100e;
 }
 
+.theme-dark .architecture-watermark,
+.theme-dark .architecture-watermark-center {
+  mix-blend-mode: normal;
+}
+
+.theme-dark .architecture-watermark span,
+.theme-dark .architecture-watermark-center {
+  color: #eef2ec;
+}
+
+.theme-dark .architecture-watermark {
+  opacity: 0.42;
+}
+
+.theme-dark .architecture-watermark-center {
+  opacity: 0.055;
+}
+
 @media (max-width: 900px) {
   .architecture-kind-switch {
     top: 8px;
@@ -67,5 +128,20 @@
   .architecture-kind-switch button {
     padding: 7px 9px;
     font-size: 8px;
+  }
+
+  .architecture-watermark {
+    right: 10px;
+    top: 58px;
+    gap: 4px;
+  }
+
+  .architecture-watermark img {
+    width: 44px;
+    height: 22px;
+  }
+
+  .architecture-watermark span {
+    display: none;
   }
 }
