@@ -1,6 +1,5 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import fallback from "../../../media/1746172642405.webp";
 import logo from "../../../media/Pr_sentation1_page-0001.webp";
 import "../../../styles/architecture-switch.css";
 
@@ -54,9 +53,7 @@ export default function Architecture({
   }, []);
 
   useEffect(() => {
-    const media = matchMedia(
-      "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
-    );
+    const media = matchMedia("(prefers-reduced-motion: no-preference)");
     const update = () =>
       setEnabled(
         media.matches &&
@@ -141,23 +138,11 @@ export default function Architecture({
         )}
 
         {enabled && !failed ? (
-          <Suspense
-            fallback={
-              <img
-                className="architecture-photo"
-                src={fallback}
-                alt="Intérieur résidentiel, finitions bois et minérales"
-              />
-            }
-          >
+          <Suspense fallback={<div className="architecture-static-placeholder" aria-hidden="true" />}>
             <Scene phase={phase} onFailure={failure} />
           </Suspense>
         ) : (
-          <img
-            className="architecture-photo"
-            src={fallback}
-            alt="Intérieur résidentiel, finitions bois et minérales"
-          />
+          <div className="architecture-static-placeholder" aria-hidden="true" />
         )}
 
         <div className="architecture-watermark" aria-hidden="true">
@@ -169,7 +154,7 @@ export default function Architecture({
         </div>
 
         <span className="architecture-note">
-          {enabled && !failed ? sceneLabel : "LE SENS DU DÉTAIL · SBRE"}
+          {enabled && !failed ? sceneLabel : "MODÈLE ARCHITECTURAL · SBRE"}
         </span>
         <span className="architecture-scale" aria-hidden="true">
           {String(phase + 1).padStart(2, "0")} / 04
