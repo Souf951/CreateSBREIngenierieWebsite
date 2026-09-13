@@ -41,7 +41,7 @@ export const cases = [
   {
     title: "Un planning doit permettre de décider.",
     label: "Délais & anticipation",
-    image: logements,
+    image: `${import.meta.env.BASE_URL}sbre-planning-case.webp`,
     problem:
       "Une tâche décale les suivantes. Les équipes restent mobilisées, mais la date de livraison devient incertaine.",
     analysis:
