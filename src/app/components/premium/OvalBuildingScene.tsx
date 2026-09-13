@@ -183,20 +183,22 @@ export default function OvalBuildingScene({
     }
 
     // 04 — Finitions / curved balcony identity
+    // The rails are deliberately anchored lower so their uprights visibly start
+    // on the balcony slab rather than appearing attached to the ceiling above.
     for (let floor = 0; floor < floorCount; floor++) {
       const slabY = 0.4 + floor * floorHeight;
       ellipseMesh(groups[3], slabY + 0.03, 5.0, 3.58, 0.12, concrete);
-      ring(groups[3], slabY + 0.62, 4.9, 3.48, 0.025, rail);
-      ring(groups[3], slabY + 0.82, 4.9, 3.48, 0.018, rail);
+      ring(groups[3], slabY + 0.48, 4.9, 3.48, 0.025, rail);
+      ring(groups[3], slabY + 0.68, 4.9, 3.48, 0.018, rail);
       for (let i = 0; i < 32; i++) {
         const a = (i / 32) * Math.PI * 2;
         const x = Math.cos(a) * 4.9;
         const z = Math.sin(a) * 3.48;
-        box(groups[3], x, slabY + 0.72, z, 0.025, 0.42, 0.025, rail, -a);
+        box(groups[3], x, slabY + 0.58, z, 0.025, 0.42, 0.025, rail, -a);
       }
     }
     ellipseMesh(groups[3], 9.94, 4.85, 3.45, 0.18, concrete);
-    ring(groups[3], 10.18, 4.8, 3.4, 0.03, rail);
+    ring(groups[3], 10.08, 4.8, 3.4, 0.03, rail);
 
     // Ground / landscape accents
     ellipseMesh(groups[3], -0.08, 6.2, 4.55, 0.06, green);
