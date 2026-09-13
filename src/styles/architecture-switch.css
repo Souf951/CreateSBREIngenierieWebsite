@@ -44,6 +44,27 @@
   color: #f5f5ee;
 }
 
+.construction-activity {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.98;
+  animation: construction-activity-in 420ms ease both;
+}
+
+.construction-activity canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+@keyframes construction-activity-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 0.98; transform: translateY(0); }
+}
+
 .architecture-watermark {
   position: absolute;
   right: 18px;
@@ -156,5 +177,11 @@
 
   .architecture-watermark span {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .construction-activity {
+    animation: none;
   }
 }
