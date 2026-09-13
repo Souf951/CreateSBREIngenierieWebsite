@@ -27,9 +27,14 @@ const steps = [
 export default function ScrollVideoPrototype() {
   const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const targetProgressRef = useRef(0);
+  const smoothProgressRef = useRef(0);
+  const lastSeekRef = useRef(0);
+  const warmedRef = useRef(false);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(44.177);
   const [videoMissing, setVideoMissing] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
 
   const activeStep = useMemo(
     () => Math.min(3, Math.max(0, Math.floor(progress * 4))),
@@ -38,42 +43,103 @@ export default function ScrollVideoPrototype() {
 
   useEffect(() => {
     let raf = 0;
+    let previous = performance.now();
 
-    const update = () => {
-      raf = 0;
+    const measureScroll = () => {
       const section = sectionRef.current;
-      const video = videoRef.current;
-      if (!section || !video || videoMissing) return;
+      if (!section) return;
 
       const rect = section.getBoundingClientRect();
       const total = Math.max(1, section.offsetHeight - window.innerHeight);
       const travelled = Math.min(total, Math.max(0, -rect.top));
-      const p = travelled / total;
-      setProgress(p);
+      targetProgressRef.current = travelled / total;
+    };
 
-      const targetTime = p * duration;
-      if (Number.isFinite(targetTime) && Math.abs(video.currentTime - targetTime) > 0.025) {
-        try {
-          video.currentTime = targetTime;
-        } catch {
-          /* Seeking can briefly fail while metadata is loading. */
-        }
+    const warmDecoder = () => {
+      const video = videoRef.current;
+      if (!video || warmedRef.current || video.readyState < 2) return;
+      warmedRef.current = true;
+      video.muted = true;
+      const promise = video.play();
+      if (promise) {
+        promise
+          .then(() => {
+            video.pause();
+            video.currentTime = Math.max(0, smoothProgressRef.current * duration);
+          })
+          .catch(() => {
+            video.pause();
+          });
       }
     };
 
-    const requestUpdate = () => {
-      if (!raf) raf = requestAnimationFrame(update);
+    const tick = (now: number) => {
+      const dt = Math.min((now - previous) / 1000, 0.05);
+      previous = now;
+
+      const current = smoothProgressRef.current;
+      const target = targetProgressRef.current;
+      const eased = current + (target - current) * Math.min(1, dt * 10);
+      smoothProgressRef.current = Math.abs(target - eased) < 0.0001 ? target : eased;
+
+      const displayed = smoothProgressRef.current;
+      setProgress((old) => (Math.abs(old - displayed) > 0.001 ? displayed : old));
+
+      const video = videoRef.current;
+      if (video && videoReady && !videoMissing && video.readyState >= 1) {
+        const safeDuration = Number.isFinite(video.duration) && video.duration > 0 ? video.duration : duration;
+        const targetTime = Math.min(Math.max(0, displayed * Math.max(0.01, safeDuration - 0.04)), safeDuration);
+
+        // Limit seeks to ~30 fps: Chrome is much happier than with one seek per wheel event.
+        if (now - lastSeekRef.current > 32 && Math.abs(video.currentTime - targetTime) > 0.018) {
+          lastSeekRef.current = now;
+          try {
+            video.currentTime = targetTime;
+          } catch {
+            /* Metadata/decoder can be briefly busy; the next frame retries. */
+          }
+        }
+      }
+
+      raf = requestAnimationFrame(tick);
     };
 
-    update();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
+    measureScroll();
+    const onScroll = () => {
+      measureScroll();
+      warmDecoder();
+    };
+    const onResize = () => measureScroll();
+    const onPointer = () => warmDecoder();
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onResize);
+    window.addEventListener("wheel", onPointer, { passive: true, once: true });
+    window.addEventListener("pointerdown", onPointer, { passive: true, once: true });
+    raf = requestAnimationFrame(tick);
+
     return () => {
       cancelAnimationFrame(raf);
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("wheel", onPointer);
+      window.removeEventListener("pointerdown", onPointer);
     };
-  }, [duration, videoMissing]);
+  }, [duration, videoMissing, videoReady]);
+
+  const prepareVideo = (video: HTMLVideoElement) => {
+    const value = video.duration;
+    if (Number.isFinite(value) && value > 0) setDuration(value);
+    video.muted = true;
+    video.pause();
+    try {
+      video.currentTime = Math.max(0, smoothProgressRef.current * (Number.isFinite(value) ? value : duration));
+    } catch {
+      /* Seeking will retry from the animation loop. */
+    }
+    setVideoReady(true);
+    setVideoMissing(false);
+  };
 
   const jumpTo = (index: number) => {
     const section = sectionRef.current;
@@ -108,13 +174,13 @@ export default function ScrollVideoPrototype() {
             muted
             playsInline
             preload="auto"
-            onLoadedMetadata={(event) => {
-              const value = event.currentTarget.duration;
-              if (Number.isFinite(value) && value > 0) setDuration(value);
-              event.currentTarget.pause();
-              event.currentTarget.currentTime = 0;
+            disablePictureInPicture
+            onLoadedMetadata={(event) => prepareVideo(event.currentTarget)}
+            onCanPlay={(event) => prepareVideo(event.currentTarget)}
+            onError={() => {
+              setVideoMissing(true);
+              setVideoReady(false);
             }}
-            onError={() => setVideoMissing(true)}
           />
           <div className="scroll-scrub-shade" />
 
