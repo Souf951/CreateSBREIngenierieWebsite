@@ -29,9 +29,6 @@ const ProjectMicroLogements = lazy(
 const ProjectVillaPrangins = lazy(
   () => import("./components/ProjectVillaPrangins"),
 );
-const ScrollVideoPrototype = lazy(
-  () => import("./components/ScrollVideoPrototype"),
-);
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -124,7 +121,6 @@ export default function App() {
           >
             <Routes>
               <Route path="/" element={<HomePage />} />
-              <Route path="/prototype-scroll" element={<ScrollVideoPrototype />} />
               <Route
                 path="/projet/tertiaire-geneve"
                 element={<ProjectTertiaire />}
