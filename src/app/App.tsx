@@ -34,10 +34,28 @@ const ProjectVillaPrangins = lazy(
 );
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, key } = useLocation();
+
   useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+
+    const jumpTop = () => window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+
+    jumpTop();
+    const raf1 = requestAnimationFrame(() => {
+      jumpTop();
+      requestAnimationFrame(jumpTop);
+    });
+    const timer = window.setTimeout(jumpTop, 120);
+
+    return () => {
+      cancelAnimationFrame(raf1);
+      window.clearTimeout(timer);
+    };
+  }, [pathname, key]);
+
   return null;
 }
 
