@@ -53,7 +53,7 @@ export default function Architecture({
       ? "IMMEUBLE COURBE · SBRE"
       : kind === "villa"
         ? "VILLA CONTEMPORAINE · SBRE"
-        : "AMÉNAGEMENT ROUTIER · SBRE";
+        : "INFRASTRUCTURES PUBLIQUES · SBRE";
 
   return (
     <div className={`architecture ${compact ? "architecture-compact" : ""}`}>
@@ -80,7 +80,7 @@ export default function Architecture({
             aria-pressed={kind === "travaux-publics"}
             onClick={() => setKind("travaux-publics")}
           >
-            <span>03</span> Travaux publics
+            <span>03</span> Infrastructures publiques
           </button>
         </div>
       )}
