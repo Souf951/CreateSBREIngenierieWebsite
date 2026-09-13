@@ -28,8 +28,9 @@ export default function TeamProfilesGuard() {
   useEffect(() => {
     const apply = () => {
       const section = document.querySelector<HTMLElement>(".team-section");
-      if (!section) return;
+      if (!section || section.dataset.sbreTeamEnhanced === "true") return;
 
+      section.dataset.sbreTeamEnhanced = "true";
       section.style.setProperty(
         "--team-bg",
         `url("${import.meta.env.BASE_URL}team-office-bg.webp")`,
@@ -65,15 +66,15 @@ export default function TeamProfilesGuard() {
       section.querySelector(".team-note")?.remove();
     };
 
-    const raf = requestAnimationFrame(apply);
-    const timers = [150, 500, 1200].map((delay) => window.setTimeout(apply, delay));
-    window.addEventListener("hashchange", apply);
+    apply();
 
-    return () => {
-      cancelAnimationFrame(raf);
-      timers.forEach((timer) => window.clearTimeout(timer));
-      window.removeEventListener("hashchange", apply);
-    };
+    // HomePage can disappear/reappear when opening a project page. Observe only
+    // child additions and enhance each new team section once. The data marker
+    // prevents mutation loops and protects previous customisations.
+    const observer = new MutationObserver(() => apply());
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
   }, []);
 
   return null;
