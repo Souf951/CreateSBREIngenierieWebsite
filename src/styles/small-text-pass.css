@@ -1,0 +1,71 @@
+/* Targeted small-text readability pass. Intentionally leaves large titles,
+   cards and hero typography untouched. */
+
+.premium-site .principles {
+  font-size: 14px;
+  font-weight: 520;
+}
+
+.premium-site .principles > span::before {
+  color: #0b6f4a;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.premium-site .hero-location,
+.premium-site .visual-heading,
+.premium-site .architecture-note,
+.premium-site .architecture-scale,
+.premium-site .model-caption,
+.premium-site .phase-controls button span,
+.premium-site .card-footer,
+.premium-site .team-role,
+.premium-site .team-note,
+.premium-site .form-note,
+.premium-site .image-caption,
+.premium-site .step-index,
+.premium-site .case-deliverable,
+.premium-site .method-list small {
+  font-size: 11px;
+}
+
+.premium-site .eyebrow {
+  font-size: 12px;
+}
+
+.theme-dark .premium-site .principles {
+  color: #f2f6f3;
+}
+
+.theme-dark .premium-site .principles > span::before {
+  color: #77d39c;
+  text-shadow: 0 0 10px rgba(119, 211, 156, 0.24);
+}
+
+.theme-dark .premium-site .hero-location,
+.theme-dark .premium-site .visual-heading,
+.theme-dark .premium-site .architecture-note,
+.theme-dark .premium-site .architecture-scale,
+.theme-dark .premium-site .model-caption,
+.theme-dark .premium-site .phase-controls button span,
+.theme-dark .premium-site .card-footer,
+.theme-dark .premium-site .team-role,
+.theme-dark .premium-site .team-note,
+.theme-dark .premium-site .form-note,
+.theme-dark .premium-site .image-caption,
+.theme-dark .premium-site .step-index,
+.theme-dark .premium-site .case-deliverable,
+.theme-dark .premium-site .method-list small,
+.theme-dark .premium-site .eyebrow {
+  color: #d6e0da;
+}
+
+@media (max-width: 800px) {
+  .premium-site .principles {
+    font-size: 13px;
+  }
+
+  .premium-site .eyebrow {
+    font-size: 11px;
+  }
+}
