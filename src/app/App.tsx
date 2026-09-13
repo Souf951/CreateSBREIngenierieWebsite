@@ -21,11 +21,13 @@ import ControlBannerVideo from "./components/ControlBannerVideo";
 import FloatingContact from "./components/FloatingContact";
 import MethodAccordionGuard from "./components/premium/MethodAccordionGuard";
 import TeamProfilesGuard from "./components/premium/TeamProfilesGuard";
+import FooterEnhancer from "./components/premium/FooterEnhancer";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
 import "../styles/dark-logo.css";
 import "../styles/small-text-pass.css";
 import "../styles/project-gallery-premium.css";
+import "../styles/footer-premium.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
@@ -172,6 +174,7 @@ export default function App() {
           <ScrollToTop />
           <MethodAccordionGuard />
           <TeamProfilesGuard />
+          <FooterEnhancer />
           <ControlBannerVideo />
           <Suspense
             fallback={
