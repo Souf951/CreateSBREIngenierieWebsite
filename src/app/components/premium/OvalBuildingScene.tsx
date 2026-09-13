@@ -105,12 +105,31 @@ export default function OvalBuildingScene({
       return mesh;
     };
 
-    const ring = (g: THREE.Group, y: number, rx: number, rz: number, tube: number, mat: THREE.Material) => {
-      const mesh = new THREE.Mesh(new THREE.TorusGeometry(rx, tube, 8, 96), mat);
-      mesh.rotation.x = Math.PI / 2;
-      mesh.scale.z = rz / rx;
+    // True elliptical balcony rail. A torus is rotationally symmetric, so it can
+    // look visually "fixed" while the building rotates. This curve is genuinely
+    // oval in plan and therefore follows the exact orientation of the building.
+    const ring = (
+      g: THREE.Group,
+      y: number,
+      rx: number,
+      rz: number,
+      tube: number,
+      mat: THREE.Material,
+    ) => {
+      const points: THREE.Vector3[] = [];
+      const segments = 96;
+      for (let i = 0; i < segments; i++) {
+        const a = (i / segments) * Math.PI * 2;
+        points.push(new THREE.Vector3(Math.cos(a) * rx, 0, Math.sin(a) * rz));
+      }
+      const curve = new THREE.CatmullRomCurve3(points, true, "centripetal");
+      const mesh = new THREE.Mesh(
+        new THREE.TubeGeometry(curve, segments, tube, 6, true),
+        mat,
+      );
       mesh.position.y = y;
       mesh.castShadow = true;
+      mesh.receiveShadow = true;
       g.add(mesh);
       return mesh;
     };
@@ -260,7 +279,11 @@ export default function OvalBuildingScene({
       if (!dragging) return;
       dragging = false;
       if (activePointerId !== null) {
-        try { container.releasePointerCapture?.(activePointerId); } catch { /* no-op */ }
+        try {
+          container.releasePointerCapture?.(activePointerId);
+        } catch {
+          /* no-op */
+        }
       }
       activePointerId = null;
       lastPointerX = 0;
