@@ -5,12 +5,21 @@ import {
   useLocation,
   Link,
 } from "react-router-dom";
-import { lazy, Suspense, useLayoutEffect, useState, useCallback } from "react";
+import {
+  lazy,
+  Suspense,
+  useLayoutEffect,
+  useState,
+  useCallback,
+  useEffect,
+} from "react";
 import { MotionConfig } from "motion/react";
+import { Moon, Sun } from "lucide-react";
 import HomePage from "./components/HomePage";
 import IntroLoader from "./components/IntroLoader";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
+
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
   () => import("./components/ProjectMicroLogements"),
@@ -18,6 +27,7 @@ const ProjectMicroLogements = lazy(
 const ProjectVillaPrangins = lazy(
   () => import("./components/ProjectVillaPrangins"),
 );
+
 function ScrollToTop() {
   const { pathname } = useLocation();
   useLayoutEffect(() => {
@@ -25,6 +35,7 @@ function ScrollToTop() {
   }, [pathname]);
   return null;
 }
+
 function shouldSkipIntro() {
   try {
     return (
@@ -37,8 +48,21 @@ function shouldSkipIntro() {
     return true;
   }
 }
+
+function getInitialTheme(): "light" | "dark" {
+  try {
+    const saved = localStorage.getItem("sbre_theme");
+    if (saved === "light" || saved === "dark") return saved;
+    return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  } catch {
+    return "light";
+  }
+}
+
 export default function App() {
   const [introDone, setIntroDone] = useState(shouldSkipIntro);
+  const [theme, setTheme] = useState<"light" | "dark">(getInitialTheme);
+
   const complete = useCallback(() => {
     try {
       sessionStorage.setItem("sbre_intro_v2", "true");
@@ -47,13 +71,43 @@ export default function App() {
     }
     setIntroDone(true);
   }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem("sbre_theme", theme);
+    } catch {
+      /* Storage is optional. */
+    }
+    document.documentElement.style.colorScheme = theme;
+  }, [theme]);
+
+  const toggleTheme = useCallback(() => {
+    setTheme((current) => (current === "dark" ? "light" : "dark"));
+  }, []);
+
+  const isDark = theme === "dark";
+
   return (
     <MotionConfig reducedMotion="user">
       {!introDone && <IntroLoader onComplete={complete} />}
       <div
+        className={`sbre-theme ${isDark ? "theme-dark" : "theme-light"}`}
         {...(!introDone ? { inert: "" } : {})}
         aria-hidden={!introDone || undefined}
       >
+        <button
+          type="button"
+          className="theme-toggle"
+          onClick={toggleTheme}
+          aria-label={isDark ? "Activer le mode jour" : "Activer le mode nuit"}
+          title={isDark ? "Mode jour" : "Mode nuit"}
+        >
+          <span className="theme-toggle-icon" aria-hidden="true">
+            {isDark ? <Sun size={17} strokeWidth={1.8} /> : <Moon size={17} strokeWidth={1.8} />}
+          </span>
+          <span className="theme-toggle-label">{isDark ? "Jour" : "Nuit"}</span>
+        </button>
+
         <Router>
           <ScrollToTop />
           <Suspense
