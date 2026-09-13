@@ -63,13 +63,14 @@ export default function FooterEnhancer() {
       footer.appendChild(bottom);
     };
 
-    const raf = requestAnimationFrame(apply);
-    const timers = [100, 350, 900].map((delay) => window.setTimeout(apply, delay));
+    apply();
 
-    return () => {
-      cancelAnimationFrame(raf);
-      timers.forEach((timer) => window.clearTimeout(timer));
-    };
+    // Footer belongs to HomePage and can be recreated after visiting project pages.
+    // Enhance each new footer once without rewriting unrelated sections.
+    const observer = new MutationObserver(() => apply());
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    return () => observer.disconnect();
   }, []);
 
   return null;
