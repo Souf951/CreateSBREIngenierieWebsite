@@ -12,14 +12,14 @@ const profiles = [
     name: "Yannick Müller",
     role: "Chef de projet",
     description: "Organisation, planification et coordination des intervenants.",
-    image: `${import.meta.env.BASE_URL}team-yannick-muller.webp`,
+    image: `${import.meta.env.BASE_URL}team-zayd-haidar.webp`,
     alt: "Yannick Müller, chef de projet chez SBRE Ingénierie",
   },
   {
     name: "Zayd Haidar",
     role: "Conducteur de travaux",
     description: "Suivi terrain, contrôle de l’exécution et préparation des réceptions.",
-    image: `${import.meta.env.BASE_URL}team-zayd-haidar.webp`,
+    image: `${import.meta.env.BASE_URL}team-yannick-muller.webp`,
     alt: "Zayd Haidar, conducteur de travaux chez SBRE Ingénierie",
   },
 ];
