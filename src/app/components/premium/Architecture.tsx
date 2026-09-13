@@ -1,5 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import fallback from "../../../media/1746172642405.webp";
+import "../../../styles/architecture-switch.css";
 
 const VillaScene = lazy(() => import("./BuildingScene"));
 const OvalScene = lazy(() => import("./OvalBuildingScene"));
