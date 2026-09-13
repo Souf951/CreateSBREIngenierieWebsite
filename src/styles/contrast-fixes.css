@@ -47,6 +47,94 @@
   --muted-readable: #d4ddd2;
 }
 
+/* Readability pass: keep the airy premium layout, but make small copy
+   comfortably readable on desktop and laptop displays. */
+.premium-site {
+  font-size: 16px;
+}
+
+.premium-site .brand {
+  width: 210px;
+}
+
+.premium-site .brand img {
+  height: 82px;
+}
+
+.premium-site .desktop-nav button,
+.premium-site .header-contact,
+.premium-site .button,
+.premium-site .text-link {
+  font-size: 13px !important;
+}
+
+.premium-site .eyebrow {
+  font-size: 11px;
+}
+
+.premium-site .hero-description {
+  font-size: 16px;
+}
+
+.premium-site .hero-location {
+  font-size: 10px;
+}
+
+.premium-site .visual-heading,
+.premium-site .architecture-note {
+  font-size: 9px;
+}
+
+.premium-site .architecture-scale,
+.premium-site .phase-controls button {
+  font-size: 11px;
+}
+
+.premium-site .phase-controls button span,
+.premium-site .model-caption {
+  font-size: 9px;
+}
+
+.premium-site .principles {
+  font-size: 13px;
+}
+
+.premium-site .section-heading > p:last-child {
+  font-size: 15px;
+}
+
+.premium-site .expertise-card strong {
+  font-size: 14px;
+}
+
+.premium-site .expertise-card p,
+.premium-site .team-card > p:last-child,
+.premium-site .case-tabs button,
+.premium-site .faq-section details p,
+.premium-site .contact-section > div > p:not(.eyebrow) {
+  font-size: 14px;
+}
+
+.premium-site .card-footer,
+.premium-site .team-role,
+.premium-site .team-note,
+.premium-site .form-note {
+  font-size: 11px;
+}
+
+.premium-site .case-steps p {
+  font-size: 13px;
+}
+
+.premium-site .method-intro > p:not(.eyebrow),
+.premium-site .method-list details > div {
+  font-size: 14px;
+}
+
+.premium-site .faq-section summary {
+  font-size: 16px;
+}
+
 /* Persistent premium day / night control. */
 .sbre-theme {
   min-height: 100vh;
@@ -229,7 +317,46 @@
   color: #0b100e;
 }
 
+@media (max-width: 800px) {
+  .premium-site .brand {
+    width: 160px;
+  }
+
+  .premium-site .brand img {
+    height: 62px;
+  }
+
+  .premium-site .hero-description,
+  .premium-site .section-heading > p:last-child,
+  .premium-site .expertise-card p,
+  .premium-site .team-card > p:last-child {
+    font-size: 14px;
+  }
+}
+
 @media (max-width: 540px) {
+  .premium-site .brand {
+    width: 138px;
+  }
+
+  .premium-site .brand img {
+    height: 56px;
+  }
+
+  .premium-site .eyebrow {
+    font-size: 9px;
+  }
+
+  .premium-site .visual-heading,
+  .premium-site .architecture-note,
+  .premium-site .model-caption {
+    font-size: 8px;
+  }
+
+  .premium-site .phase-controls button {
+    font-size: 10px;
+  }
+
   .theme-toggle {
     right: 14px;
     bottom: 14px;
