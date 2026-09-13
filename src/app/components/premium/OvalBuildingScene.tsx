@@ -43,7 +43,7 @@ export default function OvalBuildingScene({
     camera.lookAt(0, 4.6, 0);
 
     const building = new THREE.Group();
-    building.scale.setScalar(0.88);
+    building.scale.setScalar(0.80);
     scene.add(building);
 
     const concrete = new THREE.MeshStandardMaterial({ color: "#c98f78", roughness: 0.78 });
