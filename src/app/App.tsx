@@ -17,6 +17,7 @@ import { MotionConfig } from "motion/react";
 import { Moon, Sun } from "lucide-react";
 import HomePage from "./components/HomePage";
 import IntroLoader from "./components/IntroLoader";
+import ControlBannerVideo from "./components/ControlBannerVideo";
 import MethodAccordionGuard from "./components/premium/MethodAccordionGuard";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
@@ -114,6 +115,7 @@ export default function App() {
         <Router>
           <ScrollToTop />
           <MethodAccordionGuard />
+          <ControlBannerVideo />
           <Suspense
             fallback={
               <div style={{ padding: "15vh 8%", color: "#0a5c3d" }}>
