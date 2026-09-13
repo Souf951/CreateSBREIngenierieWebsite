@@ -1,0 +1,40 @@
+/* Center the three homepage principles evenly without disturbing the arrow control. */
+.premium-site .principles {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  align-items: center;
+  gap: 18px;
+}
+
+.premium-site .principles > span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
+
+.premium-site .principles > button {
+  justify-self: end;
+}
+
+@media (max-width: 820px) {
+  .premium-site .principles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .premium-site .principles > button {
+    justify-self: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .premium-site .principles {
+    grid-template-columns: 1fr !important;
+  }
+
+  .premium-site .principles > span,
+  .premium-site .principles > button {
+    justify-self: center;
+  }
+}
