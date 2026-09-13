@@ -31,10 +31,6 @@ export default function TeamProfilesGuard() {
       if (!section || section.dataset.sbreTeamEnhanced === "true") return;
 
       section.dataset.sbreTeamEnhanced = "true";
-      section.style.setProperty(
-        "--team-bg",
-        `url("${import.meta.env.BASE_URL}team-office-bg.webp")`,
-      );
 
       const intro = section.querySelector<HTMLElement>(".section-heading > p:last-child");
       if (intro) {
