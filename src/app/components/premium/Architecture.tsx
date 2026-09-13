@@ -6,7 +6,6 @@ import "../../../styles/architecture-switch.css";
 const VillaScene = lazy(() => import("./BuildingScene"));
 const OvalScene = lazy(() => import("./OvalBuildingScene"));
 const PublicWorksScene = lazy(() => import("./PublicWorksScene"));
-const ConstructionActivity = lazy(() => import("./ConstructionActivity"));
 
 export const phases = ["Fondations", "Structure", "Enveloppe", "Finitions"];
 export type ArchitectureKind = "villa" | "immeuble" | "travaux-publics";
@@ -97,9 +96,6 @@ export default function Architecture({
           }
         >
           <Scene phase={phase} onFailure={failure} />
-          {phase === 0 && kind !== "travaux-publics" && (
-            <ConstructionActivity kind={kind} />
-          )}
         </Suspense>
       ) : (
         <img
