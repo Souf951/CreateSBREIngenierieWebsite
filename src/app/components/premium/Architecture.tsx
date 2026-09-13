@@ -1,5 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import fallback from "../../../media/1746172642405.webp";
+import logo from "../../../media/Pr_sentation1_page-0001.webp";
 import "../../../styles/architecture-switch.css";
 
 const VillaScene = lazy(() => import("./BuildingScene"));
@@ -84,6 +85,15 @@ export default function Architecture({
           alt="Intérieur résidentiel, finitions bois et minérales"
         />
       )}
+
+      <div className="architecture-watermark" aria-hidden="true">
+        <img src={logo} alt="" />
+        <span>SBRE INGÉNIERIE</span>
+      </div>
+      <div className="architecture-watermark-center" aria-hidden="true">
+        SBRE INGÉNIERIE
+      </div>
+
       <span className="architecture-note">
         {enabled && !failed ? sceneLabel : "LE SENS DU DÉTAIL · SBRE"}
       </span>
