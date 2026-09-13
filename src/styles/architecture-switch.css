@@ -1,3 +1,49 @@
+.architecture-backgrounds {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #0b1410;
+}
+
+.architecture-backgrounds img {
+  position: absolute;
+  inset: -2%;
+  width: 104%;
+  height: 104%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transform: scale(1.035);
+  filter: saturate(0.88) contrast(1.02) brightness(0.58);
+  transition:
+    opacity 760ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1100ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 760ms ease;
+  will-change: opacity, transform;
+}
+
+.architecture-backgrounds img.is-active {
+  opacity: 1;
+  transform: scale(1);
+  filter: saturate(0.95) contrast(1.03) brightness(0.68);
+}
+
+.architecture-background-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 52% 48%, rgba(7, 16, 12, 0.08) 0%, rgba(7, 16, 12, 0.28) 62%, rgba(7, 16, 12, 0.58) 100%),
+    linear-gradient(180deg, rgba(5, 12, 9, 0.18), rgba(5, 12, 9, 0.42));
+}
+
+.architecture > .building-canvas,
+.architecture > .architecture-photo {
+  position: relative;
+  z-index: 1;
+}
+
 .architecture-kind-switch {
   position: absolute;
   top: 14px;
@@ -44,27 +90,6 @@
   color: #f5f5ee;
 }
 
-.construction-activity {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  overflow: hidden;
-  opacity: 0.98;
-  animation: construction-activity-in 420ms ease both;
-}
-
-.construction-activity canvas {
-  width: 100% !important;
-  height: 100% !important;
-  display: block;
-}
-
-@keyframes construction-activity-in {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 0.98; transform: translateY(0); }
-}
-
 .architecture-watermark {
   position: absolute;
   right: 18px;
@@ -106,6 +131,20 @@
   font: 700 clamp(20px, 2.7vw, 38px)/1 Inter, Arial, sans-serif;
   letter-spacing: 0.18em;
   white-space: nowrap;
+}
+
+.theme-light .architecture-backgrounds img {
+  filter: saturate(0.82) contrast(0.98) brightness(0.86);
+}
+
+.theme-light .architecture-backgrounds img.is-active {
+  filter: saturate(0.92) contrast(1) brightness(0.96);
+}
+
+.theme-light .architecture-background-shade {
+  background:
+    radial-gradient(circle at 52% 48%, rgba(244, 244, 237, 0.08) 0%, rgba(244, 244, 237, 0.18) 65%, rgba(244, 244, 237, 0.34) 100%),
+    linear-gradient(180deg, rgba(245, 245, 238, 0.08), rgba(245, 245, 238, 0.18));
 }
 
 .theme-dark .architecture-kind-switch {
@@ -181,7 +220,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .construction-activity {
-    animation: none;
+  .architecture-backgrounds img {
+    transition: opacity 160ms linear;
+    transform: none;
   }
 }
