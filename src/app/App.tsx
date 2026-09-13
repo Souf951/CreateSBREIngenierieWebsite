@@ -17,11 +17,11 @@ import { MotionConfig } from "motion/react";
 import { Moon, Sun } from "lucide-react";
 import HomePage from "./components/HomePage";
 import IntroLoader from "./components/IntroLoader";
+import MethodAccordionGuard from "./components/premium/MethodAccordionGuard";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
 import "../styles/dark-logo.css";
 import "../styles/small-text-pass.css";
-import "../styles/method-sbre.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
@@ -113,6 +113,7 @@ export default function App() {
 
         <Router>
           <ScrollToTop />
+          <MethodAccordionGuard />
           <Suspense
             fallback={
               <div style={{ padding: "15vh 8%", color: "#0a5c3d" }}>
