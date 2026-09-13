@@ -60,13 +60,15 @@ export default function TeamProfilesGuard() {
       section.querySelector(".team-note")?.remove();
     };
 
-    apply();
-    const observer = new MutationObserver(apply);
-    observer.observe(document.body, { childList: true, subtree: true });
+    // Apply only a few times after React has rendered the homepage.
+    // Do not observe DOM mutations continuously: that can create an update loop.
+    const raf = requestAnimationFrame(apply);
+    const timers = [150, 500, 1200].map((delay) => window.setTimeout(apply, delay));
     window.addEventListener("hashchange", apply);
 
     return () => {
-      observer.disconnect();
+      cancelAnimationFrame(raf);
+      timers.forEach((timer) => window.clearTimeout(timer));
       window.removeEventListener("hashchange", apply);
     };
   }, []);
