@@ -10,14 +10,13 @@ export type ArchitectureKind = "villa" | "immeuble";
 export default function Architecture({
   phase = 3,
   compact = false,
-  kind = "villa",
 }: {
   phase?: number;
   compact?: boolean;
-  kind?: ArchitectureKind;
 }) {
   const [enabled, setEnabled] = useState(false);
   const [failed, setFailed] = useState(false);
+  const [kind, setKind] = useState<ArchitectureKind>("immeuble");
   const failure = useCallback(() => setFailed(true), []);
 
   useEffect(() => {
@@ -35,12 +34,36 @@ export default function Architecture({
     return () => media.removeEventListener("change", update);
   }, []);
 
+  useEffect(() => {
+    setFailed(false);
+  }, [kind]);
+
   const Scene = kind === "immeuble" ? OvalScene : VillaScene;
-  const sceneLabel = kind === "immeuble" ? "IMMEUBLE COURBE · SBRE" : "ÉTUDE DE VOLUMÉTRIE · SBRE";
+  const sceneLabel = kind === "immeuble" ? "IMMEUBLE COURBE · SBRE" : "VILLA CONTEMPORAINE · SBRE";
 
   return (
     <div className={`architecture ${compact ? "architecture-compact" : ""}`}>
       <div className="architecture-grid" aria-hidden="true" />
+
+      {!compact && (
+        <div className="architecture-kind-switch" aria-label="Choisir le type de projet">
+          <button
+            type="button"
+            aria-pressed={kind === "immeuble"}
+            onClick={() => setKind("immeuble")}
+          >
+            <span>01</span> Immeuble
+          </button>
+          <button
+            type="button"
+            aria-pressed={kind === "villa"}
+            onClick={() => setKind("villa")}
+          >
+            <span>02</span> Villa
+          </button>
+        </div>
+      )}
+
       {enabled && !failed ? (
         <Suspense
           fallback={
