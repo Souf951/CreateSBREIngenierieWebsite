@@ -8,4 +8,6 @@ for source in (root / 'src/imports').iterdir():
     im = ImageOps.exif_transpose(Image.open(source))
     im.thumbnail((1600,1600))
     if im.mode not in ('RGB','RGBA'): im=im.convert('RGBA')
-    im.save(target, 'WEBP', quality=80, method=6)
+    temporary = target.with_suffix('.webp.tmp')
+    im.save(temporary, 'WEBP', quality=80, method=6)
+    temporary.replace(target)

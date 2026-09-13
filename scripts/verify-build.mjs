@@ -44,3 +44,15 @@ assert.ok(
 console.log(
   "Build verified: pre-rendered content, Pages links, assets, sitemap and independent 3D chunk.",
 );
+
+for (const name of await readdir(resolve("src/media"))) {
+  if (!name.endsWith(".webp")) continue;
+  const bytes = await readFile(resolve("src/media", name));
+  assert.ok(
+    bytes.length > 12 &&
+      bytes.toString("ascii", 0, 4) === "RIFF" &&
+      bytes.toString("ascii", 8, 12) === "WEBP",
+    `Empty or invalid WebP: ${name}`,
+  );
+}
+console.log("Image headers verified: no empty WebP files.");

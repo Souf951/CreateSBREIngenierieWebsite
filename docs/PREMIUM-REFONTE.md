@@ -31,11 +31,12 @@ Accueil pré-rendu au build : contenu HTML disponible aux robots et sans JavaScr
 
 ## Validation effectuée
 
+- Images WebP : toutes vérifiées par décodage ; deux dérivés vides régénérés. Écriture atomique des futures optimisations.
 - TypeScript strict : réussi.
 - 10 tests React/jsdom : menu mobile, situations, routes projet, encodage et invalidation du brouillon, fallback mobile, sélection des phases, profils provisoires, intro mobile/reduced motion, durée/nettoyage intro desktop, stockage indisponible.
 - Build Vite client + pré-rendu : réussi.
 - Vérification des assets référencés, des URL Pages, des liens projet, du sitemap et du chunk 3D séparé : réussie.
-- Production complète : environ 6,7 Mo sur disque, images comprises (ce n'est pas le poids du premier chargement).
+- Production complète : environ 7,2 Mo sur disque, images comprises (ce n'est pas le poids du premier chargement).
 - Bibliothèque 3D : environ 121 Ko gzip, chargée séparément sur les appareils éligibles. Pas de score Lighthouse revendiqué.
 
 Limite : le navigateur de contrôle de cet environnement a refusé l'aperçu local (`ERR_BLOCKED_BY_CLIENT`). Aucune validation visuelle desktop/mobile ni mesure de fluidité sur appareil réel n'est revendiquée. Le modèle est une volumétrie architecturale procédurale, pas une vidéo photoréaliste pré-calculée. Vérifier le rendu final avant fusion.
