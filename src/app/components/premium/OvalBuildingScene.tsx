@@ -59,6 +59,13 @@ export default function OvalBuildingScene({
     });
     const rail = new THREE.MeshStandardMaterial({ color: "#313d39", roughness: 0.38, metalness: 0.6 });
     const green = new THREE.MeshStandardMaterial({ color: "#315442", roughness: 0.95 });
+    const terraceMat = new THREE.MeshStandardMaterial({ color: "#b58b65", roughness: 0.9 });
+    const skinMat = new THREE.MeshStandardMaterial({ color: "#c98d6c", roughness: 0.9 });
+    const clothes = [
+      new THREE.MeshStandardMaterial({ color: "#d7d2c6", roughness: 0.88 }),
+      new THREE.MeshStandardMaterial({ color: "#304a5a", roughness: 0.88 }),
+      new THREE.MeshStandardMaterial({ color: "#7d4b3d", roughness: 0.88 }),
+    ];
 
     const groups = [new THREE.Group(), new THREE.Group(), new THREE.Group(), new THREE.Group()];
     groups.forEach((g) => {
@@ -134,6 +141,49 @@ export default function OvalBuildingScene({
       return mesh;
     };
 
+    const rooftopWalkers: Array<{
+      group: THREE.Group;
+      radiusX: number;
+      radiusZ: number;
+      offset: number;
+      speed: number;
+    }> = [];
+
+    const addRooftopWalker = (
+      parent: THREE.Group,
+      color: THREE.Material,
+      radiusX: number,
+      radiusZ: number,
+      offset: number,
+      speed: number,
+    ) => {
+      const person = new THREE.Group();
+
+      const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.13, 0.34, 10), color);
+      torso.position.y = 0.39;
+      torso.castShadow = true;
+      person.add(torso);
+
+      const head = new THREE.Mesh(new THREE.SphereGeometry(0.09, 10, 8), skinMat);
+      head.position.y = 0.66;
+      head.castShadow = true;
+      person.add(head);
+
+      const legA = new THREE.Mesh(new THREE.BoxGeometry(0.055, 0.28, 0.065), dark);
+      legA.position.set(-0.045, 0.13, 0.015);
+      legA.rotation.x = 0.16;
+      person.add(legA);
+
+      const legB = legA.clone();
+      legB.position.x = 0.045;
+      legB.position.z = -0.015;
+      legB.rotation.x = -0.16;
+      person.add(legB);
+
+      parent.add(person);
+      rooftopWalkers.push({ group: person, radiusX, radiusZ, offset, speed });
+    };
+
     // 01 — Foundations
     ellipseMesh(groups[0], -0.28, 5.5, 4.0, 0.28, coreMat);
     ellipseMesh(groups[0], 0.02, 5.0, 3.55, 0.34, concrete);
@@ -197,8 +247,36 @@ export default function OvalBuildingScene({
         box(groups[3], x, slabY + 0.58, z, 0.025, 0.42, 0.025, rail, -a);
       }
     }
+
+    // Rooftop terrace: slightly raised deck, guard rails and a few subtle users.
     ellipseMesh(groups[3], 9.94, 4.85, 3.45, 0.18, concrete);
-    ring(groups[3], 10.08, 4.8, 3.4, 0.03, rail);
+    ellipseMesh(groups[3], 10.07, 4.46, 3.04, 0.10, terraceMat);
+
+    // Low technical/penthouse volume in the centre to make the rooftop read as usable.
+    box(groups[3], 0.2, 10.31, 0.1, 1.7, 0.44, 1.18, coreMat, 0.04);
+    box(groups[3], 0.2, 10.55, 0.1, 1.82, 0.07, 1.30, dark, 0.04);
+
+    // Perimeter guard rails, raised above the terrace surface.
+    ring(groups[3], 10.40, 4.68, 3.28, 0.025, rail);
+    ring(groups[3], 10.64, 4.68, 3.28, 0.018, rail);
+    for (let i = 0; i < 36; i++) {
+      const a = (i / 36) * Math.PI * 2;
+      const x = Math.cos(a) * 4.68;
+      const z = Math.sin(a) * 3.28;
+      box(groups[3], x, 10.52, z, 0.025, 0.48, 0.025, rail, -a);
+    }
+
+    // Rooftop greenery / planters to soften the top silhouette.
+    for (const a of [-2.45, -1.95, 0.55, 1.02]) {
+      const x = Math.cos(a) * 3.72;
+      const z = Math.sin(a) * 2.38;
+      box(groups[3], x, 10.20, z, 0.42, 0.22, 0.34, green, -a);
+    }
+
+    // People circulate slowly around the rooftop terrace in the final phase.
+    addRooftopWalker(groups[3], clothes[0], 3.25, 2.02, 0.35, 0.00016);
+    addRooftopWalker(groups[3], clothes[1], 3.65, 2.34, 2.35, -0.00012);
+    addRooftopWalker(groups[3], clothes[2], 2.85, 1.72, 4.45, 0.00014);
 
     // Ground / landscape accents
     ellipseMesh(groups[3], -0.08, 6.2, 4.55, 0.06, green);
@@ -331,6 +409,16 @@ export default function OvalBuildingScene({
         g.scale.y = Math.max(0.001, next);
         g.visible = next > 0.01;
         g.position.y = (1 - next) * -0.42;
+      });
+
+      rooftopWalkers.forEach((walker, index) => {
+        const a = walker.offset + now * walker.speed;
+        walker.group.position.set(
+          Math.cos(a) * walker.radiusX,
+          10.13 + Math.sin(now * 0.006 + index) * 0.012,
+          Math.sin(a) * walker.radiusZ,
+        );
+        walker.group.rotation.y = -a + (walker.speed > 0 ? Math.PI / 2 : -Math.PI / 2);
       });
 
       if (!dragging) angle = (angle + dt * 0.042) % (Math.PI * 2);
