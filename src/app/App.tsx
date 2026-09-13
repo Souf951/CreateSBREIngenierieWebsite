@@ -20,6 +20,7 @@ import IntroLoader from "./components/IntroLoader";
 import ControlBannerVideo from "./components/ControlBannerVideo";
 import FloatingContact from "./components/FloatingContact";
 import MethodAccordionGuard from "./components/premium/MethodAccordionGuard";
+import TeamProfilesGuard from "./components/premium/TeamProfilesGuard";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
 import "../styles/dark-logo.css";
@@ -168,6 +169,7 @@ export default function App() {
         <Router>
           <ScrollToTop />
           <MethodAccordionGuard />
+          <TeamProfilesGuard />
           <ControlBannerVideo />
           <Suspense
             fallback={
