@@ -36,23 +36,50 @@ const ProjectVillaPrangins = lazy(
 function ScrollToTop() {
   const { pathname, key } = useLocation();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if ("scrollRestoration" in window.history) {
       window.history.scrollRestoration = "manual";
     }
+  }, []);
 
-    const jumpTop = () => window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  useLayoutEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const previousHtmlAnchor = html.style.overflowAnchor;
+    const previousBodyAnchor = body.style.overflowAnchor;
+
+    // Prevent late-loading project media from restoring/anchoring the old scroll position.
+    html.style.overflowAnchor = "none";
+    body.style.overflowAnchor = "none";
+
+    const jumpTop = () => {
+      window.scrollTo(0, 0);
+      html.scrollTop = 0;
+      body.scrollTop = 0;
+    };
 
     jumpTop();
+
     const raf1 = requestAnimationFrame(() => {
       jumpTop();
       requestAnimationFrame(jumpTop);
     });
-    const timer = window.setTimeout(jumpTop, 120);
+
+    const timers = [50, 150, 300, 600, 1000].map((delay) =>
+      window.setTimeout(jumpTop, delay),
+    );
+
+    const restoreAnchor = window.setTimeout(() => {
+      html.style.overflowAnchor = previousHtmlAnchor;
+      body.style.overflowAnchor = previousBodyAnchor;
+    }, 1100);
 
     return () => {
       cancelAnimationFrame(raf1);
-      window.clearTimeout(timer);
+      timers.forEach((timer) => window.clearTimeout(timer));
+      window.clearTimeout(restoreAnchor);
+      html.style.overflowAnchor = previousHtmlAnchor;
+      body.style.overflowAnchor = previousBodyAnchor;
     };
   }, [pathname, key]);
 
