@@ -18,6 +18,7 @@ import { Moon, Sun } from "lucide-react";
 import HomePage from "./components/HomePage";
 import IntroLoader from "./components/IntroLoader";
 import ControlBannerVideo from "./components/ControlBannerVideo";
+import FloatingContact from "./components/FloatingContact";
 import MethodAccordionGuard from "./components/premium/MethodAccordionGuard";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
@@ -111,6 +112,8 @@ export default function App() {
           </span>
           <span className="theme-toggle-label">{isDark ? "Jour" : "Nuit"}</span>
         </button>
+
+        <FloatingContact />
 
         <Router>
           <ScrollToTop />
