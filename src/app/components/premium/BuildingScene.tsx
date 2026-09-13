@@ -194,7 +194,7 @@ export default function BuildingScene({
         g.position.y = (1 - next) * -0.3;
       });
 
-      // Continuous, very slow architectural turntable with a subtle floating motion.
+      // Continuous architectural turntable with a subtle floating motion.
       rotationAngle = (rotationAngle + dt * 0.055) % (Math.PI * 2);
       pointerOffset = THREE.MathUtils.damp(pointerOffset, targetPointer, 5, dt);
       villa.rotation.y = rotationAngle + pointerOffset;
@@ -213,12 +213,21 @@ export default function BuildingScene({
     redraw.current = start;
     const io = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
-      if (visible) start();
-      else cancelAnimationFrame(raf);
+      if (visible) {
+        start();
+      } else {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
     });
     io.observe(container);
     const resume = () => {
-      if (!document.hidden) start();
+      if (document.hidden) {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      } else {
+        start();
+      }
     };
     document.addEventListener("visibilitychange", resume);
     const lost = (event: Event) => {
@@ -230,6 +239,7 @@ export default function BuildingScene({
     return () => {
       redraw.current = () => {};
       cancelAnimationFrame(raf);
+      raf = 0;
       ro.disconnect();
       io.disconnect();
       document.removeEventListener("visibilitychange", resume);
