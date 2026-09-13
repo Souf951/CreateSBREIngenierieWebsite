@@ -26,7 +26,10 @@ export default function ConstructionActivity({ kind }: { kind: "villa" | "immeub
     camera.lookAt(0, 1.2, 0);
 
     const root = new THREE.Group();
-    root.position.set(kind === "immeuble" ? -0.1 : 0.15, -0.35, 0.2);
+    const baseX = kind === "immeuble" ? -0.1 : 0.15;
+    const baseY = -0.35;
+    const baseZ = 0.2;
+    root.position.set(baseX, baseY, baseZ);
     root.scale.setScalar(kind === "immeuble" ? 0.9 : 0.84);
     scene.add(root);
 
@@ -174,12 +177,77 @@ export default function ConstructionActivity({ kind }: { kind: "villa" | "immeub
     ro.observe(container);
     resize();
 
+    // The construction layer is a second transparent WebGL canvas, so it must
+    // mirror the exact same rotation / drag behavior as the model beneath it.
+    const interactionTarget = container.parentElement?.querySelector<HTMLElement>(".building-canvas") ?? container.parentElement ?? container;
     let raf = 0;
     let previous = performance.now();
+    let angle = kind === "immeuble" ? -0.42 : -0.38;
+    let manualOffset = 0;
+    let pointerTarget = 0;
+    let pointerOffset = 0;
+    let dragging = false;
+    let activePointerId: number | null = null;
+    let lastPointerX = 0;
+
+    const pointerDown = (e: PointerEvent) => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      dragging = true;
+      activePointerId = e.pointerId;
+      lastPointerX = e.clientX;
+      pointerTarget = 0;
+      pointerOffset = 0;
+    };
+
+    const pointerMove = (e: PointerEvent) => {
+      if (dragging && (activePointerId === null || e.pointerId === activePointerId)) {
+        const dx = e.clientX - lastPointerX;
+        lastPointerX = e.clientX;
+        manualOffset += dx * 0.0085;
+        return;
+      }
+      const rect = interactionTarget.getBoundingClientRect();
+      if (rect.width > 0) pointerTarget = ((e.clientX - rect.left) / rect.width - 0.5) * 0.12;
+    };
+
+    const endDrag = (e: PointerEvent) => {
+      if (!dragging) return;
+      if (activePointerId !== null && e.pointerId !== activePointerId) return;
+      dragging = false;
+      activePointerId = null;
+      lastPointerX = 0;
+      pointerTarget = 0;
+    };
+
+    const leave = () => {
+      if (!dragging) pointerTarget = 0;
+    };
+
+    interactionTarget.addEventListener("pointerdown", pointerDown);
+    interactionTarget.addEventListener("pointermove", pointerMove);
+    interactionTarget.addEventListener("pointerup", endDrag);
+    interactionTarget.addEventListener("pointercancel", endDrag);
+    interactionTarget.addEventListener("pointerleave", leave);
+
     const render = (now: number) => {
       const dt = Math.min((now - previous) / 1000, 0.05);
       previous = now;
       const t = now * 0.001;
+
+      // Keep the whole site installation physically attached to the foundation.
+      // Same initial angle, same drag sensitivity and same auto-rotation speed
+      // as the corresponding villa / oval-building scene underneath.
+      if (!dragging) angle = (angle + dt * (kind === "immeuble" ? 0.042 : 0.038)) % (Math.PI * 2);
+      pointerOffset = THREE.MathUtils.damp(pointerOffset, pointerTarget, 5, dt);
+      root.rotation.y = angle + manualOffset + pointerOffset;
+      root.position.x = baseX;
+      root.position.z = baseZ;
+      root.position.y = baseY + (kind === "immeuble"
+        ? 0.08 + Math.sin(now * 0.00105) * 0.09
+        : 0.08 + Math.sin(now * 0.00115) * 0.08);
+      root.rotation.z = kind === "immeuble"
+        ? Math.sin(now * 0.00055) * 0.003
+        : Math.sin(now * 0.00062) * 0.0025;
 
       // Small crane hook sway and suspended load movement.
       cable.rotation.z = Math.sin(t * 0.7) * 0.012;
@@ -209,6 +277,11 @@ export default function ConstructionActivity({ kind }: { kind: "villa" | "immeub
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
+      interactionTarget.removeEventListener("pointerdown", pointerDown);
+      interactionTarget.removeEventListener("pointermove", pointerMove);
+      interactionTarget.removeEventListener("pointerup", endDrag);
+      interactionTarget.removeEventListener("pointercancel", endDrag);
+      interactionTarget.removeEventListener("pointerleave", leave);
       scene.traverse((o) => {
         if (o instanceof THREE.Mesh) {
           o.geometry.dispose();
