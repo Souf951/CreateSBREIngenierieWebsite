@@ -4,6 +4,8 @@
   left: 20px;
   z-index: 4;
   display: inline-flex;
+  flex-wrap: wrap;
+  max-width: calc(100% - 40px);
   gap: 4px;
   padding: 4px;
   border: 1px solid rgba(23, 61, 49, 0.14);
@@ -17,10 +19,12 @@
   background: transparent;
   color: #53645b;
   padding: 8px 12px;
+  min-height: 36px;
   font: 600 9px/1.2 Inter, Arial, sans-serif;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
+  white-space: nowrap;
   transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
 }
 
@@ -119,20 +123,29 @@
   opacity: 0.055;
 }
 
+@media (max-width: 1080px) {
+  .architecture-kind-switch button {
+    padding: 7px 9px;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+  }
+}
+
 @media (max-width: 900px) {
   .architecture-kind-switch {
     top: 8px;
     left: 8px;
+    max-width: calc(100% - 16px);
   }
 
   .architecture-kind-switch button {
-    padding: 7px 9px;
+    padding: 7px 8px;
     font-size: 8px;
   }
 
   .architecture-watermark {
     right: 10px;
-    top: 58px;
+    top: 72px;
     gap: 4px;
   }
 
