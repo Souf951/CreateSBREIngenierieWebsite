@@ -17,18 +17,18 @@
   height: 100%;
   object-fit: cover;
   object-position: center;
-  filter: saturate(.82) contrast(.94) brightness(.86);
-  transform: scale(1.02);
+  filter: saturate(.96) contrast(1.02) brightness(.94);
+  transform: scale(1.015);
 }
 
 .case-video-veil {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(90deg, rgba(247,247,240,.86) 0%, rgba(247,247,240,.75) 45%, rgba(247,247,240,.68) 100%),
-    linear-gradient(180deg, rgba(247,247,240,.48), rgba(247,247,240,.70));
-  backdrop-filter: blur(1.2px);
-  -webkit-backdrop-filter: blur(1.2px);
+    linear-gradient(90deg, rgba(247,247,240,.64) 0%, rgba(247,247,240,.52) 45%, rgba(247,247,240,.44) 100%),
+    linear-gradient(180deg, rgba(247,247,240,.24), rgba(247,247,240,.40));
+  backdrop-filter: blur(.45px);
+  -webkit-backdrop-filter: blur(.45px);
 }
 
 .case-section-has-video > *:not(.case-video-background) {
@@ -39,28 +39,28 @@
 .case-section-has-video .case-image,
 .case-section-has-video .case-steps,
 .case-section-has-video .case-tabs button {
-  backdrop-filter: blur(10px) saturate(1.04);
-  -webkit-backdrop-filter: blur(10px) saturate(1.04);
+  backdrop-filter: blur(7px) saturate(1.04);
+  -webkit-backdrop-filter: blur(7px) saturate(1.04);
 }
 
 .case-section-has-video .case-steps {
-  background: rgba(245, 246, 239, .82);
-  border: 1px solid rgba(255,255,255,.52);
+  background: rgba(245, 246, 239, .72);
+  border: 1px solid rgba(255,255,255,.46);
   box-shadow: 0 18px 48px rgba(16,44,35,.08);
 }
 
 .theme-dark .case-video-background video {
-  filter: saturate(.72) contrast(1.02) brightness(.54);
+  filter: saturate(.86) contrast(1.04) brightness(.64);
 }
 
 .theme-dark .case-video-veil {
   background:
-    linear-gradient(90deg, rgba(7,14,11,.82), rgba(7,14,11,.68) 48%, rgba(7,14,11,.62)),
-    linear-gradient(180deg, rgba(7,14,11,.30), rgba(7,14,11,.55));
+    linear-gradient(90deg, rgba(7,14,11,.66), rgba(7,14,11,.52) 48%, rgba(7,14,11,.46)),
+    linear-gradient(180deg, rgba(7,14,11,.18), rgba(7,14,11,.38));
 }
 
 .theme-dark .case-section-has-video .case-steps {
-  background: rgba(10, 20, 16, .72);
+  background: rgba(10, 20, 16, .64);
   border-color: rgba(255,255,255,.12);
 }
 
@@ -129,10 +129,11 @@
 @media (max-width: 760px) {
   .case-video-background video {
     object-position: 55% center;
+    filter: saturate(.94) contrast(1.02) brightness(.90);
   }
 
   .case-video-veil {
-    background: linear-gradient(180deg, rgba(247,247,240,.86), rgba(247,247,240,.74));
+    background: linear-gradient(180deg, rgba(247,247,240,.62), rgba(247,247,240,.50));
   }
 
   .method-video-background video {
