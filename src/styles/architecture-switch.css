@@ -1,0 +1,71 @@
+.architecture-kind-switch {
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  z-index: 4;
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border: 1px solid rgba(23, 61, 49, 0.14);
+  background: rgba(245, 245, 238, 0.86);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.architecture-kind-switch button {
+  border: 0;
+  background: transparent;
+  color: #53645b;
+  padding: 8px 12px;
+  font: 600 9px/1.2 Inter, Arial, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background-color 180ms ease, color 180ms ease, transform 180ms ease;
+}
+
+.architecture-kind-switch button span {
+  opacity: 0.58;
+  margin-right: 6px;
+  font-family: monospace;
+}
+
+.architecture-kind-switch button:hover {
+  transform: translateY(-1px);
+  color: #173d31;
+}
+
+.architecture-kind-switch button[aria-pressed="true"] {
+  background: #173d31;
+  color: #f5f5ee;
+}
+
+.theme-dark .architecture-kind-switch {
+  background: rgba(11, 16, 14, 0.82);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.theme-dark .architecture-kind-switch button {
+  color: #b8c3bc;
+}
+
+.theme-dark .architecture-kind-switch button:hover {
+  color: #eef2ec;
+}
+
+.theme-dark .architecture-kind-switch button[aria-pressed="true"] {
+  background: #eef2ec;
+  color: #0b100e;
+}
+
+@media (max-width: 900px) {
+  .architecture-kind-switch {
+    top: 8px;
+    left: 8px;
+  }
+
+  .architecture-kind-switch button {
+    padding: 7px 9px;
+    font-size: 8px;
+  }
+}
