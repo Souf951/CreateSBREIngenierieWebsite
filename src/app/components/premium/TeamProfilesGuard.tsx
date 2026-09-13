@@ -30,6 +30,11 @@ export default function TeamProfilesGuard() {
       const section = document.querySelector<HTMLElement>(".team-section");
       if (!section) return;
 
+      section.style.setProperty(
+        "--team-bg",
+        `url("${import.meta.env.BASE_URL}team-office-bg.webp")`,
+      );
+
       const intro = section.querySelector<HTMLElement>(".section-heading > p:last-child");
       if (intro) {
         intro.textContent =
@@ -60,8 +65,6 @@ export default function TeamProfilesGuard() {
       section.querySelector(".team-note")?.remove();
     };
 
-    // Apply only a few times after React has rendered the homepage.
-    // Do not observe DOM mutations continuously: that can create an update loop.
     const raf = requestAnimationFrame(apply);
     const timers = [150, 500, 1200].map((delay) => window.setTimeout(apply, delay));
     window.addEventListener("hashchange", apply);
