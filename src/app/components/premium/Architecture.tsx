@@ -10,7 +10,7 @@ const PublicWorksScene = lazy(() => import("./PublicWorksScene"));
 export const phases = ["Fondations", "Structure", "Enveloppe", "Finitions"];
 export type ArchitectureKind = "villa" | "immeuble" | "travaux-publics";
 
-const projectBackgrounds: Array<{
+export const projectBackgrounds: Array<{
   kind: ArchitectureKind;
   src: string;
   alt: string;
@@ -35,9 +35,11 @@ const projectBackgrounds: Array<{
 export default function Architecture({
   phase = 3,
   compact = false,
+  onKindChange,
 }: {
   phase?: number;
   compact?: boolean;
+  onKindChange?: (kind: ArchitectureKind) => void;
 }) {
   const [enabled, setEnabled] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -63,6 +65,11 @@ export default function Architecture({
     setFailed(false);
   }, [kind]);
 
+  const selectKind = (next: ArchitectureKind) => {
+    setKind(next);
+    onKindChange?.(next);
+  };
+
   const Scene =
     kind === "immeuble"
       ? OvalScene
@@ -79,20 +86,6 @@ export default function Architecture({
 
   return (
     <div className={`architecture ${compact ? "architecture-compact" : ""}`}>
-      <div className="architecture-backgrounds" aria-hidden="true">
-        {projectBackgrounds.map((background) => (
-          <img
-            key={background.kind}
-            src={background.src}
-            alt=""
-            className={background.kind === kind ? "is-active" : ""}
-            loading={background.kind === "immeuble" ? "eager" : "lazy"}
-            decoding="async"
-          />
-        ))}
-        <div className="architecture-background-shade" />
-      </div>
-
       <div className="architecture-grid" aria-hidden="true" />
 
       {!compact && (
@@ -100,21 +93,21 @@ export default function Architecture({
           <button
             type="button"
             aria-pressed={kind === "immeuble"}
-            onClick={() => setKind("immeuble")}
+            onClick={() => selectKind("immeuble")}
           >
             <span>01</span> Immeuble
           </button>
           <button
             type="button"
             aria-pressed={kind === "villa"}
-            onClick={() => setKind("villa")}
+            onClick={() => selectKind("villa")}
           >
             <span>02</span> Villa
           </button>
           <button
             type="button"
             aria-pressed={kind === "travaux-publics"}
-            onClick={() => setKind("travaux-publics")}
+            onClick={() => selectKind("travaux-publics")}
           >
             <span>03</span> Infrastructures publiques
           </button>
