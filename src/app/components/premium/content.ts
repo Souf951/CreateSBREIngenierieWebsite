@@ -1,8 +1,11 @@
 import tertiaire from "../../../media/1721891231854__1_.webp";
 import logements from "../../../media/1741613187041.webp";
-import villa from "../../../media/1746172633498.webp";
 import chantier from "../../../media/1748964038069-1.webp";
 import finition from "../../../media/1746172634781.webp";
+
+const villaHero =
+  "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920";
+
 export const projects = [
   {
     title: "Tertiaire, Genève",
@@ -19,7 +22,7 @@ export const projects = [
   {
     title: "Villa, Prangins",
     type: "TRANSFORMATION · FINITIONS",
-    image: villa,
+    image: villaHero,
     link: "/projet/villa-prangins",
   },
 ];
