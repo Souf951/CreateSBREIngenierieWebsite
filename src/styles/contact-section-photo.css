@@ -20,6 +20,7 @@
   background-position: center 46%;
   background-repeat: no-repeat;
   transform: scale(1.01);
+  filter: saturate(1.04) contrast(1.02);
 }
 
 .premium-site .contact-section::after {
@@ -27,17 +28,17 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(90deg, rgba(239,243,231,.91) 0%, rgba(239,243,231,.80) 43%, rgba(239,243,231,.72) 100%);
+  background: linear-gradient(90deg, rgba(239,243,231,.66) 0%, rgba(239,243,231,.54) 43%, rgba(239,243,231,.46) 100%);
 }
 
 .premium-site .contact-section > div:first-of-type,
 .premium-site .contact-section .contact-form {
-  border: 1px solid rgba(255,255,255,.48);
+  border: 1px solid rgba(255,255,255,.58);
   border-radius: 24px;
-  background: rgba(244,247,238,.56);
-  backdrop-filter: blur(10px) saturate(108%);
-  -webkit-backdrop-filter: blur(10px) saturate(108%);
-  box-shadow: 0 18px 55px rgba(11,43,33,.08);
+  background: rgba(244,247,238,.40);
+  backdrop-filter: blur(6px) saturate(110%);
+  -webkit-backdrop-filter: blur(6px) saturate(110%);
+  box-shadow: 0 18px 55px rgba(11,43,33,.10);
 }
 
 .premium-site .contact-section > div:first-of-type {
@@ -48,14 +49,18 @@
   padding: clamp(24px, 3vw, 42px);
 }
 
+.theme-dark .premium-site .contact-section::before {
+  filter: saturate(.92) contrast(1.05) brightness(.82);
+}
+
 .theme-dark .premium-site .contact-section::after {
-  background: linear-gradient(90deg, rgba(5,19,15,.84) 0%, rgba(5,19,15,.73) 45%, rgba(5,19,15,.66) 100%);
+  background: linear-gradient(90deg, rgba(5,19,15,.66) 0%, rgba(5,19,15,.54) 45%, rgba(5,19,15,.46) 100%);
 }
 
 .theme-dark .premium-site .contact-section > div:first-of-type,
 .theme-dark .premium-site .contact-section .contact-form {
-  background: rgba(7,29,22,.58);
-  border-color: rgba(255,255,255,.12);
+  background: rgba(7,29,22,.42);
+  border-color: rgba(255,255,255,.16);
 }
 
 @media (max-width: 820px) {
@@ -64,10 +69,22 @@
   }
 
   .premium-site .contact-section::after {
-    background: rgba(239,243,231,.79);
+    background: rgba(239,243,231,.60);
+  }
+
+  .premium-site .contact-section > div:first-of-type,
+  .premium-site .contact-section .contact-form {
+    background: rgba(244,247,238,.46);
+    backdrop-filter: blur(5px) saturate(108%);
+    -webkit-backdrop-filter: blur(5px) saturate(108%);
   }
 
   .theme-dark .premium-site .contact-section::after {
-    background: rgba(5,19,15,.74);
+    background: rgba(5,19,15,.58);
+  }
+
+  .theme-dark .premium-site .contact-section > div:first-of-type,
+  .theme-dark .premium-site .contact-section .contact-form {
+    background: rgba(7,29,22,.46);
   }
 }
