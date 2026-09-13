@@ -1,0 +1,253 @@
+.scroll-demo-page {
+  background: #08100d;
+  color: #f3f2e9;
+  min-height: 100vh;
+}
+
+.scroll-demo-intro,
+.scroll-demo-outro {
+  min-height: 92vh;
+  display: grid;
+  align-content: center;
+  gap: 24px;
+  padding: 10vh 8vw;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.scroll-demo-intro > p:first-child,
+.scroll-demo-outro > p:first-child {
+  font: 600 11px/1.2 Inter, Arial, sans-serif;
+  letter-spacing: 0.18em;
+  color: #9bcfae;
+}
+
+.scroll-demo-intro h1,
+.scroll-demo-outro h2 {
+  margin: 0;
+  font: 500 clamp(48px, 7vw, 110px)/0.92 Inter, Arial, sans-serif;
+  letter-spacing: -0.05em;
+}
+
+.scroll-demo-intro h1 em {
+  font-family: Georgia, serif;
+  font-weight: 400;
+}
+
+.scroll-demo-intro > p:nth-of-type(2),
+.scroll-demo-outro > p:nth-of-type(2) {
+  max-width: 680px;
+  color: #bbc6bf;
+  font: 400 clamp(16px, 1.5vw, 22px)/1.55 Inter, Arial, sans-serif;
+}
+
+.scroll-demo-intro > span {
+  margin-top: 5vh;
+  font: 500 13px/1 Inter, Arial, sans-serif;
+  letter-spacing: 0.06em;
+  color: #d8dfda;
+}
+
+.scroll-scrub-section {
+  position: relative;
+  height: 520vh;
+  background: #08100d;
+}
+
+.scroll-scrub-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  background: #07100c;
+}
+
+.scroll-scrub-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.scroll-scrub-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(3, 10, 7, 0.78) 0%, rgba(3, 10, 7, 0.24) 48%, rgba(3, 10, 7, 0.46) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.03) 45%, rgba(0, 0, 0, 0.62));
+  pointer-events: none;
+}
+
+.scroll-scrub-ui {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 38px 5vw 42px;
+}
+
+.scroll-scrub-topline {
+  display: flex;
+  justify-content: space-between;
+  font: 600 10px/1 Inter, Arial, sans-serif;
+  letter-spacing: 0.18em;
+  color: #dce5df;
+}
+
+.scroll-scrub-copy {
+  max-width: 720px;
+  margin-top: auto;
+  margin-bottom: 13vh;
+  animation: scrollCopyIn 300ms ease both;
+}
+
+.scroll-scrub-copy p {
+  margin: 0 0 16px;
+  font: 600 11px/1 Inter, Arial, sans-serif;
+  letter-spacing: 0.18em;
+  color: #a7d0b4;
+}
+
+.scroll-scrub-copy h2 {
+  margin: 0 0 18px;
+  font: 500 clamp(48px, 6vw, 92px)/0.95 Inter, Arial, sans-serif;
+  letter-spacing: -0.045em;
+}
+
+.scroll-scrub-copy > span {
+  display: block;
+  max-width: 620px;
+  color: #d5ded8;
+  font: 400 clamp(15px, 1.25vw, 19px)/1.55 Inter, Arial, sans-serif;
+}
+
+.scroll-scrub-timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.scroll-scrub-timeline button {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 6px 12px;
+  padding: 0;
+  color: #bcc6bf;
+  background: transparent;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.scroll-scrub-timeline i {
+  grid-column: 1 / -1;
+  position: relative;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.28);
+  overflow: hidden;
+}
+
+.scroll-scrub-timeline i b {
+  position: absolute;
+  inset: 0;
+  transform-origin: left;
+  background: #b7d6bf;
+}
+
+.scroll-scrub-timeline button span {
+  font: 500 10px/1 Inter, Arial, sans-serif;
+  color: #90a69a;
+}
+
+.scroll-scrub-timeline button strong {
+  font: 600 11px/1 Inter, Arial, sans-serif;
+  letter-spacing: 0.06em;
+}
+
+.scroll-scrub-timeline button.is-active {
+  color: #ffffff;
+}
+
+.scroll-scrub-timeline button.is-active span {
+  color: #a7d0b4;
+}
+
+.scroll-video-missing {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 5;
+  transform: translate(-50%, -50%);
+  width: min(620px, calc(100% - 48px));
+  padding: 28px;
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(8, 16, 13, 0.84);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.scroll-video-missing span {
+  display: block;
+  margin-bottom: 10px;
+  color: #9bcfae;
+  font: 600 10px/1 Inter, Arial, sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.scroll-video-missing strong {
+  display: block;
+  margin-bottom: 10px;
+  font: 600 22px/1.2 Inter, Arial, sans-serif;
+}
+
+.scroll-video-missing p {
+  margin: 0;
+  color: #bcc6bf;
+  font: 400 14px/1.5 Inter, Arial, sans-serif;
+}
+
+@keyframes scrollCopyIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 800px) {
+  .scroll-scrub-section {
+    height: 440vh;
+  }
+
+  .scroll-scrub-ui {
+    padding: 24px 20px 28px;
+  }
+
+  .scroll-scrub-copy {
+    margin-bottom: 10vh;
+  }
+
+  .scroll-scrub-timeline {
+    gap: 8px;
+  }
+
+  .scroll-scrub-timeline button strong {
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-scrub-section {
+    height: 140vh;
+  }
+
+  .scroll-scrub-sticky {
+    position: relative;
+  }
+
+  .scroll-scrub-copy {
+    animation: none;
+  }
+}
