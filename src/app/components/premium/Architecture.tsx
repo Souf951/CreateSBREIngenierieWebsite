@@ -10,6 +10,28 @@ const PublicWorksScene = lazy(() => import("./PublicWorksScene"));
 export const phases = ["Fondations", "Structure", "Enveloppe", "Finitions"];
 export type ArchitectureKind = "villa" | "immeuble" | "travaux-publics";
 
+const projectBackgrounds: Array<{
+  kind: ArchitectureKind;
+  src: string;
+  alt: string;
+}> = [
+  {
+    kind: "immeuble",
+    src: `${import.meta.env.BASE_URL}sbre-bg-immeuble.webp`,
+    alt: "Immeuble résidentiel contemporain aux balcons courbes",
+  },
+  {
+    kind: "villa",
+    src: `${import.meta.env.BASE_URL}sbre-bg-villa.webp`,
+    alt: "Villa contemporaine en béton et verre",
+  },
+  {
+    kind: "travaux-publics",
+    src: `${import.meta.env.BASE_URL}sbre-bg-infrastructure.webp`,
+    alt: "Infrastructure routière urbaine à Genève",
+  },
+];
+
 export default function Architecture({
   phase = 3,
   compact = false,
@@ -57,6 +79,20 @@ export default function Architecture({
 
   return (
     <div className={`architecture ${compact ? "architecture-compact" : ""}`}>
+      <div className="architecture-backgrounds" aria-hidden="true">
+        {projectBackgrounds.map((background) => (
+          <img
+            key={background.kind}
+            src={background.src}
+            alt=""
+            className={background.kind === kind ? "is-active" : ""}
+            loading={background.kind === "immeuble" ? "eager" : "lazy"}
+            decoding="async"
+          />
+        ))}
+        <div className="architecture-background-shade" />
+      </div>
+
       <div className="architecture-grid" aria-hidden="true" />
 
       {!compact && (
