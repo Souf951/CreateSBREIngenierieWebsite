@@ -227,16 +227,72 @@ export default function OvalBuildingScene({
     let angle = -0.42;
     let pointerTarget = 0;
     let pointerOffset = 0;
+    let manualOffset = 0;
+    let dragging = false;
+    let lastPointerX = 0;
+    let activePointerId: number | null = null;
 
-    const move = (e: PointerEvent) => {
-      const rect = container.getBoundingClientRect();
-      pointerTarget = ((e.clientX - rect.left) / rect.width - 0.5) * 0.16;
-    };
-    const leave = () => {
+    const pointerDown = (e: PointerEvent) => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      dragging = true;
+      lastPointerX = e.clientX;
+      activePointerId = e.pointerId;
       pointerTarget = 0;
+      pointerOffset = 0;
+      container.setPointerCapture?.(e.pointerId);
+      container.style.cursor = "grabbing";
+      start();
     };
-    container.addEventListener("pointermove", move);
+
+    const pointerMove = (e: PointerEvent) => {
+      if (dragging && (activePointerId === null || e.pointerId === activePointerId)) {
+        const dx = e.clientX - lastPointerX;
+        lastPointerX = e.clientX;
+        manualOffset += dx * 0.0085;
+        start();
+        return;
+      }
+      const rect = container.getBoundingClientRect();
+      pointerTarget = ((e.clientX - rect.left) / rect.width - 0.5) * 0.12;
+    };
+
+    const endDrag = (e: PointerEvent) => {
+      if (!dragging) return;
+      dragging = false;
+      if (activePointerId !== null) {
+        try { container.releasePointerCapture?.(activePointerId); } catch { /* no-op */ }
+      }
+      activePointerId = null;
+      lastPointerX = 0;
+      pointerTarget = 0;
+      container.style.cursor = "grab";
+      start();
+    };
+
+    const leave = () => {
+      if (!dragging) pointerTarget = 0;
+    };
+
+    const keyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        manualOffset -= 0.18;
+        e.preventDefault();
+        start();
+      } else if (e.key === "ArrowRight") {
+        manualOffset += 0.18;
+        e.preventDefault();
+        start();
+      }
+    };
+
+    container.style.cursor = "grab";
+    container.style.touchAction = "pan-y";
+    container.addEventListener("pointerdown", pointerDown);
+    container.addEventListener("pointermove", pointerMove);
+    container.addEventListener("pointerup", endDrag);
+    container.addEventListener("pointercancel", endDrag);
     container.addEventListener("pointerleave", leave);
+    container.addEventListener("keydown", keyDown);
 
     const render = (now: number) => {
       raf = 0;
@@ -252,9 +308,9 @@ export default function OvalBuildingScene({
         g.position.y = (1 - next) * -0.42;
       });
 
-      angle = (angle + dt * 0.042) % (Math.PI * 2);
+      if (!dragging) angle = (angle + dt * 0.042) % (Math.PI * 2);
       pointerOffset = THREE.MathUtils.damp(pointerOffset, pointerTarget, 5, dt);
-      building.rotation.y = angle + pointerOffset;
+      building.rotation.y = angle + manualOffset + pointerOffset;
       building.position.y = 0.08 + Math.sin(now * 0.00105) * 0.09;
       building.rotation.z = Math.sin(now * 0.00055) * 0.003;
 
@@ -298,8 +354,12 @@ export default function OvalBuildingScene({
       ro.disconnect();
       io.disconnect();
       document.removeEventListener("visibilitychange", resume);
-      container.removeEventListener("pointermove", move);
+      container.removeEventListener("pointerdown", pointerDown);
+      container.removeEventListener("pointermove", pointerMove);
+      container.removeEventListener("pointerup", endDrag);
+      container.removeEventListener("pointercancel", endDrag);
       container.removeEventListener("pointerleave", leave);
+      container.removeEventListener("keydown", keyDown);
       renderer.domElement.removeEventListener("webglcontextlost", lost);
       scene.traverse((o) => {
         if (o instanceof THREE.Mesh) {
@@ -318,7 +378,8 @@ export default function OvalBuildingScene({
       ref={host}
       className="building-canvas"
       role="img"
-      aria-label={`Immeuble contemporain ovale en trois dimensions — phase ${phase + 1} sur 4`}
+      tabIndex={0}
+      aria-label={`Immeuble contemporain ovale en trois dimensions — phase ${phase + 1} sur 4. Glissez horizontalement pour le faire pivoter.`}
     />
   );
 }
