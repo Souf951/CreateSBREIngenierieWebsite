@@ -45,9 +45,6 @@ function ScrollToTop() {
   }, []);
 
   useLayoutEffect(() => {
-    // When we intentionally return to a homepage anchor (for example
-    // #réalisations), let HomePage perform the section scroll instead of
-    // forcing the window back to the top.
     if (hash) return;
 
     const html = document.documentElement;
@@ -94,7 +91,12 @@ function ScrollToTop() {
 
 function shouldSkipIntro() {
   try {
+    const isLocalDev =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1";
+
     return (
+      isLocalDev ||
       sessionStorage.getItem("sbre_intro_v2") === "true" ||
       matchMedia("(prefers-reduced-motion: reduce), (max-width: 767px)")
         .matches ||
