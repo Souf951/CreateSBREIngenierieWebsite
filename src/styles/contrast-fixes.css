@@ -1,1 +1,48 @@
-placeholder
+:root {
+  --muted-readable: #4f6057;
+}
+
+/* Accessibility pass: preserve the premium palette while improving
+   legibility of secondary copy on the light SBRE surfaces. */
+.premium-site .hero-description,
+.premium-site .hero-location span + span,
+.premium-site .phase-controls button,
+.premium-site .model-caption,
+.premium-site .section-heading > p:last-child,
+.premium-site .expertise-card p,
+.premium-site .team-card > p:last-child,
+.premium-site .team-note,
+.premium-site .contact-section > div > p:not(.eyebrow),
+.premium-site .form-note,
+.premium-site .faq-section details p {
+  color: var(--muted-readable);
+}
+
+/* Small architectural labels need slightly stronger contrast because of
+   their compact type size. */
+.premium-site .visual-heading,
+.premium-site .architecture-note,
+.premium-site .architecture-scale,
+.premium-site .phase-controls button,
+.premium-site .model-caption {
+  color: #43564d;
+}
+
+/* Keep the selected construction phase unmistakably active. */
+.premium-site .phase-controls button[aria-pressed="true"] {
+  color: var(--forest);
+}
+
+/* On pure-white project sections, use the same readable secondary tone. */
+.premium-site .projects-section .eyebrow,
+.premium-site .projects-section p {
+  color: #4f6057;
+}
+
+/* Preserve intentionally light text over dark photographic / forest areas. */
+.premium-site .control-banner,
+.premium-site .case-image > div,
+.premium-site .method-section,
+.premium-site .site-footer {
+  --muted-readable: #d4ddd2;
+}
