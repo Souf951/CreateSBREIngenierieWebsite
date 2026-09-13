@@ -1,0 +1,73 @@
+.premium-site .contact-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: transparent;
+}
+
+.premium-site .contact-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+.premium-site .contact-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: var(--contact-bg);
+  background-size: cover;
+  background-position: center 46%;
+  background-repeat: no-repeat;
+  transform: scale(1.01);
+}
+
+.premium-site .contact-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(239,243,231,.91) 0%, rgba(239,243,231,.80) 43%, rgba(239,243,231,.72) 100%);
+}
+
+.premium-site .contact-section > div:first-of-type,
+.premium-site .contact-section .contact-form {
+  border: 1px solid rgba(255,255,255,.48);
+  border-radius: 24px;
+  background: rgba(244,247,238,.56);
+  backdrop-filter: blur(10px) saturate(108%);
+  -webkit-backdrop-filter: blur(10px) saturate(108%);
+  box-shadow: 0 18px 55px rgba(11,43,33,.08);
+}
+
+.premium-site .contact-section > div:first-of-type {
+  padding: clamp(24px, 3vw, 42px);
+}
+
+.premium-site .contact-section .contact-form {
+  padding: clamp(24px, 3vw, 42px);
+}
+
+.theme-dark .premium-site .contact-section::after {
+  background: linear-gradient(90deg, rgba(5,19,15,.84) 0%, rgba(5,19,15,.73) 45%, rgba(5,19,15,.66) 100%);
+}
+
+.theme-dark .premium-site .contact-section > div:first-of-type,
+.theme-dark .premium-site .contact-section .contact-form {
+  background: rgba(7,29,22,.58);
+  border-color: rgba(255,255,255,.12);
+}
+
+@media (max-width: 820px) {
+  .premium-site .contact-section::before {
+    background-position: 58% center;
+  }
+
+  .premium-site .contact-section::after {
+    background: rgba(239,243,231,.79);
+  }
+
+  .theme-dark .premium-site .contact-section::after {
+    background: rgba(5,19,15,.74);
+  }
+}
