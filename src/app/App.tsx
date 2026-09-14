@@ -28,6 +28,7 @@ import ContactSectionPhotoGuard from "./components/premium/ContactSectionPhotoGu
 import HomeCopyGuard from "./components/premium/HomeCopyGuard";
 import CaseStudyVideo from "./components/premium/CaseStudyVideo";
 import ExperiencesResultsBackground from "./components/premium/ExperiencesResultsBackground";
+import ProjectsMethodTransition from "./components/premium/ProjectsMethodTransition";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
 import "../styles/dark-logo.css";
@@ -42,6 +43,7 @@ import "../styles/contact-section-photo.css";
 import "../styles/accordion-premium.css";
 import "../styles/home-copy-polish.css";
 import "../styles/case-study-video.css";
+import "../styles/projects-method-transition.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
@@ -196,6 +198,7 @@ export default function App() {
           <ContactSectionPhotoGuard />
           <CaseStudyVideo />
           <ExperiencesResultsBackground />
+          <ProjectsMethodTransition />
           <Suspense
             fallback={
               <div style={{ padding: "15vh 8%", color: "#0a5c3d" }}>
