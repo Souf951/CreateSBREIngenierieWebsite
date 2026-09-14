@@ -26,9 +26,22 @@
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(180deg, transparent 72%, rgba(247,247,240,.18) 84%, rgba(247,247,240,.62) 94%, rgba(247,247,240,.92) 100%),
     linear-gradient(90deg, rgba(5, 13, 10, 0.72) 0%, rgba(5, 13, 10, 0.5) 44%, rgba(5, 13, 10, 0.28) 72%, rgba(5, 13, 10, 0.42) 100%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.34));
+}
+
+/* Architectural seam between the two moving-image sections. */
+.control-banner::before {
+  content: "";
+  position: absolute;
+  left: 7.5%;
+  right: 7.5%;
+  bottom: -1px;
+  height: 2px;
+  z-index: 4;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent 0%, #08704e 12%, #08704e 88%, transparent 100%);
+  box-shadow: 0 1px 0 rgba(255,255,255,.22);
 }
 
 .control-banner > div,
@@ -37,11 +50,16 @@
   z-index: 1;
 }
 
-.theme-dark .control-banner::after {
-  background:
-    linear-gradient(180deg, transparent 72%, rgba(7,14,11,.12) 84%, rgba(7,14,11,.52) 95%, rgba(7,14,11,.88) 100%),
-    linear-gradient(90deg, rgba(5, 13, 10, 0.72) 0%, rgba(5, 13, 10, 0.5) 44%, rgba(5, 13, 10, 0.28) 72%, rgba(5, 13, 10, 0.42) 100%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.34));
+.theme-dark .control-banner::before {
+  background: linear-gradient(90deg, transparent 0%, #1d9a70 12%, #1d9a70 88%, transparent 100%);
+  box-shadow: 0 1px 0 rgba(255,255,255,.08);
+}
+
+@media (max-width: 760px) {
+  .control-banner::before {
+    left: 5%;
+    right: 5%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
