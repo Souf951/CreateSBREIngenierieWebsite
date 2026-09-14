@@ -14,23 +14,28 @@ const partners = [
   ["Léman Construction", "partners/leman-construction.png"],
 ] as const;
 
+const lowerRowOrder = [4, 7, 1, 6, 2, 8, 0, 5, 3] as const;
+
 function LogoTrack({ reverse = false }: { reverse?: boolean }) {
-  const items = [...partners, ...partners];
+  const orderedPartners = reverse
+    ? lowerRowOrder.map((index) => partners[index])
+    : [...partners];
+  const items = [...orderedPartners, ...orderedPartners];
 
   return (
     <div className={`partners-track ${reverse ? "is-reverse" : ""}`}>
       {items.map(([name, file], index) => (
         <div
           className="partners-logo-card"
-          key={`${name}-${index}`}
-          aria-hidden={index >= partners.length || undefined}
+          key={`${reverse ? "reverse" : "forward"}-${name}-${index}`}
+          aria-hidden={index >= orderedPartners.length || undefined}
         >
           <span className="partners-logo-index">
-            {String((index % partners.length) + 1).padStart(2, "0")}
+            {String((partners.findIndex(([partnerName]) => partnerName === name) + 1)).padStart(2, "0")}
           </span>
           <img
             src={`${import.meta.env.BASE_URL}${file}`}
-            alt={index < partners.length ? name : ""}
+            alt={index < orderedPartners.length ? name : ""}
             loading="lazy"
             decoding="async"
           />
