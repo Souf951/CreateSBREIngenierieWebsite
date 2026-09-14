@@ -56,6 +56,11 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
       blue: new THREE.MeshStandardMaterial({ color: "#4e86c6", roughness: 0.7 }),
       green: new THREE.MeshStandardMaterial({ color: "#4f8a59", roughness: 0.92 }),
       wood: new THREE.MeshStandardMaterial({ color: "#9b6b48", roughness: 0.78 }),
+      glass: new THREE.MeshPhysicalMaterial({ color: "#9fc2c8", roughness: 0.15, metalness: 0.08, transparent: true, opacity: 0.78 }),
+      silver: new THREE.MeshStandardMaterial({ color: "#b9c0c2", roughness: 0.35, metalness: 0.62 }),
+      carWhite: new THREE.MeshStandardMaterial({ color: "#ecece8", roughness: 0.42, metalness: 0.16 }),
+      carRed: new THREE.MeshStandardMaterial({ color: "#8d2f2c", roughness: 0.4, metalness: 0.18 }),
+      carBlue: new THREE.MeshStandardMaterial({ color: "#365b72", roughness: 0.42, metalness: 0.18 }),
     };
 
     const groups = [new THREE.Group(), new THREE.Group(), new THREE.Group(), new THREE.Group()];
@@ -111,6 +116,27 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
       sphere(g, x + 0.28 * s, 1.35 * s, z + 0.06 * s, 0.3 * s, mat.foliage);
       sphere(g, x - 0.24 * s, 1.34 * s, z - 0.08 * s, 0.28 * s, mat.foliage);
     };
+    const car = (g: THREE.Group, material: THREE.Material, scale = 1) => {
+      const c = new THREE.Group();
+      const lower = new THREE.Mesh(new THREE.BoxGeometry(1.18 * scale, 0.28 * scale, 0.62 * scale), material);
+      lower.position.y = 0.24 * scale;
+      lower.castShadow = true;
+      const cabin = new THREE.Mesh(new THREE.BoxGeometry(0.68 * scale, 0.26 * scale, 0.52 * scale), mat.glass);
+      cabin.position.set(-0.04 * scale, 0.48 * scale, 0);
+      cabin.castShadow = true;
+      const wheelGeo = new THREE.CylinderGeometry(0.12 * scale, 0.12 * scale, 0.08 * scale, 14);
+      wheelGeo.rotateX(Math.PI / 2);
+      for (const x of [-0.36, 0.36]) {
+        for (const z of [-0.34, 0.34]) {
+          const wheel = new THREE.Mesh(wheelGeo, mat.dark);
+          wheel.position.set(x * scale, 0.13 * scale, z * scale);
+          c.add(wheel);
+        }
+      }
+      c.add(lower, cabin);
+      g.add(c);
+      return c;
+    };
 
     // 01 — Terrassement / réseaux enterrés.
     box(groups[0], 0, -0.24, 0, 14.8, 0.42, 8.4, mat.soil);
@@ -149,10 +175,31 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
     }
     for (let x = -5.2; x <= 5.2; x += 1.3) cylinder(groups[2], x, 0.72, 4.15, 0.055, 0.7, mat.dark, 12);
 
-    // 04 — Aménagement final vivant.
+    // 04 — Aménagement final vivant : rond-point, trafic, mobilier et végétation.
     box(groups[3], 0, 0.28, -4.65, 13.0, 0.12, 1.5, mat.grass);
     box(groups[3], 0, 0.28, 4.65, 13.0, 0.12, 1.5, mat.grass);
-    for (const x of [-5.1, -2.4, 0.4, 3.1, 5.2]) {
+
+    // Rond-point central posé sur la chaussée existante.
+    const roundaboutRoad = new THREE.Mesh(new THREE.TorusGeometry(2.05, 0.72, 10, 64), mat.asphalt);
+    roundaboutRoad.rotation.x = Math.PI / 2;
+    roundaboutRoad.position.set(0, 0.585, 0);
+    roundaboutRoad.castShadow = true;
+    roundaboutRoad.receiveShadow = true;
+    groups[3].add(roundaboutRoad);
+    cylinder(groups[3], 0, 0.59, 0, 1.18, 0.18, mat.curb, 48);
+    cylinder(groups[3], 0, 0.72, 0, 1.02, 0.18, mat.grass, 48);
+    cylinder(groups[3], 0, 0.88, 0, 0.72, 0.12, mat.green, 48);
+    tree(groups[3], -0.28, 0.05, 0.5);
+    tree(groups[3], 0.3, -0.18, 0.44);
+    tree(groups[3], 0.2, 0.32, 0.38);
+
+    // Marquages d'approche du rond-point.
+    for (const x of [-4.1, -3.55, 3.55, 4.1]) {
+      box(groups[3], x, 0.575, -0.65, 0.38, 0.02, 0.08, mat.white);
+      box(groups[3], x, 0.575, 0.65, 0.38, 0.02, 0.08, mat.white);
+    }
+
+    for (const x of [-5.1, -2.4, 3.1, 5.2]) {
       tree(groups[3], x, -4.7, 0.8);
       tree(groups[3], x - 0.35, 4.75, 0.75);
     }
@@ -177,6 +224,20 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
     const ball = sphere(groups[3], 4.7, 0.48, -4.45, 0.18, mat.red);
     box(groups[3], 4.6, 0.33, -4.55, 2.6, 0.08, 1.4, mat.green);
     for (let i = 0; i < 5; i++) box(groups[3], 3.7 + i * 0.45, 0.43, -4.25, 0.28, 0.06, 0.4, mat.curb);
+
+    // Véhicules animés : deux sur le giratoire et deux sur les voies d'approche.
+    const roundaboutCars = [
+      { mesh: car(groups[3], mat.carWhite, 0.7), angle: 0.2, speed: 0.42, radius: 2.08 },
+      { mesh: car(groups[3], mat.carRed, 0.66), angle: Math.PI + 0.7, speed: 0.34, radius: 2.08 },
+    ];
+    const laneCars = [
+      { mesh: car(groups[3], mat.carBlue, 0.68), x: -5.1, z: -0.78, speed: 1.05 },
+      { mesh: car(groups[3], mat.silver, 0.63), x: 5.0, z: 0.82, speed: -0.92 },
+    ];
+    laneCars.forEach((entry) => {
+      entry.mesh.position.set(entry.x, 0.61, entry.z);
+      entry.mesh.rotation.y = entry.speed > 0 ? Math.PI / 2 : -Math.PI / 2;
+    });
 
     const ground = new THREE.Mesh(new THREE.PlaneGeometry(220, 220), new THREE.ShadowMaterial({ opacity: 0.2 }));
     ground.rotation.x = -Math.PI / 2;
@@ -273,6 +334,22 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
           p.rotation.y = Math.sin(now * 0.0018 + i) * 0.3;
         });
         ball.position.y = 0.48 + Math.abs(Math.sin(now * 0.003)) * 0.12;
+
+        roundaboutCars.forEach((entry) => {
+          entry.angle += dt * entry.speed;
+          entry.mesh.position.set(
+            Math.cos(entry.angle) * entry.radius,
+            0.61,
+            Math.sin(entry.angle) * entry.radius,
+          );
+          entry.mesh.rotation.y = -entry.angle;
+        });
+
+        laneCars.forEach((entry) => {
+          entry.mesh.position.x += entry.speed * dt;
+          if (entry.speed > 0 && entry.mesh.position.x > 5.7) entry.mesh.position.x = -5.7;
+          if (entry.speed < 0 && entry.mesh.position.x < -5.7) entry.mesh.position.x = 5.7;
+        });
       }
 
       renderer.render(scene, camera);
