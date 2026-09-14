@@ -12,8 +12,35 @@
   font-weight: 800;
 }
 
+/* Header: slightly stronger presence without changing the overall layout. */
+.premium-site .desktop-nav button {
+  font-size: 14px;
+  font-weight: 540;
+}
+
+.premium-site .header-contact {
+  font-size: 13.5px !important;
+  padding: 12px 20px;
+}
+
+/* Crop the white breathing room baked into the logo image and enlarge the mark. */
+.premium-site .brand {
+  width: 188px;
+  height: 78px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.premium-site .brand img {
+  width: 188px;
+  height: 78px;
+  object-fit: contain;
+  transform: scale(1.28);
+  transform-origin: center;
+}
+
 .premium-site .hero-location,
-.premium-site .visual-heading,
 .premium-site .architecture-note,
 .premium-site .architecture-scale,
 .premium-site .model-caption,
@@ -29,8 +56,22 @@
   font-size: 11px;
 }
 
+/* Small label above the 3D visual. */
+.premium-site .visual-heading {
+  font-size: 12px;
+  font-weight: 560;
+  letter-spacing: 0.13em;
+}
+
 .premium-site .eyebrow {
   font-size: 12px;
+}
+
+/* Introductory copy on section headings: easier to read at desktop distance. */
+.premium-site .section-heading > p:last-child {
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 430px;
 }
 
 .theme-dark .premium-site .principles {
@@ -67,5 +108,20 @@
 
   .premium-site .eyebrow {
     font-size: 11px;
+  }
+
+  .premium-site .brand {
+    width: 154px;
+    height: 66px;
+  }
+
+  .premium-site .brand img {
+    width: 154px;
+    height: 66px;
+    transform: scale(1.22);
+  }
+
+  .premium-site .section-heading > p:last-child {
+    font-size: 15px;
   }
 }
