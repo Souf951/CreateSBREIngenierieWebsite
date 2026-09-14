@@ -1,0 +1,52 @@
+/* Homepage copy + typography pass: more technical, less template-like. */
+.premium-site em {
+  font-family: Inter, Arial, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: -0.045em;
+}
+
+.premium-site .hero-copy h1 {
+  font-size: clamp(48px, 5.25vw, 82px);
+  line-height: 1.02;
+  letter-spacing: -0.055em;
+  max-width: 720px;
+}
+
+.premium-site .hero-title-location {
+  display: inline-block;
+  font-weight: 600;
+  color: var(--forest);
+}
+
+.premium-site .hero-description {
+  max-width: 610px;
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+.premium-site #expertises .section-heading h2 {
+  max-width: 760px;
+  letter-spacing: -0.055em;
+}
+
+.premium-site #expertises .section-heading h2 span {
+  font-weight: 600;
+}
+
+.premium-site #expertises .section-heading > p:last-child {
+  max-width: 470px;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+@media (max-width: 800px) {
+  .premium-site .hero-copy h1 {
+    font-size: clamp(42px, 12vw, 64px);
+  }
+
+  .premium-site .hero-description,
+  .premium-site #expertises .section-heading > p:last-child {
+    font-size: 14px;
+  }
+}
