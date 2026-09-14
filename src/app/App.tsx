@@ -112,19 +112,13 @@ function ScrollToTop() {
 
 function shouldSkipIntro() {
   try {
-    const isLocalDev =
-      window.location.hostname === "localhost" ||
-      window.location.hostname === "127.0.0.1";
-
     return (
-      isLocalDev ||
-      sessionStorage.getItem("sbre_intro_v2") === "true" ||
-      matchMedia("(prefers-reduced-motion: reduce), (max-width: 767px)")
-        .matches ||
+      sessionStorage.getItem("sbre_intro_figma_v1") === "true" ||
+      matchMedia("(prefers-reduced-motion: reduce)").matches ||
       window.location.hash.length > 2
     );
   } catch {
-    return true;
+    return false;
   }
 }
 
@@ -144,7 +138,7 @@ export default function App() {
 
   const complete = useCallback(() => {
     try {
-      sessionStorage.setItem("sbre_intro_v2", "true");
+      sessionStorage.setItem("sbre_intro_figma_v1", "true");
     } catch {
       /* Storage is optional. */
     }
