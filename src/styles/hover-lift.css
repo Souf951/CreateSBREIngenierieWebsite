@@ -1,0 +1,139 @@
+/* Premium hover interactions for the principles strip and expertise cards.
+   CSS-only: no observers or runtime work. */
+
+.premium-site .principles {
+  gap: 10px;
+  overflow: visible;
+}
+
+.premium-site .principles > span {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 15px 18px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  transition:
+    transform .28s cubic-bezier(.2,.75,.2,1),
+    border-color .28s ease,
+    background-color .28s ease,
+    box-shadow .28s ease,
+    color .28s ease;
+  will-change: transform;
+}
+
+.premium-site .principles > span::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 8px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(10,92,61,.8), transparent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform .28s ease;
+  pointer-events: none;
+}
+
+.premium-site .principles > span:hover {
+  transform: translateY(-6px);
+  border-color: rgba(10,92,61,.58);
+  background: rgba(10,92,61,.055);
+  box-shadow: 0 16px 34px rgba(10,92,61,.10);
+}
+
+.premium-site .principles > span:hover::after {
+  transform: scaleX(1);
+}
+
+.premium-site .expertise-grid {
+  overflow: visible;
+}
+
+.premium-site .expertise-card {
+  position: relative;
+  z-index: 0;
+  transition:
+    transform .30s cubic-bezier(.2,.75,.2,1),
+    border-color .30s ease,
+    background-color .30s ease,
+    box-shadow .30s ease;
+  will-change: transform;
+}
+
+.premium-site .expertise-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 1px solid transparent;
+  pointer-events: none;
+  transition: border-color .30s ease;
+}
+
+.premium-site .expertise-card:hover {
+  z-index: 3;
+  transform: translateY(-10px) scale(1.012);
+  background: rgba(10,92,61,.035);
+  box-shadow: 0 24px 54px rgba(10,92,61,.13);
+}
+
+.premium-site .expertise-card:hover::before {
+  border-color: #0a5c3d;
+}
+
+.premium-site .expertise-card .card-number span {
+  display: inline-block;
+  transition: transform .28s ease, color .28s ease;
+}
+
+.premium-site .expertise-card:hover .card-number span {
+  transform: translate(3px, -3px);
+  color: #0a5c3d;
+}
+
+.theme-dark .premium-site .principles > span:hover {
+  border-color: rgba(78,205,149,.72);
+  background: rgba(29,125,87,.16);
+  box-shadow: 0 18px 38px rgba(0,0,0,.30), 0 0 0 1px rgba(78,205,149,.08);
+}
+
+.theme-dark .premium-site .principles > span::after {
+  background: linear-gradient(90deg, transparent, rgba(93,218,163,.95), transparent);
+}
+
+.theme-dark .premium-site .expertise-card:hover {
+  background: rgba(20,70,52,.34);
+  box-shadow: 0 26px 58px rgba(0,0,0,.34), 0 0 0 1px rgba(78,205,149,.08);
+}
+
+.theme-dark .premium-site .expertise-card:hover::before {
+  border-color: rgba(78,205,149,.88);
+}
+
+.theme-dark .premium-site .expertise-card:hover .card-number span {
+  color: #7ed2ad;
+}
+
+@media (max-width: 800px), (hover: none) {
+  .premium-site .principles > span,
+  .premium-site .expertise-card {
+    will-change: auto;
+  }
+
+  .premium-site .principles > span:hover,
+  .premium-site .expertise-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-site .principles > span,
+  .premium-site .principles > span::after,
+  .premium-site .expertise-card,
+  .premium-site .expertise-card::before,
+  .premium-site .expertise-card .card-number span {
+    transition: none;
+  }
+}
