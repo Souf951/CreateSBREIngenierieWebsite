@@ -10,6 +10,9 @@ const PublicWorksScene = lazy(() => import("./PublicWorksScene"));
 export const phases = ["Fondations", "Structure", "Enveloppe", "Finitions"];
 export type ArchitectureKind = "villa" | "immeuble" | "travaux-publics";
 
+const VILLA_PROJECT_HERO =
+  "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920";
+
 export const projectBackgrounds: Array<{
   kind: ArchitectureKind;
   src: string;
@@ -22,8 +25,8 @@ export const projectBackgrounds: Array<{
   },
   {
     kind: "villa",
-    src: `${import.meta.env.BASE_URL}sbre-bg-villa.webp`,
-    alt: "Villa contemporaine en béton et verre",
+    src: VILLA_PROJECT_HERO,
+    alt: "Villa contemporaine haut de gamme avec piscine",
   },
   {
     kind: "travaux-publics",
