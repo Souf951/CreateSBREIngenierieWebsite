@@ -156,18 +156,7 @@ export default function App() {
     } catch {
       /* Storage is optional. */
     }
-
-    const isDarkTheme = theme === "dark";
     document.documentElement.style.colorScheme = theme;
-    document.documentElement.classList.toggle("theme-dark", isDarkTheme);
-    document.documentElement.classList.toggle("theme-light", !isDarkTheme);
-    document.body.classList.toggle("theme-dark", isDarkTheme);
-    document.body.classList.toggle("theme-light", !isDarkTheme);
-
-    return () => {
-      document.documentElement.classList.remove("theme-dark", "theme-light");
-      document.body.classList.remove("theme-dark", "theme-light");
-    };
   }, [theme]);
 
   const toggleTheme = useCallback(() => {
