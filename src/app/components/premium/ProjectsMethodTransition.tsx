@@ -42,17 +42,26 @@ const transitions: TransitionConfig[] = [
 
 export default function ProjectsMethodTransition() {
   useEffect(() => {
+    let cancelled = false;
+    const timers: number[] = [];
+
     const ensureTransitions = () => {
+      if (cancelled) return true;
+      let complete = true;
+
       transitions.forEach(({ target, from, to, label }) => {
         const section = document.querySelector<HTMLElement>(target);
-        if (!section) return;
+        if (!section) {
+          complete = false;
+          return;
+        }
 
-        const previous = section.previousElementSibling;
-        if (
-          previous?.classList.contains("projects-method-transition") &&
-          previous.getAttribute("data-transition-to") === to
-        ) {
-          const currentLabel = previous.querySelector<HTMLElement>(
+        const existing = document.querySelector<HTMLElement>(
+          `.projects-method-transition[data-transition-to="${to}"]`,
+        );
+
+        if (existing) {
+          const currentLabel = existing.querySelector<HTMLElement>(
             ".projects-method-transition__label",
           );
           if (currentLabel && currentLabel.textContent !== label) {
@@ -81,13 +90,20 @@ export default function ProjectsMethodTransition() {
 
         section.parentElement?.insertBefore(transition, section);
       });
+
+      return complete;
     };
 
-    ensureTransitions();
-    const observer = new MutationObserver(ensureTransitions);
-    observer.observe(document.body, { childList: true, subtree: true });
+    if (!ensureTransitions()) {
+      [80, 180, 360, 700, 1200].forEach((delay) => {
+        timers.push(window.setTimeout(ensureTransitions, delay));
+      });
+    }
 
-    return () => observer.disconnect();
+    return () => {
+      cancelled = true;
+      timers.forEach((timer) => window.clearTimeout(timer));
+    };
   }, []);
 
   return null;
