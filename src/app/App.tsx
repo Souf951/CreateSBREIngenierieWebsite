@@ -44,6 +44,7 @@ const ProjectMicroLogements = lazy(
 const ProjectVillaPrangins = lazy(
   () => import("./components/ProjectVillaPrangins"),
 );
+const BuildingModelLab = lazy(() => import("./components/BuildingModelLab"));
 
 function ScrollToTop() {
   const { pathname, key, hash } = useLocation();
@@ -196,6 +197,7 @@ export default function App() {
           >
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/lab/modelisation-immeuble" element={<BuildingModelLab />} />
               <Route
                 path="/projet/tertiaire-geneve"
                 element={<ProjectTertiaire />}
