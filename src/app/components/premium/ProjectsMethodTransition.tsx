@@ -30,7 +30,7 @@ const transitions: TransitionConfig[] = [
     target: ".team-section",
     from: "04",
     to: "05",
-    label: "DE LA MÉTHODE AUX FEMMES ET AUX HOMMES",
+    label: "DE LA MÉTHODE À L’ÉQUIPE",
   },
   {
     target: "#contact",
@@ -52,6 +52,12 @@ export default function ProjectsMethodTransition() {
           previous?.classList.contains("projects-method-transition") &&
           previous.getAttribute("data-transition-to") === to
         ) {
+          const currentLabel = previous.querySelector<HTMLElement>(
+            ".projects-method-transition__label",
+          );
+          if (currentLabel && currentLabel.textContent !== label) {
+            currentLabel.textContent = label;
+          }
           return;
         }
 
