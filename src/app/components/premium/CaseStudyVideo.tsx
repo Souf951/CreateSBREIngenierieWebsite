@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
+type ActiveCase = "01" | "02" | null;
+
 export default function CaseStudyVideo() {
   const [host, setHost] = useState<HTMLElement | null>(null);
-  const [isFirstCase, setIsFirstCase] = useState(false);
+  const [activeCase, setActiveCase] = useState<ActiveCase>(null);
 
   useEffect(() => {
     const sync = () => {
@@ -11,11 +13,13 @@ export default function CaseStudyVideo() {
       const active = document.querySelector<HTMLButtonElement>(
         '.case-section .case-tabs button[aria-pressed="true"]',
       );
-      const first = active?.querySelector("span")?.textContent?.trim() === "01";
+      const activeNumber = active?.querySelector("span")?.textContent?.trim();
+      const nextCase: ActiveCase =
+        activeNumber === "01" || activeNumber === "02" ? activeNumber : null;
 
       setHost(nextHost);
-      setIsFirstCase(Boolean(first));
-      nextHost?.classList.toggle("has-sbre-case-video", Boolean(first));
+      setActiveCase(nextCase);
+      nextHost?.classList.toggle("has-sbre-case-video", Boolean(nextCase));
     };
 
     sync();
@@ -35,12 +39,18 @@ export default function CaseStudyVideo() {
     };
   }, []);
 
-  if (!host) return null;
+  if (!host || !activeCase) return null;
+
+  const videoFile =
+    activeCase === "01"
+      ? "sbre-case-coordination.mp4"
+      : "sbre-case-planning.mp4";
 
   return createPortal(
     <video
-      className={`sbre-case-card-video ${isFirstCase ? "is-active" : ""}`}
-      src={`${import.meta.env.BASE_URL}sbre-case-coordination.mp4`}
+      key={videoFile}
+      className={`sbre-case-card-video is-active case-${activeCase}`}
+      src={`${import.meta.env.BASE_URL}${videoFile}`}
       autoPlay
       muted
       loop
