@@ -55,7 +55,6 @@ export default function PublicWorksScene({
       asphalt: new THREE.MeshStandardMaterial({ color: "#2d3131", roughness: 0.96 }),
       asphaltLight: new THREE.MeshStandardMaterial({ color: "#424747", roughness: 0.95 }),
       curb: new THREE.MeshStandardMaterial({ color: "#d7d3ca", roughness: 0.9 }),
-      concrete: new THREE.MeshStandardMaterial({ color: "#c7c3ba", roughness: 0.93 }),
       sidewalk: new THREE.MeshStandardMaterial({ color: "#b9b5ac", roughness: 0.96 }),
       cycle: new THREE.MeshStandardMaterial({ color: "#9d6248", roughness: 0.92 }),
       white: new THREE.MeshStandardMaterial({ color: "#f2f0e8", roughness: 0.72 }),
@@ -157,15 +156,9 @@ export default function PublicWorksScene({
     const person = (g: THREE.Group, x: number, z: number, shirt: THREE.Material, scale = 1) => {
       const p = new THREE.Group();
       p.position.set(x, 0.38, z);
-      const body = new THREE.Mesh(
-        new THREE.CapsuleGeometry(0.09 * scale, 0.28 * scale, 4, 8),
-        shirt,
-      );
+      const body = new THREE.Mesh(new THREE.CapsuleGeometry(0.09 * scale, 0.28 * scale, 4, 8), shirt);
       body.position.y = 0.31 * scale;
-      const head = new THREE.Mesh(
-        new THREE.SphereGeometry(0.09 * scale, 12, 10),
-        mat.skin,
-      );
+      const head = new THREE.Mesh(new THREE.SphereGeometry(0.09 * scale, 12, 10), mat.skin);
       head.position.y = 0.66 * scale;
       p.add(body, head);
       g.add(p);
@@ -215,10 +208,7 @@ export default function PublicWorksScene({
     box(groups[0], 0, -0.02, 0, 12.8, 0.18, 6.2, mat.subbase);
     box(groups[0], -4.9, 0.05, 0, 0.95, 0.32, 5.5, mat.soil);
     for (let i = 0; i < 4; i += 1) {
-      const duct = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.065, 0.065, 5.1, 14),
-        i === 0 ? mat.orange : mat.dark,
-      );
+      const duct = new THREE.Mesh(new THREE.CylinderGeometry(0.065, 0.065, 5.1, 14), i === 0 ? mat.orange : mat.dark);
       duct.rotation.x = Math.PI / 2;
       duct.position.set(-5.05 + i * 0.19, 0.08, 0);
       groups[0].add(duct);
@@ -236,34 +226,22 @@ export default function PublicWorksScene({
 
     // 03 — Enrobés, marquage et équipements de base.
     box(groups[2], 0, 0.44, 0, 12.2, 0.14, 5.45, mat.asphalt);
-    for (let x = -5.3; x <= 5.3; x += 1.45) {
-      box(groups[2], x, 0.525, 0, 0.72, 0.018, 0.07, mat.white);
-    }
+    for (let x = -5.3; x <= 5.3; x += 1.45) box(groups[2], x, 0.525, 0, 0.72, 0.018, 0.07, mat.white);
     box(groups[2], 0, 0.525, -2.5, 11.4, 0.018, 0.075, mat.white);
     box(groups[2], 0, 0.525, 2.5, 11.4, 0.018, 0.075, mat.white);
-    for (let i = 0; i < 8; i += 1) {
-      box(groups[2], 4.6, 0.53, -1.42 + i * 0.4, 1.15, 0.02, 0.15, mat.white);
-    }
+    for (let i = 0; i < 8; i += 1) box(groups[2], 4.6, 0.53, -1.42 + i * 0.4, 1.15, 0.02, 0.15, mat.white);
 
     // 04 — Aménagement urbain final : giratoire compact et crédible.
     const g4 = groups[3];
-
-    // Branches du carrefour et anneau circulable, à plat.
     box(g4, 0, 0.46, 0, 13.8, 0.13, 4.25, mat.asphaltLight);
     box(g4, 0, 0.46, 0, 4.25, 0.13, 10.6, mat.asphaltLight);
     flatRing(g4, 1.35, 3.05, 0.535, mat.asphalt, 112);
 
-    // Ilot central franchissable + cœur végétalisé.
     flatRing(g4, 1.05, 1.35, 0.55, mat.curb, 96);
     cylinder(g4, 0, 0.55, 0, 1.04, 0.13, mat.grass, 72);
     cylinder(g4, 0, 0.64, 0, 0.63, 0.08, mat.green, 72);
-    for (const [x, z, s] of [
-      [-0.25, 0.18, 0.46],
-      [0.28, -0.12, 0.42],
-      [0.12, 0.38, 0.34],
-    ] as const) tree(g4, x, z, s);
+    for (const [x, z, s] of [[-0.25, 0.18, 0.46], [0.28, -0.12, 0.42], [0.12, 0.38, 0.34]] as const) tree(g4, x, z, s);
 
-    // Ilots séparateurs aux quatre entrées.
     const splitter = (x: number, z: number, rot = 0) => {
       const island = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.12, 0.36), mat.curb);
       island.position.set(x, 0.58, z);
@@ -280,19 +258,12 @@ export default function PublicWorksScene({
     splitter(0, -3.65, Math.PI / 2);
     splitter(0, 3.65, Math.PI / 2);
 
-    // Lignes cédez-le-passage / guidage circulaire.
-    const dashRing = (radius: number, count: number) => {
-      for (let i = 0; i < count; i += 1) {
-        const a = (i / count) * Math.PI * 2;
-        const x = Math.cos(a) * radius;
-        const z = Math.sin(a) * radius;
-        const dash = box(g4, x, 0.555, z, 0.38, 0.018, 0.07, mat.white, -a);
-        dash.castShadow = false;
-      }
-    };
-    dashRing(2.35, 22);
+    for (let i = 0; i < 22; i += 1) {
+      const a = (i / 22) * Math.PI * 2;
+      const dash = box(g4, Math.cos(a) * 2.35, 0.555, Math.sin(a) * 2.35, 0.38, 0.018, 0.07, mat.white, -a);
+      dash.castShadow = false;
+    }
 
-    // Passages piétons en retrait des entrées.
     const zebraX = (x: number) => {
       for (let i = -3; i <= 3; i += 1) box(g4, x, 0.555, i * 0.24, 0.62, 0.018, 0.12, mat.white);
     };
@@ -304,7 +275,6 @@ export default function PublicWorksScene({
     zebraZ(-4.65);
     zebraZ(4.65);
 
-    // Trottoirs, pistes cyclables et espaces verts périphériques.
     box(g4, 0, 0.3, -4.55, 14.0, 0.1, 1.18, mat.sidewalk);
     box(g4, 0, 0.3, 4.55, 14.0, 0.1, 1.18, mat.sidewalk);
     box(g4, -6.45, 0.3, 0, 1.18, 0.1, 8.2, mat.sidewalk);
@@ -314,7 +284,6 @@ export default function PublicWorksScene({
     box(g4, -6.0, 0.355, 0, 0.35, 0.025, 7.7, mat.cycle);
     box(g4, 6.0, 0.355, 0, 0.35, 0.025, 7.7, mat.cycle);
 
-    // Plantation régulière, avec recul par rapport aux visibilités du giratoire.
     for (const x of [-5.6, -3.6, 3.6, 5.6]) {
       tree(g4, x, -5.0, 0.7);
       tree(g4, x, 5.0, 0.68);
@@ -324,23 +293,15 @@ export default function PublicWorksScene({
       tree(g4, 6.8, z, 0.64);
     }
 
-    // Eclairage public sobre et cohérent.
     const lamp = (x: number, z: number, rot = 0) => {
       cylinder(g4, x, 1.55, z, 0.045, 2.5, mat.pole, 12);
       box(g4, x + Math.cos(rot) * 0.18, 2.74, z + Math.sin(rot) * 0.18, 0.38, 0.05, 0.07, mat.dark, -rot);
     };
     for (const [x, z, r] of [
-      [-5.4, -4.2, 0],
-      [-1.8, -4.2, 0],
-      [1.8, -4.2, Math.PI],
-      [5.4, -4.2, Math.PI],
-      [-5.4, 4.2, 0],
-      [-1.8, 4.2, 0],
-      [1.8, 4.2, Math.PI],
-      [5.4, 4.2, Math.PI],
+      [-5.4, -4.2, 0], [-1.8, -4.2, 0], [1.8, -4.2, Math.PI], [5.4, -4.2, Math.PI],
+      [-5.4, 4.2, 0], [-1.8, 4.2, 0], [1.8, 4.2, Math.PI], [5.4, 4.2, Math.PI],
     ] as const) lamp(x, z, r);
 
-    // Signalisation du giratoire et cédez-le-passage.
     const sign = (x: number, z: number, rot = 0) => {
       cylinder(g4, x, 0.95, z, 0.025, 1.35, mat.pole, 10);
       const panel = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.04, 28), mat.signBlue);
@@ -354,11 +315,7 @@ export default function PublicWorksScene({
     sign(1.05, -3.95, 0);
     sign(-1.05, 3.95, Math.PI);
 
-    // Mobilier urbain en dehors des trajectoires piétonnes.
-    for (const [x, z, r] of [
-      [-3.0, 4.75, 0],
-      [3.0, -4.75, Math.PI],
-    ] as const) {
+    for (const [x, z, r] of [[-3.0, 4.75, 0], [3.0, -4.75, Math.PI]] as const) {
       box(g4, x, 0.48, z, 1.25, 0.1, 0.4, mat.wood, r);
       box(g4, x, 0.78, z + (r === 0 ? 0.16 : -0.16), 1.25, 0.45, 0.06, mat.dark, r);
     }
@@ -370,7 +327,6 @@ export default function PublicWorksScene({
       person(g4, 2.6, 4.55, mat.blue, 0.82),
     ];
 
-    // Trafic final : voitures sur l'anneau + approches.
     const cars = [
       car(g4, mat.carWhite, 0.75),
       car(g4, mat.carBlue, 0.72),
@@ -379,10 +335,7 @@ export default function PublicWorksScene({
       car(g4, mat.carWhite, 0.68),
     ];
 
-    const ground = new THREE.Mesh(
-      new THREE.PlaneGeometry(220, 220),
-      new THREE.ShadowMaterial({ opacity: 0.16 }),
-    );
+    const ground = new THREE.Mesh(new THREE.PlaneGeometry(220, 220), new THREE.ShadowMaterial({ opacity: 0.16 }));
     ground.rotation.x = -Math.PI / 2;
     ground.position.y = -0.48;
     ground.receiveShadow = true;
@@ -425,7 +378,6 @@ export default function PublicWorksScene({
       renderer.domElement.setPointerCapture?.(e.pointerId);
       renderer.domElement.style.cursor = "grabbing";
     };
-
     const move = (e: PointerEvent) => {
       if (!dragging) return;
       const dx = e.clientX - lastX;
@@ -434,7 +386,6 @@ export default function PublicWorksScene({
       angle += delta;
       dragVelocity = delta;
     };
-
     const up = (e: PointerEvent) => {
       dragging = false;
       renderer.domElement.releasePointerCapture?.(e.pointerId);
@@ -470,22 +421,26 @@ export default function PublicWorksScene({
       works.position.y = 0.035 + Math.sin(now * 0.0009) * 0.035;
 
       if (phaseRef.current === 3) {
-        const t = now * 0.00042;
+        const t = now * 0.00034;
 
-        // Deux véhicules circulent réellement dans le giratoire.
+        // Les trois voitures du giratoire gardent exactement la même vitesse et
+        // un espacement angulaire fixe de 120°. Elles ne peuvent donc jamais se rattraper.
+        const roundaboutRadius = 2.38;
+        const offsets = [0, (Math.PI * 2) / 3, (Math.PI * 4) / 3];
         [0, 1, 2].forEach((idx) => {
-          const a = t * (0.85 + idx * 0.07) + idx * 2.1;
-          const radius = idx === 1 ? 2.18 : 2.5;
-          cars[idx].position.set(Math.cos(a) * radius, 0.61, Math.sin(a) * radius);
+          const a = t + offsets[idx];
+          cars[idx].position.set(Math.cos(a) * roundaboutRadius, 0.61, Math.sin(a) * roundaboutRadius);
           cars[idx].rotation.y = -a + Math.PI / 2;
         });
 
-        // Deux véhicules sur les branches d'approche.
-        const xLoop = ((t * 3.6) % 12.2) - 6.1;
-        cars[3].position.set(xLoop, 0.61, -1.05);
+        // Les deux véhicules d'approche restent sur des branches différentes
+        // et s'arrêtent avant la zone de conflit du giratoire.
+        const shuttle = (Math.sin(t * 1.6) + 1) / 2;
+        const approach = 6.0 - shuttle * 2.0;
+        cars[3].position.set(-approach, 0.61, -1.1);
         cars[3].rotation.y = 0;
-        cars[4].position.set(-1.0, 0.61, -xLoop * 0.72);
-        cars[4].rotation.y = Math.PI / 2;
+        cars[4].position.set(1.1, 0.61, approach);
+        cars[4].rotation.y = -Math.PI / 2;
 
         pedestrians.forEach((p, i) => {
           p.position.y = 0.38 + Math.sin(now * 0.003 + i) * 0.018;
