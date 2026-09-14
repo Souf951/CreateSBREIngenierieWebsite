@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-type ActiveCase = "01" | "02" | null;
+type ActiveCase = "01" | "02" | "03" | null;
 
 export default function CaseStudyVideo() {
   const [host, setHost] = useState<HTMLElement | null>(null);
@@ -15,7 +15,9 @@ export default function CaseStudyVideo() {
       );
       const activeNumber = active?.querySelector("span")?.textContent?.trim();
       const nextCase: ActiveCase =
-        activeNumber === "01" || activeNumber === "02" ? activeNumber : null;
+        activeNumber === "01" || activeNumber === "02" || activeNumber === "03"
+          ? activeNumber
+          : null;
 
       setHost(nextHost);
       setActiveCase(nextCase);
@@ -44,7 +46,9 @@ export default function CaseStudyVideo() {
   const videoFile =
     activeCase === "01"
       ? "sbre-case-coordination.mp4"
-      : "sbre-case-planning.mp4";
+      : activeCase === "02"
+        ? "sbre-case-planning.mp4"
+        : "sbre-case-reception.mp4";
 
   return createPortal(
     <video
