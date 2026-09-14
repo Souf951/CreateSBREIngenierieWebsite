@@ -26,6 +26,7 @@ import CaseSectionVideoBackground from "./components/premium/CaseSectionVideoBac
 import MethodSectionVideoBackground from "./components/premium/MethodSectionVideoBackground";
 import ContactSectionPhotoGuard from "./components/premium/ContactSectionPhotoGuard";
 import HomeCopyGuard from "./components/premium/HomeCopyGuard";
+import CaseStudyVideo from "./components/premium/CaseStudyVideo";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
 import "../styles/dark-logo.css";
@@ -39,6 +40,7 @@ import "../styles/case-video-background.css";
 import "../styles/contact-section-photo.css";
 import "../styles/accordion-premium.css";
 import "../styles/home-copy-polish.css";
+import "../styles/case-study-video.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
@@ -191,6 +193,7 @@ export default function App() {
           <CaseSectionVideoBackground />
           <MethodSectionVideoBackground />
           <ContactSectionPhotoGuard />
+          <CaseStudyVideo />
           <Suspense
             fallback={
               <div style={{ padding: "15vh 8%", color: "#0a5c3d" }}>
