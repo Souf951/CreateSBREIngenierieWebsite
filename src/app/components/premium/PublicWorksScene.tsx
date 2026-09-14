@@ -1,7 +1,13 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: number; onFailure: () => void }) {
+export default function PublicWorksScene({
+  phase = 3,
+  onFailure,
+}: {
+  phase?: number;
+  onFailure: () => void;
+}) {
   const host = useRef<HTMLDivElement>(null);
   const redraw = useRef<() => void>(() => {});
   const phaseRef = useRef(phase);
@@ -12,9 +18,14 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
   useEffect(() => {
     if (!host.current) return;
     const container = host.current;
+
     let renderer: THREE.WebGLRenderer;
     try {
-      renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
+      renderer = new THREE.WebGLRenderer({
+        antialias: true,
+        alpha: true,
+        powerPreference: "low-power",
+      });
     } catch {
       onFailure();
       return;
@@ -25,42 +36,54 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.2;
+    renderer.toneMappingExposure = 1.05;
     container.appendChild(renderer.domElement);
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(31, 1, 0.1, 140);
-    camera.position.set(15.5, 11.8, 18.5);
-    camera.lookAt(0, 0.9, 0);
+    const camera = new THREE.PerspectiveCamera(29, 1, 0.1, 120);
+    camera.position.set(15.8, 12.8, 18.8);
+    camera.lookAt(0, 0.85, 0);
 
     const works = new THREE.Group();
+    works.scale.setScalar(0.92);
     scene.add(works);
 
     const mat = {
-      soil: new THREE.MeshStandardMaterial({ color: "#856445", roughness: 1 }),
-      subbase: new THREE.MeshStandardMaterial({ color: "#aaa79e", roughness: 1 }),
-      gravel: new THREE.MeshStandardMaterial({ color: "#8f928f", roughness: 1 }),
-      asphalt: new THREE.MeshStandardMaterial({ color: "#33393a", roughness: 0.92 }),
-      curb: new THREE.MeshStandardMaterial({ color: "#d6d2c8", roughness: 0.88 }),
-      sidewalk: new THREE.MeshStandardMaterial({ color: "#bbb6a8", roughness: 0.9 }),
-      white: new THREE.MeshStandardMaterial({ color: "#f6f1e6", roughness: 0.62 }),
-      yellow: new THREE.MeshStandardMaterial({ color: "#f2c34c", roughness: 0.62 }),
-      orange: new THREE.MeshStandardMaterial({ color: "#e27a3d", roughness: 0.66 }),
-      dark: new THREE.MeshStandardMaterial({ color: "#1d2c29", roughness: 0.4, metalness: 0.32 }),
-      pole: new THREE.MeshStandardMaterial({ color: "#5c6661", roughness: 0.44, metalness: 0.48 }),
-      grass: new THREE.MeshStandardMaterial({ color: "#4e8057", roughness: 1 }),
-      foliage: new THREE.MeshStandardMaterial({ color: "#3f724e", roughness: 1 }),
-      trunk: new THREE.MeshStandardMaterial({ color: "#6d4e34", roughness: 1 }),
-      skin: new THREE.MeshStandardMaterial({ color: "#d6a17a", roughness: 0.8 }),
-      red: new THREE.MeshStandardMaterial({ color: "#cf554b", roughness: 0.7 }),
-      blue: new THREE.MeshStandardMaterial({ color: "#4e86c6", roughness: 0.7 }),
-      green: new THREE.MeshStandardMaterial({ color: "#4f8a59", roughness: 0.92 }),
-      wood: new THREE.MeshStandardMaterial({ color: "#9b6b48", roughness: 0.78 }),
-      glass: new THREE.MeshPhysicalMaterial({ color: "#9fc2c8", roughness: 0.15, metalness: 0.08, transparent: true, opacity: 0.78 }),
-      silver: new THREE.MeshStandardMaterial({ color: "#b9c0c2", roughness: 0.35, metalness: 0.62 }),
-      carWhite: new THREE.MeshStandardMaterial({ color: "#ecece8", roughness: 0.42, metalness: 0.16 }),
-      carRed: new THREE.MeshStandardMaterial({ color: "#8d2f2c", roughness: 0.4, metalness: 0.18 }),
-      carBlue: new THREE.MeshStandardMaterial({ color: "#365b72", roughness: 0.42, metalness: 0.18 }),
+      soil: new THREE.MeshStandardMaterial({ color: "#6d5948", roughness: 1 }),
+      subbase: new THREE.MeshStandardMaterial({ color: "#9d9b94", roughness: 1 }),
+      gravel: new THREE.MeshStandardMaterial({ color: "#858984", roughness: 1 }),
+      asphalt: new THREE.MeshStandardMaterial({ color: "#2d3131", roughness: 0.96 }),
+      asphaltLight: new THREE.MeshStandardMaterial({ color: "#424747", roughness: 0.95 }),
+      curb: new THREE.MeshStandardMaterial({ color: "#d7d3ca", roughness: 0.9 }),
+      concrete: new THREE.MeshStandardMaterial({ color: "#c7c3ba", roughness: 0.93 }),
+      sidewalk: new THREE.MeshStandardMaterial({ color: "#b9b5ac", roughness: 0.96 }),
+      cycle: new THREE.MeshStandardMaterial({ color: "#9d6248", roughness: 0.92 }),
+      white: new THREE.MeshStandardMaterial({ color: "#f2f0e8", roughness: 0.72 }),
+      yellow: new THREE.MeshStandardMaterial({ color: "#d9ad45", roughness: 0.75 }),
+      orange: new THREE.MeshStandardMaterial({ color: "#d66f37", roughness: 0.74 }),
+      dark: new THREE.MeshStandardMaterial({ color: "#171d1c", roughness: 0.5, metalness: 0.32 }),
+      pole: new THREE.MeshStandardMaterial({ color: "#636b68", roughness: 0.44, metalness: 0.58 }),
+      grass: new THREE.MeshStandardMaterial({ color: "#567257", roughness: 1 }),
+      foliage: new THREE.MeshStandardMaterial({ color: "#365843", roughness: 1 }),
+      foliage2: new THREE.MeshStandardMaterial({ color: "#4d6c4f", roughness: 1 }),
+      trunk: new THREE.MeshStandardMaterial({ color: "#5c4635", roughness: 1 }),
+      skin: new THREE.MeshStandardMaterial({ color: "#c99676", roughness: 0.84 }),
+      red: new THREE.MeshStandardMaterial({ color: "#a9473f", roughness: 0.72 }),
+      blue: new THREE.MeshStandardMaterial({ color: "#496f85", roughness: 0.72 }),
+      green: new THREE.MeshStandardMaterial({ color: "#4e6f55", roughness: 0.95 }),
+      wood: new THREE.MeshStandardMaterial({ color: "#8b6648", roughness: 0.82 }),
+      glass: new THREE.MeshPhysicalMaterial({
+        color: "#9cb5b8",
+        roughness: 0.12,
+        metalness: 0.04,
+        transparent: true,
+        opacity: 0.72,
+      }),
+      carWhite: new THREE.MeshStandardMaterial({ color: "#dcdedb", roughness: 0.44, metalness: 0.18 }),
+      carRed: new THREE.MeshStandardMaterial({ color: "#7d302d", roughness: 0.42, metalness: 0.2 }),
+      carBlue: new THREE.MeshStandardMaterial({ color: "#314e63", roughness: 0.44, metalness: 0.2 }),
+      carGray: new THREE.MeshStandardMaterial({ color: "#636968", roughness: 0.46, metalness: 0.22 }),
+      signBlue: new THREE.MeshStandardMaterial({ color: "#245f8a", roughness: 0.58 }),
     };
 
     const groups = [new THREE.Group(), new THREE.Group(), new THREE.Group(), new THREE.Group()];
@@ -70,192 +93,313 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
       works.add(g);
     });
 
-    const box = (g: THREE.Group, x: number, y: number, z: number, w: number, h: number, d: number, material: THREE.Material, rotY = 0) => {
-      const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material);
-      m.position.set(x, y, z);
-      m.rotation.y = rotY;
-      m.castShadow = true;
-      m.receiveShadow = true;
-      g.add(m);
-      return m;
+    const box = (
+      g: THREE.Group,
+      x: number,
+      y: number,
+      z: number,
+      w: number,
+      h: number,
+      d: number,
+      material: THREE.Material,
+      rotY = 0,
+    ) => {
+      const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material);
+      mesh.position.set(x, y, z);
+      mesh.rotation.y = rotY;
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      g.add(mesh);
+      return mesh;
     };
-    const cylinder = (g: THREE.Group, x: number, y: number, z: number, r: number, h: number, material: THREE.Material, segments = 20) => {
-      const m = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, segments), material);
-      m.position.set(x, y, z);
-      m.castShadow = true;
-      m.receiveShadow = true;
-      g.add(m);
-      return m;
+
+    const cylinder = (
+      g: THREE.Group,
+      x: number,
+      y: number,
+      z: number,
+      r: number,
+      h: number,
+      material: THREE.Material,
+      segments = 24,
+    ) => {
+      const mesh = new THREE.Mesh(new THREE.CylinderGeometry(r, r, h, segments), material);
+      mesh.position.set(x, y, z);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      g.add(mesh);
+      return mesh;
     };
-    const sphere = (g: THREE.Group, x: number, y: number, z: number, r: number, material: THREE.Material) => {
-      const m = new THREE.Mesh(new THREE.SphereGeometry(r, 16, 12), material);
-      m.position.set(x, y, z);
-      m.castShadow = true;
-      g.add(m);
-      return m;
+
+    const sphere = (
+      g: THREE.Group,
+      x: number,
+      y: number,
+      z: number,
+      r: number,
+      material: THREE.Material,
+      detail = 16,
+    ) => {
+      const mesh = new THREE.Mesh(new THREE.SphereGeometry(r, detail, Math.max(10, detail - 4)), material);
+      mesh.position.set(x, y, z);
+      mesh.castShadow = true;
+      g.add(mesh);
+      return mesh;
     };
+
+    const tree = (g: THREE.Group, x: number, z: number, s = 1) => {
+      cylinder(g, x, 0.56 * s, z, 0.055 * s, 1.12 * s, mat.trunk, 10);
+      sphere(g, x, 1.28 * s, z, 0.34 * s, mat.foliage, 14);
+      sphere(g, x + 0.22 * s, 1.21 * s, z + 0.06 * s, 0.24 * s, mat.foliage2, 14);
+      sphere(g, x - 0.2 * s, 1.18 * s, z - 0.05 * s, 0.22 * s, mat.foliage, 14);
+    };
+
     const person = (g: THREE.Group, x: number, z: number, shirt: THREE.Material, scale = 1) => {
       const p = new THREE.Group();
-      p.position.set(x, 0.35, z);
-      const body = new THREE.Mesh(new THREE.CapsuleGeometry(0.12 * scale, 0.34 * scale, 4, 10), shirt);
-      body.position.y = 0.38 * scale;
-      const head = new THREE.Mesh(new THREE.SphereGeometry(0.12 * scale, 12, 10), mat.skin);
-      head.position.y = 0.78 * scale;
-      const legGeo = new THREE.CylinderGeometry(0.034 * scale, 0.034 * scale, 0.38 * scale, 8);
-      const leg1 = new THREE.Mesh(legGeo, mat.dark);
-      const leg2 = leg1.clone();
-      leg1.position.set(-0.07 * scale, 0.04, 0);
-      leg2.position.set(0.07 * scale, 0.04, 0);
-      p.add(body, head, leg1, leg2);
+      p.position.set(x, 0.38, z);
+      const body = new THREE.Mesh(
+        new THREE.CapsuleGeometry(0.09 * scale, 0.28 * scale, 4, 8),
+        shirt,
+      );
+      body.position.y = 0.31 * scale;
+      const head = new THREE.Mesh(
+        new THREE.SphereGeometry(0.09 * scale, 12, 10),
+        mat.skin,
+      );
+      head.position.y = 0.66 * scale;
+      p.add(body, head);
       g.add(p);
       return p;
     };
-    const tree = (g: THREE.Group, x: number, z: number, s = 1) => {
-      cylinder(g, x, 0.65 * s, z, 0.08 * s, 1.3 * s, mat.trunk, 10);
-      sphere(g, x, 1.45 * s, z, 0.48 * s, mat.foliage);
-      sphere(g, x + 0.28 * s, 1.35 * s, z + 0.06 * s, 0.3 * s, mat.foliage);
-      sphere(g, x - 0.24 * s, 1.34 * s, z - 0.08 * s, 0.28 * s, mat.foliage);
-    };
+
     const car = (g: THREE.Group, material: THREE.Material, scale = 1) => {
       const c = new THREE.Group();
-      const lower = new THREE.Mesh(new THREE.BoxGeometry(1.18 * scale, 0.28 * scale, 0.62 * scale), material);
-      lower.position.y = 0.24 * scale;
-      lower.castShadow = true;
-      const cabin = new THREE.Mesh(new THREE.BoxGeometry(0.68 * scale, 0.26 * scale, 0.52 * scale), mat.glass);
-      cabin.position.set(-0.04 * scale, 0.48 * scale, 0);
+      const chassis = new THREE.Mesh(new THREE.BoxGeometry(1.0 * scale, 0.24 * scale, 0.5 * scale), material);
+      chassis.position.y = 0.18 * scale;
+      chassis.castShadow = true;
+      const cabin = new THREE.Mesh(new THREE.BoxGeometry(0.58 * scale, 0.23 * scale, 0.44 * scale), mat.glass);
+      cabin.position.set(-0.05 * scale, 0.4 * scale, 0);
       cabin.castShadow = true;
-      const wheelGeo = new THREE.CylinderGeometry(0.12 * scale, 0.12 * scale, 0.08 * scale, 14);
+      const wheelGeo = new THREE.CylinderGeometry(0.105 * scale, 0.105 * scale, 0.065 * scale, 14);
       wheelGeo.rotateX(Math.PI / 2);
-      for (const x of [-0.36, 0.36]) {
-        for (const z of [-0.34, 0.34]) {
+      for (const x of [-0.31, 0.31]) {
+        for (const z of [-0.27, 0.27]) {
           const wheel = new THREE.Mesh(wheelGeo, mat.dark);
-          wheel.position.set(x * scale, 0.13 * scale, z * scale);
+          wheel.position.set(x * scale, 0.09 * scale, z * scale);
           c.add(wheel);
         }
       }
-      c.add(lower, cabin);
+      c.add(chassis, cabin);
       g.add(c);
       return c;
     };
 
+    const flatRing = (
+      g: THREE.Group,
+      inner: number,
+      outer: number,
+      y: number,
+      material: THREE.Material,
+      segments = 96,
+    ) => {
+      const mesh = new THREE.Mesh(new THREE.RingGeometry(inner, outer, segments), material);
+      mesh.rotation.x = -Math.PI / 2;
+      mesh.position.y = y;
+      mesh.receiveShadow = true;
+      g.add(mesh);
+      return mesh;
+    };
+
     // 01 — Terrassement / réseaux enterrés.
-    box(groups[0], 0, -0.24, 0, 14.8, 0.42, 8.4, mat.soil);
-    box(groups[0], 0, -0.02, 0, 11.6, 0.18, 5.3, mat.subbase);
-    box(groups[0], -4.6, 0.08, 0.1, 1.0, 0.35, 4.4, mat.soil);
-    for (let i = 0; i < 3; i++) {
-      const duct = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 4.2, 14), i === 0 ? mat.orange : mat.dark);
+    box(groups[0], 0, -0.28, 0, 16.6, 0.48, 11.2, mat.soil);
+    box(groups[0], 0, -0.02, 0, 12.8, 0.18, 6.2, mat.subbase);
+    box(groups[0], -4.9, 0.05, 0, 0.95, 0.32, 5.5, mat.soil);
+    for (let i = 0; i < 4; i += 1) {
+      const duct = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.065, 0.065, 5.1, 14),
+        i === 0 ? mat.orange : mat.dark,
+      );
       duct.rotation.x = Math.PI / 2;
-      duct.position.set(-4.8 + i * 0.22, 0.1, 0.1);
+      duct.position.set(-5.05 + i * 0.19, 0.08, 0);
       groups[0].add(duct);
     }
 
     // 02 — Structure de chaussée / bordures / drainage.
-    box(groups[1], 0, 0.12, 0, 11.8, 0.28, 5.4, mat.gravel);
-    box(groups[1], 0, 0.28, 0, 10.6, 0.08, 4.3, mat.subbase);
-    box(groups[1], 0, 0.36, -2.55, 12.2, 0.18, 0.26, mat.curb);
-    box(groups[1], 0, 0.36, 2.55, 12.2, 0.18, 0.26, mat.curb);
-    box(groups[1], 0, 0.34, -3.3, 12.5, 0.14, 1.2, mat.sidewalk);
-    box(groups[1], 0, 0.34, 3.3, 12.5, 0.14, 1.2, mat.sidewalk);
-    for (const x of [-4.2, -1.4, 1.4, 4.2]) {
-      box(groups[1], x, 0.47, -2.42, 0.55, 0.04, 0.2, mat.dark);
-      box(groups[1], x, 0.47, 2.42, 0.55, 0.04, 0.2, mat.dark);
+    box(groups[1], 0, 0.12, 0, 13.5, 0.26, 6.5, mat.gravel);
+    box(groups[1], 0, 0.28, 0, 12.2, 0.08, 5.45, mat.subbase);
+    box(groups[1], 0, 0.34, -3.05, 13.9, 0.16, 0.22, mat.curb);
+    box(groups[1], 0, 0.34, 3.05, 13.9, 0.16, 0.22, mat.curb);
+    box(groups[1], 0, 0.3, -3.78, 14.2, 0.12, 1.2, mat.sidewalk);
+    box(groups[1], 0, 0.3, 3.78, 14.2, 0.12, 1.2, mat.sidewalk);
+    box(groups[1], 0, 0.35, -3.27, 14.0, 0.035, 0.45, mat.cycle);
+    box(groups[1], 0, 0.35, 3.27, 14.0, 0.035, 0.45, mat.cycle);
+
+    // 03 — Enrobés, marquage et équipements de base.
+    box(groups[2], 0, 0.44, 0, 12.2, 0.14, 5.45, mat.asphalt);
+    for (let x = -5.3; x <= 5.3; x += 1.45) {
+      box(groups[2], x, 0.525, 0, 0.72, 0.018, 0.07, mat.white);
+    }
+    box(groups[2], 0, 0.525, -2.5, 11.4, 0.018, 0.075, mat.white);
+    box(groups[2], 0, 0.525, 2.5, 11.4, 0.018, 0.075, mat.white);
+    for (let i = 0; i < 8; i += 1) {
+      box(groups[2], 4.6, 0.53, -1.42 + i * 0.4, 1.15, 0.02, 0.15, mat.white);
     }
 
-    // 03 — Revêtement / marquage / éclairage public.
-    box(groups[2], 0, 0.46, 0, 10.6, 0.16, 4.3, mat.asphalt);
-    for (let x = -4.7; x <= 4.7; x += 1.45) box(groups[2], x, 0.56, 0, 0.72, 0.025, 0.08, mat.white);
-    box(groups[2], 0, 0.56, -1.95, 10.1, 0.025, 0.09, mat.white);
-    box(groups[2], 0, 0.56, 1.95, 10.1, 0.025, 0.09, mat.white);
-    for (let i = 0; i < 7; i++) box(groups[2], 3.8, 0.565, -1.25 + i * 0.42, 1.1, 0.025, 0.18, mat.white);
-    for (const x of [-4.6, -1.5, 1.6, 4.7]) {
-      cylinder(groups[2], x, 1.7, -3.75, 0.055, 2.8, mat.pole, 12);
-      box(groups[2], x + 0.22, 3.02, -3.75, 0.48, 0.06, 0.08, mat.dark);
-      cylinder(groups[2], x, 1.7, 3.75, 0.055, 2.8, mat.pole, 12);
-      box(groups[2], x - 0.22, 3.02, 3.75, 0.48, 0.06, 0.08, mat.dark);
-    }
-    for (let x = -5.2; x <= 5.2; x += 1.3) cylinder(groups[2], x, 0.72, 4.15, 0.055, 0.7, mat.dark, 12);
+    // 04 — Aménagement urbain final : giratoire compact et crédible.
+    const g4 = groups[3];
 
-    // 04 — Aménagement final vivant : rond-point, trafic, mobilier et végétation.
-    box(groups[3], 0, 0.28, -4.65, 13.0, 0.12, 1.5, mat.grass);
-    box(groups[3], 0, 0.28, 4.65, 13.0, 0.12, 1.5, mat.grass);
+    // Branches du carrefour et anneau circulable, à plat.
+    box(g4, 0, 0.46, 0, 13.8, 0.13, 4.25, mat.asphaltLight);
+    box(g4, 0, 0.46, 0, 4.25, 0.13, 10.6, mat.asphaltLight);
+    flatRing(g4, 1.35, 3.05, 0.535, mat.asphalt, 112);
 
-    // Rond-point central posé sur la chaussée existante.
-    const roundaboutRoad = new THREE.Mesh(new THREE.TorusGeometry(2.05, 0.72, 10, 64), mat.asphalt);
-    roundaboutRoad.rotation.x = Math.PI / 2;
-    roundaboutRoad.position.set(0, 0.585, 0);
-    roundaboutRoad.castShadow = true;
-    roundaboutRoad.receiveShadow = true;
-    groups[3].add(roundaboutRoad);
-    cylinder(groups[3], 0, 0.59, 0, 1.18, 0.18, mat.curb, 48);
-    cylinder(groups[3], 0, 0.72, 0, 1.02, 0.18, mat.grass, 48);
-    cylinder(groups[3], 0, 0.88, 0, 0.72, 0.12, mat.green, 48);
-    tree(groups[3], -0.28, 0.05, 0.5);
-    tree(groups[3], 0.3, -0.18, 0.44);
-    tree(groups[3], 0.2, 0.32, 0.38);
+    // Ilot central franchissable + cœur végétalisé.
+    flatRing(g4, 1.05, 1.35, 0.55, mat.curb, 96);
+    cylinder(g4, 0, 0.55, 0, 1.04, 0.13, mat.grass, 72);
+    cylinder(g4, 0, 0.64, 0, 0.63, 0.08, mat.green, 72);
+    for (const [x, z, s] of [
+      [-0.25, 0.18, 0.46],
+      [0.28, -0.12, 0.42],
+      [0.12, 0.38, 0.34],
+    ] as const) tree(g4, x, z, s);
 
-    // Marquages d'approche du rond-point.
-    for (const x of [-4.1, -3.55, 3.55, 4.1]) {
-      box(groups[3], x, 0.575, -0.65, 0.38, 0.02, 0.08, mat.white);
-      box(groups[3], x, 0.575, 0.65, 0.38, 0.02, 0.08, mat.white);
+    // Ilots séparateurs aux quatre entrées.
+    const splitter = (x: number, z: number, rot = 0) => {
+      const island = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.12, 0.36), mat.curb);
+      island.position.set(x, 0.58, z);
+      island.rotation.y = rot;
+      island.castShadow = true;
+      g4.add(island);
+      const green = new THREE.Mesh(new THREE.BoxGeometry(1.22, 0.08, 0.18), mat.green);
+      green.position.set(x, 0.67, z);
+      green.rotation.y = rot;
+      g4.add(green);
+    };
+    splitter(-4.3, 0);
+    splitter(4.3, 0);
+    splitter(0, -3.65, Math.PI / 2);
+    splitter(0, 3.65, Math.PI / 2);
+
+    // Lignes cédez-le-passage / guidage circulaire.
+    const dashRing = (radius: number, count: number) => {
+      for (let i = 0; i < count; i += 1) {
+        const a = (i / count) * Math.PI * 2;
+        const x = Math.cos(a) * radius;
+        const z = Math.sin(a) * radius;
+        const dash = box(g4, x, 0.555, z, 0.38, 0.018, 0.07, mat.white, -a);
+        dash.castShadow = false;
+      }
+    };
+    dashRing(2.35, 22);
+
+    // Passages piétons en retrait des entrées.
+    const zebraX = (x: number) => {
+      for (let i = -3; i <= 3; i += 1) box(g4, x, 0.555, i * 0.24, 0.62, 0.018, 0.12, mat.white);
+    };
+    const zebraZ = (z: number) => {
+      for (let i = -3; i <= 3; i += 1) box(g4, i * 0.24, 0.555, z, 0.12, 0.018, 0.62, mat.white);
+    };
+    zebraX(-5.35);
+    zebraX(5.35);
+    zebraZ(-4.65);
+    zebraZ(4.65);
+
+    // Trottoirs, pistes cyclables et espaces verts périphériques.
+    box(g4, 0, 0.3, -4.55, 14.0, 0.1, 1.18, mat.sidewalk);
+    box(g4, 0, 0.3, 4.55, 14.0, 0.1, 1.18, mat.sidewalk);
+    box(g4, -6.45, 0.3, 0, 1.18, 0.1, 8.2, mat.sidewalk);
+    box(g4, 6.45, 0.3, 0, 1.18, 0.1, 8.2, mat.sidewalk);
+    box(g4, 0, 0.355, -4.02, 13.5, 0.025, 0.35, mat.cycle);
+    box(g4, 0, 0.355, 4.02, 13.5, 0.025, 0.35, mat.cycle);
+    box(g4, -6.0, 0.355, 0, 0.35, 0.025, 7.7, mat.cycle);
+    box(g4, 6.0, 0.355, 0, 0.35, 0.025, 7.7, mat.cycle);
+
+    // Plantation régulière, avec recul par rapport aux visibilités du giratoire.
+    for (const x of [-5.6, -3.6, 3.6, 5.6]) {
+      tree(g4, x, -5.0, 0.7);
+      tree(g4, x, 5.0, 0.68);
+    }
+    for (const z of [-3.0, 3.0]) {
+      tree(g4, -6.8, z, 0.64);
+      tree(g4, 6.8, z, 0.64);
     }
 
-    for (const x of [-5.1, -2.4, 3.1, 5.2]) {
-      tree(groups[3], x, -4.7, 0.8);
-      tree(groups[3], x - 0.35, 4.75, 0.75);
-    }
-    for (const x of [-3.2, 2.5]) {
-      box(groups[3], x, 0.55, 4.35, 1.25, 0.12, 0.45, mat.wood);
-      box(groups[3], x, 0.86, 4.55, 1.25, 0.55, 0.08, mat.dark);
-    }
-    for (const x of [-1.2, 4.2]) {
-      box(groups[3], x, 0.42, -4.1, 1.8, 0.3, 0.7, mat.curb);
-      box(groups[3], x, 0.62, -4.1, 1.55, 0.15, 0.5, mat.green);
+    // Eclairage public sobre et cohérent.
+    const lamp = (x: number, z: number, rot = 0) => {
+      cylinder(g4, x, 1.55, z, 0.045, 2.5, mat.pole, 12);
+      box(g4, x + Math.cos(rot) * 0.18, 2.74, z + Math.sin(rot) * 0.18, 0.38, 0.05, 0.07, mat.dark, -rot);
+    };
+    for (const [x, z, r] of [
+      [-5.4, -4.2, 0],
+      [-1.8, -4.2, 0],
+      [1.8, -4.2, Math.PI],
+      [5.4, -4.2, Math.PI],
+      [-5.4, 4.2, 0],
+      [-1.8, 4.2, 0],
+      [1.8, 4.2, Math.PI],
+      [5.4, 4.2, Math.PI],
+    ] as const) lamp(x, z, r);
+
+    // Signalisation du giratoire et cédez-le-passage.
+    const sign = (x: number, z: number, rot = 0) => {
+      cylinder(g4, x, 0.95, z, 0.025, 1.35, mat.pole, 10);
+      const panel = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.04, 28), mat.signBlue);
+      panel.rotation.z = Math.PI / 2;
+      panel.rotation.y = rot;
+      panel.position.set(x, 1.55, z);
+      g4.add(panel);
+    };
+    sign(-4.65, 1.05, Math.PI / 2);
+    sign(4.65, -1.05, -Math.PI / 2);
+    sign(1.05, -3.95, 0);
+    sign(-1.05, 3.95, Math.PI);
+
+    // Mobilier urbain en dehors des trajectoires piétonnes.
+    for (const [x, z, r] of [
+      [-3.0, 4.75, 0],
+      [3.0, -4.75, Math.PI],
+    ] as const) {
+      box(g4, x, 0.48, z, 1.25, 0.1, 0.4, mat.wood, r);
+      box(g4, x, 0.78, z + (r === 0 ? 0.16 : -0.16), 1.25, 0.45, 0.06, mat.dark, r);
     }
 
-    const walkers = [
-      person(groups[3], -4.4, 3.15, mat.blue, 0.95),
-      person(groups[3], -0.8, -3.15, mat.red, 0.9),
-      person(groups[3], 2.1, 3.05, mat.yellow, 0.85),
+    const pedestrians = [
+      person(g4, -5.2, 3.75, mat.blue, 0.9),
+      person(g4, 5.1, -3.65, mat.red, 0.88),
+      person(g4, -2.5, -4.55, mat.yellow, 0.84),
+      person(g4, 2.6, 4.55, mat.blue, 0.82),
     ];
-    const children = [
-      person(groups[3], 4.4, -4.3, mat.yellow, 0.64),
-      person(groups[3], 5.0, -4.0, mat.blue, 0.62),
-    ];
-    const ball = sphere(groups[3], 4.7, 0.48, -4.45, 0.18, mat.red);
-    box(groups[3], 4.6, 0.33, -4.55, 2.6, 0.08, 1.4, mat.green);
-    for (let i = 0; i < 5; i++) box(groups[3], 3.7 + i * 0.45, 0.43, -4.25, 0.28, 0.06, 0.4, mat.curb);
 
-    // Véhicules animés : deux sur le giratoire et deux sur les voies d'approche.
-    const roundaboutCars = [
-      { mesh: car(groups[3], mat.carWhite, 0.7), angle: 0.2, speed: 0.42, radius: 2.08 },
-      { mesh: car(groups[3], mat.carRed, 0.66), angle: Math.PI + 0.7, speed: 0.34, radius: 2.08 },
+    // Trafic final : voitures sur l'anneau + approches.
+    const cars = [
+      car(g4, mat.carWhite, 0.75),
+      car(g4, mat.carBlue, 0.72),
+      car(g4, mat.carRed, 0.7),
+      car(g4, mat.carGray, 0.74),
+      car(g4, mat.carWhite, 0.68),
     ];
-    const laneCars = [
-      { mesh: car(groups[3], mat.carBlue, 0.68), x: -5.1, z: -0.78, speed: 1.05 },
-      { mesh: car(groups[3], mat.silver, 0.63), x: 5.0, z: 0.82, speed: -0.92 },
-    ];
-    laneCars.forEach((entry) => {
-      entry.mesh.position.set(entry.x, 0.61, entry.z);
-      entry.mesh.rotation.y = entry.speed > 0 ? Math.PI / 2 : -Math.PI / 2;
-    });
 
-    const ground = new THREE.Mesh(new THREE.PlaneGeometry(220, 220), new THREE.ShadowMaterial({ opacity: 0.2 }));
+    const ground = new THREE.Mesh(
+      new THREE.PlaneGeometry(220, 220),
+      new THREE.ShadowMaterial({ opacity: 0.16 }),
+    );
     ground.rotation.x = -Math.PI / 2;
-    ground.position.y = -0.46;
+    ground.position.y = -0.48;
     ground.receiveShadow = true;
     scene.add(ground);
 
-    scene.add(new THREE.HemisphereLight("#fff5e7", "#41584d", 2.8));
-    const sun = new THREE.DirectionalLight("#fff0d9", 4.1);
-    sun.position.set(-9, 15, 10);
+    scene.add(new THREE.HemisphereLight("#f8f4ea", "#435247", 2.2));
+    const sun = new THREE.DirectionalLight("#fff2df", 3.3);
+    sun.position.set(-8, 16, 11);
     sun.castShadow = true;
     sun.shadow.mapSize.set(1024, 1024);
     Object.assign(sun.shadow.camera, { left: -15, right: 15, top: 15, bottom: -15 });
-    sun.shadow.bias = -0.002;
+    sun.shadow.bias = -0.0015;
     scene.add(sun);
 
     const resize = () => {
-      const w = container.clientWidth, h = container.clientHeight;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
       if (!w || !h) return;
       renderer.setSize(w, h);
       camera.aspect = w / h;
@@ -269,7 +413,7 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
     let raf = 0;
     let visible = true;
     let previous = performance.now();
-    let angle = -0.32;
+    let angle = -0.35;
     let dragging = false;
     let lastX = 0;
     let dragVelocity = 0;
@@ -281,19 +425,22 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
       renderer.domElement.setPointerCapture?.(e.pointerId);
       renderer.domElement.style.cursor = "grabbing";
     };
+
     const move = (e: PointerEvent) => {
       if (!dragging) return;
       const dx = e.clientX - lastX;
       lastX = e.clientX;
-      const delta = dx * 0.008;
+      const delta = dx * 0.007;
       angle += delta;
       dragVelocity = delta;
     };
+
     const up = (e: PointerEvent) => {
       dragging = false;
       renderer.domElement.releasePointerCapture?.(e.pointerId);
       renderer.domElement.style.cursor = "grab";
     };
+
     renderer.domElement.style.cursor = "grab";
     renderer.domElement.style.touchAction = "pan-y";
     renderer.domElement.addEventListener("pointerdown", down);
@@ -312,43 +459,36 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
         const next = THREE.MathUtils.damp(g.scale.y, target, 8, dt);
         g.scale.y = Math.max(0.001, next);
         g.visible = next > 0.01;
-        g.position.y = (1 - next) * -0.32;
+        g.position.y = (1 - next) * -0.26;
       });
 
       if (!dragging) {
-        angle += (0.032 + dragVelocity) * dt;
-        dragVelocity = THREE.MathUtils.damp(dragVelocity, 0, 3.5, dt);
+        angle += (0.026 + dragVelocity) * dt;
+        dragVelocity = THREE.MathUtils.damp(dragVelocity, 0, 3.4, dt);
       }
       works.rotation.y = angle;
-      works.position.y = 0.06 + Math.sin(now * 0.001) * 0.055;
+      works.position.y = 0.035 + Math.sin(now * 0.0009) * 0.035;
 
       if (phaseRef.current === 3) {
-        walkers.forEach((p, i) => {
-          p.position.x += dt * (i % 2 === 0 ? 0.32 : -0.26);
-          if (p.position.x > 5.4) p.position.x = -5.4;
-          if (p.position.x < -5.4) p.position.x = 5.4;
-          p.rotation.y = i % 2 === 0 ? Math.PI / 2 : -Math.PI / 2;
-        });
-        children.forEach((p, i) => {
-          p.position.y = 0.35 + Math.sin(now * 0.004 + i * 1.4) * 0.025;
-          p.rotation.y = Math.sin(now * 0.0018 + i) * 0.3;
-        });
-        ball.position.y = 0.48 + Math.abs(Math.sin(now * 0.003)) * 0.12;
+        const t = now * 0.00042;
 
-        roundaboutCars.forEach((entry) => {
-          entry.angle += dt * entry.speed;
-          entry.mesh.position.set(
-            Math.cos(entry.angle) * entry.radius,
-            0.61,
-            Math.sin(entry.angle) * entry.radius,
-          );
-          entry.mesh.rotation.y = -entry.angle;
+        // Deux véhicules circulent réellement dans le giratoire.
+        [0, 1, 2].forEach((idx) => {
+          const a = t * (0.85 + idx * 0.07) + idx * 2.1;
+          const radius = idx === 1 ? 2.18 : 2.5;
+          cars[idx].position.set(Math.cos(a) * radius, 0.61, Math.sin(a) * radius);
+          cars[idx].rotation.y = -a + Math.PI / 2;
         });
 
-        laneCars.forEach((entry) => {
-          entry.mesh.position.x += entry.speed * dt;
-          if (entry.speed > 0 && entry.mesh.position.x > 5.7) entry.mesh.position.x = -5.7;
-          if (entry.speed < 0 && entry.mesh.position.x < -5.7) entry.mesh.position.x = 5.7;
+        // Deux véhicules sur les branches d'approche.
+        const xLoop = ((t * 3.6) % 12.2) - 6.1;
+        cars[3].position.set(xLoop, 0.61, -1.05);
+        cars[3].rotation.y = 0;
+        cars[4].position.set(-1.0, 0.61, -xLoop * 0.72);
+        cars[4].rotation.y = Math.PI / 2;
+
+        pedestrians.forEach((p, i) => {
+          p.position.y = 0.38 + Math.sin(now * 0.003 + i) * 0.018;
         });
       }
 
@@ -356,23 +496,33 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
       raf = requestAnimationFrame(render);
     };
 
-    function start() {
+    const start = () => {
       if (!raf && visible && !document.hidden) {
         previous = performance.now();
         raf = requestAnimationFrame(render);
       }
-    }
+    };
     redraw.current = start;
 
     const io = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
       if (visible) start();
-      else { cancelAnimationFrame(raf); raf = 0; }
+      else {
+        cancelAnimationFrame(raf);
+        raf = 0;
+      }
     });
     io.observe(container);
-    const resume = () => { if (!document.hidden) start(); };
+
+    const resume = () => {
+      if (!document.hidden) start();
+    };
     document.addEventListener("visibilitychange", resume);
-    const lost = (event: Event) => { event.preventDefault(); onFailure(); };
+
+    const lost = (event: Event) => {
+      event.preventDefault();
+      onFailure();
+    };
     renderer.domElement.addEventListener("webglcontextlost", lost);
     start();
 
@@ -390,8 +540,8 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
       scene.traverse((o) => {
         if (o instanceof THREE.Mesh) {
           o.geometry.dispose();
-          const mats = Array.isArray(o.material) ? o.material : [o.material];
-          mats.forEach((m) => m.dispose());
+          const materials = Array.isArray(o.material) ? o.material : [o.material];
+          materials.forEach((m) => m.dispose());
         }
       });
       renderer.dispose();
@@ -399,5 +549,12 @@ export default function PublicWorksScene({ phase = 3, onFailure }: { phase?: num
     };
   }, [onFailure]);
 
-  return <div ref={host} className="building-canvas" role="img" aria-label={`Travaux publics et aménagement routier en trois dimensions — phase ${phase + 1} sur 4`} />;
+  return (
+    <div
+      ref={host}
+      className="building-canvas"
+      role="img"
+      aria-label={`Travaux publics et aménagement urbain en trois dimensions — phase ${phase + 1} sur 4`}
+    />
+  );
 }
