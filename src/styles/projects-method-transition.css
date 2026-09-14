@@ -1,0 +1,110 @@
+.projects-method-transition {
+  position: relative;
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(10,92,61,.035) 1px, transparent 1px),
+    linear-gradient(rgba(10,92,61,.035) 1px, transparent 1px),
+    #f5f5ee;
+  background-size: 28px 28px;
+  border-top: 1px solid rgba(10,92,61,.14);
+  border-bottom: 1px solid rgba(10,92,61,.18);
+}
+
+.projects-method-transition::before,
+.projects-method-transition::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 18%;
+  pointer-events: none;
+}
+
+.projects-method-transition::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(10,92,61,.11), transparent);
+  clip-path: polygon(0 0, 100% 0, 78% 100%, 0 100%);
+}
+
+.projects-method-transition::after {
+  right: 0;
+  background: linear-gradient(270deg, rgba(10,92,61,.09), transparent);
+  clip-path: polygon(22% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.projects-method-transition__line {
+  width: min(36vw, 420px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #0a5c3d 18%, #0a5c3d 82%, transparent);
+}
+
+.projects-method-transition__badge {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 88px;
+  justify-content: center;
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: #0a5c3d;
+  color: #fff;
+  box-shadow: 0 10px 28px rgba(10,92,61,.18);
+  font: 700 10px/1 Inter, Arial, sans-serif;
+  letter-spacing: .08em;
+}
+
+.projects-method-transition__badge i {
+  width: 18px;
+  height: 1px;
+  background: rgba(255,255,255,.62);
+}
+
+.projects-method-transition__label {
+  position: relative;
+  z-index: 1;
+  font: 700 10px/1 Inter, Arial, sans-serif;
+  letter-spacing: .16em;
+  color: #173d31;
+  white-space: nowrap;
+}
+
+.theme-dark .projects-method-transition {
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+    #0a1712;
+  background-size: 28px 28px;
+  border-color: rgba(255,255,255,.08);
+}
+
+.theme-dark .projects-method-transition__label {
+  color: #e9f3ed;
+}
+
+@media (max-width: 760px) {
+  .projects-method-transition {
+    height: 62px;
+    gap: 10px;
+  }
+
+  .projects-method-transition__line {
+    width: 18vw;
+  }
+
+  .projects-method-transition__label {
+    font-size: 8px;
+    letter-spacing: .11em;
+  }
+
+  .projects-method-transition__badge {
+    min-width: 76px;
+    padding: 8px 10px;
+  }
+}
