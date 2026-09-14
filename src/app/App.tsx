@@ -25,6 +25,7 @@ import FooterEnhancer from "./components/premium/FooterEnhancer";
 import CaseSectionVideoBackground from "./components/premium/CaseSectionVideoBackground";
 import MethodSectionVideoBackground from "./components/premium/MethodSectionVideoBackground";
 import ContactSectionPhotoGuard from "./components/premium/ContactSectionPhotoGuard";
+import HomeCopyGuard from "./components/premium/HomeCopyGuard";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
 import "../styles/dark-logo.css";
@@ -37,6 +38,7 @@ import "../styles/principles-center.css";
 import "../styles/case-video-background.css";
 import "../styles/contact-section-photo.css";
 import "../styles/accordion-premium.css";
+import "../styles/home-copy-polish.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
@@ -181,6 +183,7 @@ export default function App() {
 
         <Router>
           <ScrollToTop />
+          <HomeCopyGuard />
           <MethodAccordionGuard />
           <TeamProfilesGuard />
           <FooterEnhancer />
