@@ -50,9 +50,14 @@ export default function PartnersShowcase() {
       return;
     }
 
+    let cancelled = false;
+    const timers: number[] = [];
+
     const ensureHost = () => {
+      if (cancelled) return true;
+
       const contact = document.querySelector<HTMLElement>("#contact");
-      if (!contact) return;
+      if (!contact) return false;
 
       let nextHost = document.querySelector<HTMLElement>(".partners-portal-host");
       if (!nextHost) {
@@ -69,14 +74,20 @@ export default function PartnersShowcase() {
         contact.parentElement?.insertBefore(nextHost, contactTransition ?? contact);
       }
 
-      setHost((current) => (current === nextHost ? current : nextHost));
+      setHost(nextHost);
+      return true;
     };
 
-    ensureHost();
-    const observer = new MutationObserver(ensureHost);
-    observer.observe(document.body, { childList: true, subtree: true });
+    if (!ensureHost()) {
+      [60, 160, 320, 600, 1000].forEach((delay) => {
+        timers.push(window.setTimeout(ensureHost, delay));
+      });
+    }
 
-    return () => observer.disconnect();
+    return () => {
+      cancelled = true;
+      timers.forEach((timer) => window.clearTimeout(timer));
+    };
   }, [pathname]);
 
   if (!host) return null;
