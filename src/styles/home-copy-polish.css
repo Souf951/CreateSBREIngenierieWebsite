@@ -40,6 +40,52 @@
   line-height: 1.8;
 }
 
+/* Section identifiers: stronger hierarchy and a clear SBRE navigation rhythm. */
+.premium-site .section-heading > .eyebrow,
+.premium-site .method-intro > .eyebrow {
+  display: inline-flex;
+  align-items: center;
+  width: max-content;
+  min-height: 34px;
+  padding: 8px 14px 7px;
+  border-radius: 999px;
+  background: var(--forest);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .11em;
+  line-height: 1.2;
+  box-shadow: 0 8px 22px rgba(10, 92, 61, .14);
+}
+
+.premium-site .section-heading > .eyebrow {
+  margin-bottom: 26px;
+}
+
+.premium-site .method-intro > .eyebrow {
+  margin-bottom: 22px;
+}
+
+/* The case-study heading reads more confidently without the disclaimer block. */
+.premium-site .case-section .section-heading > p:last-child {
+  display: none;
+}
+
+.premium-site .case-section .section-heading {
+  grid-template-columns: 1fr;
+}
+
+.premium-site .case-section .section-heading h2 {
+  max-width: 900px;
+}
+
+.theme-dark .premium-site .section-heading > .eyebrow,
+.theme-dark .premium-site .method-intro > .eyebrow {
+  background: #139b6c;
+  color: #f8fbf8;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .24);
+}
+
 @media (max-width: 800px) {
   .premium-site .hero-copy h1 {
     font-size: clamp(42px, 12vw, 64px);
@@ -48,5 +94,12 @@
   .premium-site .hero-description,
   .premium-site #expertises .section-heading > p:last-child {
     font-size: 14px;
+  }
+
+  .premium-site .section-heading > .eyebrow,
+  .premium-site .method-intro > .eyebrow {
+    min-height: 32px;
+    padding: 8px 12px 7px;
+    font-size: 11px;
   }
 }
