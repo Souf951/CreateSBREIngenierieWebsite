@@ -29,7 +29,7 @@ const methodSteps = [
 
 export default function MethodAccordionGuard() {
   useEffect(() => {
-    const wireSection = (section: HTMLElement) => {
+    const wireMethodSection = (section: HTMLElement) => {
       if (section.dataset.sbreMethodEnhanced === "true") return;
       section.dataset.sbreMethodEnhanced = "true";
 
@@ -68,35 +68,45 @@ export default function MethodAccordionGuard() {
         if (number) number.textContent = `0${index + 1}`;
         if (body) body.textContent = step.body;
         if (foot) foot.textContent = step.foot;
-        if (plus) plus.textContent = item.open ? "×" : "+";
+        if (plus) plus.setAttribute("aria-hidden", "true");
 
-        const onToggle = () => {
-          if (plus) plus.textContent = item.open ? "×" : "+";
+        item.addEventListener("toggle", () => {
           if (!item.open) return;
           details.forEach((other) => {
-            if (other !== item) other.open = false;
+            if (other !== item && other.open) other.open = false;
           });
-        };
-        item.addEventListener("toggle", onToggle);
+        });
       });
 
-      // Start with one clear step only.
       details.forEach((item, index) => {
         item.open = index === 0;
-        const plus = item.querySelector<HTMLElement>("summary b");
-        if (plus) plus.textContent = index === 0 ? "×" : "+";
+      });
+    };
+
+    const wireFaqSection = (section: HTMLElement) => {
+      if (section.dataset.sbreFaqEnhanced === "true") return;
+      section.dataset.sbreFaqEnhanced = "true";
+
+      const details = Array.from(section.querySelectorAll<HTMLDetailsElement>("details"));
+      details.forEach((item) => {
+        item.addEventListener("toggle", () => {
+          if (!item.open) return;
+          details.forEach((other) => {
+            if (other !== item && other.open) other.open = false;
+          });
+        });
       });
     };
 
     const apply = () => {
-      const section = document.querySelector<HTMLElement>(".method-section");
-      if (section) wireSection(section);
+      const method = document.querySelector<HTMLElement>(".method-section");
+      const faq = document.querySelector<HTMLElement>(".faq-section");
+      if (method) wireMethodSection(method);
+      if (faq) wireFaqSection(faq);
     };
 
     apply();
 
-    // Route changes remount HomePage without remounting this global helper.
-    // Enhance each newly mounted section once instead of relying on timers.
     const observer = new MutationObserver(() => apply());
     observer.observe(document.body, { childList: true, subtree: true });
 
