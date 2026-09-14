@@ -8,6 +8,7 @@ export default function ContactSectionPhotoGuard() {
     if (pathname !== "/") return;
 
     let cancelled = false;
+    let frame = 0;
     const background = `url("${import.meta.env.BASE_URL}sbre-office-contact.webp")`;
 
     const apply = () => {
@@ -19,22 +20,35 @@ export default function ContactSectionPhotoGuard() {
       if (section.style.getPropertyValue("--contact-bg") !== background) {
         section.style.setProperty("--contact-bg", background);
       }
-      section.classList.add("contact-section-has-photo");
+
+      if (!section.classList.contains("contact-section-has-photo")) {
+        section.classList.add("contact-section-has-photo");
+      }
+    };
+
+    const scheduleApply = () => {
+      if (cancelled || frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        apply();
+      });
     };
 
     apply();
 
-    const observer = new MutationObserver(() => apply());
+    // Only watch DOM mounting/unmounting. Watching every class/style mutation on
+    // the whole page causes a feedback storm with animated sections and can hang
+    // Chromium's renderer.
+    const observer = new MutationObserver(scheduleApply);
     observer.observe(document.body, {
       childList: true,
       subtree: true,
-      attributes: true,
-      attributeFilter: ["class", "style"],
     });
 
     return () => {
       cancelled = true;
       observer.disconnect();
+      if (frame) window.cancelAnimationFrame(frame);
     };
   }, [pathname]);
 
