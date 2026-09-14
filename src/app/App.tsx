@@ -44,7 +44,7 @@ const ProjectMicroLogements = lazy(
 const ProjectVillaPrangins = lazy(
   () => import("./components/ProjectVillaPrangins"),
 );
-const BuildingModelLab = lazy(() => import("./components/BuildingModelLab"));
+const BuildingModelLab = lazy(() => import("./components/BuildingModelLiftLab"));
 
 function ScrollToTop() {
   const { pathname, key, hash } = useLocation();
