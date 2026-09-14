@@ -28,7 +28,7 @@ export default function ExperiencesResultsBackground() {
   useEffect(() => {
     const timer = window.setInterval(() => {
       setIndex((current) => (current + 1) % images.length);
-    }, 1000);
+    }, 4000);
 
     return () => window.clearInterval(timer);
   }, []);
