@@ -1,0 +1,39 @@
+.case-section .case-image {
+  isolation: isolate;
+}
+
+.case-section .case-image.has-sbre-case-video > img {
+  opacity: 0;
+}
+
+.sbre-case-card-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 50%;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .35s ease;
+  background: #173d31;
+}
+
+.sbre-case-card-video.is-active {
+  opacity: 1;
+}
+
+.case-section .case-image::after {
+  z-index: 1;
+}
+
+.case-section .case-image > div {
+  z-index: 2;
+}
+
+@media (max-width: 800px) {
+  .sbre-case-card-video {
+    object-position: center center;
+  }
+}
