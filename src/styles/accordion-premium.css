@@ -1,0 +1,134 @@
+/* Premium accordion treatment for Method + FAQ. */
+.method-list details,
+.faq-section details {
+  transition: background .35s ease, border-color .35s ease, transform .35s ease;
+}
+
+.method-list summary,
+.faq-section summary {
+  position: relative;
+  transition: color .25s ease, padding-left .3s ease;
+}
+
+.method-list details:hover,
+.faq-section details:hover {
+  background: rgba(255,255,255,.035);
+}
+
+.method-list details[open] {
+  background: linear-gradient(90deg, rgba(214,230,176,.09), rgba(255,255,255,.025) 70%, transparent);
+  border-color: rgba(214,230,176,.48);
+}
+
+.method-list details[open] summary {
+  padding-left: 14px;
+}
+
+.method-list summary b,
+.faq-section summary span {
+  position: relative;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.36);
+  font-size: 0 !important;
+  overflow: hidden;
+  transition: border-color .3s ease, background .3s ease, transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease;
+}
+
+.method-list summary b::before,
+.method-list summary b::after,
+.faq-section summary span::before,
+.faq-section summary span::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 12px;
+  height: 1.5px;
+  background: currentColor;
+  border-radius: 99px;
+  transform: translate(-50%, -50%);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1), opacity .25s ease;
+}
+
+.method-list summary b::after,
+.faq-section summary span::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.method-list details[open] summary b {
+  background: rgba(214,230,176,.14);
+  border-color: rgba(214,230,176,.9);
+  box-shadow: 0 0 0 5px rgba(214,230,176,.06);
+  transform: rotate(180deg);
+}
+
+.method-list details[open] summary b::after,
+.faq-section details[open] summary span::after {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(90deg) scale(.2);
+}
+
+.method-list details > div {
+  animation: methodReveal .34s ease both;
+}
+
+@keyframes methodReveal {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* FAQ receives a lighter editorial version of the same language. */
+.faq-section details {
+  border-top-color: rgba(23,61,49,.16);
+}
+
+.faq-section details[open] {
+  background: linear-gradient(90deg, rgba(10,92,61,.055), rgba(10,92,61,.015) 58%, transparent);
+  border-color: rgba(10,92,61,.28);
+}
+
+.faq-section summary span {
+  width: 32px;
+  height: 32px;
+  color: var(--forest);
+  border-color: rgba(10,92,61,.32);
+}
+
+.faq-section details[open] summary span {
+  background: var(--forest);
+  color: white;
+  border-color: var(--forest);
+  box-shadow: 0 8px 24px rgba(10,92,61,.14);
+}
+
+.faq-section details[open] summary {
+  color: var(--forest);
+}
+
+.theme-dark .faq-section details:hover,
+.theme-dark .faq-section details[open] {
+  background: rgba(255,255,255,.035);
+}
+
+.theme-dark .faq-section summary span {
+  color: #d6e6b0;
+  border-color: rgba(214,230,176,.42);
+}
+
+.theme-dark .faq-section details[open] summary span {
+  background: #d6e6b0;
+  color: #173d31;
+}
+
+@media (max-width: 800px) {
+  .method-list summary b,
+  .faq-section summary span {
+    width: 30px;
+    height: 30px;
+  }
+}
