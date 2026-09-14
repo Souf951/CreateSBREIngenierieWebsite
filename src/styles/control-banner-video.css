@@ -26,6 +26,7 @@
   z-index: -1;
   pointer-events: none;
   background:
+    linear-gradient(180deg, transparent 72%, rgba(247,247,240,.18) 84%, rgba(247,247,240,.62) 94%, rgba(247,247,240,.92) 100%),
     linear-gradient(90deg, rgba(5, 13, 10, 0.72) 0%, rgba(5, 13, 10, 0.5) 44%, rgba(5, 13, 10, 0.28) 72%, rgba(5, 13, 10, 0.42) 100%),
     linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.34));
 }
@@ -34,6 +35,13 @@
 .control-banner .image-caption {
   position: relative;
   z-index: 1;
+}
+
+.theme-dark .control-banner::after {
+  background:
+    linear-gradient(180deg, transparent 72%, rgba(7,14,11,.12) 84%, rgba(7,14,11,.52) 95%, rgba(7,14,11,.88) 100%),
+    linear-gradient(90deg, rgba(5, 13, 10, 0.72) 0%, rgba(5, 13, 10, 0.5) 44%, rgba(5, 13, 10, 0.28) 72%, rgba(5, 13, 10, 0.42) 100%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.34));
 }
 
 @media (prefers-reduced-motion: reduce) {
