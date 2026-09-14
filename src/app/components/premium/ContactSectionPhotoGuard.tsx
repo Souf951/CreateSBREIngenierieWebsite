@@ -8,27 +8,33 @@ export default function ContactSectionPhotoGuard() {
     if (pathname !== "/") return;
 
     let cancelled = false;
-    let timer = 0;
+    const background = `url("${import.meta.env.BASE_URL}sbre-office-contact.webp")`;
 
     const apply = () => {
       if (cancelled) return;
-      const section = document.querySelector<HTMLElement>(".contact-section");
-      if (!section) {
-        timer = window.setTimeout(apply, 80);
-        return;
-      }
 
-      section.style.setProperty(
-        "--contact-bg",
-        `url("${import.meta.env.BASE_URL}sbre-office-contact.webp")`,
-      );
+      const section = document.querySelector<HTMLElement>(".contact-section");
+      if (!section) return;
+
+      if (section.style.getPropertyValue("--contact-bg") !== background) {
+        section.style.setProperty("--contact-bg", background);
+      }
+      section.classList.add("contact-section-has-photo");
     };
 
     apply();
 
+    const observer = new MutationObserver(() => apply());
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["class", "style"],
+    });
+
     return () => {
       cancelled = true;
-      window.clearTimeout(timer);
+      observer.disconnect();
     };
   }, [pathname]);
 
