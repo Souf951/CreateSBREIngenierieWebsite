@@ -10,8 +10,7 @@
   transition: color .25s ease, padding-left .3s ease;
 }
 
-.method-list details:hover,
-.faq-section details:hover {
+.method-list details:hover {
   background: rgba(255,255,255,.035);
 }
 
@@ -82,42 +81,172 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* FAQ receives a lighter editorial version of the same language. */
+/* FAQ — same visual language as the SBRE method section, isolated to this block. */
+.faq-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 500px;
+  display: grid;
+  grid-template-columns: minmax(300px, .82fr) minmax(520px, 1.18fr);
+  grid-auto-rows: min-content;
+  column-gap: clamp(58px, 7vw, 110px);
+  align-content: center;
+  padding-top: 82px !important;
+  padding-bottom: 82px !important;
+  counter-reset: faq-item;
+  background:
+    radial-gradient(circle at 16% 18%, rgba(214,230,176,.12), transparent 34%),
+    linear-gradient(118deg, #153f32 0%, #10372c 44%, #0b2d24 100%);
+  color: #f4f6ef;
+}
+
+.faq-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  opacity: .17;
+  background-image:
+    linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+  background-size: 34px 34px;
+  mask-image: linear-gradient(90deg, rgba(0,0,0,.85), transparent 72%);
+}
+
+.faq-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(5,31,24,.08), rgba(5,31,24,.30));
+}
+
+.faq-section > .eyebrow {
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  align-self: start;
+  margin: 0 !important;
+  padding-top: 5px;
+  color: #d6e6b0;
+  font-size: 12px;
+  letter-spacing: .12em;
+  line-height: 1.25;
+}
+
+.faq-section > .eyebrow::after {
+  content: "Des réponses claires.\A Avant de démarrer.";
+  display: block;
+  max-width: 520px;
+  margin-top: 36px;
+  white-space: pre-line;
+  color: #fff;
+  font-size: clamp(42px, 4.2vw, 66px);
+  font-weight: 520;
+  line-height: .98;
+  letter-spacing: -.055em;
+  text-transform: none;
+}
+
 .faq-section details {
-  border-top-color: rgba(23,61,49,.16);
+  grid-column: 2;
+  margin: 0;
+  padding: 0;
+  border-top: 1px solid rgba(255,255,255,.23);
+  border-bottom: 0;
+  background: transparent;
+  color: #fff;
+  counter-increment: faq-item;
+}
+
+.faq-section details:last-of-type {
+  border-bottom: 1px solid rgba(255,255,255,.23);
+}
+
+.faq-section details:hover {
+  background: rgba(255,255,255,.035);
 }
 
 .faq-section details[open] {
-  background: linear-gradient(90deg, rgba(10,92,61,.055), rgba(10,92,61,.015) 58%, transparent);
-  border-color: rgba(10,92,61,.28);
+  background: linear-gradient(90deg, rgba(214,230,176,.095), rgba(255,255,255,.025) 72%, transparent);
+  border-color: rgba(214,230,176,.48);
+}
+
+.faq-section summary {
+  display: grid;
+  grid-template-columns: 38px minmax(0, 1fr) 38px;
+  align-items: center;
+  gap: 18px;
+  min-height: 84px;
+  padding: 18px 4px 18px 0;
+  list-style: none;
+  cursor: pointer;
+  color: #fff;
+  font-size: clamp(19px, 1.7vw, 25px);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -.025em;
+}
+
+.faq-section summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-section summary::before {
+  content: "0" counter(faq-item);
+  display: grid;
+  place-items: center;
+  color: #d6e6b0;
+  font: 700 11px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: .02em;
 }
 
 .faq-section summary span {
-  width: 32px;
-  height: 32px;
-  color: var(--forest);
-  border-color: rgba(10,92,61,.32);
-}
-
-.faq-section details[open] summary span {
-  background: var(--forest);
-  color: white;
-  border-color: var(--forest);
-  box-shadow: 0 8px 24px rgba(10,92,61,.14);
+  justify-self: end;
+  width: 34px;
+  height: 34px;
+  color: #d6e6b0;
+  border-color: rgba(214,230,176,.54);
 }
 
 .faq-section details[open] summary {
-  color: var(--forest);
+  color: #fff;
+}
+
+.faq-section details[open] summary span {
+  background: #d6e6b0;
+  color: #173d31;
+  border-color: #d6e6b0;
+  box-shadow: 0 0 0 5px rgba(214,230,176,.07);
+  transform: rotate(180deg);
+}
+
+.faq-section details p {
+  max-width: 690px;
+  margin: 0 50px 0 56px;
+  padding: 0 0 28px !important;
+  color: rgba(245,248,242,.76) !important;
+  font-size: 14px !important;
+  line-height: 1.75;
+  animation: methodReveal .34s ease both;
+}
+
+.theme-dark .faq-section {
+  background:
+    radial-gradient(circle at 16% 18%, rgba(214,230,176,.09), transparent 34%),
+    linear-gradient(118deg, #123529 0%, #0e2d24 46%, #091f19 100%);
 }
 
 .theme-dark .faq-section details:hover,
 .theme-dark .faq-section details[open] {
-  background: rgba(255,255,255,.035);
+  background: linear-gradient(90deg, rgba(214,230,176,.08), rgba(255,255,255,.018) 72%, transparent);
 }
 
 .theme-dark .faq-section summary span {
   color: #d6e6b0;
-  border-color: rgba(214,230,176,.42);
+  border-color: rgba(214,230,176,.54);
 }
 
 .theme-dark .faq-section details[open] summary span {
@@ -125,10 +254,57 @@
   color: #173d31;
 }
 
+@media (max-width: 980px) {
+  .faq-section {
+    grid-template-columns: 1fr;
+    gap: 46px;
+    min-height: 0;
+  }
+
+  .faq-section > .eyebrow {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .faq-section > .eyebrow::after {
+    max-width: 680px;
+    font-size: clamp(42px, 8vw, 64px);
+  }
+
+  .faq-section details {
+    grid-column: 1;
+  }
+}
+
 @media (max-width: 800px) {
   .method-list summary b,
   .faq-section summary span {
     width: 30px;
     height: 30px;
+  }
+
+  .faq-section {
+    gap: 34px;
+    padding-top: 62px !important;
+    padding-bottom: 62px !important;
+  }
+
+  .faq-section > .eyebrow::after {
+    margin-top: 24px;
+    font-size: clamp(38px, 11vw, 54px);
+  }
+
+  .faq-section summary {
+    grid-template-columns: 30px minmax(0, 1fr) 32px;
+    gap: 12px;
+    min-height: 72px;
+    padding: 14px 0;
+    font-size: 18px;
+  }
+
+  .faq-section details p {
+    margin: 0 42px 0 42px;
+    padding-bottom: 22px !important;
+    font-size: 13px !important;
   }
 }
