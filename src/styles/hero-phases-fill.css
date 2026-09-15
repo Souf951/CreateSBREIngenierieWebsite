@@ -3,15 +3,21 @@
 @media (min-width: 641px) {
   .hero-visual {
     display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto auto;
-    align-content: stretch;
+    /* Keep every hero row at its natural height. Using a flexible 1fr row here
+       created a large artificial gap below the 3D model on tall viewports. */
+    grid-template-rows: auto auto auto auto;
+    align-content: center;
     min-width: 0;
+  }
+
+  .architecture {
+    height: clamp(390px, 39vw, 455px) !important;
   }
 
   .phase-controls {
     width: calc(100% + 24px) !important;
     max-width: none !important;
-    margin: 14px -12px 12px !important;
+    margin: 4px -12px 10px !important;
     padding: 12px !important;
     gap: 9px !important;
     border-radius: 22px !important;
@@ -63,9 +69,9 @@
   .model-caption {
     width: calc(100% + 24px) !important;
     max-width: none !important;
-    min-height: 72px;
-    margin: 0 -12px 12px !important;
-    padding: 18px 20px !important;
+    min-height: 64px;
+    margin: 0 -12px 8px !important;
+    padding: 16px 20px !important;
     display: flex;
     align-items: center;
     border-radius: 20px !important;
@@ -82,6 +88,10 @@
 }
 
 @media (min-width: 641px) and (max-width: 1024px) {
+  .architecture {
+    height: 410px !important;
+  }
+
   .phase-controls {
     width: calc(100% + 12px) !important;
     margin-left: -6px !important;
@@ -102,7 +112,7 @@
     width: calc(100% + 12px) !important;
     margin-left: -6px !important;
     margin-right: -6px !important;
-    min-height: 62px;
+    min-height: 60px;
     font-size: clamp(11px, 1.45vw, 13px) !important;
   }
 }
