@@ -47,7 +47,6 @@ import "../styles/case-study-video.css";
 import "../styles/projects-method-transition.css";
 import "../styles/partners-showcase.css";
 import "../styles/hover-lift.css";
-import "../styles/architecture-interaction.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(

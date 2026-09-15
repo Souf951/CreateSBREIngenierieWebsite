@@ -134,10 +134,6 @@ export default function HomePage() {
               <span>CH — 01</span>
             </div>
             <Architecture phase={phase} />
-            <div className="architecture-interaction-hint" aria-label="Mode d’emploi du modèle 3D">
-              <span className="interaction-hand" aria-hidden="true">↔</span>
-              <span><strong>Explorez le modèle</strong> — faites glisser pour le faire pivoter</span>
-            </div>
             <div className="phase-controls" aria-label="Phases de construction">
               {phases.map((p, i) => (
                 <button
@@ -151,7 +147,8 @@ export default function HomePage() {
               ))}
             </div>
             <p className="model-caption">
-              Cliquez sur une étape pour suivre la construction du projet.
+              Explorez les étapes d’une construction. Modèle architectural
+              d’illustration.
             </p>
           </div>
         </section>
@@ -221,30 +218,31 @@ export default function HomePage() {
           <img
             src={chantier}
             loading="lazy"
-            alt="Chantier suivi par SBRE Ingénierie"
+            decoding="async"
+            alt="Chantier intérieur en cours, réseaux et structure apparents"
           />
-          <div className="control-banner-content">
+          <div>
             <p className="eyebrow">LE TERRAIN NE LAISSE RIEN AU HASARD</p>
             <h2>
               Anticiper aujourd’hui.
               <br />
               <em>Éviter les reprises demain.</em>
             </h2>
-            <button className="text-link" onClick={() => section("methode")}>
-              Notre manière d’intervenir <span>↗</span>
+            <button className="text-link" onClick={() => section("situations")}>
+              Notre manière d’intervenir ↗
             </button>
           </div>
-          <span className="control-banner-side">
+          <span className="image-caption">
             COORDINATION / AVANT FERMETURE DES OUVRAGES
           </span>
         </section>
         <section className="section case-section" id="situations">
-          <div className="section-heading case-heading">
+          <div className="section-heading">
             <p className="eyebrow">02 / REPRENDRE LA MAÎTRISE</p>
             <h2>
               Des situations concrètes.
               <br />
-              Des réponses <em>structurées.</em>
+              <em>Des réponses structurées.</em>
             </h2>
             <p>
               Exemples de méthode appliqués aux enjeux courants d’un chantier.
@@ -252,42 +250,56 @@ export default function HomePage() {
               clients attestés.
             </p>
           </div>
-          <div className="case-tabs" role="tablist" aria-label="Situations de chantier">
-            {cases.map((entry, i) => (
+          <div className="case-tabs" aria-label="Choisir une situation">
+            {cases.map((c, i) => (
               <button
-                key={entry.tab}
-                role="tab"
-                aria-selected={activeCase === i}
+                key={c.label}
                 aria-pressed={activeCase === i}
                 onClick={() => setCase(i)}
               >
                 <span>0{i + 1}</span>
-                {entry.tab}
-                <b>↗</b>
+                {c.label}
+                <span>↗</span>
               </button>
             ))}
           </div>
-          <div className="case-content">
+          <article className="case-study">
             <div className="case-image">
-              <img src={item.image} alt="" loading="lazy" />
+              <img
+                src={item.image}
+                alt={
+                  item.label === "Coordination des CFC"
+                    ? "Réseaux et structure sur un chantier de rénovation"
+                    : item.label === "Délais & anticipation"
+                      ? "Bâtiment résidentiel à Lancy"
+                      : "Salle d’eau et détails de finition"
+                }
+                loading="lazy"
+                decoding="async"
+              />
               <div>
-                <small>SITUATION / 0{activeCase + 1}</small>
+                <p className="eyebrow">SITUATION / 0{activeCase + 1}</p>
                 <h3>{item.title}</h3>
               </div>
             </div>
-            <div className="case-copy">
-              {item.steps.map(([n, title, text]) => (
-                <div className="case-step" key={n}>
-                  <span>{n}</span>
+            <div className="case-steps">
+              {[
+                ["Problème", item.problem],
+                ["Analyse", item.analysis],
+                ["Action", item.action],
+                ["Résultat visé", item.result],
+              ].map(([label, text], i) => (
+                <div key={label}>
+                  <span className="step-index">0{i + 1}</span>
                   <div>
-                    <strong>{title}</strong>
+                    <h4>{label}</h4>
                     <p>{text}</p>
                   </div>
                 </div>
               ))}
-              <div className="case-deliverable">{item.deliverable}</div>
+              <p className="case-deliverable">LIVRABLE / {item.deliverable}</p>
             </div>
-          </div>
+          </article>
         </section>
         <section className="section projects-section" id="réalisations">
           <div className="section-heading">
@@ -295,102 +307,220 @@ export default function HomePage() {
             <h2>
               La maîtrise se voit
               <br />
-              dans le <em>résultat.</em>
+              <em>dans le résultat.</em>
             </h2>
             <p>
               Une sélection d’expériences de direction et de suivi de travaux.
-              Les collaborations et contextes sont précisés dans chaque fiche projet.
+              Les collaborations et contextes sont précisés dans chaque fiche
+              projet.
             </p>
           </div>
           <div className="projects-grid">
-            {projects.map((project, i) => (
-              <Link to={project.href} className="project-card" key={project.href}>
-                <div className="project-image">
-                  <img src={project.image} alt="" loading="lazy" />
-                  <span>↗</span>
+            {projects.map((p, i) => (
+              <Link className="project-card" key={p.link} to={p.link}>
+                <div>
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="project-arrow">↗</span>
                 </div>
-                <small>0{i + 1} / {project.meta}</small>
-                <h3>{project.title}</h3>
+                <p className="eyebrow">
+                  0{i + 1} / {p.type}
+                </p>
+                <h3>{p.title}</h3>
               </Link>
             ))}
           </div>
         </section>
         <section className="section method-section" id="methode">
-          <div className="section-heading">
-            <p className="eyebrow">04 / LA MÉTHODE SBRE</p>
+          <div className="method-intro">
+            <p className="eyebrow">04 / UNE MÉTHODE, DU DÉBUT À LA FIN</p>
             <h2>
-              Structurer. Budgéter.
+              Rien d’implicite.
               <br />
-              Réaliser. <em>Exiger.</em>
+              <em>Tout se pilote.</em>
             </h2>
             <p>
-              Une méthode de direction de travaux organisée autour des décisions,
-              des coûts, de l’exécution et de la qualité finale.
+              Un chantier maîtrisé repose sur des points de contrôle réguliers
+              et des responsabilités claires.
             </p>
+            <button
+              className="button button-light"
+              onClick={() => section("contact")}
+            >
+              Cadrons votre opération ↗
+            </button>
           </div>
-          <div className="method-grid">
-            {["Cadrer", "Préparer", "Piloter", "Livrer"].map((title, i) => (
-              <details className="method-item" key={title} open={i === 0}>
+          <div className="method-list">
+            {[
+              [
+                "Cadrer",
+                "Analyser le dossier, clarifier les objectifs, identifier les risques et définir le périmètre du mandat.",
+                "Diagnostic · Budget · Priorités",
+              ],
+              [
+                "Préparer",
+                "Métrer, consulter, comparer les offres et préparer les adjudications avec un planning cohérent.",
+                "Soumissions · Comparatifs · Planning",
+              ],
+              [
+                "Piloter",
+                "Coordonner les CFC, contrôler les coûts, traiter les modifications et suivre les décisions sur le terrain.",
+                "Séances · Contrôles · Reporting",
+              ],
+              [
+                "Livrer",
+                "Organiser les réceptions, suivre la levée des réserves et réunir les pièces de clôture.",
+                "Réception · Réserves · Dossier final",
+              ],
+            ].map(([title, body, foot], i) => (
+              <details key={title} open={i === 0}>
                 <summary>
                   <span>0{i + 1}</span>
-                  <strong>{title}</strong>
+                  {title}
                   <b>+</b>
                 </summary>
-                <p>
-                  {i === 0 && "Objectifs, responsabilités, contraintes et organisation du projet."}
-                  {i === 1 && "Consultations, comparatifs, arbitrages et préparation de l’exécution."}
-                  {i === 2 && "Coordination des entreprises, suivi terrain, qualité, délais et coûts."}
-                  {i === 3 && "Réceptions, réserves, contrôles des reprises et clôture du chantier."}
-                </p>
+                <div>
+                  <p>{body}</p>
+                  <small>{foot}</small>
+                </div>
               </details>
             ))}
           </div>
         </section>
         <section className="section team-section" id="equipe">
           <div className="section-heading">
-            <p className="eyebrow">05 / L’ÉQUIPE</p>
+            <p className="eyebrow">05 / AU PLUS PRÈS DU TERRAIN</p>
             <h2>
-              Une présence terrain.
+              Une direction présente.
               <br />
-              Des décisions <em>assumées.</em>
+              <em>Des rôles identifiés.</em>
             </h2>
             <p>
-              Une équipe resserrée autour du suivi opérationnel, de la coordination
-              et de la maîtrise des enjeux du projet.
+              Soufiane est votre interlocuteur pour cadrer le mandat et
+              organiser le pilotage de votre opération.
             </p>
           </div>
           <div className="team-grid">
             {[
-              [soufiane, "Soufiane SBRE", "Directeur"],
-              [chef, "Chef de projet", "Coordination"],
-              [conducteur, "Conducteur de travaux", "Suivi terrain"],
-            ].map(([image, name, role]) => (
+              [
+                soufiane,
+                "Soufiane",
+                "Directeur",
+                "Cadrage du mandat, arbitrages et direction des opérations.",
+              ],
+              [
+                chef,
+                "Chef de projet",
+                "Profil provisoire · illustration IA",
+                "Organisation, planification et coordination des intervenants.",
+              ],
+              [
+                conducteur,
+                "Conducteur de travaux",
+                "Profil provisoire · illustration IA",
+                "Suivi terrain, contrôle de l’exécution et préparation des réceptions.",
+              ],
+            ].map(([src, name, role, description], i) => (
               <article className="team-card" key={name}>
-                <img src={image} alt="" loading="lazy" />
                 <div>
-                  <h3>{name}</h3>
-                  <p>{role}</p>
+                  <img
+                    src={src}
+                    alt={
+                      i === 0
+                        ? "Soufiane, directeur de SBRE Ingénierie"
+                        : `Portrait fictif de ${name.toLowerCase()}`
+                    }
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  {i > 0 && (
+                    <span className="provisional">PORTRAIT DE MAQUETTE</span>
+                  )}
                 </div>
+                <h3>{name}</h3>
+                <p className="team-role">{role}</p>
+                <p>{description}</p>
               </article>
             ))}
           </div>
+          <p className="team-note">
+            Les deux profils provisoires illustrent l’organisation envisagée.
+            Ils ne représentent pas des collaborateurs actuellement confirmés.
+          </p>
         </section>
-        <section className="contact-section" id="contact">
-          <div className="contact-copy">
+        <section className="section contact-section" id="contact">
+          <div>
             <p className="eyebrow">06 / PARLONS CONCRÈTEMENT</p>
             <h2>
               Où en est
               <br />
-              votre <em>projet ?</em>
+              <em>votre projet ?</em>
             </h2>
             <p>
-              Un dossier à reprendre, une consultation à lancer, un chantier à
-              sécuriser ou une réception à préparer : échangeons sur votre besoin.
+              Une opération à préparer, un chantier à coordonner ou une
+              situation à reprendre en main. Commençons par les faits.
             </p>
+            <a className="contact-phone" href="tel:+41783076029">
+              +41 78 307 60 29 ↗
+            </a>
+            <a href="mailto:info@sbre-ingenierie.ch">info@sbre-ingenierie.ch</a>
+            <div className="contact-area">
+              LAUSANNE · GENÈVE · VAUD
+              <br />
+              Interventions en Suisse romande
+            </div>
           </div>
           <ContactForm />
         </section>
+        <section className="section faq-section">
+          <p className="eyebrow">LES QUESTIONS ESSENTIELLES</p>
+          {[
+            [
+              "À quel moment faire intervenir SBRE ?",
+              "Dès la préparation du projet pour organiser les consultations et le planning, ou en cours de travaux pour clarifier une situation et redéfinir les priorités. Le périmètre est fixé au début du mandat.",
+            ],
+            [
+              "Travaillez-vous avec mon architecte ?",
+              "Oui. La direction de travaux se coordonne avec l’architecte et les mandataires techniques, dans le respect des responsabilités de chacun.",
+            ],
+            [
+              "Comment sont définis vos honoraires ?",
+              "Sur la base du périmètre, de la durée, de la complexité et de la présence terrain nécessaire. Une offre précise les prestations, les livrables et les conditions du mandat.",
+            ],
+          ].map(([q, a]) => (
+            <details key={q}>
+              <summary>
+                {q}
+                <span>+</span>
+              </summary>
+              <p>{a}</p>
+            </details>
+          ))}
+        </section>
       </main>
+      <footer className="site-footer">
+        <div>
+          <span className="footer-brand">
+            SBRE<span>INGÉNIERIE</span>
+          </span>
+          <p>Structurer. Budgéter. Réaliser. Exiger.</p>
+        </div>
+        <div>
+          <p>Direction de travaux en Suisse romande</p>
+          <a href="mailto:info@sbre-ingenierie.ch">
+            info@sbre-ingenierie.ch ↗
+          </a>
+        </div>
+        <div className="footer-bottom">
+          <span>© {new Date().getFullYear()} SBRE Ingénierie</span>
+          <span>Les décisions justes. Au bon moment.</span>
+          <button onClick={() => section("accueil")}>Retour en haut ↑</button>
+        </div>
+      </footer>
     </div>
   );
 }
