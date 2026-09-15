@@ -48,6 +48,7 @@ import "../styles/projects-method-transition.css";
 import "../styles/partners-showcase.css";
 import "../styles/hover-lift.css";
 import "../styles/mobile-tablet-premium.css";
+import "../styles/mobile-3d-cleanup.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
