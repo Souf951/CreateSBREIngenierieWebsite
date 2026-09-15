@@ -148,6 +148,16 @@ export default function Architecture({
           <div className="architecture-static-placeholder" aria-hidden="true" />
         )}
 
+        {!compact && enabled && !failed && (
+          <div className="architecture-interaction-hint" aria-hidden="true">
+            <span className="interaction-hand">↔</span>
+            <span>
+              <strong>3D INTERACTIVE</strong>
+              Glissez pour faire tourner
+            </span>
+          </div>
+        )}
+
         <div className="architecture-watermark" aria-hidden="true">
           <img src={logo} alt="" />
           <span>SBRE INGÉNIERIE</span>
