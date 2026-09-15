@@ -1,0 +1,59 @@
+/* Fill the lower hero controls area on tablet/desktop without changing phone layout. */
+
+@media (min-width: 641px) {
+  .hero-visual {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto auto;
+    align-content: stretch;
+  }
+
+  .phase-controls {
+    width: 100%;
+    margin: 10px 0 10px !important;
+    padding: 10px !important;
+    gap: 8px !important;
+    border-radius: 20px !important;
+  }
+
+  .phase-controls button {
+    min-height: 86px !important;
+    padding: 16px 14px !important;
+    justify-content: center;
+    gap: 8px !important;
+    font-size: clamp(13px, 1.25vw, 16px) !important;
+    line-height: 1.2 !important;
+  }
+
+  .phase-controls button span {
+    font-size: clamp(11px, .95vw, 13px) !important;
+    font-weight: 700 !important;
+  }
+
+  .model-caption {
+    width: 100%;
+    min-height: 62px;
+    margin: 0 0 10px !important;
+    padding: 16px 18px !important;
+    display: flex;
+    align-items: center;
+    border-radius: 18px !important;
+    font-size: clamp(12px, 1.05vw, 14px) !important;
+    line-height: 1.4 !important;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .phase-controls button {
+    min-height: 78px !important;
+    font-size: clamp(12px, 1.7vw, 15px) !important;
+  }
+
+  .phase-controls button span {
+    font-size: clamp(10px, 1.35vw, 12px) !important;
+  }
+
+  .model-caption {
+    min-height: 58px;
+    font-size: clamp(11px, 1.45vw, 13px) !important;
+  }
+}
