@@ -32,6 +32,70 @@
   z-index: 2;
 }
 
+/* Restore the premium two-column composition used before the last regression. */
+.case-section .case-heading > p:last-child {
+  display: none;
+}
+
+.case-section .case-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 570px;
+  background: rgba(247, 248, 242, .94);
+  box-shadow: 0 18px 48px rgba(16, 44, 35, .08);
+}
+
+.case-section .case-content .case-image {
+  min-height: 570px;
+}
+
+.case-section .case-copy {
+  padding: 30px;
+  background: rgba(247, 248, 242, .94);
+  border: 1px solid rgba(255,255,255,.46);
+  backdrop-filter: blur(7px) saturate(1.04);
+  -webkit-backdrop-filter: blur(7px) saturate(1.04);
+}
+
+.case-section .case-step {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 12px;
+  padding: 16px 17px;
+  border: 1px solid rgba(10, 92, 61, .16);
+  border-left: 4px solid #0a5c3d;
+  border-radius: 10px;
+  background: rgba(232, 240, 232, .82);
+}
+
+.case-section .case-step > span {
+  display: grid;
+  place-items: center;
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border-radius: 999px;
+  background: #0a5c3d;
+  color: #fff;
+  font: 700 11px/1 monospace;
+}
+
+.case-section .case-step strong {
+  display: block;
+  margin-bottom: 6px;
+  color: #0a5c3d;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.case-section .case-step p {
+  margin: 0;
+  color: #405a4d;
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+
 /* Situation selector — larger, clearer and more premium. */
 .case-section .case-tabs {
   gap: 14px;
@@ -74,8 +138,11 @@
   opacity: 1;
 }
 
+.case-section .case-tabs button b,
 .case-section .case-tabs button span:last-child {
+  margin-left: auto;
   font-size: 18px;
+  font-weight: 500;
   color: #0a5c3d;
 }
 
@@ -91,11 +158,12 @@
   color: #fff;
 }
 
+.case-section .case-tabs button[aria-pressed="true"] b,
 .case-section .case-tabs button[aria-pressed="true"] span:last-child {
   color: #fff;
 }
 
-/* Problem / Analysis / Action / Result — larger and much easier to scan. */
+/* Keep compatibility with the older case-study markup too. */
 .case-section .case-steps {
   padding: 30px;
   background: rgba(247, 248, 242, .94);
@@ -161,20 +229,26 @@
   color: #fff;
 }
 
+.theme-dark .case-section .case-content,
+.theme-dark .case-section .case-copy,
 .theme-dark .case-section .case-steps {
   background: rgba(10, 22, 17, .94);
 }
 
+.theme-dark .case-section .case-step,
 .theme-dark .case-section .case-steps > div {
   background: rgba(20, 54, 42, .72);
   border-color: rgba(93, 185, 143, .20);
   border-left-color: #1d9a70;
 }
 
+.theme-dark .case-section .case-step > span,
 .theme-dark .case-section .case-steps .step-index {
   background: #1d9a70;
 }
 
+.theme-dark .case-section .case-step strong,
+.theme-dark .case-section .case-step p,
 .theme-dark .case-section .case-steps h4,
 .theme-dark .case-section .case-steps p {
   color: #edf6f0;
@@ -196,10 +270,21 @@
     font-size: 14px;
   }
 
+  .case-section .case-content {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .case-section .case-content .case-image {
+    min-height: 420px;
+  }
+
+  .case-section .case-copy,
   .case-section .case-steps {
     padding: 20px;
   }
 
+  .case-section .case-step,
   .case-section .case-steps > div {
     padding: 14px;
   }
