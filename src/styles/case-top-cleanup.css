@@ -1,0 +1,5 @@
+.case-section-has-video::before,
+.case-section-has-video::after {
+  content: none !important;
+  display: none !important;
+}
