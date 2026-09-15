@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import logo from "../../../media/Pr_sentation1_page-0001.webp";
 import "../../../styles/architecture-switch.css";
 
-const VillaScene = lazy(() => import("./BuildingSceneV3"));
+const VillaScene = lazy(() => import("./BuildingScene"));
 const OvalScene = lazy(() => import("./OvalBuildingScene"));
 const PublicWorksScene = lazy(() => import("./PublicWorksScene"));
 
