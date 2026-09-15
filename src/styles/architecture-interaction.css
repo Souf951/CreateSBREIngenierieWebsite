@@ -1,0 +1,161 @@
+.architecture-interaction-hint {
+  margin: 4px 20px 12px;
+  min-height: 42px;
+  padding: 9px 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+  border: 1px solid color-mix(in srgb, var(--forest) 42%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--forest) 10%, transparent);
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.25;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.architecture-interaction-hint strong {
+  color: var(--forest);
+  font-weight: 700;
+}
+
+.interaction-hand {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--forest);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  animation: sbre-drag-cue 1.8s ease-in-out infinite;
+}
+
+.phase-controls {
+  margin: 0 20px !important;
+  gap: 10px !important;
+  padding: 8px !important;
+  border: 1px solid color-mix(in srgb, var(--forest) 28%, transparent);
+  border-radius: 18px;
+  background: color-mix(in srgb, #f5f5ee 82%, transparent);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.phase-controls button {
+  min-height: 66px;
+  padding: 11px 12px !important;
+  border: 1px solid transparent !important;
+  border-radius: 12px;
+  background: transparent !important;
+  color: var(--ink) !important;
+  font-size: 12px !important;
+  line-height: 1.25;
+  justify-content: center;
+  transition: transform .22s ease, background .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+
+.phase-controls button span {
+  font-size: 10px !important;
+  font-weight: 700;
+  color: var(--forest);
+}
+
+.phase-controls button[aria-pressed="true"] {
+  background: var(--forest) !important;
+  border-color: var(--forest) !important;
+  color: #fff !important;
+  box-shadow: 0 8px 22px rgba(10, 92, 61, .2);
+  transform: translateY(-2px);
+}
+
+.phase-controls button[aria-pressed="true"] span {
+  color: #d8edc8;
+}
+
+.phase-controls button:hover {
+  border-color: color-mix(in srgb, var(--forest) 42%, transparent) !important;
+  background: color-mix(in srgb, var(--forest) 7%, transparent) !important;
+  transform: translateY(-2px);
+}
+
+.phase-controls button[aria-pressed="true"]:hover {
+  background: #084b32 !important;
+}
+
+.model-caption {
+  margin: 10px 20px 28px !important;
+  font-size: 11px !important;
+  font-weight: 600;
+  color: var(--ink) !important;
+  opacity: .9;
+}
+
+.theme-dark .architecture-interaction-hint {
+  background: rgba(9, 34, 27, .78);
+  border-color: rgba(115, 194, 151, .34);
+  color: #eef5ef;
+}
+
+.theme-dark .architecture-interaction-hint strong {
+  color: #9fdbb8;
+}
+
+.theme-dark .phase-controls {
+  background: rgba(5, 26, 21, .8);
+  border-color: rgba(115, 194, 151, .24);
+}
+
+.theme-dark .phase-controls button {
+  color: #eaf1ec !important;
+}
+
+.theme-dark .phase-controls button span {
+  color: #9fdbb8;
+}
+
+.theme-dark .model-caption {
+  color: #e4ece6 !important;
+}
+
+@keyframes sbre-drag-cue {
+  0%, 100% { transform: translateX(0); }
+  35% { transform: translateX(3px); }
+  70% { transform: translateX(-3px); }
+}
+
+@media (max-width: 800px) {
+  .architecture-interaction-hint {
+    margin-inline: 10px;
+    font-size: 10px;
+  }
+
+  .phase-controls {
+    margin-inline: 10px !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .phase-controls button {
+    min-height: 60px;
+    font-size: 11px !important;
+  }
+
+  .model-caption {
+    margin-inline: 10px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interaction-hand {
+    animation: none;
+  }
+
+  .phase-controls button {
+    transition: none;
+  }
+}
