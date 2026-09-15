@@ -2,6 +2,7 @@ import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react"
 import { createPortal } from "react-dom";
 import logo from "../../../media/Pr_sentation1_page-0001.webp";
 import "../../../styles/architecture-switch.css";
+import "../../../styles/hero-interaction-pass.css";
 
 const VillaScene = lazy(() => import("./BuildingScene"));
 const OvalScene = lazy(() => import("./OvalBuildingScene"));
