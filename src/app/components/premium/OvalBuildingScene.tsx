@@ -114,9 +114,6 @@ export default function OvalBuildingScene({
       return mesh;
     };
 
-    // True elliptical balcony rail. A torus is rotationally symmetric, so it can
-    // look visually "fixed" while the building rotates. This curve is genuinely
-    // oval in plan and therefore follows the exact orientation of the building.
     const ring = (
       g: THREE.Group,
       y: number,
@@ -132,10 +129,7 @@ export default function OvalBuildingScene({
         points.push(new THREE.Vector3(Math.cos(a) * rx, 0, Math.sin(a) * rz));
       }
       const curve = new THREE.CatmullRomCurve3(points, true, "centripetal");
-      const mesh = new THREE.Mesh(
-        new THREE.TubeGeometry(curve, segments, tube, 6, true),
-        mat,
-      );
+      const mesh = new THREE.Mesh(new THREE.TubeGeometry(curve, segments, tube, 6, true), mat);
       mesh.position.y = y;
       mesh.castShadow = true;
       mesh.receiveShadow = true;
@@ -143,13 +137,7 @@ export default function OvalBuildingScene({
       return mesh;
     };
 
-    const rooftopWalkers: Array<{
-      group: THREE.Group;
-      radiusX: number;
-      radiusZ: number;
-      offset: number;
-      speed: number;
-    }> = [];
+    const rooftopWalkers: Array<{ group: THREE.Group; radiusX: number; radiusZ: number; offset: number; speed: number }> = [];
 
     const addRooftopWalker = (
       parent: THREE.Group,
@@ -160,33 +148,27 @@ export default function OvalBuildingScene({
       speed: number,
     ) => {
       const person = new THREE.Group();
-
       const torso = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.13, 0.34, 10), color);
       torso.position.y = 0.39;
       torso.castShadow = true;
       person.add(torso);
-
       const head = new THREE.Mesh(new THREE.SphereGeometry(0.09, 10, 8), skinMat);
       head.position.y = 0.66;
       head.castShadow = true;
       person.add(head);
-
       const legA = new THREE.Mesh(new THREE.BoxGeometry(0.055, 0.28, 0.065), dark);
       legA.position.set(-0.045, 0.13, 0.015);
       legA.rotation.x = 0.16;
       person.add(legA);
-
       const legB = legA.clone();
       legB.position.x = 0.045;
       legB.position.z = -0.015;
       legB.rotation.x = -0.16;
       person.add(legB);
-
       parent.add(person);
       rooftopWalkers.push({ group: person, radiusX, radiusZ, offset, speed });
     };
 
-    // 01 — Foundations
     ellipseMesh(groups[0], -0.28, 5.5, 4.0, 0.28, coreMat);
     ellipseMesh(groups[0], 0.02, 5.0, 3.55, 0.34, concrete);
     for (let a = 0; a < Math.PI * 2; a += Math.PI / 8) {
@@ -198,7 +180,6 @@ export default function OvalBuildingScene({
     const floorCount = 9;
     const floorHeight = 1.05;
 
-    // 02 — Structure
     box(groups[1], 0, 4.55, 0, 1.55, 9.4, 1.35, coreMat);
     for (let floor = 0; floor <= floorCount; floor++) {
       const y = 0.36 + floor * floorHeight;
@@ -214,18 +195,13 @@ export default function OvalBuildingScene({
       }
     }
 
-    // 03 — Envelope
     for (let floor = 0; floor < floorCount; floor++) {
       const y = 0.87 + floor * floorHeight;
-      const facade = new THREE.Mesh(
-        new THREE.CylinderGeometry(4.15, 4.15, 0.78, 64, 1, true),
-        glass,
-      );
+      const facade = new THREE.Mesh(new THREE.CylinderGeometry(4.15, 4.15, 0.78, 64, 1, true), glass);
       facade.scale.z = 2.95 / 4.15;
       facade.position.y = y;
       facade.castShadow = true;
       groups[2].add(facade);
-
       for (let i = 0; i < 18; i++) {
         const a = (i / 18) * Math.PI * 2;
         const x = Math.cos(a) * 4.18;
@@ -234,9 +210,6 @@ export default function OvalBuildingScene({
       }
     }
 
-    // 04 — Finitions / curved balcony identity
-    // The rails are deliberately anchored lower so their uprights visibly start
-    // on the balcony slab rather than appearing attached to the ceiling above.
     for (let floor = 0; floor < floorCount; floor++) {
       const slabY = 0.4 + floor * floorHeight;
       ellipseMesh(groups[3], slabY + 0.03, 5.0, 3.58, 0.12, concrete);
@@ -250,7 +223,6 @@ export default function OvalBuildingScene({
       }
     }
 
-    // SBRE sign fixed to a front balcony in the final phase.
     const signCanvas = document.createElement("canvas");
     signCanvas.width = 1024;
     signCanvas.height = 320;
@@ -262,30 +234,25 @@ export default function OvalBuildingScene({
       signCtx.lineWidth = 24;
       signCtx.strokeRect(12, 12, signCanvas.width - 24, signCanvas.height - 24);
       signCtx.fillStyle = "#0b684a";
-      signCtx.font = "700 142px Arial";
+      signCtx.font = "700 176px Arial";
       signCtx.textAlign = "center";
       signCtx.textBaseline = "middle";
       signCtx.fillText("SBRE", 512, 132);
-      signCtx.font = "600 48px Arial";
-      signCtx.fillText("INGÉNIERIE", 512, 242);
+      signCtx.font = "600 62px Arial";
+      signCtx.fillText("INGÉNIERIE", 512, 246);
     }
     signTexture = new THREE.CanvasTexture(signCanvas);
     signTexture.colorSpace = THREE.SRGBColorSpace;
     signTexture.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
     const signMaterial = new THREE.MeshBasicMaterial({ map: signTexture, transparent: true, side: THREE.DoubleSide });
-    const balconySign = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 0.66), signMaterial);
+    const balconySign = new THREE.Mesh(new THREE.PlaneGeometry(2.65, 0.82), signMaterial);
     balconySign.position.set(0, 4.72, 3.535);
     groups[3].add(balconySign);
 
-    // Rooftop terrace: slightly raised deck, guard rails and a few subtle users.
     ellipseMesh(groups[3], 9.94, 4.85, 3.45, 0.18, concrete);
     ellipseMesh(groups[3], 10.07, 4.46, 3.04, 0.10, terraceMat);
-
-    // Low technical/penthouse volume in the centre to make the rooftop read as usable.
     box(groups[3], 0.2, 10.31, 0.1, 1.7, 0.44, 1.18, coreMat, 0.04);
     box(groups[3], 0.2, 10.55, 0.1, 1.82, 0.07, 1.30, dark, 0.04);
-
-    // Perimeter guard rails, raised above the terrace surface.
     ring(groups[3], 10.40, 4.68, 3.28, 0.025, rail);
     ring(groups[3], 10.64, 4.68, 3.28, 0.018, rail);
     for (let i = 0; i < 36; i++) {
@@ -294,20 +261,15 @@ export default function OvalBuildingScene({
       const z = Math.sin(a) * 3.28;
       box(groups[3], x, 10.52, z, 0.025, 0.48, 0.025, rail, -a);
     }
-
-    // Rooftop greenery / planters to soften the top silhouette.
     for (const a of [-2.45, -1.95, 0.55, 1.02]) {
       const x = Math.cos(a) * 3.72;
       const z = Math.sin(a) * 2.38;
       box(groups[3], x, 10.20, z, 0.42, 0.22, 0.34, green, -a);
     }
-
-    // People circulate slowly around the rooftop terrace in the final phase.
     addRooftopWalker(groups[3], clothes[0], 3.25, 2.02, 0.35, 0.00016);
     addRooftopWalker(groups[3], clothes[1], 3.65, 2.34, 2.35, -0.00012);
     addRooftopWalker(groups[3], clothes[2], 2.85, 1.72, 4.45, 0.00014);
 
-    // Ground / landscape accents
     ellipseMesh(groups[3], -0.08, 6.2, 4.55, 0.06, green);
     for (let i = 0; i < 6; i++) {
       const a = -0.9 + i * 0.32;
@@ -319,10 +281,7 @@ export default function OvalBuildingScene({
       groups[3].add(crown);
     }
 
-    const ground = new THREE.Mesh(
-      new THREE.PlaneGeometry(200, 200),
-      new THREE.ShadowMaterial({ opacity: 0.22 }),
-    );
+    const ground = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.ShadowMaterial({ opacity: 0.22 }));
     ground.rotation.x = -Math.PI / 2;
     ground.position.y = -0.72;
     ground.receiveShadow = true;
@@ -384,15 +343,11 @@ export default function OvalBuildingScene({
       pointerTarget = ((e.clientX - rect.left) / rect.width - 0.5) * 0.12;
     };
 
-    const endDrag = (e: PointerEvent) => {
+    const endDrag = () => {
       if (!dragging) return;
       dragging = false;
       if (activePointerId !== null) {
-        try {
-          container.releasePointerCapture?.(activePointerId);
-        } catch {
-          /* no-op */
-        }
+        try { container.releasePointerCapture?.(activePointerId); } catch { /* no-op */ }
       }
       activePointerId = null;
       lastPointerX = 0;
@@ -453,7 +408,7 @@ export default function OvalBuildingScene({
       if (!dragging) angle = (angle + dt * 0.042) % (Math.PI * 2);
       pointerOffset = THREE.MathUtils.damp(pointerOffset, pointerTarget, 5, dt);
       building.rotation.y = angle + manualOffset + pointerOffset;
-      building.position.y = 0.08 + Math.sin(now * 0.00105) * 0.09;
+      building.position.y = -0.14 + Math.sin(now * 0.00105) * 0.09;
       building.rotation.z = Math.sin(now * 0.00055) * 0.003;
 
       renderer.render(scene, camera);
