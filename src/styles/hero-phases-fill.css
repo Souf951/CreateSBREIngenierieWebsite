@@ -14,6 +14,11 @@
     height: clamp(390px, 39vw, 455px) !important;
   }
 
+  /* Give the project switch breathing room before the 3D model starts. */
+  .architecture .building-canvas {
+    transform: translateY(24px);
+  }
+
   .phase-controls {
     width: calc(100% + 24px) !important;
     max-width: none !important;
@@ -90,6 +95,10 @@
 @media (min-width: 641px) and (max-width: 1024px) {
   .architecture {
     height: 410px !important;
+  }
+
+  .architecture .building-canvas {
+    transform: translateY(18px);
   }
 
   .phase-controls {
