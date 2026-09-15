@@ -10,26 +10,34 @@ export const projects = [
   {
     title: "Tertiaire, Genève",
     type: "RÉNOVATION · COORDINATION TCE",
+    meta: "RÉNOVATION · COORDINATION TCE",
     image: tertiaire,
     link: "/projet/tertiaire-geneve",
+    href: "/projet/tertiaire-geneve",
   },
   {
     title: "Micro-logements, Lancy",
     type: "RÉSIDENTIEL · SUIVI OPÉRATIONNEL",
+    meta: "RÉSIDENTIEL · SUIVI OPÉRATIONNEL",
     image: logements,
     link: "/projet/micro-logements-lancy",
+    href: "/projet/micro-logements-lancy",
   },
   {
     title: "Villa, Prangins",
     type: "TRANSFORMATION · FINITIONS",
+    meta: "TRANSFORMATION · FINITIONS",
     image: villaHero,
     link: "/projet/villa-prangins",
+    href: "/projet/villa-prangins",
   },
 ];
+
 export const cases = [
   {
     title: "Quand les corps de métier se croisent.",
     label: "Coordination des CFC",
+    tab: "Coordination des CFC",
     image: chantier,
     problem:
       "Des réseaux techniques, des cloisons et des plafonds occupent le même espace. Une interface oubliée peut bloquer plusieurs entreprises.",
@@ -40,10 +48,17 @@ export const cases = [
     result:
       "Un point de contrôle clair : interfaces validées et autorisation de fermeture documentée.",
     deliverable: "Plan de coordination + relevé des décisions",
+    steps: [
+      ["01", "Problème", "Des réseaux techniques, des cloisons et des plafonds occupent le même espace. Une interface oubliée peut bloquer plusieurs entreprises."],
+      ["02", "Analyse", "Croiser les plans, les réservations et l’ordre d’intervention avant la fermeture des ouvrages."],
+      ["03", "Action", "Arbitrer les interfaces en séance, attribuer chaque action et intégrer les décisions au planning des entreprises."],
+      ["04", "Résultat visé", "Un point de contrôle clair : interfaces validées et autorisation de fermeture documentée."],
+    ],
   },
   {
     title: "Un planning doit permettre de décider.",
     label: "Délais & anticipation",
+    tab: "Délais & anticipation",
     image: `${import.meta.env.BASE_URL}sbre-planning-case.webp`,
     problem:
       "Une tâche décale les suivantes. Les équipes restent mobilisées, mais la date de livraison devient incertaine.",
@@ -54,10 +69,17 @@ export const cases = [
     result:
       "Un cap mesurable : jalons révisés, responsables identifiés et écarts suivis chaque semaine.",
     deliverable: "Planning recalé + suivi hebdomadaire",
+    steps: [
+      ["01", "Problème", "Une tâche décale les suivantes. Les équipes restent mobilisées, mais la date de livraison devient incertaine."],
+      ["02", "Analyse", "Identifier le chemin critique, les approvisionnements et les zones réellement disponibles."],
+      ["03", "Action", "Reséquencer les tâches, organiser les interventions par zone et suivre les engagements à court terme."],
+      ["04", "Résultat visé", "Un cap mesurable : jalons révisés, responsables identifiés et écarts suivis chaque semaine."],
+    ],
   },
   {
     title: "La réception se prépare sur le terrain.",
     label: "Qualité & livraison",
+    tab: "Qualité & livraison",
     image: finition,
     problem:
       "Des défauts de finition découverts trop tard multiplient les reprises et compliquent l’entrée dans les lieux.",
@@ -68,5 +90,11 @@ export const cases = [
     result:
       "Une livraison documentée : état des réserves, corrections vérifiées et responsabilités traçables.",
     deliverable: "Liste de réserves + contrôle des reprises",
+    steps: [
+      ["01", "Problème", "Des défauts de finition découverts trop tard multiplient les reprises et compliquent l’entrée dans les lieux."],
+      ["02", "Analyse", "Contrôler les points sensibles par local et par lot avant les opérations de réception."],
+      ["03", "Action", "Organiser les pré-réceptions, photographier les défauts, affecter les corrections et vérifier les reprises."],
+      ["04", "Résultat visé", "Une livraison documentée : état des réserves, corrections vérifiées et responsabilités traçables."],
+    ],
   },
 ];
