@@ -41,6 +41,7 @@ import "../styles/team-section-premium.css";
 import "../styles/responsive-pass.css";
 import "../styles/principles-center.css";
 import "../styles/case-video-background.css";
+import "../styles/case-top-cleanup.css";
 import "../styles/contact-section-photo.css";
 import "../styles/accordion-premium.css";
 import "../styles/home-copy-polish.css";
