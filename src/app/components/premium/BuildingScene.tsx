@@ -217,15 +217,18 @@ export default function BuildingScene({
     for (const x of [-1.0, 1.15, 3.3]) box(groups[3], x, 5.22, 3.55, 0.1, 1.0, 0.1, mat.aluminum);
     for (let i = 0; i < 9; i++) box(groups[3], -0.9 + i * 0.5, 5.7, 3.08, 0.06, 0.06, 1.25, mat.wood);
 
-    // SBRE roof marking, integrated into the terrace surface.
+    // SBRE balcony sign mounted to the front glass railing.
     const labelCanvas = document.createElement("canvas");
     labelCanvas.width = 1024;
     labelCanvas.height = 256;
     const ctx = labelCanvas.getContext("2d");
     if (ctx) {
       ctx.clearRect(0, 0, 1024, 256);
-      ctx.fillStyle = "rgba(245,245,238,0.94)";
+      ctx.fillStyle = "rgba(245,245,238,0.97)";
       ctx.fillRect(0, 0, 1024, 256);
+      ctx.strokeStyle = "#07583f";
+      ctx.lineWidth = 16;
+      ctx.strokeRect(8, 8, 1008, 240);
       ctx.fillStyle = "#07583f";
       ctx.font = "700 132px Arial";
       ctx.textAlign = "center";
@@ -239,11 +242,9 @@ export default function BuildingScene({
     labelTexture.colorSpace = THREE.SRGBColorSpace;
     labelTexture.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
     const labelMat = new THREE.MeshBasicMaterial({ map: labelTexture, transparent: true, side: THREE.DoubleSide });
-    const roofLabel = new THREE.Mesh(new THREE.PlaneGeometry(4.4, 1.1), labelMat);
-    roofLabel.rotation.x = -Math.PI / 2;
-    roofLabel.rotation.z = -0.08;
-    roofLabel.position.set(1.1, 6.205, -0.55);
-    groups[3].add(roofLabel);
+    const balconySign = new THREE.Mesh(new THREE.PlaneGeometry(2.85, 0.72), labelMat);
+    balconySign.position.set(1.35, 3.62, 3.575);
+    groups[3].add(balconySign);
 
     // Lower reflecting pool / sun deck.
     box(groups[3], -1.8, 0.16, -4.0, 6.15, 0.2, 1.7, mat.warmConcrete);
