@@ -74,6 +74,129 @@
   max-width: 430px;
 }
 
+/* 01 / Notre rôle — make secondary copy readable without changing the cards. */
+.premium-site .expertise-card h3 {
+  font-size: clamp(24px, 1.9vw, 31px);
+  line-height: 1.16;
+}
+
+.premium-site .expertise-card strong {
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.premium-site .expertise-card p {
+  font-size: 15px;
+  line-height: 1.72;
+}
+
+.premium-site .expertise-card .card-number,
+.premium-site .expertise-card .card-footer {
+  font-size: 12px;
+}
+
+/* 02 / Situations — strengthen all explanatory content. */
+.premium-site .case-tabs button {
+  font-size: 14px;
+  min-height: 62px;
+}
+
+.premium-site .case-steps h4 {
+  font-size: 15px;
+}
+
+.premium-site .case-steps p {
+  font-size: 14px;
+  line-height: 1.58;
+}
+
+.premium-site .case-steps .step-index {
+  font-size: 11px;
+}
+
+.premium-site .case-deliverable {
+  font-size: 11.5px;
+}
+
+/* 05 / Team — names and descriptions should be readable at a glance. */
+.premium-site .team-card h3 {
+  font-size: 23px;
+  line-height: 1.15;
+}
+
+.premium-site .team-card .team-role {
+  font-size: 12px;
+}
+
+.premium-site .team-card .team-note {
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* 06 / Contact — increase form and contact copy without changing the glass layout. */
+.premium-site .contact-section > div:first-of-type > p:not(.eyebrow) {
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+.premium-site .contact-section > div:first-of-type a,
+.premium-site .contact-section > div:first-of-type strong {
+  font-size: 19px;
+  line-height: 1.45;
+}
+
+.premium-site .contact-form label {
+  font-size: 12.5px;
+  font-weight: 600;
+}
+
+.premium-site .contact-form input,
+.premium-site .contact-form select,
+.premium-site .contact-form textarea {
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.premium-site .contact-form .button {
+  font-size: 14px;
+}
+
+.premium-site .form-note {
+  font-size: 11.5px;
+  line-height: 1.5;
+}
+
+/* Footer — deliberately larger than the previous micro-copy. */
+.premium-site .footer-premium-brand p {
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.premium-site .footer-premium-kicker {
+  font-size: 12.5px;
+}
+
+.premium-site .footer-premium-contact a {
+  font-size: clamp(20px, 1.7vw, 27px);
+}
+
+.premium-site .footer-premium-area {
+  font-size: 14px;
+}
+
+.premium-site .footer-premium-bottom {
+  font-size: 13px;
+}
+
+.premium-site .footer-premium-promise {
+  font-size: 14px;
+  font-weight: 520;
+}
+
+.premium-site .footer-premium-bottom button {
+  font-size: 13px;
+}
+
 .theme-dark .premium-site .principles {
   color: #f2f6f3;
 }
@@ -123,5 +246,23 @@
 
   .premium-site .section-heading > p:last-child {
     font-size: 15px;
+  }
+
+  .premium-site .expertise-card p,
+  .premium-site .team-card .team-note,
+  .premium-site .contact-section > div:first-of-type > p:not(.eyebrow) {
+    font-size: 14px;
+  }
+
+  .premium-site .case-steps p,
+  .premium-site .contact-form input,
+  .premium-site .contact-form select,
+  .premium-site .contact-form textarea {
+    font-size: 14px;
+  }
+
+  .premium-site .footer-premium-brand p,
+  .premium-site .footer-premium-promise {
+    font-size: 14px;
   }
 }
