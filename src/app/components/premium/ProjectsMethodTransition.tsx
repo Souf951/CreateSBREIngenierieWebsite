@@ -9,6 +9,12 @@ type TransitionConfig = {
 
 const transitions: TransitionConfig[] = [
   {
+    target: "#situations",
+    from: "01",
+    to: "02",
+    label: "DU PILOTAGE AUX SITUATIONS CONCRÈTES",
+  },
+  {
     target: "#réalisations",
     from: "02",
     to: "03",
@@ -38,12 +44,6 @@ export default function ProjectsMethodTransition() {
   useEffect(() => {
     let cancelled = false;
     const timers: number[] = [];
-
-    document
-      .querySelector<HTMLElement>(
-        '.projects-method-transition[data-transition-to="02"]',
-      )
-      ?.remove();
 
     const ensureTransitions = () => {
       if (cancelled) return true;
