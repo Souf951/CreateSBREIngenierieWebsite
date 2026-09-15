@@ -51,6 +51,7 @@ import "../styles/hover-lift.css";
 import "../styles/mobile-tablet-premium.css";
 import "../styles/mobile-3d-cleanup.css";
 import "../styles/fluid-responsive-type.css";
+import "../styles/hero-phases-fill.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
