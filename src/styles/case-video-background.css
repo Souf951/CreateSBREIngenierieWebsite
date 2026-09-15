@@ -39,13 +39,18 @@
   pointer-events: none;
 }
 
-.case-video-background video {
+.case-video-background video,
+.case-video-background img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
   filter: saturate(.96) contrast(1.02) brightness(.94);
   transform: scale(1.015);
+}
+
+.case-video-background img {
+  display: block;
 }
 
 .case-video-veil {
@@ -87,7 +92,8 @@
   background: #1d9a70;
 }
 
-.theme-dark .case-video-background video {
+.theme-dark .case-video-background video,
+.theme-dark .case-video-background img {
   filter: saturate(.86) contrast(1.04) brightness(.64);
 }
 
@@ -177,7 +183,8 @@
     width: 34px;
   }
 
-  .case-video-background video {
+  .case-video-background video,
+  .case-video-background img {
     object-position: 55% center;
     filter: saturate(.94) contrast(1.02) brightness(.90);
   }
