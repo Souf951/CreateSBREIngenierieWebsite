@@ -15,25 +15,21 @@ export default function ExperiencesResultsBackground() {
 
   useEffect(() => {
     let cancelled = false;
-    const timers: number[] = [];
 
     const syncHost = () => {
-      if (cancelled) return true;
+      if (cancelled) return;
       const nextHost = document.querySelector<HTMLElement>("#réalisations");
-      if (!nextHost) return false;
-      setHost(nextHost);
-      return true;
+      setHost((current) => (current === nextHost ? current : nextHost));
     };
 
-    if (!syncHost()) {
-      [60, 160, 320, 600, 1000].forEach((delay) => {
-        timers.push(window.setTimeout(syncHost, delay));
-      });
-    }
+    syncHost();
+
+    const observer = new MutationObserver(syncHost);
+    observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       cancelled = true;
-      timers.forEach((timer) => window.clearTimeout(timer));
+      observer.disconnect();
     };
   }, []);
 
