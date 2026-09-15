@@ -30,6 +30,7 @@ import CaseStudyVideo from "./components/premium/CaseStudyVideo";
 import ExperiencesResultsBackground from "./components/premium/ExperiencesResultsBackground";
 import ProjectsMethodTransition from "./components/premium/ProjectsMethodTransition";
 import PartnersShowcase from "./components/premium/PartnersShowcase";
+import FaqPunctuationGuard from "./components/premium/FaqPunctuationGuard";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
 import "../styles/dark-logo.css";
@@ -200,6 +201,7 @@ export default function App() {
           <ExperiencesResultsBackground />
           <ProjectsMethodTransition />
           <PartnersShowcase />
+          <FaqPunctuationGuard />
           <Suspense
             fallback={
               <div style={{ padding: "15vh 8%", color: "#0a5c3d" }}>
