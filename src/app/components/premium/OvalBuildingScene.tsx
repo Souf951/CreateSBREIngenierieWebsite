@@ -74,6 +74,8 @@ export default function OvalBuildingScene({
       building.add(g);
     });
 
+    let signTexture: THREE.CanvasTexture | null = null;
+
     const ellipseMesh = (
       g: THREE.Group,
       y: number,
@@ -247,6 +249,33 @@ export default function OvalBuildingScene({
         box(groups[3], x, slabY + 0.58, z, 0.025, 0.42, 0.025, rail, -a);
       }
     }
+
+    // SBRE sign fixed to a front balcony in the final phase.
+    const signCanvas = document.createElement("canvas");
+    signCanvas.width = 1024;
+    signCanvas.height = 320;
+    const signCtx = signCanvas.getContext("2d");
+    if (signCtx) {
+      signCtx.fillStyle = "#f5f5ef";
+      signCtx.fillRect(0, 0, signCanvas.width, signCanvas.height);
+      signCtx.strokeStyle = "#0b684a";
+      signCtx.lineWidth = 24;
+      signCtx.strokeRect(12, 12, signCanvas.width - 24, signCanvas.height - 24);
+      signCtx.fillStyle = "#0b684a";
+      signCtx.font = "700 142px Arial";
+      signCtx.textAlign = "center";
+      signCtx.textBaseline = "middle";
+      signCtx.fillText("SBRE", 512, 132);
+      signCtx.font = "600 48px Arial";
+      signCtx.fillText("INGÉNIERIE", 512, 242);
+    }
+    signTexture = new THREE.CanvasTexture(signCanvas);
+    signTexture.colorSpace = THREE.SRGBColorSpace;
+    signTexture.anisotropy = Math.min(4, renderer.capabilities.getMaxAnisotropy());
+    const signMaterial = new THREE.MeshBasicMaterial({ map: signTexture, transparent: true, side: THREE.DoubleSide });
+    const balconySign = new THREE.Mesh(new THREE.PlaneGeometry(2.1, 0.66), signMaterial);
+    balconySign.position.set(0, 4.72, 3.535);
+    groups[3].add(balconySign);
 
     // Rooftop terrace: slightly raised deck, guard rails and a few subtle users.
     ellipseMesh(groups[3], 9.94, 4.85, 3.45, 0.18, concrete);
@@ -474,6 +503,7 @@ export default function OvalBuildingScene({
       container.removeEventListener("pointerleave", leave);
       container.removeEventListener("keydown", keyDown);
       renderer.domElement.removeEventListener("webglcontextlost", lost);
+      signTexture?.dispose();
       scene.traverse((o) => {
         if (o instanceof THREE.Mesh) {
           o.geometry.dispose();
