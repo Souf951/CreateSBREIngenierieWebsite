@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import logo from "../../../media/Pr_sentation1_page-0001.webp";
 import "../../../styles/architecture-switch.css";
 
-const VillaScene = lazy(() => import("./BuildingSceneV3"));
+const VillaScene = lazy(() => import("./VillaGLBTestScene"));
 const OvalScene = lazy(() => import("./OvalBuildingScene"));
 const PublicWorksScene = lazy(() => import("./PublicWorksScene"));
 
@@ -88,7 +88,7 @@ export default function Architecture({
     kind === "immeuble"
       ? "IMMEUBLE COURBE · SBRE"
       : kind === "villa"
-        ? "VILLA CONTEMPORAINE · SBRE"
+        ? "VILLA GLB · TEST MODÈLE TÉLÉCHARGEABLE"
         : "INFRASTRUCTURES PUBLIQUES · SBRE";
 
   return (
