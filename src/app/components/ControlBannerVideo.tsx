@@ -4,11 +4,11 @@ import "../../styles/control-banner-video.css";
 
 export default function ControlBannerVideo() {
   const [host, setHost] = useState<HTMLElement | null>(null);
+  const [shouldLoad, setShouldLoad] = useState(false);
 
   useEffect(() => {
     const findHost = () => {
-      const next = document.querySelector<HTMLElement>(".control-banner");
-      if (next) setHost(next);
+      setHost(document.querySelector<HTMLElement>(".control-banner"));
     };
 
     findHost();
@@ -17,7 +17,24 @@ export default function ControlBannerVideo() {
     return () => observer.disconnect();
   }, []);
 
-  if (!host) return null;
+  useEffect(() => {
+    setShouldLoad(false);
+    if (!host) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry?.isIntersecting) return;
+        setShouldLoad(true);
+        observer.disconnect();
+      },
+      { rootMargin: "450px 0px", threshold: 0.01 },
+    );
+
+    observer.observe(host);
+    return () => observer.disconnect();
+  }, [host]);
+
+  if (!host || !shouldLoad) return null;
 
   return createPortal(
     <video
