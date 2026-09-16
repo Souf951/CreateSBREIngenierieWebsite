@@ -31,6 +31,7 @@ import ExperiencesResultsBackground from "./components/premium/ExperiencesResult
 import ProjectsMethodTransition from "./components/premium/ProjectsMethodTransition";
 import PartnersShowcase from "./components/premium/PartnersShowcase";
 import PartnersNavLink from "./components/premium/PartnersNavLink";
+import PartnersSharedChrome from "./components/premium/PartnersSharedChrome";
 import FaqPunctuationGuard from "./components/premium/FaqPunctuationGuard";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
@@ -217,6 +218,7 @@ export default function App() {
           <ProjectsMethodTransition />
           <PartnersShowcase />
           <PartnersNavLink />
+          <PartnersSharedChrome />
           <FaqPunctuationGuard />
           <Suspense
             fallback={
