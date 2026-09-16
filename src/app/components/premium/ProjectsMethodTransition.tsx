@@ -12,7 +12,7 @@ const transitions: TransitionConfig[] = [
     target: "#situations",
     from: "01",
     to: "02",
-    label: "DU PILOTAGE AUX SITUATIONS CONCRÈTES",
+    label: "DE NOTRE RÔLE À REPRENDRE LA MAÎTRISE",
   },
   {
     target: "#réalisations",
