@@ -45,10 +45,10 @@ export default function PartnerArchitecture({
         >
           <polygon
             points={points([
-              [x, y, 0],
-              [x + width, y, 0],
-              [x + width, y, height],
-              [x, y, height],
+              [x, y + depth, 0],
+              [x + width, y + depth, 0],
+              [x + width, y + depth, height],
+              [x, y + depth, height],
             ])}
           />
           <polygon
@@ -79,10 +79,10 @@ export default function PartnerArchitecture({
             >
               {face(
                 [
-                  [x, y, z],
-                  [x + width, y, z],
-                  [x + width, y, z + 49],
-                  [x, y, z + 49],
+                  [x, y + depth, z],
+                  [x + width, y + depth, z],
+                  [x + width, y + depth, z + 49],
+                  [x, y + depth, z + 49],
                 ],
                 `url(#${id}-stone)`,
               )}
@@ -101,17 +101,17 @@ export default function PartnerArchitecture({
                   <g key={column}>
                     {face(
                       [
-                        [left, y - 0.4, z + 8],
-                        [left + 19, y - 0.4, z + 8],
-                        [left + 19, y - 0.4, z + 40],
-                        [left, y - 0.4, z + 40],
+                        [left, y + depth + 0.4, z + 8],
+                        [left + 19, y + depth + 0.4, z + 8],
+                        [left + 19, y + depth + 0.4, z + 40],
+                        [left, y + depth + 0.4, z + 40],
                       ],
                       `url(#${id}-glass)`,
                     )}
                     <polyline
                       points={points([
-                        [left + 10, y - 0.5, z + 8],
-                        [left + 10, y - 0.5, z + 40],
+                        [left + 10, y + depth + 0.5, z + 8],
+                        [left + 10, y + depth + 0.5, z + 40],
                       ])}
                       fill="none"
                       stroke="#a0b1a7"
@@ -144,10 +144,10 @@ export default function PartnerArchitecture({
               )}
               {face(
                 [
-                  [x - 4, y - 4, z + 46],
-                  [x + width + 4, y - 4, z + 46],
-                  [x + width + 4, y - 4, z + 50],
-                  [x - 4, y - 4, z + 50],
+                  [x - 4, y + depth + 4, z + 46],
+                  [x + width + 4, y + depth + 4, z + 46],
+                  [x + width + 4, y + depth + 4, z + 50],
+                  [x - 4, y + depth + 4, z + 50],
                 ],
                 "#e5e1d5",
               )}
@@ -299,9 +299,9 @@ export default function PartnerArchitecture({
         </g>
       </g>
       <g className="pr-model-volumes">
+        {volume(-75, -30, 182, 112, 3, "front")}
         {volume(-45, 105, 176, 112, 4, "west")}
         {volume(128, 25, 156, 144, 5, "east")}
-        {volume(-75, -30, 182, 112, 3, "front")}
         <g className={narrative ? "pr-model-crown" : undefined}>
           {face(
             [
@@ -365,3 +365,4 @@ export default function PartnerArchitecture({
     </svg>
   );
 }
+
