@@ -9,7 +9,9 @@ export default function CaseSectionVideoBackground() {
 
     let cancelled = false;
 
-    const ensureImageBackground = () => {
+    const apply = () => {
+      if (cancelled) return;
+
       const section = document.querySelector<HTMLElement>(".case-section");
       if (!section) return;
 
@@ -23,9 +25,8 @@ export default function CaseSectionVideoBackground() {
         section.prepend(wrap);
       }
 
-      // The section background is now a still chantier photo. Remove only the
-      // old section-level video if it is still present; case-card videos are
-      // mounted elsewhere and remain untouched.
+      // The section background is intentionally a still chantier photo.
+      // Situation-card videos are mounted separately by CaseStudyVideo.
       wrap.querySelector("video")?.remove();
 
       let image = wrap.querySelector<HTMLImageElement>("img");
@@ -33,58 +34,18 @@ export default function CaseSectionVideoBackground() {
         image = document.createElement("img");
         image.alt = "";
         image.decoding = "async";
+        image.loading = "lazy";
         wrap.prepend(image);
       }
-      image.src = `${import.meta.env.BASE_URL}sbre-situations-bg.jpg`;
+
+      const expectedSrc = `${import.meta.env.BASE_URL}sbre-situations-bg.jpg`;
+      if (image.getAttribute("src") !== expectedSrc) image.src = expectedSrc;
 
       if (!wrap.querySelector(".case-video-veil")) {
         const veil = document.createElement("div");
         veil.className = "case-video-veil";
         wrap.append(veil);
       }
-    };
-
-    const ensureMethodVideo = () => {
-      const section = document.querySelector<HTMLElement>(".method-section");
-      if (!section) return;
-
-      section.classList.add("method-section-has-video");
-
-      let wrap = section.querySelector<HTMLDivElement>(".method-video-background");
-      if (!wrap) {
-        wrap = document.createElement("div");
-        wrap.className = "method-video-background";
-        wrap.setAttribute("aria-hidden", "true");
-
-        const video = document.createElement("video");
-        video.src = `${import.meta.env.BASE_URL}sbre-method-bg.mp4`;
-        video.autoplay = true;
-        video.muted = true;
-        video.loop = true;
-        video.playsInline = true;
-        video.preload = "metadata";
-        video.setAttribute("playsinline", "");
-
-        const veil = document.createElement("div");
-        veil.className = "method-video-veil";
-
-        wrap.append(video, veil);
-        section.prepend(wrap);
-      }
-
-      const video = wrap.querySelector<HTMLVideoElement>("video");
-      if (video) {
-        video.muted = true;
-        const play = () => video.play().catch(() => {});
-        play();
-        window.setTimeout(play, 180);
-      }
-    };
-
-    const apply = () => {
-      if (cancelled) return;
-      ensureImageBackground();
-      ensureMethodVideo();
     };
 
     apply();
