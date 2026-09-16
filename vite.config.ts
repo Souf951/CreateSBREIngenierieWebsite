@@ -15,21 +15,30 @@ function figmaAssetResolver() {
   }
 }
 
-const isGitHubProjectPages = process.env.GITHUB_ACTIONS === 'true' && !process.env.SBRE_CUSTOM_DOMAIN
+const useCustomDomain = process.env.SBRE_CUSTOM_DOMAIN === 'true'
 
 export default defineConfig({
-  // Local dev and the final custom domain use root-relative URLs. GitHub's
-  // project-pages preview keeps the repository prefix automatically.
-  base: isGitHubProjectPages ? '/CreateSBREIngenierieWebsite/' : '/',
-  plugins: [
-    figmaAssetResolver(),
-    react(),
-    tailwindcss(),
-  ],
+  // Keep the repository-prefixed URL for local development and CI previews.
+  // The production Pages workflow explicitly enables the custom-domain root.
+  base: useCustomDomain ? '/' : '/CreateSBREIngenierieWebsite/',
+  plugins: [figmaAssetResolver(), react(), tailwindcss()],
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
+    alias: [
+      // Two old WebP derivatives in src/media are empty. Their original JPEGs
+      // are valid and only used on lazily-loaded project gallery pages.
+      {
+        find: /IMG_0259\.webp$/,
+        replacement: path.resolve(__dirname, 'src/imports/IMG_0259.jpeg'),
+      },
+      {
+        find: /IMG_1260\.webp$/,
+        replacement: path.resolve(__dirname, 'src/imports/IMG_1260.jpeg'),
+      },
+      {
+        find: '@',
+        replacement: path.resolve(__dirname, './src'),
+      },
+    ],
   },
   assetsInclude: ['**/*.svg', '**/*.csv'],
   build: {
