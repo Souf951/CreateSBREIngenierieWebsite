@@ -1,3 +1,5 @@
+import type { CSSProperties } from "react";
+
 const partnerNodes = [
   { name: "CityPop", file: "partners/citypop.png", x: 8, y: 22, w: 72, delay: 0.8 },
   { name: "Wincasa", file: "partners/wincasa.png", x: 23, y: 74, w: 78, delay: 2.2 },
@@ -11,21 +13,11 @@ const partnerNodes = [
 ] as const;
 
 const links = [
-  [8, 22, 13, 53, 0.2],
-  [13, 53, 23, 74, 1.1],
-  [8, 22, 39, 15, 1.8],
-  [39, 15, 53, 62, 3.1],
-  [23, 74, 53, 62, 4.0],
-  [39, 15, 67, 28, 4.8],
-  [53, 62, 67, 28, 5.6],
-  [53, 62, 72, 84, 6.2],
-  [67, 28, 81, 71, 6.8],
-  [67, 28, 91, 21, 7.4],
-  [81, 71, 91, 21, 8.3],
-  [72, 84, 81, 71, 9.1],
-  [13, 53, 53, 62, 9.8],
-  [23, 74, 72, 84, 10.5],
-  [39, 15, 91, 21, 11.2],
+  [8, 22, 13, 53, 0.2], [13, 53, 23, 74, 1.1], [8, 22, 39, 15, 1.8],
+  [39, 15, 53, 62, 3.1], [23, 74, 53, 62, 4.0], [39, 15, 67, 28, 4.8],
+  [53, 62, 67, 28, 5.6], [53, 62, 72, 84, 6.2], [67, 28, 81, 71, 6.8],
+  [67, 28, 91, 21, 7.4], [81, 71, 91, 21, 8.3], [72, 84, 81, 71, 9.1],
+  [13, 53, 53, 62, 9.8], [23, 74, 72, 84, 10.5], [39, 15, 91, 21, 11.2],
 ] as const;
 
 export default function PartnerLogoNetwork() {
@@ -33,35 +25,14 @@ export default function PartnerLogoNetwork() {
     <div className="pr-logo-network" aria-hidden="true">
       <svg className="pr-logo-network-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
         {links.map(([x1, y1, x2, y2, delay], index) => (
-          <line
-            key={index}
-            x1={x1}
-            y1={y1}
-            x2={x2}
-            y2={y2}
-            pathLength="1"
-            style={{ "--network-delay": `${delay}s` } as React.CSSProperties}
-          />
+          <line key={index} x1={x1} y1={y1} x2={x2} y2={y2} pathLength="1"
+            style={{ "--network-delay": `${delay}s` } as CSSProperties} />
         ))}
       </svg>
-
       {partnerNodes.map((node) => (
-        <div
-          className="pr-logo-network-node"
-          key={node.name}
-          style={{
-            left: `${node.x}%`,
-            top: `${node.y}%`,
-            width: `${node.w}px`,
-            "--logo-delay": `${node.delay}s`,
-          } as React.CSSProperties}
-        >
-          <img
-            src={`${import.meta.env.BASE_URL}${node.file}`}
-            alt=""
-            loading="eager"
-            decoding="async"
-          />
+        <div className="pr-logo-network-node" key={node.name}
+          style={{ left: `${node.x}%`, top: `${node.y}%`, width: `${node.w}px`, "--logo-delay": `${node.delay}s` } as CSSProperties}>
+          <img src={`${import.meta.env.BASE_URL}${node.file}`} alt="" loading="eager" decoding="async" />
         </div>
       ))}
     </div>
