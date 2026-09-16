@@ -11,8 +11,12 @@
 }
 
 .pr-page .partners-site-header .brand {
-  width: 174px;
+  width: 188px;
+  height: 78px;
   margin-right: auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
   padding: 0;
   border-radius: 0;
   background: transparent;
@@ -25,9 +29,11 @@
 }
 
 .pr-page .partners-site-header .brand img {
-  width: 100%;
-  height: 70px;
+  width: 188px;
+  height: 78px;
   object-fit: contain;
+  transform: scale(1.28);
+  transform-origin: center;
   mix-blend-mode: normal;
 }
 
@@ -37,16 +43,12 @@
   font-family: Inter, Arial, sans-serif;
 }
 
-.pr-page .partners-site-header .desktop-nav button,
-.pr-page .partners-site-header .header-contact {
+.pr-page .partners-site-header .desktop-nav button {
   font-family: Inter, Arial, sans-serif;
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 540;
   line-height: 1.2;
   letter-spacing: 0;
-}
-
-.pr-page .partners-site-header .desktop-nav button {
   background: none;
   border: 0;
   padding: 0;
@@ -54,8 +56,13 @@
 }
 
 .pr-page .partners-site-header .header-contact {
+  font-family: Inter, Arial, sans-serif;
+  font-size: 13.5px !important;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
   border: 1px solid #173d31;
-  padding: 11px 18px;
+  padding: 12px 20px;
   background: transparent;
   color: inherit;
 }
@@ -102,5 +109,14 @@
 @media (max-width: 900px) {
   .pr-page .partners-site-header {
     height: 82px;
+  }
+  .pr-page .partners-site-header .brand {
+    width: 154px;
+    height: 66px;
+  }
+  .pr-page .partners-site-header .brand img {
+    width: 154px;
+    height: 66px;
+    transform: scale(1.22);
   }
 }
