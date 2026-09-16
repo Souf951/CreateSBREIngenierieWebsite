@@ -1,7 +1,5 @@
 import type { CSSProperties } from "react";
 
-const uploadedPartnerLogo = "data:image/webp;base64,UklGRiQE...";
-
 const partnerNodes = [
   { name: "CityPop", file: "partners/citypop.png", x: 8, y: 22, w: 72, delay: 0.8 },
   { name: "Wincasa", file: "partners/wincasa.png", x: 23, y: 74, w: 78, delay: 2.2 },
@@ -12,7 +10,7 @@ const partnerNodes = [
   { name: "Psy Réunis", file: "partners/psy-reunis.png", x: 91, y: 21, w: 76, delay: 9.2 },
   { name: "Bruellan", file: "partners/bruellan.png", x: 13, y: 53, w: 70, delay: 10.6 },
   { name: "Léman Construction", file: "partners/leman-construction.png", x: 72, y: 84, w: 88, delay: 12.0 },
-  { name: "Partenaire suisse", src: uploadedPartnerLogo, x: 47, y: 86, w: 102, delay: 13.2 },
+  { name: "Partenaire suisse", file: "partners/partner-uploaded.svg", x: 47, y: 86, w: 112, delay: 13.2 },
 ] as const;
 
 const links = [
@@ -29,15 +27,30 @@ export default function PartnerLogoNetwork() {
     <div className="pr-logo-network" aria-hidden="true">
       <svg className="pr-logo-network-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
         {links.map(([x1, y1, x2, y2, delay], index) => (
-          <line key={index} x1={x1} y1={y1} x2={x2} y2={y2} pathLength="1"
-            style={{ "--network-delay": `${delay}s` } as CSSProperties} />
+          <line
+            key={index}
+            x1={x1}
+            y1={y1}
+            x2={x2}
+            y2={y2}
+            pathLength="1"
+            style={{ "--network-delay": `${delay}s` } as CSSProperties}
+          />
         ))}
       </svg>
       {partnerNodes.map((node) => (
-        <div className="pr-logo-network-node" key={node.name}
-          style={{ left: `${node.x}%`, top: `${node.y}%`, width: `${node.w}px`, "--logo-delay": `${node.delay}s` } as CSSProperties}>
+        <div
+          className="pr-logo-network-node"
+          key={node.name}
+          style={{
+            left: `${node.x}%`,
+            top: `${node.y}%`,
+            width: `${node.w}px`,
+            "--logo-delay": `${node.delay}s`,
+          } as CSSProperties}
+        >
           <img
-            src={"src" in node ? node.src : `${import.meta.env.BASE_URL}${node.file}`}
+            src={`${import.meta.env.BASE_URL}${node.file}`}
             alt=""
             loading="eager"
             decoding="async"
