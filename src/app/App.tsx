@@ -32,6 +32,7 @@ import ProjectsMethodTransition from "./components/premium/ProjectsMethodTransit
 import PartnersShowcase from "./components/premium/PartnersShowcase";
 import PartnersNavLink from "./components/premium/PartnersNavLink";
 import PartnerImpactStory from "./components/premium/PartnerImpactStory";
+import PartnerNetworkHero from "./components/premium/PartnerNetworkHero";
 import FaqPunctuationGuard from "./components/premium/FaqPunctuationGuard";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
@@ -210,6 +211,7 @@ export default function App() {
           <PartnersShowcase />
           <PartnersNavLink />
           <PartnerImpactStory />
+          <PartnerNetworkHero />
           <FaqPunctuationGuard />
           <Suspense
             fallback={
