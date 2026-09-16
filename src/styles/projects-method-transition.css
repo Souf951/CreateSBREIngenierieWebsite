@@ -1,18 +1,26 @@
 .projects-method-transition {
   position: relative;
   height: 76px;
-  display: flex;
+  min-height: 76px;
+  flex: 0 0 76px;
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
   align-items: center;
   justify-content: center;
   gap: 18px;
   overflow: hidden;
+  z-index: 40;
+  isolation: isolate;
+  margin: 0 !important;
   background:
-    linear-gradient(90deg, rgba(10,92,61,.035) 1px, transparent 1px),
-    linear-gradient(rgba(10,92,61,.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10,92,61,.045) 1px, transparent 1px),
+    linear-gradient(rgba(10,92,61,.045) 1px, transparent 1px),
     #f5f5ee;
   background-size: 28px 28px;
-  border-top: 1px solid rgba(10,92,61,.14);
-  border-bottom: 1px solid rgba(10,92,61,.18);
+  border-top: 1px solid rgba(10,92,61,.22);
+  border-bottom: 1px solid rgba(10,92,61,.26);
+  box-shadow: 0 1px 0 rgba(10,92,61,.05), 0 -1px 0 rgba(10,92,61,.04);
 }
 
 .projects-method-transition::before,
@@ -23,26 +31,28 @@
   bottom: 0;
   width: 18%;
   pointer-events: none;
+  z-index: 0;
 }
 
 .projects-method-transition::before {
   left: 0;
-  background: linear-gradient(90deg, rgba(10,92,61,.11), transparent);
+  background: linear-gradient(90deg, rgba(10,92,61,.14), transparent);
   clip-path: polygon(0 0, 100% 0, 78% 100%, 0 100%);
 }
 
 .projects-method-transition::after {
   right: 0;
-  background: linear-gradient(270deg, rgba(10,92,61,.09), transparent);
+  background: linear-gradient(270deg, rgba(10,92,61,.12), transparent);
   clip-path: polygon(22% 0, 100% 0, 100% 100%, 0 100%);
 }
 
 .projects-method-transition__line {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: min(22vw, 310px);
   height: 1px;
-  background: linear-gradient(90deg, transparent, #0a5c3d 22%, #0a5c3d 100%);
+  background: linear-gradient(90deg, transparent, #0a5c3d 18%, #0a5c3d 100%);
+  opacity: 1;
 }
 
 .projects-method-transition__line--right {
@@ -51,17 +61,17 @@
 
 .projects-method-transition__badge {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  min-width: 88px;
+  min-width: 92px;
   justify-content: center;
-  padding: 9px 13px;
+  padding: 10px 14px;
   border-radius: 999px;
   background: #0a5c3d;
   color: #fff;
-  box-shadow: 0 10px 28px rgba(10,92,61,.18);
+  box-shadow: 0 10px 28px rgba(10,92,61,.22);
   font: 700 10px/1 Inter, Arial, sans-serif;
   letter-spacing: .08em;
 }
@@ -74,7 +84,7 @@
 
 .projects-method-transition__label {
   position: relative;
-  z-index: 2;
+  z-index: 3;
   font: 700 10px/1 Inter, Arial, sans-serif;
   letter-spacing: .16em;
   color: #173d31;
@@ -89,8 +99,8 @@
   border-radius: 999px;
   background: #0a5c3d;
   transform: translateY(-50%);
-  opacity: .82;
-  z-index: 2;
+  opacity: .9;
+  z-index: 3;
 }
 
 .projects-method-transition__edge--left {
@@ -111,13 +121,22 @@
   background: #173d31;
 }
 
+.control-banner + .projects-method-transition,
+.case-section + .projects-method-transition,
+.projects-section + .projects-method-transition,
+.method-section + .projects-method-transition,
+.team-section + .projects-method-transition {
+  position: relative !important;
+  z-index: 60 !important;
+}
+
 .theme-dark .projects-method-transition {
   background:
-    linear-gradient(90deg, rgba(255,255,255,.028) 1px, transparent 1px),
-    linear-gradient(rgba(255,255,255,.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.034) 1px, transparent 1px),
+    linear-gradient(rgba(255,255,255,.034) 1px, transparent 1px),
     #0a1712;
   background-size: 28px 28px;
-  border-color: rgba(255,255,255,.08);
+  border-color: rgba(255,255,255,.12);
 }
 
 .theme-dark .projects-method-transition__label {
@@ -125,7 +144,7 @@
 }
 
 .theme-dark .projects-method-transition__line {
-  background: linear-gradient(90deg, transparent, #3dbb8e 22%, #3dbb8e 100%);
+  background: linear-gradient(90deg, transparent, #3dbb8e 18%, #3dbb8e 100%);
 }
 
 .theme-dark .projects-method-transition__edge {
@@ -151,6 +170,8 @@
 @media (max-width: 760px) {
   .projects-method-transition {
     height: 64px;
+    min-height: 64px;
+    flex-basis: 64px;
     gap: 8px;
     padding: 0 18px;
   }
