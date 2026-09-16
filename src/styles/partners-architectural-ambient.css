@@ -1,0 +1,233 @@
+/* Architectural ambient layer for /partenaires.
+   Subtle by design: it should feel like a drawing board, never compete with the copy. */
+
+.pr-page {
+  transition: background-color 0.45s ease, color 0.45s ease;
+}
+
+.pr-page .pr-header,
+.pr-page .pr-story,
+.pr-page .pr-button,
+.pr-page .pr-link,
+.pr-page .pr-hero-visual,
+.pr-page .pr-architecture {
+  transition:
+    background-color 0.45s ease,
+    border-color 0.45s ease,
+    color 0.45s ease,
+    filter 0.45s ease,
+    opacity 0.45s ease;
+}
+
+/* Blueprint / planning background */
+.pr-page .pr-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.pr-page .pr-hero::before,
+.pr-page .pr-hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.pr-page .pr-hero::before {
+  background-image:
+    linear-gradient(90deg, transparent 0 8%, color-mix(in srgb, var(--pr-accent) 15%, transparent) 8% 8.08%, transparent 8.08% 100%),
+    linear-gradient(0deg, transparent 0 21%, color-mix(in srgb, var(--pr-accent) 12%, transparent) 21% 21.08%, transparent 21.08% 100%),
+    repeating-linear-gradient(90deg, transparent 0 86px, color-mix(in srgb, var(--pr-accent) 8%, transparent) 86px 87px),
+    repeating-linear-gradient(0deg, transparent 0 86px, color-mix(in srgb, var(--pr-accent) 7%, transparent) 86px 87px),
+    linear-gradient(28deg, transparent 0 46%, color-mix(in srgb, var(--pr-accent) 9%, transparent) 46% 46.08%, transparent 46.08% 100%),
+    linear-gradient(152deg, transparent 0 63%, color-mix(in srgb, var(--pr-accent) 7%, transparent) 63% 63.08%, transparent 63.08% 100%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  opacity: 0.48;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 60%, transparent 95%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 60%, transparent 95%);
+  animation: pr-blueprint-breathe 9s ease-in-out infinite alternate;
+}
+
+.pr-page .pr-hero::after {
+  inset: 10% 4% 8% 3%;
+  border-left: 1px solid color-mix(in srgb, var(--pr-accent) 22%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--pr-accent) 18%, transparent);
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--pr-accent) 30%, transparent), color-mix(in srgb, var(--pr-accent) 30%, transparent)) 13% 5% / 1px 18% no-repeat,
+    linear-gradient(90deg, color-mix(in srgb, var(--pr-accent) 22%, transparent), color-mix(in srgb, var(--pr-accent) 22%, transparent)) 75% 12% / 1px 14% no-repeat,
+    linear-gradient(0deg, color-mix(in srgb, var(--pr-accent) 26%, transparent), color-mix(in srgb, var(--pr-accent) 26%, transparent)) 18% 73% / 22% 1px no-repeat,
+    linear-gradient(0deg, color-mix(in srgb, var(--pr-accent) 20%, transparent), color-mix(in srgb, var(--pr-accent) 20%, transparent)) 78% 31% / 14% 1px no-repeat;
+  opacity: 0.7;
+  transform-origin: left center;
+  animation: pr-plan-draw 8s cubic-bezier(.22,.61,.36,1) infinite;
+}
+
+.pr-page .pr-hero-body,
+.pr-page .pr-hero-top,
+.pr-page .pr-hero-bottom {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes pr-plan-draw {
+  0%, 8% {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0;
+  }
+  24% {
+    opacity: 0.72;
+  }
+  62%, 88% {
+    clip-path: inset(0 0 0 0);
+    opacity: 0.72;
+  }
+  100% {
+    clip-path: inset(0 0 0 0);
+    opacity: 0.35;
+  }
+}
+
+@keyframes pr-blueprint-breathe {
+  from {
+    opacity: 0.28;
+    transform: translate3d(-0.25%, 0, 0) scale(1.003);
+  }
+  to {
+    opacity: 0.5;
+    transform: translate3d(0.25%, -0.2%, 0) scale(1.008);
+  }
+}
+
+/* Reuse the real global theme control, but make it unmistakably available on Partners. */
+.sbre-theme:has(.pr-page) .theme-toggle {
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: fixed !important;
+  right: 24px !important;
+  bottom: 24px !important;
+  top: auto !important;
+  left: auto !important;
+  z-index: 140 !important;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 10px 14px !important;
+  border: 1px solid var(--pr-line) !important;
+  border-radius: 999px !important;
+  background: color-mix(in srgb, var(--pr-paper) 92%, transparent) !important;
+  color: var(--pr-ink) !important;
+  box-shadow: 0 8px 24px rgba(16, 38, 29, 0.09);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.sbre-theme:has(.pr-page) .theme-toggle:hover {
+  border-color: color-mix(in srgb, var(--pr-accent) 50%, var(--pr-line)) !important;
+  transform: translateY(-1px);
+}
+
+.sbre-theme:has(.pr-page) .theme-toggle-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sbre-theme:has(.pr-page) .theme-toggle-label {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+}
+
+/* Dark mode: keep the architectural language, but move it into deep mineral green. */
+.theme-dark .pr-page {
+  --pr-paper: #10241c;
+  --pr-soft: #162d23;
+  --pr-ink: #edf2e8;
+  --pr-muted: #b7c6bb;
+  --pr-line: #dbe8de24;
+  --pr-accent: #9fcaaa;
+  background:
+    radial-gradient(circle at 72% 18%, rgba(91, 138, 109, 0.10), transparent 33%),
+    var(--pr-paper);
+}
+
+.theme-dark .pr-page .pr-header {
+  background: color-mix(in srgb, var(--pr-paper) 94%, transparent);
+}
+
+.theme-dark .pr-page .pr-hero::before {
+  opacity: 0.4;
+}
+
+.theme-dark .pr-page .pr-hero::after {
+  opacity: 0.5;
+}
+
+.theme-dark .pr-page .pr-architecture {
+  filter: brightness(0.82) saturate(0.88) contrast(1.06);
+}
+
+.theme-dark .pr-page .pr-model-wire {
+  opacity: 0.48;
+}
+
+.theme-dark .pr-page .pr-button {
+  background: #dfeadf;
+  color: #123126;
+}
+
+.theme-dark .pr-page .pr-button:hover {
+  background: #ffffff;
+}
+
+.theme-dark .pr-page .pr-link,
+.theme-dark .pr-page .pr-header-contact {
+  border-color: color-mix(in srgb, var(--pr-ink) 52%, transparent);
+}
+
+.theme-dark .pr-page .pr-brand img {
+  background: transparent;
+  padding: 0;
+  mix-blend-mode: normal;
+  filter: brightness(0) invert(1) sepia(.08) saturate(.55) brightness(.96);
+}
+
+.theme-dark.sbre-theme:has(.pr-page) .theme-toggle {
+  background: rgba(13, 33, 25, 0.88) !important;
+  border-color: rgba(220, 235, 224, 0.16) !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+}
+
+@media (max-width: 760px) {
+  .pr-page .pr-hero::before {
+    background-size: 100% 100%, 100% 100%, 72px 72px, 72px 72px, 100% 100%, 100% 100%;
+    opacity: 0.32;
+  }
+
+  .pr-page .pr-hero::after {
+    inset: 7% 3% 5%;
+    opacity: 0.42;
+  }
+
+  .sbre-theme:has(.pr-page) .theme-toggle {
+    right: 14px !important;
+    bottom: 14px !important;
+    padding: 10px 12px !important;
+  }
+
+  .sbre-theme:has(.pr-page) .theme-toggle-label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-page .pr-hero::before,
+  .pr-page .pr-hero::after {
+    animation: none !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
+}
