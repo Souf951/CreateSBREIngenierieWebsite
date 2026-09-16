@@ -30,6 +30,7 @@ import CaseStudyVideo from "./components/premium/CaseStudyVideo";
 import ExperiencesResultsBackground from "./components/premium/ExperiencesResultsBackground";
 import ProjectsMethodTransition from "./components/premium/ProjectsMethodTransition";
 import PartnersShowcase from "./components/premium/PartnersShowcase";
+import PartnersNavLink from "./components/premium/PartnersNavLink";
 import FaqPunctuationGuard from "./components/premium/FaqPunctuationGuard";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
@@ -54,6 +55,7 @@ import "../styles/mobile-3d-cleanup.css";
 import "../styles/fluid-responsive-type.css";
 import "../styles/hero-phases-fill.css";
 import "../styles/partners-page.css";
+import "../styles/partners-nav-link.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
@@ -205,6 +207,7 @@ export default function App() {
           <ExperiencesResultsBackground />
           <ProjectsMethodTransition />
           <PartnersShowcase />
+          <PartnersNavLink />
           <FaqPunctuationGuard />
           <Suspense
             fallback={
