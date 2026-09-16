@@ -1,0 +1,80 @@
+/* Legibility pass for the Partners page. Keeps the visual hierarchy while avoiding ultra-small copy. */
+.pr-page .pr-header nav,
+.pr-page .pr-header-contact,
+.pr-page .pr-button,
+.pr-page .pr-link {
+  font-size: 14px;
+}
+
+.pr-page .pr-eyebrow,
+.pr-page .pr-hero-top > span,
+.pr-page .pr-hero-bottom,
+.pr-page .pr-story-instruction {
+  font-size: 12px;
+}
+
+.pr-page .pr-hero-overline,
+.pr-page .pr-hero-bottom > span,
+.pr-page .pr-hero-visual figcaption,
+.pr-page .pr-model-caption,
+.pr-page .pr-actor {
+  font-size: 11px;
+}
+
+.pr-page .pr-drawing-note {
+  font-size: 10px;
+}
+
+.pr-page .pr-lead {
+  font-size: clamp(17px, 1.3vw, 20px);
+}
+
+.pr-page .pr-story-detail {
+  font-size: 15px;
+}
+
+.pr-page .pr-story-message {
+  font-size: 16px;
+  max-width: 390px;
+}
+
+/* Small editorial labels elsewhere on the page should remain discreet, but readable. */
+.pr-page :where(.pr-profile-index, .pr-profile-services, .pr-value-index, .pr-footer, .pr-form-note) {
+  font-size: max(12px, 0.78rem);
+}
+
+@media (max-width: 1024px) {
+  .pr-page .pr-header nav,
+  .pr-page .pr-header-contact,
+  .pr-page .pr-button,
+  .pr-page .pr-link {
+    font-size: 13px;
+  }
+
+  .pr-page .pr-eyebrow,
+  .pr-page .pr-hero-top > span,
+  .pr-page .pr-hero-bottom,
+  .pr-page .pr-story-instruction {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 640px) {
+  .pr-page .pr-lead {
+    font-size: 17px;
+    line-height: 1.65;
+  }
+
+  .pr-page .pr-story-detail,
+  .pr-page .pr-story-message {
+    font-size: 15px;
+  }
+
+  .pr-page .pr-hero-overline,
+  .pr-page .pr-hero-visual figcaption,
+  .pr-page .pr-model-caption,
+  .pr-page .pr-actor,
+  .pr-page .pr-drawing-note {
+    font-size: 10px;
+  }
+}
