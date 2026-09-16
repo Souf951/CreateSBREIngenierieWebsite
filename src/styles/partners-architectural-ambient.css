@@ -1,5 +1,5 @@
 /* Architectural ambient layer for /partenaires.
-   Subtle by design: it should feel like a drawing board, never compete with the copy. */
+   Full-hero animated coordination network: calm, technical, and deliberately subtle. */
 
 .pr-page {
   transition: background-color 0.45s ease, color 0.45s ease;
@@ -19,7 +19,11 @@
     opacity 0.45s ease;
 }
 
-/* Blueprint / planning background */
+/* --------------------------------------------------------------------------
+   HERO NETWORK
+   A single animated network spans the complete hero, not only the model area.
+   The SVG draws paths node-by-node to evoke coordination, planning and flow.
+   -------------------------------------------------------------------------- */
 .pr-page .pr-hero {
   position: relative;
   isolation: isolate;
@@ -36,32 +40,28 @@
 }
 
 .pr-page .pr-hero::before {
-  background-image:
-    linear-gradient(90deg, transparent 0 8%, color-mix(in srgb, var(--pr-accent) 15%, transparent) 8% 8.08%, transparent 8.08% 100%),
-    linear-gradient(0deg, transparent 0 21%, color-mix(in srgb, var(--pr-accent) 12%, transparent) 21% 21.08%, transparent 21.08% 100%),
-    repeating-linear-gradient(90deg, transparent 0 86px, color-mix(in srgb, var(--pr-accent) 8%, transparent) 86px 87px),
-    repeating-linear-gradient(0deg, transparent 0 86px, color-mix(in srgb, var(--pr-accent) 7%, transparent) 86px 87px),
-    linear-gradient(28deg, transparent 0 46%, color-mix(in srgb, var(--pr-accent) 9%, transparent) 46% 46.08%, transparent 46.08% 100%),
-    linear-gradient(152deg, transparent 0 63%, color-mix(in srgb, var(--pr-accent) 7%, transparent) 63% 63.08%, transparent 63.08% 100%);
-  background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
-  opacity: 0.48;
-  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 60%, transparent 95%);
-  mask-image: linear-gradient(90deg, #000 0%, #000 60%, transparent 95%);
-  animation: pr-blueprint-breathe 9s ease-in-out infinite alternate;
+  inset: -3% -2% -5%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' fill='none'%3E%3Cg stroke='%230b6342' stroke-width='1.15' stroke-linecap='round' opacity='.54'%3E%3Cpath pathLength='1' stroke-dasharray='1' stroke-dashoffset='1' d='M-20 120L150 220L320 105L480 210'%3E%3Canimate attributeName='stroke-dashoffset' values='1;0;0' keyTimes='0;.18;1' dur='18s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath pathLength='1' stroke-dasharray='1' stroke-dashoffset='1' d='M150 220L250 380L470 445L620 290'%3E%3Canimate attributeName='stroke-dashoffset' values='1;1;0;0' keyTimes='0;.08;.28;1' dur='18s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath pathLength='1' stroke-dasharray='1' stroke-dashoffset='1' d='M320 105L420 42L585 145L760 105'%3E%3Canimate attributeName='stroke-dashoffset' values='1;1;0;0' keyTimes='0;.16;.34;1' dur='18s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath pathLength='1' stroke-dasharray='1' stroke-dashoffset='1' d='M480 210L620 290L785 230L930 335'%3E%3Canimate attributeName='stroke-dashoffset' values='1;1;0;0' keyTimes='0;.22;.4;1' dur='18s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath pathLength='1' stroke-dasharray='1' stroke-dashoffset='1' d='M760 105L905 180L1080 115L1240 205'%3E%3Canimate attributeName='stroke-dashoffset' values='1;1;0;0' keyTimes='0;.28;.46;1' dur='18s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath pathLength='1' stroke-dasharray='1' stroke-dashoffset='1' d='M930 335L1060 430L1210 350L1385 420L1625 260'%3E%3Canimate attributeName='stroke-dashoffset' values='1;1;0;0' keyTimes='0;.34;.54;1' dur='18s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath pathLength='1' stroke-dasharray='1' stroke-dashoffset='1' d='M1080 115L1165 270L1380 180L1540 90'%3E%3Canimate attributeName='stroke-dashoffset' values='1;1;0;0' keyTimes='0;.4;.58;1' dur='18s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath pathLength='1' stroke-dasharray='1' stroke-dashoffset='1' d='M250 380L165 560L350 700L520 630'%3E%3Canimate attributeName='stroke-dashoffset' values='1;1;0;0' keyTimes='0;.44;.62;1' dur='18s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath pathLength='1' stroke-dasharray='1' stroke-dashoffset='1' d='M470 445L650 520L820 455L990 570'%3E%3Canimate attributeName='stroke-dashoffset' values='1;1;0;0' keyTimes='0;.48;.66;1' dur='18s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath pathLength='1' stroke-dasharray='1' stroke-dashoffset='1' d='M820 455L930 335M820 455L760 105M820 455L1210 350'%3E%3Canimate attributeName='stroke-dashoffset' values='1;1;0;0' keyTimes='0;.52;.7;1' dur='18s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath pathLength='1' stroke-dasharray='1' stroke-dashoffset='1' d='M990 570L1140 690L1340 610L1510 720'%3E%3Canimate attributeName='stroke-dashoffset' values='1;1;0;0' keyTimes='0;.58;.76;1' dur='18s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath pathLength='1' stroke-dasharray='1' stroke-dashoffset='1' d='M520 630L700 790L930 725L1140 690'%3E%3Canimate attributeName='stroke-dashoffset' values='1;1;0;0' keyTimes='0;.62;.8;1' dur='18s' repeatCount='indefinite'/%3E%3C/path%3E%3Cpath pathLength='1' stroke-dasharray='1' stroke-dashoffset='1' d='M350 700L170 820L-30 760M930 725L1030 875M1340 610L1620 560'%3E%3Canimate attributeName='stroke-dashoffset' values='1;1;0;0' keyTimes='0;.68;.86;1' dur='18s' repeatCount='indefinite'/%3E%3C/path%3E%3C/g%3E%3Cg fill='%230b6342'%3E%3Ccircle cx='150' cy='220' r='4'%3E%3Canimate attributeName='opacity' values='0;.8;.45;.8' keyTimes='0;.16;.58;1' dur='7s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='320' cy='105' r='3.5'%3E%3Canimate attributeName='opacity' values='0;.72;.34;.72' keyTimes='0;.22;.62;1' dur='8s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='480' cy='210' r='4.5'%3E%3Canimate attributeName='opacity' values='0;.86;.42;.86' keyTimes='0;.28;.68;1' dur='6.5s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='620' cy='290' r='3.5'%3E%3Canimate attributeName='opacity' values='0;.75;.4;.75' keyTimes='0;.34;.7;1' dur='7.8s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='760' cy='105' r='4'%3E%3Canimate attributeName='opacity' values='0;.8;.36;.8' keyTimes='0;.4;.75;1' dur='8.2s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='785' cy='230' r='3'%3E%3Canimate attributeName='opacity' values='0;.7;.3;.7' keyTimes='0;.44;.78;1' dur='7s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='930' cy='335' r='4.5'%3E%3Canimate attributeName='opacity' values='0;.9;.45;.9' keyTimes='0;.48;.8;1' dur='6.4s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='1080' cy='115' r='3.5'%3E%3Canimate attributeName='opacity' values='0;.72;.32;.72' keyTimes='0;.52;.82;1' dur='8.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='1210' cy='350' r='4'%3E%3Canimate attributeName='opacity' values='0;.82;.42;.82' keyTimes='0;.56;.84;1' dur='7.4s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='1385' cy='420' r='3'%3E%3Canimate attributeName='opacity' values='0;.65;.3;.65' keyTimes='0;.6;.86;1' dur='8s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='250' cy='380' r='4'%3E%3Canimate attributeName='opacity' values='0;.78;.36;.78' keyTimes='0;.42;.74;1' dur='7.3s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='470' cy='445' r='4'%3E%3Canimate attributeName='opacity' values='0;.8;.4;.8' keyTimes='0;.48;.78;1' dur='7.6s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='820' cy='455' r='5'%3E%3Canimate attributeName='opacity' values='0;.96;.48;.96' keyTimes='0;.52;.8;1' dur='6s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='990' cy='570' r='3.5'%3E%3Canimate attributeName='opacity' values='0;.72;.32;.72' keyTimes='0;.58;.84;1' dur='8.4s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='520' cy='630' r='4'%3E%3Canimate attributeName='opacity' values='0;.78;.35;.78' keyTimes='0;.62;.87;1' dur='7.7s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='1140' cy='690' r='4.5'%3E%3Canimate attributeName='opacity' values='0;.88;.42;.88' keyTimes='0;.66;.9;1' dur='6.8s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='1340' cy='610' r='3.5'%3E%3Canimate attributeName='opacity' values='0;.74;.34;.74' keyTimes='0;.7;.92;1' dur='7.9s' repeatCount='indefinite'/%3E%3C/circle%3E%3Ccircle cx='350' cy='700' r='3.5'%3E%3Canimate attributeName='opacity' values='0;.68;.3;.68' keyTimes='0;.68;.91;1' dur='8.3s' repeatCount='indefinite'/%3E%3C/circle%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  opacity: 0.36;
+  transform: scale(1.025);
+  animation: pr-network-drift 13s ease-in-out infinite alternate;
+  -webkit-mask-image: linear-gradient(90deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.43) 35%, #000 64%, #000 100%);
+  mask-image: linear-gradient(90deg, rgba(0,0,0,.72) 0%, rgba(0,0,0,.43) 35%, #000 64%, #000 100%);
 }
 
+/* A faint drawing-board layer gives the network architectural context without
+   turning the hero into a software dashboard. */
 .pr-page .pr-hero::after {
-  inset: 10% 4% 8% 3%;
-  border-left: 1px solid color-mix(in srgb, var(--pr-accent) 22%, transparent);
-  border-bottom: 1px solid color-mix(in srgb, var(--pr-accent) 18%, transparent);
-  background:
-    linear-gradient(90deg, color-mix(in srgb, var(--pr-accent) 30%, transparent), color-mix(in srgb, var(--pr-accent) 30%, transparent)) 13% 5% / 1px 18% no-repeat,
-    linear-gradient(90deg, color-mix(in srgb, var(--pr-accent) 22%, transparent), color-mix(in srgb, var(--pr-accent) 22%, transparent)) 75% 12% / 1px 14% no-repeat,
-    linear-gradient(0deg, color-mix(in srgb, var(--pr-accent) 26%, transparent), color-mix(in srgb, var(--pr-accent) 26%, transparent)) 18% 73% / 22% 1px no-repeat,
-    linear-gradient(0deg, color-mix(in srgb, var(--pr-accent) 20%, transparent), color-mix(in srgb, var(--pr-accent) 20%, transparent)) 78% 31% / 14% 1px no-repeat;
-  opacity: 0.7;
-  transform-origin: left center;
-  animation: pr-plan-draw 8s cubic-bezier(.22,.61,.36,1) infinite;
+  opacity: 0.34;
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0 109px, color-mix(in srgb, var(--pr-accent) 6%, transparent) 109px 110px),
+    repeating-linear-gradient(0deg, transparent 0 109px, color-mix(in srgb, var(--pr-accent) 5%, transparent) 109px 110px),
+    linear-gradient(90deg, transparent 0 7.8%, color-mix(in srgb, var(--pr-accent) 12%, transparent) 7.8% 7.86%, transparent 7.86% 100%),
+    linear-gradient(0deg, transparent 0 76%, color-mix(in srgb, var(--pr-accent) 10%, transparent) 76% 76.06%, transparent 76.06% 100%);
+  animation: pr-grid-breathe 10s ease-in-out infinite alternate;
 }
 
 .pr-page .pr-hero-body,
@@ -71,33 +71,18 @@
   z-index: 1;
 }
 
-@keyframes pr-plan-draw {
-  0%, 8% {
-    clip-path: inset(0 100% 0 0);
-    opacity: 0;
+@keyframes pr-network-drift {
+  from {
+    transform: translate3d(-0.35%, 0.1%, 0) scale(1.025);
   }
-  24% {
-    opacity: 0.72;
-  }
-  62%, 88% {
-    clip-path: inset(0 0 0 0);
-    opacity: 0.72;
-  }
-  100% {
-    clip-path: inset(0 0 0 0);
-    opacity: 0.35;
+  to {
+    transform: translate3d(0.45%, -0.3%, 0) scale(1.034);
   }
 }
 
-@keyframes pr-blueprint-breathe {
-  from {
-    opacity: 0.28;
-    transform: translate3d(-0.25%, 0, 0) scale(1.003);
-  }
-  to {
-    opacity: 0.5;
-    transform: translate3d(0.25%, -0.2%, 0) scale(1.008);
-  }
+@keyframes pr-grid-breathe {
+  from { opacity: 0.22; }
+  to { opacity: 0.38; }
 }
 
 /* Reuse the real global theme control, but make it unmistakably available on Partners. */
@@ -141,7 +126,7 @@
   line-height: 1;
 }
 
-/* Dark mode: keep the architectural language, but move it into deep mineral green. */
+/* Dark mode: deep mineral green with slightly stronger network contrast. */
 .theme-dark .pr-page {
   --pr-paper: #10241c;
   --pr-soft: #162d23;
@@ -150,7 +135,7 @@
   --pr-line: #dbe8de24;
   --pr-accent: #9fcaaa;
   background:
-    radial-gradient(circle at 72% 18%, rgba(91, 138, 109, 0.10), transparent 33%),
+    radial-gradient(circle at 70% 16%, rgba(91, 138, 109, 0.11), transparent 35%),
     var(--pr-paper);
 }
 
@@ -159,11 +144,12 @@
 }
 
 .theme-dark .pr-page .pr-hero::before {
-  opacity: 0.4;
+  filter: brightness(1.7) saturate(0.8);
+  opacity: 0.48;
 }
 
 .theme-dark .pr-page .pr-hero::after {
-  opacity: 0.5;
+  opacity: 0.22;
 }
 
 .theme-dark .pr-page .pr-architecture {
@@ -201,23 +187,32 @@
   box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .pr-page .pr-hero::before {
-    background-size: 100% 100%, 100% 100%, 72px 72px, 72px 72px, 100% 100%, 100% 100%;
-    opacity: 0.32;
+    opacity: 0.29;
+    background-size: auto 100%;
+    background-position: 54% center;
   }
-
   .pr-page .pr-hero::after {
-    inset: 7% 3% 5%;
-    opacity: 0.42;
+    opacity: 0.22;
   }
+}
 
+@media (max-width: 640px) {
+  .pr-page .pr-hero::before {
+    inset: 0 -55%;
+    opacity: 0.23;
+    background-position: 58% center;
+  }
+  .pr-page .pr-hero::after {
+    background-size: 90px 90px, 90px 90px, 100% 100%, 100% 100%;
+    opacity: 0.16;
+  }
   .sbre-theme:has(.pr-page) .theme-toggle {
     right: 14px !important;
     bottom: 14px !important;
     padding: 10px 12px !important;
   }
-
   .sbre-theme:has(.pr-page) .theme-toggle-label {
     display: none;
   }
@@ -228,6 +223,5 @@
   .pr-page .pr-hero::after {
     animation: none !important;
     transform: none !important;
-    clip-path: none !important;
   }
 }
