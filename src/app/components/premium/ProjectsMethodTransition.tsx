@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 type TransitionConfig = {
   target: string;
@@ -18,30 +19,44 @@ const transitions: TransitionConfig[] = [
     target: "#réalisations",
     from: "02",
     to: "03",
-    label: "DU TERRAIN AU RÉSULTAT",
+    label: "DE REPRENDRE LA MAÎTRISE AUX EXPÉRIENCES PROJET",
   },
   {
     target: ".method-section",
     from: "03",
     to: "04",
-    label: "DU RÉSULTAT À LA MÉTHODE",
+    label: "DES EXPÉRIENCES PROJET À NOTRE MÉTHODE",
   },
   {
     target: ".team-section",
     from: "04",
     to: "05",
-    label: "DE LA MÉTHODE À L’ÉQUIPE",
+    label: "DE NOTRE MÉTHODE AU PLUS PRÈS DU TERRAIN",
   },
   {
     target: "#contact",
     from: "05",
     to: "06",
-    label: "DE L’ÉQUIPE À VOTRE PROJET",
+    label: "DU TERRAIN À VOTRE PROJET",
   },
 ];
 
 export default function ProjectsMethodTransition() {
+  const { pathname } = useLocation();
+
   useEffect(() => {
+    const removeTransitions = () => {
+      document
+        .querySelectorAll<HTMLElement>(".projects-method-transition")
+        .forEach((node) => node.remove());
+    };
+
+    // These numbered separators belong only to the main SBRE homepage.
+    if (pathname !== "/") {
+      removeTransitions();
+      return;
+    }
+
     let cancelled = false;
     const timers: number[] = [];
 
@@ -61,6 +76,7 @@ export default function ProjectsMethodTransition() {
         );
 
         if (existing) {
+          existing.setAttribute("data-transition-from", from);
           const currentLabel = existing.querySelector<HTMLElement>(
             ".projects-method-transition__label",
           );
@@ -94,6 +110,8 @@ export default function ProjectsMethodTransition() {
       return complete;
     };
 
+    removeTransitions();
+
     if (!ensureTransitions()) {
       [80, 180, 360, 700, 1200].forEach((delay) => {
         timers.push(window.setTimeout(ensureTransitions, delay));
@@ -103,8 +121,9 @@ export default function ProjectsMethodTransition() {
     return () => {
       cancelled = true;
       timers.forEach((timer) => window.clearTimeout(timer));
+      removeTransitions();
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
