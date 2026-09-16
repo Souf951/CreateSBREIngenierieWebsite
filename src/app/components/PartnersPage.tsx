@@ -1,390 +1,468 @@
-import { FormEvent, useEffect, useMemo, useState } from "react";
+import { FormEvent, MouseEvent, useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  ArrowRight,
-  Building2,
-  DraftingCompass,
-  HardHat,
-  Network,
-  ShieldCheck,
-  UsersRound,
-} from "lucide-react";
+import { ArrowDown, ArrowUpRight, ArrowRight } from "lucide-react";
 import SEOHead from "./SEOHead";
+import PartnerArchitecture from "./premium/PartnerArchitecture";
+import PartnerScrollStory from "./premium/PartnerScrollStory";
 import logo from "../../media/Pr_sentation1_page-0001.webp";
-import "../../styles/partners-hero-model.css";
+import "../../styles/partners-page.css";
 
-type PartnerKind = "architecte" | "specialiste" | "entreprise-generale" | "entreprise";
-
-type PartnerProfile = {
-  id: PartnerKind;
-  index: string;
-  title: string;
-  short: string;
-  icon: typeof DraftingCompass;
-  collaboration: string[];
-};
-
-const profiles: PartnerProfile[] = [
+const profiles = [
   {
-    id: "architecte",
-    index: "01",
-    title: "Architectes & mandataires",
-    short: "Un relais terrain structuré pour transformer les intentions du projet en décisions exécutables.",
-    icon: DraftingCompass,
-    collaboration: [
-      "Direction et suivi des travaux",
-      "Consultation et analyse des offres",
-      "Coordination des CFC",
-      "Contrôle des coûts et avenants",
-      "Planning et suivi des décisions",
-      "Réceptions et levée des réserves",
-    ],
+    title: "Architectes",
+    subtitle: "De l’intention au terrain.",
+    text: "Un relais opérationnel pour préserver la cohérence du projet, suivre les validations et rendre les détails exécutables.",
+    services: "Direction de travaux · Consultations · Réceptions",
   },
   {
-    id: "specialiste",
-    index: "02",
-    title: "Bureaux d’études & spécialistes",
-    short: "Une coordination claire entre études, décisions techniques et contraintes d’exécution.",
-    icon: Network,
-    collaboration: [
-      "Coordination interdisciplinaire",
-      "Interfaces techniques et réservations",
-      "Planification des interventions",
-      "Suivi des validations chantier",
-      "Contrôles avant fermeture des ouvrages",
-      "Reporting et traçabilité des décisions",
-    ],
+    title: "Entreprises",
+    subtitle: "Les bonnes conditions pour réaliser.",
+    text: "Des consultations ciblées, des séquences claires et des interfaces anticipées pour organiser les interventions sur le chantier.",
+    services: "Appels d’offres · Planning · Coordination des CFC",
   },
   {
-    id: "entreprise-generale",
-    index: "03",
-    title: "Entreprises générales",
-    short: "Un appui opérationnel pour renforcer le pilotage, la coordination et la maîtrise du terrain.",
-    icon: Building2,
-    collaboration: [
-      "Renfort en direction de travaux",
-      "Pilotage de lots et sous-traitants",
-      "Suivi coûts, délais et qualité",
-      "Coordination des interfaces",
-      "Séances et reporting chantier",
-      "Pré-réceptions et clôture des travaux",
-    ],
+    title: "Maîtres d’ouvrage",
+    subtitle: "Une lecture claire pour décider.",
+    text: "Des informations structurées sur les coûts, les délais et les risques, pour arbitrer avec une vision concrète de l’avancement.",
+    services: "Suivi des coûts · Décisions · Reporting",
   },
   {
-    id: "entreprise",
-    index: "04",
-    title: "Entreprises & sous-traitants",
-    short: "Des consultations ciblées et une organisation de chantier lisible pour travailler dans de bonnes conditions.",
-    icon: HardHat,
-    collaboration: [
-      "Participation aux consultations",
-      "Appels d’offres ciblés par CFC",
-      "Clarifications avant adjudication",
-      "Coordination des interventions",
-      "Suivi des prestations et interfaces",
-      "Collaborations sur de futures opérations",
-    ],
+    title: "Directions de travaux",
+    subtitle: "Un renfort au plus près du projet.",
+    text: "Une extension de votre équipe sur les phases qui demandent davantage de présence, de contrôle et de suivi des interfaces.",
+    services: "Renfort terrain · Contrôle qualité · Suivi des réserves",
   },
 ];
-
 const values = [
-  ["01", "Fiabilité", "Tenir les engagements annoncés et alerter suffisamment tôt."],
-  ["02", "Qualité", "Livrer un travail maîtrisé, contrôlable et conforme aux attentes du projet."],
-  ["03", "Communication", "Partager les bonnes informations au bon moment, sans zones grises."],
-  ["04", "Délais", "Anticiper les interfaces et protéger le chemin critique du chantier."],
-  ["05", "Transparence", "Documenter les décisions, les écarts et les conséquences."],
-  ["06", "Engagement", "Chercher la solution collective plutôt que déplacer le problème."],
+  [
+    "Des responsabilités claires",
+    "Chaque sujet trouve son interlocuteur. Les rôles et les engagements sont définis.",
+  ],
+  [
+    "Une information structurée",
+    "Les bonnes informations circulent entre études, décisions et exécution.",
+  ],
+  [
+    "Des décisions tracées",
+    "Les validations, les écarts et leurs conséquences restent documentés.",
+  ],
+  [
+    "Des interfaces maîtrisées",
+    "Les interventions s’articulent. Les points de rencontre sont anticipés.",
+  ],
+  [
+    "Une présence terrain",
+    "Le suivi se nourrit de la réalité du chantier, des contrôles et du dialogue.",
+  ],
+  [
+    "Coûts, délais, qualité",
+    "Trois dimensions suivies ensemble, à chaque phase du projet.",
+  ],
 ];
+
+// HashRouter owns the URL fragment. Native #anchors would otherwise leave the route.
+function jump(event: MouseEvent<HTMLAnchorElement>, id: string) {
+  event.preventDefault();
+  document
+    .getElementById(id)
+    ?.scrollIntoView({
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "auto"
+        : "smooth",
+    });
+  document.getElementById(id)?.focus({ preventScroll: true });
+}
 
 export default function PartnersPage() {
-  const [showIntro, setShowIntro] = useState(true);
-  const [selected, setSelected] = useState<PartnerKind>("architecte");
+  const [selected, setSelected] = useState("Architectes");
   const [draftHref, setDraftHref] = useState<string | null>(null);
 
-  const active = useMemo(
-    () => profiles.find((profile) => profile.id === selected) ?? profiles[0],
-    [selected],
-  );
-
-  useEffect(() => {
-    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduceMotion) {
-      setShowIntro(false);
-      return;
-    }
-    const timer = window.setTimeout(() => setShowIntro(false), 3200);
-    return () => window.clearTimeout(timer);
-  }, []);
-
-  const scrollToForm = () =>
-    document.getElementById("partner-form")?.scrollIntoView({ behavior: "smooth" });
-
-  const prepareEmail = (event: FormEvent<HTMLFormElement>) => {
+  function prepareEmail(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    const subject = `Proposition de collaboration SBRE — ${active.title}`;
     const body = [
       "Bonjour SBRE Ingénierie,",
       "",
       "Je souhaite vous proposer une collaboration.",
       "",
-      `Profil : ${active.title}`,
-      `Nom / prénom : ${data.get("name") ?? ""}`,
-      `Société : ${data.get("company") ?? ""}`,
-      `E-mail : ${data.get("email") ?? ""}`,
-      `Téléphone : ${data.get("phone") ?? ""}`,
-      `Métier / spécialité / CFC : ${data.get("speciality") ?? ""}`,
-      `Zone d’intervention : ${data.get("area") ?? ""}`,
-      `Site internet : ${data.get("website") ?? ""}`,
-      `Références : ${data.get("references") ?? ""}`,
-      "",
-      "Message :",
-      String(data.get("message") ?? ""),
+      `Profil : ${selected}`,
+      ...[
+        ["Nom / prénom", "name"],
+        ["Société", "company"],
+        ["E-mail", "email"],
+        ["Téléphone", "phone"],
+        ["Métier / spécialité / CFC", "speciality"],
+        ["Zone d’intervention", "area"],
+        ["Site internet", "website"],
+        ["Références", "references"],
+        ["Message", "message"],
+      ].map(([label, key]) => `${label} : ${data.get(key) ?? ""}`),
       "",
       "Cordialement,",
       String(data.get("name") ?? ""),
     ].join("\n");
     setDraftHref(
-      `mailto:info@sbre-ingenierie.ch?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`,
+      `mailto:info@sbre-ingenierie.ch?subject=${encodeURIComponent(`Proposition de collaboration SBRE — ${selected}`)}&body=${encodeURIComponent(body)}`,
     );
-  };
+  }
 
   return (
-    <div className="partners-page">
+    <div className="pr-page">
       <SEOHead
-        title="Devenir partenaire | SBRE Ingénierie Suisse romande"
-        description="Architectes, mandataires, bureaux d’études et entreprises : découvrez comment collaborer avec SBRE Ingénierie sur des opérations en Suisse romande."
+        title="Partenaires | SBRE Ingénierie — Une même direction"
+        description="Architectes, entreprises, maîtres d’ouvrage et directions de travaux : construisons une collaboration claire et maîtrisée en Suisse romande."
         canonical="/partenaires"
       />
-
-      {showIntro && (
-        <div className="partners-intro" role="status" aria-live="polite">
-          <div className="partners-intro-mark" aria-hidden="true">
-            <span />
-            <span />
-          </div>
-          <p>Les belles opérations se construisent avec les bons partenaires.</p>
-          <small>SBRE INGÉNIERIE · RÉSEAU PROFESSIONNEL</small>
-        </div>
-      )}
-
-      <header className="partners-header">
-        <Link to="/" className="partners-brand" aria-label="Retour à l’accueil SBRE Ingénierie">
+      <a
+        className="pr-skip"
+        href="#pr-main"
+        onClick={(event) => jump(event, "pr-main")}
+      >
+        Aller au contenu
+      </a>
+      <header className="pr-header">
+        <Link
+          to="/"
+          className="pr-brand"
+          aria-label="SBRE Ingénierie — Accueil"
+        >
           <img src={logo} alt="SBRE Ingénierie" />
         </Link>
         <nav aria-label="Navigation partenaires">
           <Link to="/">Accueil</Link>
-          <a href="#profils">Profils</a>
-          <a href="#collaboration">Collaborer</a>
-        </nav>
-        <div className="partners-header-actions">
-          <a className="partners-button partners-button-ghost" href="tel:+41783076029">
-            Demander un entretien
+          <a
+            href="#coordination"
+            onClick={(event) => jump(event, "coordination")}
+          >
+            Notre approche
           </a>
-          <button className="partners-button partners-button-solid" onClick={scrollToForm}>
-            Devenir partenaire <ArrowRight size={16} />
-          </button>
-        </div>
+          <a href="#profils" onClick={(event) => jump(event, "profils")}>
+            Collaborations
+          </a>
+        </nav>
+        <a
+          className="pr-header-contact"
+          href="#partner-form"
+          onClick={(event) => jump(event, "partner-form")}
+        >
+          Entrons en contact <ArrowUpRight size={17} />
+        </a>
       </header>
-
-      <main>
-        <section className="partners-hero">
-          <div className="partners-blueprint" aria-hidden="true">
-            <span className="bp-line bp-line-a" />
-            <span className="bp-line bp-line-b" />
-            <span className="bp-node bp-node-a" />
-            <span className="bp-node bp-node-b" />
+      <main id="pr-main" tabIndex={-1}>
+        <section className="pr-hero" aria-labelledby="pr-hero-title">
+          <div className="pr-hero-top">
+            <p className="pr-eyebrow">SBRE Ingénierie / Le réseau</p>
+            <span>Direction de travaux · Suisse romande</span>
           </div>
-          <div className="partners-hero-copy">
-            <p className="partners-kicker"><span /> COLLABORATIONS · SUISSE ROMANDE</p>
-            <h1>Rejoignez le<br /><em>réseau SBRE.</em></h1>
-            <p className="partners-lead">
-              Nous développons des collaborations durables avec les professionnels qui conçoivent,
-              étudient et réalisent les projets. L’objectif : des responsabilités claires, de bonnes
-              interfaces et une exécution maîtrisée sur le terrain.
-            </p>
-            <div className="partners-hero-actions">
-              <button className="partners-button partners-button-solid" onClick={scrollToForm}>
-                Devenir partenaire <ArrowRight size={17} />
-              </button>
-              <a className="partners-button partners-button-ghost" href="tel:+41783076029">
-                Demander un entretien
-              </a>
-            </div>
-          </div>
-
-          <div className="partners-hero-visual partner-model-visual" aria-label="Maquette de coordination SBRE">
-            <div className="partner-model-scene" aria-hidden="true">
-              <div className="partner-model-ground">
-                <span className="ground-axis axis-a" />
-                <span className="ground-axis axis-b" />
-                <span className="ground-axis axis-c" />
-              </div>
-
-              <div className="partner-building-model">
-                <div className="model-slab slab-1" />
-                <div className="model-slab slab-2" />
-                <div className="model-tower tower-a">
-                  <div className="model-face model-front">
-                    {Array.from({ length: 9 }).map((_, index) => <span key={index} />)}
-                  </div>
-                  <div className="model-face model-side" />
-                  <div className="model-face model-roof" />
-                </div>
-                <div className="model-tower tower-b">
-                  <div className="model-face model-front">
-                    {Array.from({ length: 6 }).map((_, index) => <span key={index} />)}
-                  </div>
-                  <div className="model-face model-side" />
-                  <div className="model-face model-roof" />
-                </div>
-                <div className="model-core-shaft" />
-              </div>
-
-              <div className="model-crane">
-                <span className="crane-mast" />
-                <span className="crane-jib" />
-                <span className="crane-cable" />
-                <span className="crane-load" />
-              </div>
-
-              <div className="model-sbre-tag">
-                <img src={logo} alt="" />
-                <div><strong>SBRE</strong><span>PILOTAGE DU PROJET</span></div>
-              </div>
-
-              {["ARCHITECTE", "BUREAU D’ÉTUDES", "ENTREPRISE", "TERRAIN"].map((label, index) => (
-                <div className={`model-partner-tag model-partner-${index + 1}`} key={label}>
-                  <small>0{index + 1}</small>
-                  <strong>{label}</strong>
-                </div>
-              ))}
-
-              <svg className="model-connections" viewBox="0 0 620 500">
-                <path d="M305 265 C230 205 175 155 105 105" />
-                <path d="M315 250 C390 190 445 145 520 105" />
-                <path d="M330 300 C415 330 475 360 535 405" />
-                <path d="M285 310 C220 350 160 375 95 410" />
-              </svg>
-            </div>
-          </div>
-
-          <div className="partners-hero-foot">
-            <span>LAUSANNE · GENÈVE · VAUD</span>
-            <span>Architecture · Ingénierie · Entreprises · Direction de travaux</span>
-          </div>
-        </section>
-
-        <section className="partners-section partners-profiles" id="profils">
-          <div className="partners-section-heading">
-            <p className="partners-kicker">01 / VOTRE PROFIL</p>
-            <h2>Une collaboration différente<br /><em>selon votre rôle.</em></h2>
-            <p>Sélectionnez votre profil. Les possibilités de collaboration s’adaptent immédiatement.</p>
-          </div>
-          <div className="partner-profile-grid">
-            {profiles.map((profile) => {
-              const Icon = profile.icon;
-              const current = profile.id === selected;
-              return (
-                <button
-                  type="button"
-                  key={profile.id}
-                  className={current ? "partner-profile-card is-active" : "partner-profile-card"}
-                  aria-pressed={current}
-                  onClick={() => setSelected(profile.id)}
+          <div className="pr-hero-body">
+            <div className="pr-hero-copy">
+              <p className="pr-eyebrow pr-hero-overline">
+                <span /> Ensemble, du plan au terrain.
+              </p>
+              <h1 id="pr-hero-title">
+                Rejoignez
+                <br />
+                le réseau <em>SBRE.</em>
+              </h1>
+              <p className="pr-lead">
+                Nous collaborons avec celles et ceux qui conçoivent, décident,
+                réalisent et pilotent les projets.
+              </p>
+              <div className="pr-actions">
+                <a
+                  className="pr-button"
+                  href="#partner-form"
+                  onClick={(event) => jump(event, "partner-form")}
                 >
-                  <div className="profile-card-top"><span>{profile.index}</span><Icon size={27} strokeWidth={1.35} /></div>
-                  <h3>{profile.title}</h3>
-                  <p>{profile.short}</p>
-                  <span className="profile-card-link">Voir les possibilités <ArrowRight size={15} /></span>
-                </button>
-              );
-            })}
+                  Devenir partenaire <ArrowUpRight size={18} />
+                </a>
+                <a className="pr-link" href="tel:+41783076029">
+                  Demander un entretien <ArrowUpRight size={16} />
+                </a>
+              </div>
+            </div>
+            <figure className="pr-hero-visual">
+              <span className="pr-drawing-note">
+                ÉTUDE DE COORDINATION
+                <br />
+                VOLUMES / INTERFACES / LIENS
+              </span>
+              <PartnerArchitecture />
+              <figcaption>
+                <span>Des expertises qui se rencontrent.</span>
+                <span>Une vision qui prend forme.</span>
+              </figcaption>
+            </figure>
+          </div>
+          <div className="pr-hero-bottom">
+            <a
+              href="#coordination"
+              onClick={(event) => jump(event, "coordination")}
+            >
+              <ArrowDown size={16} /> Explorer notre approche
+            </a>
+            <p>Concevoir. Exécuter. Décider. Coordonner.</p>
+            <span>01 — 05</span>
           </div>
         </section>
-
-        <section className="partners-section partners-collaboration" id="collaboration">
-          <div className="collaboration-aside">
-            <p className="partners-kicker">02 / COLLABORER</p>
-            <span className="collaboration-index">{active.index}</span>
-            <h2>{active.title}</h2>
-            <p>{active.short}</p>
-            <button className="partners-text-link" onClick={scrollToForm}>Présenter votre société <ArrowRight size={16} /></button>
-          </div>
-          <div className="collaboration-list">
-            {active.collaboration.map((item, index) => (
-              <div key={item}><span>0{index + 1}</span><p>{item}</p><ArrowRight size={17} /></div>
-            ))}
-          </div>
-        </section>
-
-        <section className="partners-section partners-values">
-          <div className="partners-section-heading">
-            <p className="partners-kicker">03 / NOS REPÈRES COMMUNS</p>
-            <h2>Une bonne coordination commence<br /><em>par des engagements simples.</em></h2>
-          </div>
-          <div className="partners-values-grid">
-            {values.map(([index, title, description]) => (
-              <article key={title}><span>{index}</span><h3>{title}</h3><p>{description}</p></article>
-            ))}
-          </div>
-        </section>
-
-        <section className="partners-section partners-form-section" id="partner-form">
-          <div className="partners-form-copy">
-            <p className="partners-kicker">04 / PRÉSENTEZ-VOUS</p>
-            <h2>Commençons par<br /><em>les bonnes informations.</em></h2>
+        <PartnerScrollStory />
+        <section
+          className="pr-collaboration pr-section"
+          id="profils"
+          tabIndex={-1}
+          aria-labelledby="pr-profiles-title"
+        >
+          <div className="pr-section-heading">
+            <p className="pr-eyebrow">02 — Les collaborations</p>
+            <h2 id="pr-profiles-title">
+              Votre expertise.
+              <br />
+              <em>Notre point de rencontre.</em>
+            </h2>
             <p>
-              Décrivez votre activité et la manière dont vous souhaitez collaborer. Cette première
-              prise de contact nous permet de comprendre rapidement votre positionnement.
+              Comment nous collaborons : un rôle précis pour chacun, une
+              exigence commune pour le projet.
             </p>
-            <div className="partners-trust"><ShieldCheck size={21} /><span>Toute demande de collaboration est étudiée avant intégration au réseau SBRE.</span></div>
-            <div className="partners-selected-profile"><small>PROFIL SÉLECTIONNÉ</small><strong>{active.title}</strong></div>
           </div>
-          <form className="partners-form" onSubmit={prepareEmail} onChange={() => setDraftHref(null)}>
-            <div className="partners-field-row">
-              <label>Nom / prénom<input required name="name" autoComplete="name" /></label>
-              <label>Société<input required name="company" autoComplete="organization" /></label>
+          <div className="pr-profile-list">
+            {profiles.map((profile, i) => (
+              <article className="pr-profile" key={profile.title}>
+                <span className="pr-profile-index">0{i + 1}</span>
+                <div className="pr-profile-title">
+                  <h3>{profile.title}</h3>
+                  <p>{profile.subtitle}</p>
+                </div>
+                <svg
+                  className="pr-profile-drawing"
+                  viewBox="0 0 130 100"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d={
+                      [
+                        "M15 72L57 18L116 47L74 86ZM38 64L63 32L95 48L70 73ZM57 18V53L74 86",
+                        "M20 77V32L62 12L112 38V82M20 32L67 57L112 38M67 57V94M20 48L67 73L112 54M20 64L67 89L112 70",
+                        "M20 70L63 92L112 65L70 44ZM20 47L63 69L112 42L70 21ZM20 47V70M112 42V65M63 69V92",
+                        "M12 50H47L67 24L115 50L68 77L47 50M67 24V5M115 50H130M68 77V98",
+                      ][i]
+                    }
+                    stroke="currentColor"
+                    strokeWidth="1"
+                  />
+                  <circle cx="67" cy="50" r="3" fill="currentColor" />
+                </svg>
+                <div className="pr-profile-copy">
+                  <p>{profile.text}</p>
+                  <span>{profile.services}</span>
+                  <a
+                    href="#partner-form"
+                    className="pr-link"
+                    onClick={(event) => {
+                      setSelected(profile.title);
+                      setDraftHref(null);
+                      jump(event, "partner-form");
+                    }}
+                  >
+                    Échanger sur une collaboration <ArrowUpRight size={16} />
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section
+          className="pr-value pr-section"
+          aria-labelledby="pr-value-title"
+        >
+          <div className="pr-value-intro">
+            <p className="pr-eyebrow">03 — L’exigence SBRE</p>
+            <h2 id="pr-value-title">
+              La coordination
+              <br />
+              se mesure à<br />
+              <em>la clarté du terrain.</em>
+            </h2>
+            <p>
+              Ce que SBRE apporte au projet : une méthode lisible, un suivi
+              concret et une attention constante aux détails d’exécution.
+            </p>
+            <span className="pr-value-signature">
+              Structurer · Budgéter · Réaliser · Exiger
+            </span>
+          </div>
+          <div className="pr-values">
+            {values.map(([title, text], i) => (
+              <article key={title}>
+                <span>0{i + 1}</span>
+                <div>
+                  <h3>{title}</h3>
+                  <p>{text}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section
+          className="pr-form-section pr-section"
+          id="partner-form"
+          tabIndex={-1}
+          aria-labelledby="pr-form-title"
+        >
+          <div className="pr-form-intro">
+            <p className="pr-eyebrow">04 — Faisons connaissance</p>
+            <h2 id="pr-form-title">
+              Une collaboration
+              <br />
+              commence par
+              <br />
+              <em>une conversation.</em>
+            </h2>
+            <p>
+              Présentez-nous votre activité, votre projet ou le renfort dont
+              vous avez besoin.
+            </p>
+            <a className="pr-link" href="mailto:info@sbre-ingenierie.ch">
+              info@sbre-ingenierie.ch <ArrowUpRight size={16} />
+            </a>
+            <p className="pr-form-aside">
+              Toute demande est étudiée avant intégration au réseau SBRE.
+            </p>
+          </div>
+          <form
+            className="pr-form"
+            onSubmit={prepareEmail}
+            onChange={() => setDraftHref(null)}
+          >
+            <label>
+              Vous êtes
+              <select
+                value={selected}
+                onChange={(event) => setSelected(event.target.value)}
+                name="profile"
+              >
+                {[
+                  ...profiles.map((p) => p.title),
+                  "Bureaux d’études & spécialistes",
+                  "Autre profil",
+                ].map((title) => (
+                  <option key={title}>{title}</option>
+                ))}
+              </select>
+            </label>
+            <div className="pr-field-row">
+              <label>
+                Nom / prénom *<input name="name" required autoComplete="name" />
+              </label>
+              <label>
+                Société *
+                <input name="company" required autoComplete="organization" />
+              </label>
             </div>
-            <div className="partners-field-row">
-              <label>E-mail<input required type="email" name="email" autoComplete="email" /></label>
-              <label>Téléphone<input type="tel" name="phone" autoComplete="tel" /></label>
+            <div className="pr-field-row">
+              <label>
+                E-mail *
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  autoComplete="email"
+                />
+              </label>
+              <label>
+                Téléphone
+                <input name="phone" type="tel" autoComplete="tel" />
+              </label>
             </div>
-            <div className="partners-field-row">
-              <label>Métier / spécialité / CFC<input required name="speciality" /></label>
-              <label>Zone d’intervention<input required name="area" placeholder="Vaud, Genève, Suisse romande…" /></label>
+            <div className="pr-field-row">
+              <label>
+                Métier / spécialité / CFC *<input name="speciality" required />
+              </label>
+              <label>
+                Zone d’intervention *
+                <input
+                  name="area"
+                  required
+                  placeholder="Vaud, Genève, Suisse romande…"
+                />
+              </label>
             </div>
-            <label>Site internet<input type="url" name="website" placeholder="https://" /></label>
-            <label>Références éventuelles<textarea name="references" rows={3} placeholder="Projets, clients, typologies d’intervention…" /></label>
-            <label>Votre message<textarea required name="message" rows={5} placeholder="Présentez-nous votre activité et le type de collaboration recherché." /></label>
-            {!draftHref ? (
-              <button className="partners-button partners-button-solid partners-submit" type="submit">
-                Proposer une collaboration <ArrowRight size={17} />
-              </button>
+            <label>
+              Site internet
+              <input name="website" type="url" placeholder="https://" />
+            </label>
+            <label>
+              Références éventuelles
+              <textarea name="references" rows={2} />
+            </label>
+            <label>
+              Votre message *
+              <textarea
+                name="message"
+                rows={3}
+                required
+                placeholder="Votre activité, votre projet, vos attentes…"
+              />
+            </label>
+            <p className="pr-form-note">
+              * Champs requis. Ce formulaire prépare un e-mail à envoyer depuis
+              votre messagerie. Aucune donnée n’est stockée sur ce site.
+            </p>
+            {draftHref ? (
+              <div role="status">
+                <p className="pr-draft-status">
+                  Votre e-mail est prêt. Ouvrez votre messagerie pour l’envoyer.
+                </p>
+                <a className="pr-button" href={draftHref}>
+                  Ouvrir mon e-mail préparé <ArrowUpRight size={17} />
+                </a>
+              </div>
             ) : (
-              <a className="partners-button partners-button-solid partners-submit" href={draftHref}>
-                Ouvrir mon e-mail préparé <ArrowRight size={17} />
-              </a>
+              <button type="submit" className="pr-button">
+                Préparer ma demande <ArrowRight size={17} />
+              </button>
             )}
-            <small className="partners-form-note">Aucune donnée n’est stockée sur le site dans cette première version.</small>
           </form>
         </section>
-
-        <section className="partners-final-cta">
-          <UsersRound size={34} strokeWidth={1.25} />
-          <p className="partners-kicker">UN PROJET COMMUN COMMENCE PAR UNE CONVERSATION</p>
-          <h2>Construisons de belles<br /><em>opérations ensemble.</em></h2>
-          <div>
-            <button className="partners-button partners-button-light" onClick={scrollToForm}>Présenter votre société</button>
-            <a className="partners-button partners-button-outline-light" href="tel:+41783076029">Parler avec SBRE</a>
+        <section className="pr-final" aria-labelledby="pr-final-title">
+          <p className="pr-eyebrow">Le prochain projet commence ici.</p>
+          <h2 id="pr-final-title">
+            Un projet
+            <br />à <em>structurer ?</em>
+          </h2>
+          <div className="pr-actions">
+            <a className="pr-button pr-button-light" href="tel:+41783076029">
+              Parler à SBRE <ArrowUpRight size={18} />
+            </a>
+            <a
+              className="pr-link"
+              href="#partner-form"
+              onClick={(event) => jump(event, "partner-form")}
+            >
+              Devenir partenaire <ArrowUpRight size={18} />
+            </a>
           </div>
+          <span className="pr-final-mark" aria-hidden="true">
+            SBRE.
+          </span>
         </section>
       </main>
-
-      <footer className="partners-footer">
-        <img src={logo} alt="SBRE Ingénierie" />
-        <div><strong>Structurer · Budgéter · Réaliser · Exiger</strong><span>Direction de travaux · Suisse romande</span></div>
-        <div><a href="mailto:info@sbre-ingenierie.ch">info@sbre-ingenierie.ch</a><a href="tel:+41783076029">+41 78 307 60 29</a></div>
+      <footer className="pr-footer">
+        <Link to="/" className="pr-footer-brand">
+          SBRE<span>INGÉNIERIE</span>
+        </Link>
+        <p>
+          Direction de travaux
+          <br />
+          Suisse romande
+        </p>
+        <div>
+          <a href="mailto:info@sbre-ingenierie.ch">info@sbre-ingenierie.ch</a>
+          <a href="tel:+41783076029">+41 78 307 60 29</a>
+        </div>
+        <Link to="/">
+          Retour à l’accueil <ArrowUpRight size={15} />
+        </Link>
       </footer>
     </div>
   );

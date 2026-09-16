@@ -1,6 +1,8 @@
 name: Validate SBRE website
 
 on:
+  push:
+    branches: [feat/contrast-fixes]
   pull_request:
     branches: [main]
   workflow_dispatch:

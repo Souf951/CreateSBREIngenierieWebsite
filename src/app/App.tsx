@@ -31,8 +31,6 @@ import ExperiencesResultsBackground from "./components/premium/ExperiencesResult
 import ProjectsMethodTransition from "./components/premium/ProjectsMethodTransition";
 import PartnersShowcase from "./components/premium/PartnersShowcase";
 import PartnersNavLink from "./components/premium/PartnersNavLink";
-import PartnerImpactStory from "./components/premium/PartnerImpactStory";
-import PartnerNetworkHero from "./components/premium/PartnerNetworkHero";
 import FaqPunctuationGuard from "./components/premium/FaqPunctuationGuard";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
@@ -56,7 +54,6 @@ import "../styles/mobile-tablet-premium.css";
 import "../styles/mobile-3d-cleanup.css";
 import "../styles/fluid-responsive-type.css";
 import "../styles/hero-phases-fill.css";
-import "../styles/partners-page.css";
 import "../styles/partners-nav-link.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
@@ -67,6 +64,11 @@ const ProjectVillaPrangins = lazy(
   () => import("./components/ProjectVillaPrangins"),
 );
 const PartnersPage = lazy(() => import("./components/PartnersPage"));
+
+function RouteContact() {
+  const { pathname } = useLocation();
+  return pathname === "/partenaires" ? null : <FloatingContact />;
+}
 
 function ScrollToTop() {
   const { pathname, key, hash } = useLocation();
@@ -138,7 +140,9 @@ function getInitialTheme(): "light" | "dark" {
   try {
     const saved = localStorage.getItem("sbre_theme");
     if (saved === "light" || saved === "dark") return saved;
-    return matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    return matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
   } catch {
     return "light";
   }
@@ -188,14 +192,17 @@ export default function App() {
           title={isDark ? "Mode jour" : "Mode nuit"}
         >
           <span className="theme-toggle-icon" aria-hidden="true">
-            {isDark ? <Sun size={17} strokeWidth={1.8} /> : <Moon size={17} strokeWidth={1.8} />}
+            {isDark ? (
+              <Sun size={17} strokeWidth={1.8} />
+            ) : (
+              <Moon size={17} strokeWidth={1.8} />
+            )}
           </span>
           <span className="theme-toggle-label">{isDark ? "Jour" : "Nuit"}</span>
         </button>
 
-        <FloatingContact />
-
         <Router>
+          <RouteContact />
           <ScrollToTop />
           <HomeCopyGuard />
           <MethodAccordionGuard />
@@ -210,8 +217,6 @@ export default function App() {
           <ProjectsMethodTransition />
           <PartnersShowcase />
           <PartnersNavLink />
-          <PartnerImpactStory />
-          <PartnerNetworkHero />
           <FaqPunctuationGuard />
           <Suspense
             fallback={
