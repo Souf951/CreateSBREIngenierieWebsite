@@ -10,7 +10,7 @@ const partnerNodes = [
   { name: "Psy Réunis", file: "partners/psy-reunis.png", x: 91, y: 21, w: 76, delay: 9.2 },
   { name: "Bruellan", file: "partners/bruellan.png", x: 13, y: 53, w: 70, delay: 10.6 },
   { name: "Léman Construction", file: "partners/leman-construction.png", x: 72, y: 84, w: 88, delay: 12.0 },
-  { name: "Partenaire suisse", file: "partners/partner-uploaded.svg", x: 47, y: 86, w: 112, delay: 13.2 },
+  { name: "La Boîte des Travaux", file: "partners/nom-partenaire.png", x: 47, y: 86, w: 112, delay: 13.2 },
 ] as const;
 
 const links = [
