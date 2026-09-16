@@ -6,12 +6,14 @@ import ContactForm from "../src/app/components/premium/ContactForm";
 import Architecture from "../src/app/components/premium/Architecture";
 import IntroLoader from "../src/app/components/IntroLoader";
 import App from "../src/app/App";
+
 const home = () =>
   render(
     <MemoryRouter>
       <HomePage />
     </MemoryRouter>,
   );
+
 describe("Visitor journeys", () => {
   it("opens and closes the mobile navigation when a destination is chosen", () => {
     home();
@@ -24,6 +26,7 @@ describe("Visitor journeys", () => {
     ).toBeNull();
     expect(Element.prototype.scrollIntoView).toHaveBeenCalled();
   });
+
   it("switches the situation and presents the associated actions", () => {
     home();
     fireEvent.click(
@@ -37,15 +40,18 @@ describe("Visitor journeys", () => {
     expect(screen.getByText(/Reséquencer les tâches/)).toBeTruthy();
     expect(screen.getByText(/résultats clients attestés/)).toBeTruthy();
   });
+
   it("keeps the three original project links", () => {
     home();
     for (const slug of [
       "tertiaire-geneve",
       "micro-logements-lancy",
       "villa-prangins",
-    ])
+    ]) {
       expect(document.querySelector(`a[href="/projet/${slug}"]`)).toBeTruthy();
+    }
   });
+
   it("preserves names, special characters and the complete message in the email draft", () => {
     render(<ContactForm />);
     fireEvent.change(screen.getByLabelText("Votre nom"), {
@@ -74,11 +80,13 @@ describe("Visitor journeys", () => {
       screen.queryByRole("link", { name: /Ouvrir mon brouillon/ }),
     ).toBeNull();
   });
-  it("renders a lightweight image without a WebGL canvas on mobile", () => {
+
+  it("uses a lightweight fallback when motion or WebGL is unavailable", () => {
     render(<Architecture />);
-    expect(screen.getByRole("img")).toBeTruthy();
+    expect(document.querySelector(".architecture-static-placeholder")).toBeTruthy();
     expect(document.querySelector("canvas")).toBeNull();
   });
+
   it("allows the construction phase to be selected with semantic buttons", () => {
     home();
     const button = screen.getByRole("button", { name: "01 Fondations" });
@@ -90,7 +98,8 @@ describe("Visitor journeys", () => {
         .getAttribute("aria-pressed"),
     ).toBe("false");
   });
-  it("identifies provisional portraits without implying real employees", () => {
+
+  it("identifies provisional portraits without implying real employees in the base markup", () => {
     home();
     expect(
       screen.getAllByText("Profil provisoire · illustration IA"),
@@ -101,36 +110,41 @@ describe("Visitor journeys", () => {
       }),
     ).toBeTruthy();
   });
-  it("skips the introduction when reduced motion or mobile is preferred", () => {
+
+  it("lets the visitor skip the introduction", () => {
+    vi.useFakeTimers();
     const done = vi.fn();
     render(<IntroLoader onComplete={done} />);
+    fireEvent.click(screen.getByRole("button", { name: "Passer l'animation" }));
+    act(() => vi.advanceTimersByTime(900));
     expect(done).toHaveBeenCalledOnce();
   });
-  it("finishes the desktop intro and cancels timers on unmount", () => {
+
+  it("finishes the full desktop intro and cancels timers on unmount", () => {
     vi.useFakeTimers();
-    vi.mocked(window.matchMedia).mockImplementationOnce(
-      (q) =>
-        ({
-          matches: false,
-          media: q,
-          addEventListener: vi.fn(),
-          removeEventListener: vi.fn(),
-        }) as unknown as MediaQueryList,
-    );
     const done = vi.fn();
     const { unmount } = render(<IntroLoader onComplete={done} />);
-    act(() => vi.advanceTimersByTime(2700));
+    act(() => vi.advanceTimersByTime(5400));
     expect(done).toHaveBeenCalledOnce();
     unmount();
     expect(vi.getTimerCount()).toBe(0);
   });
-  it("still renders the site if session storage is unavailable", () => {
+
+  it("remains usable if session storage is unavailable", () => {
+    vi.useFakeTimers();
     vi.spyOn(Storage.prototype, "getItem").mockImplementation(() => {
       throw new Error("blocked");
     });
+
     render(<App />);
+    fireEvent.click(screen.getByRole("button", { name: "Passer l'animation" }));
+    act(() => vi.advanceTimersByTime(900));
+
     expect(
-      screen.getByRole("heading", { level: 1, name: /Chaque détail/ }),
+      screen.getByRole("heading", {
+        level: 1,
+        name: /Direction de travaux et pilotage de chantier/i,
+      }),
     ).toBeTruthy();
   });
 });
