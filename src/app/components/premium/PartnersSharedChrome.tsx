@@ -11,6 +11,21 @@ function makeButton(label: string, section: string) {
   return button;
 }
 
+function syncPartnerLogoTone() {
+  const image = document.querySelector<HTMLImageElement>(
+    ".pr-page .partners-site-header .brand img",
+  );
+  if (!image) return;
+
+  const isDark = Boolean(document.querySelector(".sbre-theme.theme-dark"));
+  image.style.setProperty(
+    "filter",
+    isDark ? "brightness(0) saturate(100%) invert(100%)" : "none",
+    "important",
+  );
+  image.style.setProperty("opacity", "1", "important");
+}
+
 export default function PartnersSharedChrome() {
   const { pathname } = useLocation();
 
@@ -55,7 +70,9 @@ export default function PartnersSharedChrome() {
         current.type = "button";
         current.textContent = "Partenaires";
         current.className = "partners-nav-current";
-        current.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+        current.addEventListener("click", () =>
+          window.scrollTo({ top: 0, behavior: "smooth" }),
+        );
         nav.appendChild(current);
 
         const contact = makeButton("Demander un entretien ↗", "contact");
@@ -67,23 +84,32 @@ export default function PartnersSharedChrome() {
         menu.textContent = "Menu ☰";
 
         header.replaceChildren(brand, nav, contact, menu);
-        header.querySelectorAll<HTMLElement>("[data-home-section]").forEach((button) => {
-          button.addEventListener("click", () => {
-            const section = button.dataset.homeSection;
-            if (section) window.location.hash = `/#${section}`;
+        header
+          .querySelectorAll<HTMLElement>("[data-home-section]")
+          .forEach((button) => {
+            button.addEventListener("click", () => {
+              const section = button.dataset.homeSection;
+              if (section) window.location.hash = `/#${section}`;
+            });
           });
-        });
       }
 
       if (footer && footer.dataset.sharedChrome !== "true") {
         footer.dataset.sharedChrome = "true";
         footer.className = "site-footer";
       }
+
+      syncPartnerLogoTone();
     };
 
     apply();
     const observer = new MutationObserver(apply);
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["class"],
+    });
 
     return () => {
       cancelled = true;
