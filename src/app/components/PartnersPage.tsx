@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import SEOHead from "./SEOHead";
 import logo from "../../media/Pr_sentation1_page-0001.webp";
+import "../../styles/partners-hero-model.css";
 
 type PartnerKind = "architecte" | "specialiste" | "entreprise-generale" | "entreprise";
 
@@ -111,7 +112,7 @@ export default function PartnersPage() {
       setShowIntro(false);
       return;
     }
-    const timer = window.setTimeout(() => setShowIntro(false), 1550);
+    const timer = window.setTimeout(() => setShowIntro(false), 3200);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -211,22 +212,63 @@ export default function PartnersPage() {
               </a>
             </div>
           </div>
-          <div className="partners-hero-visual" aria-label="Principe du réseau SBRE">
-            <div className="network-core">
-              <img src={logo} alt="" />
-              <strong>SBRE</strong>
-              <span>PILOTAGE</span>
-            </div>
-            {["ARCHI", "ÉTUDES", "ENTREPRISE", "TERRAIN"].map((label, index) => (
-              <div className={`network-satellite satellite-${index + 1}`} key={label}>
-                <span>0{index + 1}</span>{label}
+
+          <div className="partners-hero-visual partner-model-visual" aria-label="Maquette de coordination SBRE">
+            <div className="partner-model-scene" aria-hidden="true">
+              <div className="partner-model-ground">
+                <span className="ground-axis axis-a" />
+                <span className="ground-axis axis-b" />
+                <span className="ground-axis axis-c" />
               </div>
-            ))}
-            <svg viewBox="0 0 600 440" aria-hidden="true">
-              <path d="M300 220 L112 88 M300 220 L490 92 M300 220 L495 348 M300 220 L110 350" />
-              <circle cx="300" cy="220" r="145" />
-            </svg>
+
+              <div className="partner-building-model">
+                <div className="model-slab slab-1" />
+                <div className="model-slab slab-2" />
+                <div className="model-tower tower-a">
+                  <div className="model-face model-front">
+                    {Array.from({ length: 9 }).map((_, index) => <span key={index} />)}
+                  </div>
+                  <div className="model-face model-side" />
+                  <div className="model-face model-roof" />
+                </div>
+                <div className="model-tower tower-b">
+                  <div className="model-face model-front">
+                    {Array.from({ length: 6 }).map((_, index) => <span key={index} />)}
+                  </div>
+                  <div className="model-face model-side" />
+                  <div className="model-face model-roof" />
+                </div>
+                <div className="model-core-shaft" />
+              </div>
+
+              <div className="model-crane">
+                <span className="crane-mast" />
+                <span className="crane-jib" />
+                <span className="crane-cable" />
+                <span className="crane-load" />
+              </div>
+
+              <div className="model-sbre-tag">
+                <img src={logo} alt="" />
+                <div><strong>SBRE</strong><span>PILOTAGE DU PROJET</span></div>
+              </div>
+
+              {["ARCHITECTE", "BUREAU D’ÉTUDES", "ENTREPRISE", "TERRAIN"].map((label, index) => (
+                <div className={`model-partner-tag model-partner-${index + 1}`} key={label}>
+                  <small>0{index + 1}</small>
+                  <strong>{label}</strong>
+                </div>
+              ))}
+
+              <svg className="model-connections" viewBox="0 0 620 500">
+                <path d="M305 265 C230 205 175 155 105 105" />
+                <path d="M315 250 C390 190 445 145 520 105" />
+                <path d="M330 300 C415 330 475 360 535 405" />
+                <path d="M285 310 C220 350 160 375 95 410" />
+              </svg>
+            </div>
           </div>
+
           <div className="partners-hero-foot">
             <span>LAUSANNE · GENÈVE · VAUD</span>
             <span>Architecture · Ingénierie · Entreprises · Direction de travaux</span>
