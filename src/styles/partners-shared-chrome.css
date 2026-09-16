@@ -1,0 +1,103 @@
+.pr-page .pr-header {
+  height: 102px;
+  padding: 0 4.5%;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(245,245,238,.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #d9ded4;
+}
+
+.pr-page .pr-brand {
+  width: 174px;
+}
+
+.pr-page .pr-brand img {
+  height: 70px;
+  mix-blend-mode: normal;
+}
+
+.pr-page .pr-header nav {
+  gap: 28px;
+}
+
+.pr-page .pr-header-contact {
+  border: 1px solid #173d31;
+  padding: 11px 18px;
+  gap: 20px;
+}
+
+.pr-page .pr-footer {
+  background: #112e24;
+  color: #d8e0d4;
+  padding: 55px 4.5% 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 35px;
+}
+
+.pr-page .pr-footer-brand {
+  display: block;
+  width: 190px;
+  height: 112px;
+  padding: 0;
+  border-radius: 14px;
+  background: #f5f5ee url("../media/Pr_sentation1_page-0001.webp") center/82% auto no-repeat;
+  color: transparent !important;
+  overflow: hidden;
+}
+
+.pr-page .pr-footer-brand span {
+  display: none;
+}
+
+.pr-page .pr-footer > p {
+  align-self: end;
+  color: #d8e0d4;
+  font-weight: 600;
+}
+
+.pr-page .pr-footer > div {
+  justify-self: end;
+  align-self: center;
+  font-size: 15px;
+  gap: 8px;
+}
+
+.pr-page .pr-footer > div a {
+  color: #fff;
+  font-size: 18px;
+}
+
+.pr-page .pr-footer > a:last-child {
+  grid-column: 1/-1;
+  justify-self: end;
+  border-top: 1px solid rgba(255,255,255,.12);
+  width: 100%;
+  justify-content: flex-end;
+  padding-top: 20px;
+  color: #fff;
+}
+
+.theme-dark .pr-page .pr-header {
+  background: rgba(10,23,18,.96);
+  border-color: rgba(255,255,255,.08);
+}
+
+.theme-dark .pr-page .pr-header-contact {
+  border-color: #e9f3ed;
+}
+
+@media (max-width: 900px) {
+  .pr-page .pr-header {
+    height: 82px;
+  }
+  .pr-page .pr-footer {
+    grid-template-columns: 1fr;
+  }
+  .pr-page .pr-footer > div,
+  .pr-page .pr-footer > a:last-child {
+    justify-self: start;
+  }
+}
