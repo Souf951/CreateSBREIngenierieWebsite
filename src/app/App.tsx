@@ -53,6 +53,7 @@ import "../styles/mobile-tablet-premium.css";
 import "../styles/mobile-3d-cleanup.css";
 import "../styles/fluid-responsive-type.css";
 import "../styles/hero-phases-fill.css";
+import "../styles/partners-page.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
@@ -61,6 +62,7 @@ const ProjectMicroLogements = lazy(
 const ProjectVillaPrangins = lazy(
   () => import("./components/ProjectVillaPrangins"),
 );
+const PartnersPage = lazy(() => import("./components/PartnersPage"));
 
 function ScrollToTop() {
   const { pathname, key, hash } = useLocation();
@@ -213,6 +215,7 @@ export default function App() {
           >
             <Routes>
               <Route path="/" element={<HomePage />} />
+              <Route path="/partenaires" element={<PartnersPage />} />
               <Route
                 path="/projet/tertiaire-geneve"
                 element={<ProjectTertiaire />}
