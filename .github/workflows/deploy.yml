@@ -18,6 +18,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SBRE_CUSTOM_DOMAIN: "true"
 
     steps:
       - name: Checkout
@@ -32,6 +34,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+          cache: pnpm
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -41,6 +44,9 @@ jobs:
 
       - name: Build website
         run: pnpm build
+
+      - name: Verify production artifact
+        run: node scripts/verify-build.mjs
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
