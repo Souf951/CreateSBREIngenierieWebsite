@@ -7,6 +7,7 @@
   background: rgba(245,245,238,.96);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid #d9ded4;
+  font-family: Inter, Arial, sans-serif;
 }
 
 .pr-page .pr-brand {
@@ -20,12 +21,30 @@
 
 .pr-page .pr-header nav {
   gap: 28px;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.pr-page .pr-header nav a {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
 }
 
 .pr-page .pr-header-contact {
   border: 1px solid #173d31;
   padding: 11px 18px;
   gap: 20px;
+  font-family: Inter, Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
 }
 
 .pr-page .pr-footer {
@@ -85,8 +104,21 @@
   border-color: rgba(255,255,255,.08);
 }
 
+.theme-dark .pr-page .pr-brand img {
+  background: transparent;
+  padding: 0;
+  filter: brightness(0) invert(1);
+  opacity: .96;
+}
+
+.theme-dark .pr-page .pr-header nav,
+.theme-dark .pr-page .pr-header nav a,
 .theme-dark .pr-page .pr-header-contact {
-  border-color: #e9f3ed;
+  color: #f5f5ee;
+}
+
+.theme-dark .pr-page .pr-header-contact {
+  border-color: rgba(245,245,238,.72);
 }
 
 @media (max-width: 900px) {
