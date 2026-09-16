@@ -1,0 +1,98 @@
+.pr-logo-network {
+  position: absolute;
+  inset: 86px 0 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.pr-logo-network-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.pr-logo-network-lines line {
+  stroke: color-mix(in srgb, var(--pr-accent) 38%, transparent);
+  stroke-width: 0.12;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0.6;
+  animation: pr-network-draw 16s cubic-bezier(.22,.61,.36,1) infinite;
+  animation-delay: var(--network-delay);
+}
+
+.pr-logo-network-node {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(.82);
+  opacity: 0;
+  filter: grayscale(1) saturate(.3) opacity(.8);
+  animation: pr-logo-arrive 16s ease-in-out infinite;
+  animation-delay: var(--logo-delay);
+}
+
+.pr-logo-network-node img {
+  display: block;
+  width: 100%;
+  height: 42px;
+  object-fit: contain;
+}
+
+@keyframes pr-network-draw {
+  0%, 5% { stroke-dashoffset: 1; opacity: 0; }
+  18% { opacity: .6; }
+  42%, 78% { stroke-dashoffset: 0; opacity: .55; }
+  100% { stroke-dashoffset: 0; opacity: .18; }
+}
+
+@keyframes pr-logo-arrive {
+  0%, 8% { opacity: 0; transform: translate(-50%, -50%) scale(.82); }
+  18% { opacity: .92; transform: translate(-50%, -50%) scale(1); }
+  70% { opacity: .82; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: .18; transform: translate(-50%, -50%) scale(.97); }
+}
+
+.theme-dark .pr-logo-network-lines line {
+  stroke: color-mix(in srgb, var(--pr-accent) 60%, transparent);
+  opacity: .72;
+}
+
+.theme-dark .pr-logo-network-node {
+  filter: grayscale(1) brightness(1.7) contrast(.82) opacity(.88);
+}
+
+.pr-page .pr-hero-top,
+.pr-page .pr-hero-body,
+.pr-page .pr-hero-bottom {
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 1024px) {
+  .pr-logo-network-node { opacity: 0; }
+  .pr-logo-network-node:nth-of-type(n+7) { display: none; }
+  .pr-logo-network-lines line:nth-child(n+11) { display: none; }
+}
+
+@media (max-width: 720px) {
+  .pr-logo-network { inset: 70px 0 0; }
+  .pr-logo-network-node { width: 54px !important; }
+  .pr-logo-network-node img { height: 30px; }
+  .pr-logo-network-lines line { opacity: .34; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-logo-network-lines line {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: .28;
+  }
+  .pr-logo-network-node {
+    animation: none;
+    opacity: .55;
+    transform: translate(-50%, -50%);
+  }
+}
