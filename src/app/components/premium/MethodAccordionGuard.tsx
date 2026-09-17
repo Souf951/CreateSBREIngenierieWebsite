@@ -38,7 +38,7 @@ export default function MethodAccordionGuard() {
       const intro = section.querySelector<HTMLElement>(".method-intro > p:not(.eyebrow)");
       const button = section.querySelector<HTMLButtonElement>(".method-intro .button");
 
-      if (eyebrow) eyebrow.textContent = "04 / LA MÉTHODE SBRE";
+      if (eyebrow) eyebrow.textContent = "03 / LA MÉTHODE SBRE";
       if (heading) heading.innerHTML = "Structurer. Budgéter.<br><em>Réaliser. Exiger.</em>";
       if (intro) {
         intro.textContent =
