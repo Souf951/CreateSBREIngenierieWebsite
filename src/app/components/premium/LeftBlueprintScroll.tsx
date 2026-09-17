@@ -179,6 +179,12 @@ export default function LeftBlueprintScroll() {
     const labels = Array.from(root.querySelectorAll<SVGTextElement>("text"));
 
     paths.forEach((path) => {
+      if (typeof path.getTotalLength !== "function") {
+        path.style.strokeDasharray = "none";
+        path.style.strokeDashoffset = "0";
+        return;
+      }
+
       const length = path.getTotalLength();
       const reverse = path.dataset.direction === "reverse";
       path.style.strokeDasharray = `${length}`;
