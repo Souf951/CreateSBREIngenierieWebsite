@@ -73,21 +73,33 @@ export default function MethodAccordionGuard() {
           word.className = "method-step-word";
           word.style.display = "inline-flex";
           word.style.alignItems = "baseline";
-          word.style.gap = "2px";
+          word.style.gap = "1px";
           word.style.whiteSpace = "nowrap";
+          word.style.font = "inherit";
+          word.style.fontSize = "inherit";
+          word.style.fontWeight = "inherit";
+          word.style.lineHeight = "inherit";
+          word.style.color = "inherit";
+          word.style.letterSpacing = "inherit";
 
           const initial = document.createElement("strong");
           initial.className = "method-step-initial";
           initial.textContent = step.title.charAt(0);
           initial.style.color = "#39b980";
           initial.style.fontWeight = "900";
-          initial.style.fontSize = "1.08em";
-          initial.style.lineHeight = "1";
-          initial.style.textShadow = "0 0 16px rgba(57,185,128,.18)";
+          initial.style.fontSize = "1em";
+          initial.style.lineHeight = "inherit";
+          initial.style.textShadow = "0 0 14px rgba(57,185,128,.16)";
 
           const rest = document.createElement("span");
           rest.className = "method-step-rest";
           rest.textContent = step.title.slice(1);
+          rest.style.font = "inherit";
+          rest.style.fontSize = "inherit";
+          rest.style.fontWeight = "inherit";
+          rest.style.lineHeight = "inherit";
+          rest.style.color = "inherit";
+          rest.style.letterSpacing = "inherit";
 
           word.append(initial, rest);
 
