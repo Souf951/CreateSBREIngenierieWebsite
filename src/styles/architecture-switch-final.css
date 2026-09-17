@@ -3,7 +3,7 @@
 
 @media (min-width: 621px) {
   .architecture-kind-switch {
-    top: -18px !important;
+    top: 10px !important;
     left: 20px !important;
     right: 20px !important;
     width: auto !important;
@@ -20,6 +20,7 @@
     backdrop-filter: blur(16px) saturate(1.08) !important;
     -webkit-backdrop-filter: blur(16px) saturate(1.08) !important;
     box-shadow: 0 12px 30px rgba(17, 42, 34, 0.10) !important;
+    z-index: 20 !important;
   }
 
   .architecture-kind-switch button {
@@ -50,7 +51,7 @@
 
 @media (min-width: 621px) and (max-width: 900px) {
   .architecture-kind-switch {
-    top: -14px !important;
+    top: 8px !important;
     left: 12px !important;
     right: 12px !important;
   }
@@ -65,7 +66,7 @@
 
 @media (max-width: 620px) {
   .architecture-kind-switch {
-    top: 4px !important;
+    top: 8px !important;
     left: 10px !important;
     right: 10px !important;
     width: auto !important;
@@ -75,6 +76,7 @@
     gap: 4px !important;
     padding: 5px !important;
     border-radius: 18px !important;
+    z-index: 20 !important;
   }
 
   .architecture-kind-switch button {
