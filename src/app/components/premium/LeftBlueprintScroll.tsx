@@ -23,9 +23,9 @@ export default function LeftBlueprintScroll() {
         .sbre-square-side.left{left:0}
         .sbre-square-side.right{right:0}
         .sbre-square-grid{position:absolute;inset:-18px;transform-style:preserve-3d}
-        .sbre-square-tile{position:absolute;width:var(--tile-size);height:var(--tile-size);border:1px solid rgba(7,108,70,.16);background:linear-gradient(145deg,rgba(8,84,58,.035),rgba(8,84,58,.01));box-shadow:inset 0 0 16px rgba(10,104,71,.02);transform:translate3d(0,var(--liftY,0px),var(--liftZ,0px)) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--scale,1));opacity:var(--alpha,.32);filter:drop-shadow(0 0 calc(var(--glow,0) * 16px) rgba(0,180,108,calc(var(--glow,0) * .46)));transition:transform .16s cubic-bezier(.2,.7,.2,1),filter .16s ease,opacity .16s ease,border-color .16s ease,background .2s ease;will-change:transform}
-        .sbre-square-tile::after{content:"";position:absolute;inset:7px;border:1px solid rgba(74,210,150,.05);background:radial-gradient(circle at 50% 45%,rgba(31,184,118,calc(var(--glow,0) * .08)),transparent 70%)}
-        .sbre-square-margins.is-dark .sbre-square-tile{border-color:rgba(102,255,186,.16);background:linear-gradient(145deg,rgba(255,255,255,.014),rgba(15,54,41,.03));box-shadow:inset 0 0 16px rgba(70,255,184,.018)}
+        .sbre-square-tile{position:absolute;width:var(--tile-size);height:var(--tile-size);border:1px solid rgba(7,108,70,.16);background:linear-gradient(145deg,rgba(8,84,58,.035),rgba(8,84,58,.01));box-shadow:inset 0 0 12px rgba(10,104,71,.018);transform:translate3d(0,var(--liftY,0px),var(--liftZ,0px)) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--scale,1));opacity:var(--alpha,.30);filter:drop-shadow(0 0 calc(var(--glow,0) * 12px) rgba(0,180,108,calc(var(--glow,0) * .42)));transition:transform .16s cubic-bezier(.2,.7,.2,1),filter .16s ease,opacity .16s ease,border-color .16s ease,background .2s ease;will-change:transform}
+        .sbre-square-tile::after{content:"";position:absolute;inset:5px;border:1px solid rgba(74,210,150,.045);background:radial-gradient(circle at 50% 45%,rgba(31,184,118,calc(var(--glow,0) * .07)),transparent 70%)}
+        .sbre-square-margins.is-dark .sbre-square-tile{border-color:rgba(102,255,186,.16);background:linear-gradient(145deg,rgba(255,255,255,.014),rgba(15,54,41,.03));box-shadow:inset 0 0 12px rgba(70,255,184,.016)}
         .sbre-square-margins.is-dark .sbre-square-tile::after{border-color:rgba(132,255,203,.07)}
         @media(max-width:900px){.sbre-square-margins{display:none!important}}
         @media(prefers-reduced-motion:reduce){.sbre-square-tile{transition:none!important}}
@@ -63,7 +63,7 @@ export default function LeftBlueprintScroll() {
       el.style.setProperty("--ry", "0deg");
       el.style.setProperty("--scale", "1");
       el.style.setProperty("--glow", "0");
-      el.style.setProperty("--alpha", ".32");
+      el.style.setProperty("--alpha", ".30");
       el.style.borderColor = "";
     };
 
@@ -75,8 +75,8 @@ export default function LeftBlueprintScroll() {
     const buildGrid = (grid: HTMLElement, sideWidth: number, isRight: boolean) => {
       grid.innerHTML = "";
 
-      const size = Math.round(Math.max(66, Math.min(86, window.innerWidth * .038)));
-      const gap = 8;
+      const size = Math.round(Math.max(38, Math.min(50, window.innerWidth * .022)));
+      const gap = 5;
       const step = size + gap;
       const cols = Math.max(2, Math.ceil(sideWidth / step) + 2);
       const rows = Math.ceil(window.innerHeight / step) + 2;
@@ -142,7 +142,7 @@ export default function LeftBlueprintScroll() {
         return;
       }
 
-      const radius = Math.max(150, Math.min(220, vw * .10));
+      const radius = Math.max(145, Math.min(210, vw * .095));
       const radiusSq = radius * radius;
       const nextActive = new Set<HTMLElement>();
 
@@ -155,11 +155,11 @@ export default function LeftBlueprintScroll() {
         const dist = Math.sqrt(distSq);
         const base = Math.max(0, 1 - dist / radius);
         const influence = base * base * (3 - 2 * base);
-        const liftZ = influence * 32;
-        const liftY = -influence * 5;
-        const rx = (-dy / radius) * influence * 6;
-        const ry = (dx / radius) * influence * 7;
-        const scale = 1 + influence * .04;
+        const liftZ = influence * 26;
+        const liftY = -influence * 4;
+        const rx = (-dy / radius) * influence * 5;
+        const ry = (dx / radius) * influence * 6;
+        const scale = 1 + influence * .035;
 
         tile.el.style.setProperty("--liftZ", `${liftZ.toFixed(2)}px`);
         tile.el.style.setProperty("--liftY", `${liftY.toFixed(2)}px`);
@@ -167,7 +167,7 @@ export default function LeftBlueprintScroll() {
         tile.el.style.setProperty("--ry", `${ry.toFixed(2)}deg`);
         tile.el.style.setProperty("--scale", scale.toFixed(3));
         tile.el.style.setProperty("--glow", influence.toFixed(3));
-        tile.el.style.setProperty("--alpha", (0.30 + influence * .58).toFixed(3));
+        tile.el.style.setProperty("--alpha", (0.28 + influence * .58).toFixed(3));
         tile.el.style.borderColor = `rgba(31,184,118,${0.14 + influence * .46})`;
         nextActive.add(tile.el);
       }
