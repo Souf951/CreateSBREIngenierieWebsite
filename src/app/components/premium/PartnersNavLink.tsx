@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
 import HeaderKineticTriangles from "./HeaderKineticTriangles";
+import "../../../styles/header-kinetic-tiles.css";
 
 export default function PartnersNavLink() {
   const { pathname } = useLocation();
