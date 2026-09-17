@@ -56,41 +56,56 @@ function drawPartial(
   }
 }
 
-function buildVerticalPlan(): Segment[] {
+function buildLeftPlan(): Segment[] {
   return [
-    // Main vertical architectural spine.
-    { points: [[50, 0], [50, 8], [38, 8], [38, 18], [58, 18], [58, 30], [44, 30], [44, 42], [62, 42], [62, 55], [40, 55], [40, 68], [56, 68], [56, 80], [46, 80], [46, 92], [54, 92], [54, 100]], start: 0.00, weight: 2.8 },
-
-    // Left/right wall returns that appear as the drawing head descends.
-    { points: [[38, 8], [18, 8], [18, 15], [30, 15]], start: 0.06, weight: 2.2 },
-    { points: [[58, 18], [80, 18], [80, 25], [68, 25]], start: 0.15, weight: 2.2 },
-    { points: [[44, 30], [22, 30], [22, 38], [34, 38]], start: 0.25, weight: 2.2 },
-    { points: [[62, 42], [84, 42], [84, 49], [70, 49]], start: 0.36, weight: 2.2 },
-    { points: [[40, 55], [16, 55], [16, 63], [30, 63]], start: 0.49, weight: 2.2 },
-    { points: [[56, 68], [82, 68], [82, 76], [68, 76]], start: 0.62, weight: 2.2 },
-    { points: [[46, 80], [24, 80], [24, 88], [36, 88]], start: 0.75, weight: 2.2 },
-    { points: [[54, 92], [78, 92], [78, 98], [66, 98]], start: 0.88, weight: 2.2 },
-
-    // Secondary technical lines / room subdivisions.
-    { points: [[24, 11], [24, 20], [34, 20]], start: 0.10, weight: 1.5, soft: true },
-    { points: [[66, 21], [66, 31], [56, 31]], start: 0.20, weight: 1.5, soft: true },
-    { points: [[28, 34], [28, 45], [40, 45]], start: 0.31, weight: 1.5, soft: true },
-    { points: [[72, 45], [72, 57], [60, 57]], start: 0.43, weight: 1.5, soft: true },
-    { points: [[24, 59], [24, 71], [38, 71]], start: 0.56, weight: 1.5, soft: true },
-    { points: [[70, 71], [70, 83], [58, 83]], start: 0.69, weight: 1.5, soft: true },
-    { points: [[30, 83], [30, 95], [44, 95]], start: 0.82, weight: 1.5, soft: true },
-
-    // Small construction marks, like door / axis / detail strokes.
-    { points: [[12, 26], [30, 26]], start: 0.22, weight: 1.25, soft: true },
-    { points: [[70, 36], [88, 36]], start: 0.32, weight: 1.25, soft: true },
-    { points: [[10, 51], [28, 51]], start: 0.46, weight: 1.25, soft: true },
-    { points: [[72, 64], [90, 64]], start: 0.59, weight: 1.25, soft: true },
-    { points: [[12, 77], [30, 77]], start: 0.72, weight: 1.25, soft: true },
-    { points: [[70, 89], [88, 89]], start: 0.85, weight: 1.25, soft: true },
+    { points: [[48, 0], [48, 9], [34, 9], [34, 21], [58, 21], [58, 34], [42, 34], [42, 47], [64, 47], [64, 60], [38, 60], [38, 73], [56, 73], [56, 86], [46, 86], [46, 100]], start: 0.00, weight: 2.25 },
+    { points: [[34, 9], [15, 9], [15, 17], [28, 17]], start: 0.07, weight: 1.85 },
+    { points: [[58, 21], [82, 21], [82, 29], [69, 29]], start: 0.16, weight: 1.85 },
+    { points: [[42, 34], [20, 34], [20, 43], [33, 43]], start: 0.27, weight: 1.85 },
+    { points: [[64, 47], [86, 47], [86, 55], [72, 55]], start: 0.38, weight: 1.85 },
+    { points: [[38, 60], [14, 60], [14, 69], [29, 69]], start: 0.51, weight: 1.85 },
+    { points: [[56, 73], [83, 73], [83, 82], [67, 82]], start: 0.64, weight: 1.85 },
+    { points: [[46, 86], [22, 86], [22, 95], [35, 95]], start: 0.78, weight: 1.85 },
+    { points: [[23, 13], [23, 24], [34, 24]], start: 0.11, weight: 1.2, soft: true },
+    { points: [[68, 25], [68, 37], [57, 37]], start: 0.22, weight: 1.2, soft: true },
+    { points: [[27, 39], [27, 51], [41, 51]], start: 0.33, weight: 1.2, soft: true },
+    { points: [[73, 51], [73, 63], [61, 63]], start: 0.45, weight: 1.2, soft: true },
+    { points: [[24, 64], [24, 77], [37, 77]], start: 0.57, weight: 1.2, soft: true },
+    { points: [[70, 77], [70, 90], [57, 90]], start: 0.70, weight: 1.2, soft: true },
+    { points: [[11, 29], [28, 29]], start: 0.24, weight: 1.0, soft: true },
+    { points: [[70, 42], [90, 42]], start: 0.35, weight: 1.0, soft: true },
+    { points: [[10, 56], [27, 56]], start: 0.48, weight: 1.0, soft: true },
+    { points: [[73, 69], [91, 69]], start: 0.61, weight: 1.0, soft: true },
+    { points: [[12, 82], [30, 82]], start: 0.74, weight: 1.0, soft: true },
   ];
 }
 
-const PLAN = buildVerticalPlan();
+function buildRightPlan(): Segment[] {
+  return [
+    { points: [[58, 0], [58, 11], [72, 11], [72, 23], [52, 23], [52, 36], [68, 36], [68, 49], [44, 49], [44, 63], [61, 63], [61, 76], [39, 76], [39, 89], [53, 89], [53, 100]], start: 0.00, weight: 2.15 },
+    { points: [[72, 11], [91, 11], [91, 19], [79, 19]], start: 0.08, weight: 1.75 },
+    { points: [[52, 23], [27, 23], [27, 32], [40, 32]], start: 0.18, weight: 1.75 },
+    { points: [[68, 36], [88, 36], [88, 45], [76, 45]], start: 0.29, weight: 1.75 },
+    { points: [[44, 49], [18, 49], [18, 58], [31, 58]], start: 0.41, weight: 1.75 },
+    { points: [[61, 63], [86, 63], [86, 71], [73, 71]], start: 0.54, weight: 1.75 },
+    { points: [[39, 76], [15, 76], [15, 85], [28, 85]], start: 0.68, weight: 1.75 },
+    { points: [[53, 89], [80, 89], [80, 97], [66, 97]], start: 0.82, weight: 1.75 },
+    { points: [[79, 15], [79, 28], [69, 28]], start: 0.13, weight: 1.15, soft: true },
+    { points: [[34, 27], [34, 40], [50, 40]], start: 0.24, weight: 1.15, soft: true },
+    { points: [[77, 41], [77, 54], [66, 54]], start: 0.36, weight: 1.15, soft: true },
+    { points: [[29, 54], [29, 67], [43, 67]], start: 0.48, weight: 1.15, soft: true },
+    { points: [[75, 67], [75, 80], [62, 80]], start: 0.61, weight: 1.15, soft: true },
+    { points: [[31, 80], [31, 93], [40, 93]], start: 0.75, weight: 1.15, soft: true },
+    { points: [[72, 31], [92, 31]], start: 0.27, weight: 0.95, soft: true },
+    { points: [[9, 45], [28, 45]], start: 0.38, weight: 0.95, soft: true },
+    { points: [[72, 59], [93, 59]], start: 0.52, weight: 0.95, soft: true },
+    { points: [[8, 72], [27, 72]], start: 0.65, weight: 0.95, soft: true },
+    { points: [[69, 86], [90, 86]], start: 0.79, weight: 0.95, soft: true },
+  ];
+}
+
+const LEFT_PLAN = buildLeftPlan();
+const RIGHT_PLAN = buildRightPlan();
 
 export default function LeftBlueprintScroll() {
   const { pathname } = useLocation();
@@ -124,11 +139,11 @@ export default function LeftBlueprintScroll() {
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
     const started = performance.now();
 
-    // Very slow top-to-bottom drawing.
-    const drawDuration = 21;
-    const holdDuration = 5;
-    const fadeDuration = 3;
-    const cycle = drawDuration + holdDuration + fadeDuration + 1;
+    // Slower, calmer architectural drawing loop.
+    const drawDuration = 32;
+    const holdDuration = 7;
+    const fadeDuration = 4;
+    const cycle = drawDuration + holdDuration + fadeDuration + 2;
 
     const measure = () => {
       vw = window.innerWidth;
@@ -158,12 +173,13 @@ export default function LeftBlueprintScroll() {
     const drawStrip = (
       x: number,
       width: number,
-      mirror: boolean,
+      plan: Segment[],
       master: number,
       alpha: number,
       mainColor: string,
       softColor: string,
       headColor: string,
+      headBias: number,
     ) => {
       if (width < 120) return;
 
@@ -174,37 +190,33 @@ export default function LeftBlueprintScroll() {
 
       const inset = Math.max(14, width * 0.09);
       const usable = Math.max(80, width - inset * 2);
-      const mapX = (n: number) => {
-        const px = inset + (n / 100) * usable;
-        return mirror ? x + width - px : x + px;
-      };
+      const mapX = (n: number) => x + inset + (n / 100) * usable;
       const mapY = (n: number) => 10 + (n / 100) * (vh - 20);
 
-      PLAN.forEach((segment) => {
-        const local = clamp01((master - segment.start) / 0.16);
+      plan.forEach((segment) => {
+        const local = clamp01((master - segment.start) / 0.19);
         if (local <= 0) return;
 
         ctx.save();
         ctx.globalAlpha = alpha;
         ctx.lineCap = "round";
         ctx.lineJoin = "round";
-        ctx.lineWidth = segment.weight ?? 2;
+        ctx.lineWidth = segment.weight ?? 1.7;
         ctx.strokeStyle = segment.soft ? softColor : mainColor;
         drawPartial(ctx, segment.points, ease(local), mapX, mapY);
         ctx.stroke();
         ctx.restore();
       });
 
-      // Bright drawing head travels literally from top to bottom.
-      if (master > 0 && master < 1 && alpha > 0.1) {
+      if (master > 0 && master < 1 && alpha > 0.08) {
         const hy = mapY(master * 100);
-        const hx = mapX(50 + Math.sin(master * Math.PI * 8) * 4);
+        const hx = mapX(headBias + Math.sin(master * Math.PI * 6) * 3.2);
         ctx.save();
-        ctx.globalAlpha = 0.9 * alpha;
+        ctx.globalAlpha = 0.52 * alpha;
         ctx.beginPath();
-        ctx.arc(hx, hy, 2.8, 0, Math.PI * 2);
+        ctx.arc(hx, hy, 2.1, 0, Math.PI * 2);
         ctx.fillStyle = headColor;
-        ctx.shadowBlur = 13;
+        ctx.shadowBlur = 7;
         ctx.shadowColor = headColor;
         ctx.fill();
         ctx.restore();
@@ -222,9 +234,9 @@ export default function LeftBlueprintScroll() {
       ctx.clearRect(0, 0, vw, vh);
 
       const dark = document.querySelector(".sbre-theme")?.classList.contains("theme-dark") ?? false;
-      const mainColor = dark ? "rgba(255,255,255,.76)" : "rgba(10,92,61,.58)";
-      const softColor = dark ? "rgba(255,255,255,.40)" : "rgba(10,92,61,.30)";
-      const headColor = dark ? "rgba(255,255,255,.98)" : "rgba(16,112,78,.92)";
+      const mainColor = dark ? "rgba(255,255,255,.42)" : "rgba(10,92,61,.34)";
+      const softColor = dark ? "rgba(255,255,255,.20)" : "rgba(10,92,61,.16)";
+      const headColor = dark ? "rgba(255,255,255,.70)" : "rgba(16,112,78,.58)";
 
       const elapsed = reduced ? drawDuration + 1 : ((now - started) / 1000) % cycle;
       let master = 1;
@@ -242,11 +254,11 @@ export default function LeftBlueprintScroll() {
         alpha = 0;
       }
 
-      // Left starts immediately. Right follows slightly later for a more natural composition.
-      drawStrip(0, left, false, master, alpha, mainColor, softColor, headColor);
+      drawStrip(0, left, LEFT_PLAN, master, alpha, mainColor, softColor, headColor, 48);
 
-      const delayed = reduced ? 1 : clamp01(master - 0.055);
-      drawStrip(contentRight, right, true, delayed, alpha, mainColor, softColor, headColor);
+      // Right side is deliberately different: another plan, another rhythm, another drawing head path.
+      const rightMaster = reduced ? 1 : clamp01(master - 0.085);
+      drawStrip(contentRight, right, RIGHT_PLAN, rightMaster, alpha, mainColor, softColor, headColor, 58);
 
       if (!reduced) raf = requestAnimationFrame(render);
     };
