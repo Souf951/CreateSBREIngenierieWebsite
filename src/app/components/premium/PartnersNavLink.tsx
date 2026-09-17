@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "react-router-dom";
+import HeaderKineticTriangles from "./HeaderKineticTriangles";
 
 export default function PartnersNavLink() {
   const { pathname } = useLocation();
@@ -27,6 +28,7 @@ export default function PartnersNavLink() {
 
   return (
     <>
+      <HeaderKineticTriangles />
       {desktopHost &&
         createPortal(
           <Link className="partners-nav-link" to="/partenaires">
