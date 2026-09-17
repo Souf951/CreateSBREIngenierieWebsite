@@ -21,6 +21,7 @@ export default function HeaderKineticTriangles() {
     let cancelled = false;
     let raf = 0;
     let retryTimer: number | undefined;
+    let starTimer: number | undefined;
 
     const mount = () => {
       if (cancelled) return;
@@ -70,6 +71,56 @@ export default function HeaderKineticTriangles() {
 
       header.prepend(layer);
 
+      const launchShootingStar = () => {
+        if (cancelled || !layer.isConnected) return;
+
+        const star = document.createElement("span");
+        star.className = "sbre-shooting-star";
+
+        const startY = 12 + Math.random() * 54;
+        const duration = 1250 + Math.random() * 650;
+        const travelX = 112 + Math.random() * 18;
+        const travelY = 18 + Math.random() * 22;
+        const scale = 0.78 + Math.random() * 0.42;
+
+        star.style.top = `${startY}%`;
+        star.style.left = "-14%";
+        star.style.setProperty("--star-scale", `${scale}`);
+        layer.appendChild(star);
+
+        const animation = star.animate(
+          [
+            {
+              transform: `translate3d(0,0,0) rotate(-12deg) scale(${scale})`,
+              opacity: 0,
+            },
+            {
+              transform: `translate3d(10vw,${travelY * 0.08}px,0) rotate(-12deg) scale(${scale})`,
+              opacity: 0.82,
+              offset: 0.12,
+            },
+            {
+              transform: `translate3d(${travelX}vw,${travelY}px,0) rotate(-12deg) scale(${scale})`,
+              opacity: 0,
+            },
+          ],
+          {
+            duration,
+            easing: "cubic-bezier(.18,.72,.24,1)",
+            fill: "forwards",
+          },
+        );
+
+        animation.finished
+          .catch(() => undefined)
+          .finally(() => star.remove());
+
+        const nextDelay = 5200 + Math.random() * 7200;
+        starTimer = window.setTimeout(launchShootingStar, nextDelay);
+      };
+
+      starTimer = window.setTimeout(launchShootingStar, 2600 + Math.random() * 2600);
+
       const travel = 8600;
       const pause = 900;
       const total = travel + pause;
@@ -112,6 +163,7 @@ export default function HeaderKineticTriangles() {
       cancelled = true;
       cancelAnimationFrame(raf);
       if (retryTimer) window.clearTimeout(retryTimer);
+      if (starTimer) window.clearTimeout(starTimer);
       document.querySelector(".premium-site .site-header .sbre-point-cloud")?.remove();
     };
   }, [pathname]);
