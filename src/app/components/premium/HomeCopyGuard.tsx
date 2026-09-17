@@ -33,6 +33,20 @@ export default function HomeCopyGuard() {
       setHtmlIfChanged(heroActions[0] ?? null, 'Discuter de votre projet <span>↗</span>');
       setHtmlIfChanged(heroActions[1] ?? null, 'Nos références <span>↗</span>');
 
+      // Remove the old technical strip above the interactive building.
+      home.querySelector<HTMLElement>(".visual-heading")?.remove();
+
+      // Present the 3D model facing the SBRE sign on first arrival.
+      const building = home.querySelector<HTMLElement>(".building-canvas");
+      if (building && building.dataset.frontAligned !== "true") {
+        building.dataset.frontAligned = "true";
+        requestAnimationFrame(() => {
+          building.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }));
+          building.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }));
+          building.dispatchEvent(new KeyboardEvent("keydown", { key: "ArrowRight", bubbles: true }));
+        });
+      }
+
       setHtmlIfChanged(
         home.querySelector<HTMLElement>("#expertises .section-heading h2"),
         'Un pilotage rigoureux<br><span>à chaque étape du chantier.</span>',
