@@ -1,5 +1,11 @@
 import { useEffect } from "react";
 
+const metrics = [
+  { value: 20, suffix: "%", label: "d’économie moyenne", note: "par rapport à une entreprise générale" },
+  { value: 8, suffix: "+ ans", label: "d’expérience", note: "en direction de travaux" },
+  { value: 30, suffix: "+", label: "partenaires", note: "en Suisse romande" },
+];
+
 export default function MethodSectionSpatialMotion() {
   useEffect(() => {
     let cleanup: (() => void) | null = null;
@@ -9,19 +15,76 @@ export default function MethodSectionSpatialMotion() {
       if (!section || section.dataset.sbreSpatialMotion === "true") return false;
 
       const list = section.querySelector<HTMLElement>(".method-list");
+      const intro = section.querySelector<HTMLElement>(".method-intro");
       const items = Array.from(section.querySelectorAll<HTMLDetailsElement>(".method-list details"));
-      if (!list || !items.length) return false;
+      if (!list || !intro || !items.length) return false;
 
       section.dataset.sbreSpatialMotion = "true";
-      section.classList.add("method-spatial-ready");
+      section.classList.add("method-spatial-ready", "method-metrics-ready");
       items.forEach((item, index) => {
         item.style.setProperty("--method-index", String(index));
         item.classList.toggle("method-card-active", item.open);
       });
 
+      const metricsRow = document.createElement("div");
+      metricsRow.className = "method-metrics";
+      metricsRow.setAttribute("aria-label", "Chiffres clés SBRE Ingénierie");
+      metricsRow.innerHTML = metrics
+        .map(
+          (metric, index) => `
+            <article class="method-metric" style="--metric-index:${index}">
+              <div class="method-metric-value" aria-label="${metric.value}${metric.suffix}">
+                <span class="method-counter" data-target="${metric.value}">0</span><span class="method-metric-suffix">${metric.suffix}</span>
+              </div>
+              <strong>${metric.label}</strong>
+              <p>${metric.note}</p>
+            </article>`,
+        )
+        .join("");
+      section.insertBefore(metricsRow, intro);
+
+      const counters = Array.from(metricsRow.querySelectorAll<HTMLElement>(".method-counter"));
+      let metricsAnimated = false;
+
+      const animateCounters = () => {
+        if (metricsAnimated) return;
+        metricsAnimated = true;
+        section.classList.add("method-metrics-visible");
+
+        if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          counters.forEach((counter) => {
+            counter.textContent = counter.dataset.target ?? "0";
+          });
+          return;
+        }
+
+        counters.forEach((counter, index) => {
+          const target = Number(counter.dataset.target || 0);
+          const duration = 1000 + index * 150;
+          const delay = index * 100;
+          const startedAt = performance.now() + delay;
+
+          const tick = (now: number) => {
+            if (now < startedAt) {
+              requestAnimationFrame(tick);
+              return;
+            }
+            const progress = Math.min(1, (now - startedAt) / duration);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            counter.textContent = String(Math.round(target * eased));
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+
+          requestAnimationFrame(tick);
+        });
+      };
+
       const revealObserver = new IntersectionObserver(
         ([entry]) => {
-          if (entry?.isIntersecting) section.classList.add("method-spatial-visible");
+          if (entry?.isIntersecting) {
+            section.classList.add("method-spatial-visible");
+            animateCounters();
+          }
         },
         { threshold: 0.22 },
       );
@@ -60,7 +123,8 @@ export default function MethodSectionSpatialMotion() {
         section.removeEventListener("pointermove", onPointerMove);
         section.removeEventListener("pointerleave", onPointerLeave);
         items.forEach((item) => item.removeEventListener("toggle", onToggle));
-        section.classList.remove("method-spatial-ready", "method-spatial-visible");
+        metricsRow.remove();
+        section.classList.remove("method-spatial-ready", "method-spatial-visible", "method-metrics-ready", "method-metrics-visible");
         section.style.removeProperty("--method-x");
         section.style.removeProperty("--method-y");
         section.style.removeProperty("--method-rx");
