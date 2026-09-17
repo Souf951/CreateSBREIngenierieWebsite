@@ -1,5 +1,36 @@
 import { useEffect } from "react";
 
+const faqCopy = [
+  [
+    "Sur quels types d’opérations SBRE peut intervenir ?",
+    "Nous accompagnons des rénovations, transformations, projets résidentiels et opérations tertiaires, depuis la préparation du dossier jusqu’au suivi d’exécution et à la livraison.",
+  ],
+  [
+    "À quel stade du projet est-il pertinent de vous solliciter ?",
+    "Le plus tôt possible pour cadrer les consultations, le budget et le planning. Nous pouvons aussi reprendre un chantier déjà lancé lorsqu’il faut clarifier les priorités ou renforcer le pilotage.",
+  ],
+  [
+    "Comment vous intégrez-vous à une équipe de mandataires existante ?",
+    "Nous travaillons avec l’architecte, les ingénieurs et les spécialistes déjà en place. Les rôles restent clairement définis afin que chacun garde son périmètre de responsabilité.",
+  ],
+  [
+    "Pouvez-vous prendre en charge la consultation des entreprises ?",
+    "Oui. Selon le mandat, nous préparons les soumissions, lançons les consultations, comparons les offres, menons les clarifications et préparons les adjudications.",
+  ],
+  [
+    "Comment sécurisez-vous le budget avant et pendant les travaux ?",
+    "Nous construisons des estimatifs, comparons les offres reçues et suivons les écarts au fil des décisions. L’objectif est de rendre les coûts lisibles avant qu’ils ne deviennent des problèmes de chantier.",
+  ],
+  [
+    "Quelle présence assurez-vous réellement sur le terrain ?",
+    "Elle est adaptée au besoin du projet : séances de chantier, contrôles ciblés, coordination des entreprises, suivi des points sensibles, réceptions et levée des réserves.",
+  ],
+  [
+    "Sur quelle base établissez-vous votre proposition d’honoraires ?",
+    "Elle dépend du périmètre confié, de la durée de l’opération, de sa complexité et du niveau de présence nécessaire. Chaque offre précise les prestations, les livrables et les conditions du mandat.",
+  ],
+] as const;
+
 export default function FaqArchitecturalEnhancer() {
   useEffect(() => {
     let cleanup: (() => void) | null = null;
@@ -15,8 +46,8 @@ export default function FaqArchitecturalEnhancer() {
       title.className = "faq-architectural-title";
       title.setAttribute("aria-hidden", "true");
       title.innerHTML = `
-        <span>SBRE / NOTE TECHNIQUE</span>
-        <span>FAQ — 07</span>
+        <span>SBRE / QUESTIONS FRÉQUENTES</span>
+        <span>07 POINTS CLÉS</span>
       `;
       section.prepend(title);
 
@@ -44,6 +75,16 @@ export default function FaqArchitecturalEnhancer() {
         const answer = item.querySelector<HTMLElement>(":scope > p");
         if (!summary || !answer) return;
 
+        const plus = summary.querySelector<HTMLElement>("span:last-child");
+        const copy = faqCopy[index];
+        if (copy) {
+          Array.from(summary.childNodes).forEach((node) => {
+            if (node.nodeType === Node.TEXT_NODE) node.remove();
+          });
+          summary.insertBefore(document.createTextNode(copy[0]), plus ?? null);
+          answer.textContent = copy[1];
+        }
+
         const number = document.createElement("span");
         number.className = "faq-architectural-number";
         number.textContent = `0${index + 1}`;
@@ -54,40 +95,17 @@ export default function FaqArchitecturalEnhancer() {
         rail.setAttribute("aria-hidden", "true");
         item.appendChild(rail);
 
-        const trace = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-        trace.setAttribute("class", "faq-answer-trace");
-        trace.setAttribute("viewBox", "0 0 520 44");
-        trace.setAttribute("preserveAspectRatio", "none");
-        trace.setAttribute("aria-hidden", "true");
-        trace.innerHTML = '<path d="M0 22 H145 L176 6 H330 L360 22 H520" pathLength="1" />';
-        answer.prepend(trace);
-
         const updateState = () => {
           item.classList.toggle("is-open", item.open);
+          if (item.open) {
+            details.forEach((other) => {
+              if (other !== item && other.open) other.open = false;
+            });
+          }
         };
         updateState();
         item.addEventListener("toggle", updateState);
         listeners.push(() => item.removeEventListener("toggle", updateState));
-
-        if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
-
-        const move = (event: PointerEvent) => {
-          const rect = item.getBoundingClientRect();
-          const px = (event.clientX - rect.left) / rect.width - 0.5;
-          const py = (event.clientY - rect.top) / rect.height - 0.5;
-          item.style.setProperty("--faq-ry", `${px * 3.8}deg`);
-          item.style.setProperty("--faq-rx", `${py * -2.6}deg`);
-          item.style.setProperty("--faq-glow-x", `${(px + 0.5) * 100}%`);
-          item.style.setProperty("--faq-glow-y", `${(py + 0.5) * 100}%`);
-        };
-        const leave = () => {
-          item.style.setProperty("--faq-ry", "0deg");
-          item.style.setProperty("--faq-rx", "0deg");
-        };
-        item.addEventListener("pointermove", move);
-        item.addEventListener("pointerleave", leave);
-        listeners.push(() => item.removeEventListener("pointermove", move));
-        listeners.push(() => item.removeEventListener("pointerleave", leave));
       });
 
       cleanup = () => {
@@ -95,13 +113,8 @@ export default function FaqArchitecturalEnhancer() {
         details.forEach((item) => {
           item.classList.remove("faq-architectural-item", "is-open");
           item.style.removeProperty("--faq-index");
-          item.style.removeProperty("--faq-ry");
-          item.style.removeProperty("--faq-rx");
-          item.style.removeProperty("--faq-glow-x");
-          item.style.removeProperty("--faq-glow-y");
           item.querySelector(".faq-architectural-number")?.remove();
           item.querySelector(".faq-architectural-rail")?.remove();
-          item.querySelector(".faq-answer-trace")?.remove();
         });
         title.remove();
         grid.remove();
