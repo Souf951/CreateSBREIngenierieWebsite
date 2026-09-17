@@ -36,23 +36,30 @@
   pointer-events: none;
   overflow: hidden;
   perspective: 760px;
+  background: transparent;
+  transition: background-color 220ms ease;
+}
+
+/* Once every facet is active, fill the tiny interstitial seams too. */
+.premium-site .site-header .sbre-kinetic-triangles.is-full-green {
+  background: #0b513d;
 }
 
 .premium-site .site-header .sbre-kinetic-triangle {
   position: absolute;
   left: var(--x);
   top: var(--y);
-  width: clamp(26px, 2.65vw, 40px);
+  width: clamp(27px, 2.72vw, 41px);
   aspect-ratio: 1 / .866;
   clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
   background: rgba(249,249,244,.78);
   opacity: .52;
   transform-origin: 50% 55%;
   transform:
-    translate(-18%, -16%)
+    translate(-14%, -14%)
     rotate(calc(var(--flip) * 180deg))
     rotateY(0deg)
-    scale(.985);
+    scale(1.01);
   transition:
     transform 470ms cubic-bezier(.22,.75,.2,1),
     background-color 320ms ease,
@@ -62,21 +69,21 @@
   will-change: transform, background-color, opacity;
 }
 
-/* Offset alternating rows for a tighter architectural tessellation. */
+/* Offset alternating rows so facets interlock more tightly. */
 .premium-site .site-header .sbre-kinetic-triangle[style*="--row: 1"],
 .premium-site .site-header .sbre-kinetic-triangle[style*="--row: 3"] {
-  margin-left: 1.25vw;
+  margin-left: 1.22vw;
 }
 
 .premium-site .site-header .sbre-kinetic-triangle.is-green {
   background: #0b513d;
-  opacity: .78;
+  opacity: .82;
   transform:
-    translate(-18%, -16%)
+    translate(-14%, -14%)
     rotate(calc(var(--flip) * 180deg))
     rotateY(178deg)
-    scale(1.015);
-  filter: drop-shadow(0 3px 6px rgba(5,54,39,.07));
+    scale(1.04);
+  filter: drop-shadow(0 3px 6px rgba(5,54,39,.06));
 }
 
 /* Four restrained SBRE tones: darker, less luminous, still dimensional. */
@@ -133,7 +140,11 @@
 
 .theme-dark .premium-site .site-header .sbre-kinetic-triangle.is-green {
   background: #0b503c;
-  opacity: .74;
+  opacity: .76;
+}
+
+.theme-dark .premium-site .site-header .sbre-kinetic-triangles.is-full-green {
+  background: #0b503c;
 }
 
 .theme-dark .premium-site .site-header .brand,
