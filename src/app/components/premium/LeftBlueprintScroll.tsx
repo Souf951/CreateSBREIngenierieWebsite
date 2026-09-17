@@ -126,23 +126,41 @@ export default function LeftBlueprintScroll() {
         .sbre-blueprint-side.right{right:0}
         .sbre-blueprint-side svg{display:block;width:100%;height:100%}
         .sbre-blueprint-side path{fill:none;stroke:#0a5c3d;vector-effect:non-scaling-stroke;stroke-linecap:square;stroke-linejoin:miter}
-        .sbre-blueprint-side .bp-plan-fragments path{stroke-width:.9;opacity:.28;stroke-dasharray:5 7}
-        .sbre-blueprint-side .bp-detail path{stroke-width:.72;opacity:.20;stroke-dasharray:2 6}
-        .sbre-blueprint-side .bp-dimensions path{stroke-width:.68;opacity:.22;stroke-dasharray:3 5}
+        .sbre-blueprint-side .bp-plan-fragments path{stroke-width:.9;opacity:.28;stroke-dasharray:5 7;animation:bp-plan-flow 6.2s linear 4.2s infinite}
+        .sbre-blueprint-side .bp-plan-fragments path:nth-child(even){animation-direction:reverse;animation-duration:7.1s}
+        .sbre-blueprint-side .bp-detail path{stroke-width:.72;opacity:.20;stroke-dasharray:2 6;animation:bp-detail-flow 8.4s linear 4.4s infinite}
+        .sbre-blueprint-side .bp-detail path:nth-child(3n+2){animation-direction:reverse;animation-duration:9.2s}
+        .sbre-blueprint-side .bp-dimensions path{stroke-width:.68;opacity:.22;stroke-dasharray:3 5;animation:bp-dimension-flow 10.4s linear 4.6s infinite}
+        .sbre-blueprint-side.right .bp-plan-fragments path{animation-delay:4.5s}
+        .sbre-blueprint-side.right .bp-detail path{animation-delay:4.7s}
+        .sbre-blueprint-side.right .bp-dimensions path{animation-delay:4.9s}
         .sbre-blueprint-side text{fill:#0a5c3d;font:500 7.5px/1 Inter,Arial,sans-serif;letter-spacing:.05em;opacity:.24}
-        .theme-dark .sbre-blueprint-side{opacity:.72}
-        .theme-dark .sbre-blueprint-side path{stroke:#fff}
-        .theme-dark .sbre-blueprint-side .bp-plan-fragments path{opacity:.34}
-        .theme-dark .sbre-blueprint-side .bp-detail path{opacity:.25}
-        .theme-dark .sbre-blueprint-side .bp-dimensions path{opacity:.29}
-        .theme-dark .sbre-blueprint-side text{fill:#fff;opacity:.30}
+        .sbre-architectural-margins.theme-dark .sbre-blueprint-side{opacity:.80}
+        .sbre-architectural-margins.theme-dark .sbre-blueprint-side path{stroke:#fff!important}
+        .sbre-architectural-margins.theme-dark .sbre-blueprint-side .bp-plan-fragments path{opacity:.46}
+        .sbre-architectural-margins.theme-dark .sbre-blueprint-side .bp-detail path{opacity:.34}
+        .sbre-architectural-margins.theme-dark .sbre-blueprint-side .bp-dimensions path{opacity:.40}
+        .sbre-architectural-margins.theme-dark .sbre-blueprint-side text{fill:#fff!important;opacity:.42}
+        @keyframes bp-plan-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-24}}
+        @keyframes bp-detail-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:16}}
+        @keyframes bp-dimension-flow{from{stroke-dashoffset:0}to{stroke-dashoffset:-18}}
         @media(max-width:767px){.sbre-architectural-margins{display:none!important}}
+        @media(prefers-reduced-motion:reduce){.sbre-blueprint-side path{animation:none!important}}
       </style>
       <div class="sbre-blueprint-side left">${LEFT_SVG}</div>
       <div class="sbre-blueprint-side right">${RIGHT_SVG}</div>
     `;
 
     document.body.appendChild(root);
+
+    const themeHost = document.querySelector<HTMLElement>(".sbre-theme");
+    const syncTheme = () => {
+      root.classList.toggle("theme-dark", Boolean(themeHost?.classList.contains("theme-dark")));
+    };
+    syncTheme();
+
+    const themeObserver = themeHost ? new MutationObserver(syncTheme) : null;
+    themeObserver?.observe(themeHost, { attributes: true, attributeFilter: ["class"] });
 
     const leftSide = root.querySelector<HTMLElement>(".sbre-blueprint-side.left");
     const rightSide = root.querySelector<HTMLElement>(".sbre-blueprint-side.right");
@@ -190,6 +208,7 @@ export default function LeftBlueprintScroll() {
       });
       labels.forEach((label) => (label.style.opacity = "0.24"));
       return () => {
+        themeObserver?.disconnect();
         window.removeEventListener("resize", sizeSides);
         root.remove();
       };
@@ -242,6 +261,7 @@ export default function LeftBlueprintScroll() {
 
     return () => {
       disposed = true;
+      themeObserver?.disconnect();
       window.removeEventListener("resize", sizeSides);
       root.remove();
     };
