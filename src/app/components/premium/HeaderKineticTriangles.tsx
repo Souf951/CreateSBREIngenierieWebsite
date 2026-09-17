@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const COLS = 26;
-const ROWS = 4;
+const COLS = 40;
+const ROWS = 5;
 
 function seededShuffle(length: number, seed: number) {
   const values = Array.from({ length }, (_, index) => index);
@@ -56,6 +56,7 @@ export default function HeaderKineticTriangles() {
           triangle.style.setProperty("--y", `${(row / ROWS) * 100}%`);
           triangle.style.setProperty("--flip", `${(row + col) % 2}`);
           triangle.style.setProperty("--tone", `${index % 4}`);
+          triangle.style.setProperty("--row", `${row}`);
           layer.appendChild(triangle);
           triangles.push(triangle);
         }
@@ -72,9 +73,9 @@ export default function HeaderKineticTriangles() {
 
         const onOrder = seededShuffle(total, 1709 + cycle * 97);
         const offOrder = seededShuffle(total, 8611 + cycle * 131);
-        const onStep = 34;
-        const offStep = 27;
-        const startDelay = 420;
+        const onStep = 19;
+        const offStep = 15;
+        const startDelay = 520;
 
         onOrder.forEach((triangleIndex, orderIndex) => {
           timers.push(
@@ -85,7 +86,7 @@ export default function HeaderKineticTriangles() {
         });
 
         const allGreenAt = startDelay + total * onStep;
-        const holdGreen = 1150;
+        const holdGreen = 1050;
 
         offOrder.forEach((triangleIndex, orderIndex) => {
           timers.push(
@@ -95,7 +96,7 @@ export default function HeaderKineticTriangles() {
           );
         });
 
-        const cycleDuration = allGreenAt + holdGreen + total * offStep + 1450;
+        const cycleDuration = allGreenAt + holdGreen + total * offStep + 1500;
         cycleTimer = window.setTimeout(runCycle, cycleDuration);
       };
 
