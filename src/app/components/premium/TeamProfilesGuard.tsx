@@ -34,6 +34,27 @@ export default function TeamProfilesGuard() {
 
       section.dataset.sbreTeamEnhanced = "true";
 
+      if (!section.querySelector(".team-royal-backdrop")) {
+        const backdrop = document.createElement("div");
+        backdrop.className = "team-royal-backdrop";
+        backdrop.setAttribute("aria-hidden", "true");
+        backdrop.innerHTML = `
+          <span class="team-royal-glow team-royal-glow-a"></span>
+          <span class="team-royal-glow team-royal-glow-b"></span>
+          <span class="team-royal-diamond team-royal-diamond-a"></span>
+          <span class="team-royal-diamond team-royal-diamond-b"></span>
+          <span class="team-royal-diamond team-royal-diamond-c"></span>
+          <span class="team-royal-diamond team-royal-diamond-d"></span>
+          <span class="team-royal-line team-royal-line-a"></span>
+          <span class="team-royal-line team-royal-line-b"></span>
+          <span class="team-royal-line team-royal-line-c"></span>
+          <span class="team-royal-line team-royal-line-d"></span>
+          <span class="team-royal-orbit team-royal-orbit-a"></span>
+          <span class="team-royal-orbit team-royal-orbit-b"></span>
+        `;
+        section.prepend(backdrop);
+      }
+
       const intro = section.querySelector<HTMLElement>(".section-heading > p:last-child");
       if (intro) {
         intro.textContent =
