@@ -1,3 +1,5 @@
+@import './method-metrics-premium.css';
+
 .method-section.method-spatial-ready {
   --method-x: 50%;
   --method-y: 45%;
@@ -108,7 +110,6 @@
   z-index: 2;
 }
 
-/* Number badge only — do not style the word wrapper as a circle. */
 .method-section.method-spatial-ready .method-list summary > span:first-child {
   display: inline-grid;
   place-items: center;
@@ -135,7 +136,6 @@
   box-shadow: none !important;
 }
 
-/* Slightly larger descriptive copy for readability without changing hierarchy. */
 .method-section.method-spatial-ready .method-intro > p:not(.eyebrow) {
   font-size: 15.5px !important;
   line-height: 1.75;
@@ -162,7 +162,6 @@
   }
 }
 
-/* Restore the true chantier colours: no green wash over the Method video. */
 .method-section-has-video {
   background: #101311 !important;
 }
