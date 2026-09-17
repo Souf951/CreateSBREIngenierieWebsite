@@ -24,6 +24,194 @@ const profiles = [
   },
 ];
 
+function createHexWave(section: HTMLElement) {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const canvas = document.createElement("canvas");
+  canvas.className = "team-hex-wave-canvas";
+  canvas.setAttribute("aria-hidden", "true");
+  canvas.style.position = "absolute";
+  canvas.style.inset = "0";
+  canvas.style.width = "100%";
+  canvas.style.height = "100%";
+  canvas.style.pointerEvents = "none";
+  canvas.style.zIndex = "0";
+  canvas.style.opacity = "0.92";
+  canvas.style.mixBlendMode = "screen";
+
+  const oldCanvas = section.querySelector(".team-hex-wave-canvas");
+  oldCanvas?.remove();
+  section.prepend(canvas);
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return () => canvas.remove();
+
+  let width = 1;
+  let height = 1;
+  let dpr = 1;
+  let raf = 0;
+  let running = false;
+  let startTime = performance.now();
+
+  type Hex = {
+    x: number;
+    y: number;
+    r: number;
+    delay: number;
+    phase: number;
+  };
+
+  let hexes: Hex[] = [];
+
+  const rebuild = () => {
+    const rect = section.getBoundingClientRect();
+    width = Math.max(1, rect.width);
+    height = Math.max(1, rect.height);
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const mobile = width < 780;
+    const radius = mobile ? 34 : 48;
+    const horizontal = Math.sqrt(3) * radius;
+    const vertical = radius * 1.5;
+    const cols = Math.ceil(width / horizontal) + 3;
+    const rows = Math.ceil(height / vertical) + 3;
+
+    const next: Hex[] = [];
+    for (let row = -1; row < rows; row += 1) {
+      for (let col = -1; col < cols; col += 1) {
+        const x = col * horizontal + (row % 2 ? horizontal / 2 : 0);
+        const y = row * vertical;
+        const diagonal = x * 0.72 + y * 0.18;
+        const jitter = ((row * 17 + col * 29) % 13) * 0.032;
+        next.push({
+          x,
+          y,
+          r: radius,
+          delay: diagonal / Math.max(width, 1) + jitter,
+          phase: ((row * 11 + col * 7) % 19) / 19,
+        });
+      }
+    }
+    hexes = next;
+  };
+
+  const drawHex = (hex: Hex, progress: number, alpha: number) => {
+    if (progress <= 0 || alpha <= 0) return;
+
+    const points: Array<[number, number]> = [];
+    for (let i = 0; i < 6; i += 1) {
+      const angle = Math.PI / 3 * i - Math.PI / 6;
+      points.push([
+        hex.x + Math.cos(angle) * hex.r,
+        hex.y + Math.sin(angle) * hex.r,
+      ]);
+    }
+
+    const perimeter = 6;
+    const total = Math.min(perimeter, Math.max(0, progress * perimeter));
+
+    ctx.beginPath();
+    ctx.moveTo(points[0][0], points[0][1]);
+
+    for (let edge = 0; edge < Math.floor(total); edge += 1) {
+      const next = points[(edge + 1) % 6];
+      ctx.lineTo(next[0], next[1]);
+    }
+
+    const partial = total - Math.floor(total);
+    if (partial > 0 && total < perimeter) {
+      const edge = Math.floor(total);
+      const a = points[edge % 6];
+      const b = points[(edge + 1) % 6];
+      ctx.lineTo(
+        a[0] + (b[0] - a[0]) * partial,
+        a[1] + (b[1] - a[1]) * partial,
+      );
+    }
+
+    const glowAlpha = alpha * 0.75;
+    ctx.lineWidth = width < 780 ? 1.4 : 1.8;
+    ctx.strokeStyle = `rgba(238, 249, 242, ${alpha})`;
+    ctx.shadowColor = `rgba(188, 239, 207, ${glowAlpha})`;
+    ctx.shadowBlur = width < 780 ? 6 : 10;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+  };
+
+  const render = (now: number) => {
+    ctx.clearRect(0, 0, width, height);
+
+    const elapsed = (now - startTime) / 1000;
+    const cycleDuration = 8.5;
+    const cycle = (elapsed % cycleDuration) / cycleDuration;
+
+    for (const hex of hexes) {
+      const wavePosition = cycle * 1.8 - 0.35;
+      const local = wavePosition - hex.delay;
+
+      let drawProgress = 0;
+      let alpha = 0;
+
+      if (prefersReducedMotion) {
+        drawProgress = 1;
+        alpha = 0.12 + hex.phase * 0.08;
+      } else if (local >= 0 && local < 0.34) {
+        drawProgress = Math.min(1, local / 0.16);
+        const fadeIn = Math.min(1, local / 0.08);
+        const fadeOut = Math.max(0, 1 - (local - 0.20) / 0.14);
+        alpha = 0.18 + 0.62 * Math.min(fadeIn, fadeOut);
+      } else if (local >= 0.34 && local < 0.62) {
+        drawProgress = 1;
+        alpha = Math.max(0, 0.18 * (1 - (local - 0.34) / 0.28));
+      }
+
+      const breathe = prefersReducedMotion ? 1 : 0.88 + Math.sin(elapsed * 1.35 + hex.phase * 6) * 0.12;
+      drawHex(hex, drawProgress, alpha * breathe);
+    }
+
+    if (running && !prefersReducedMotion) {
+      raf = requestAnimationFrame(render);
+    }
+  };
+
+  rebuild();
+
+  const resizeObserver = new ResizeObserver(() => {
+    rebuild();
+    if (!running || prefersReducedMotion) render(performance.now());
+  });
+  resizeObserver.observe(section);
+
+  const visibilityObserver = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        if (!running) {
+          running = true;
+          startTime = performance.now();
+          if (prefersReducedMotion) render(startTime);
+          else raf = requestAnimationFrame(render);
+        }
+      } else {
+        running = false;
+        cancelAnimationFrame(raf);
+      }
+    },
+    { threshold: 0.08 },
+  );
+  visibilityObserver.observe(section);
+
+  return () => {
+    running = false;
+    cancelAnimationFrame(raf);
+    resizeObserver.disconnect();
+    visibilityObserver.disconnect();
+    canvas.remove();
+  };
+}
+
 export default function TeamProfilesGuard() {
   useEffect(() => {
     const cleanups: Array<() => void> = [];
@@ -45,15 +233,13 @@ export default function TeamProfilesGuard() {
           <span class="team-royal-diamond team-royal-diamond-b"></span>
           <span class="team-royal-diamond team-royal-diamond-c"></span>
           <span class="team-royal-diamond team-royal-diamond-d"></span>
-          <span class="team-royal-line team-royal-line-a"></span>
-          <span class="team-royal-line team-royal-line-b"></span>
-          <span class="team-royal-line team-royal-line-c"></span>
-          <span class="team-royal-line team-royal-line-d"></span>
           <span class="team-royal-orbit team-royal-orbit-a"></span>
           <span class="team-royal-orbit team-royal-orbit-b"></span>
         `;
         section.prepend(backdrop);
       }
+
+      cleanups.push(createHexWave(section));
 
       const intro = section.querySelector<HTMLElement>(".section-heading > p:last-child");
       if (intro) {
