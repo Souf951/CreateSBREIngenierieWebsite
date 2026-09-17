@@ -1,82 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const LEFT_SVG = `
-<svg viewBox="0 0 140 1000" preserveAspectRatio="xMinYMid meet" aria-hidden="true">
-  <g class="bp-plan-fragments">
-    <path d="M18 42 H82 V98" />
-    <path d="M112 92 V168 H54" />
-    <path d="M28 205 H74 V252 H120" />
-    <path d="M96 294 V354 H42" />
-    <path d="M18 424 H68 V388" />
-    <path d="M114 468 H76 V536 H34" />
-    <path d="M24 604 H88 V650" />
-    <path d="M118 690 H70 V742" />
-    <path d="M30 792 H78 V836 H110" />
-    <path d="M96 914 H46 V972" />
-  </g>
-  <g class="bp-detail">
-    <path d="M38 132 H68 V158" />
-    <path d="M86 236 H112" />
-    <path d="M24 326 H54 V366" />
-    <path d="M82 414 H112 V442" />
-    <path d="M44 560 H76 V588" />
-    <path d="M82 676 H108" />
-    <path d="M28 756 H58 V782" />
-    <path d="M76 872 H112 V898" />
-  </g>
-  <g class="bp-dimensions">
-    <path d="M14 120 H102 M18 114 V126 M98 114 V126" />
-    <path d="M32 378 H124 M36 372 V384 M120 372 V384" />
-    <path d="M16 646 H112 M20 640 V652 M108 640 V652" />
-    <path d="M28 936 H122 M32 930 V942 M118 930 V942" />
-  </g>
-  <g class="bp-labels">
-    <text x="18" y="108">4.20 m</text>
-    <text x="36" y="366">6.80 m</text>
-    <text x="20" y="634">5.40 m</text>
-    <text x="32" y="924">3.60 m</text>
-  </g>
-</svg>`;
-
-const RIGHT_SVG = `
-<svg viewBox="0 0 140 1000" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
-  <g class="bp-plan-fragments">
-    <path d="M120 36 H62 V86" />
-    <path d="M28 118 V188 H92" />
-    <path d="M116 230 H72 V280 H34" />
-    <path d="M42 326 H104 V370" />
-    <path d="M122 438 H76 V408" />
-    <path d="M24 486 H62 V548 H108" />
-    <path d="M118 614 H56 V658" />
-    <path d="M34 708 H84 V752" />
-    <path d="M116 808 H72 V850 H28" />
-    <path d="M44 928 H98 V974" />
-  </g>
-  <g class="bp-detail">
-    <path d="M70 140 H106 V166" />
-    <path d="M28 252 H54" />
-    <path d="M82 344 H116" />
-    <path d="M30 418 H58 V448" />
-    <path d="M76 574 H108 V598" />
-    <path d="M36 674 H62" />
-    <path d="M78 774 H110 V800" />
-    <path d="M34 886 H66 V912" />
-  </g>
-  <g class="bp-dimensions">
-    <path d="M28 146 H124 M32 140 V152 M120 140 V152" />
-    <path d="M16 362 H106 M20 356 V368 M102 356 V368" />
-    <path d="M30 628 H124 M34 622 V634 M120 622 V634" />
-    <path d="M18 896 H110 M22 890 V902 M106 890 V902" />
-  </g>
-  <g class="bp-labels">
-    <text x="82" y="134">5.75 m</text>
-    <text x="22" y="350">4.90 m</text>
-    <text x="82" y="616">7.10 m</text>
-    <text x="24" y="884">3.25 m</text>
-  </g>
-</svg>`;
-
 export default function LeftBlueprintScroll() {
   const { pathname } = useLocation();
 
@@ -84,66 +8,70 @@ export default function LeftBlueprintScroll() {
     if (pathname !== "/") return;
 
     const root = document.createElement("div");
-    root.className = "sbre-architectural-margins";
+    root.className = "sbre-hex-margins";
     root.setAttribute("aria-hidden", "true");
     root.innerHTML = `
       <style>
-        .sbre-architectural-margins{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-        .sbre-blueprint-side{position:absolute;top:0;height:100vh;overflow:hidden;opacity:.66;transition:opacity .25s ease}
-        .sbre-blueprint-side.left{left:0}
-        .sbre-blueprint-side.right{right:0}
-        .sbre-blueprint-side svg{display:block;width:100%;height:100%}
-        .sbre-blueprint-side path{fill:none;stroke:#0a5c3d;vector-effect:non-scaling-stroke;stroke-linecap:square;stroke-linejoin:miter;will-change:stroke-dashoffset;transition:stroke .25s ease,opacity .25s ease}
-        .sbre-blueprint-side .bp-plan-fragments path{stroke-width:.92;opacity:.30;stroke-dasharray:5 7;animation:bp-plan-flow-a 2.4s linear infinite}
-        .sbre-blueprint-side .bp-plan-fragments path:nth-child(2n){animation-name:bp-plan-flow-b;animation-duration:3.1s;animation-delay:-1.2s}
-        .sbre-blueprint-side .bp-plan-fragments path:nth-child(3n){animation-duration:2.8s;animation-delay:-.7s}
-        .sbre-blueprint-side .bp-detail path{stroke-width:.74;opacity:.22;stroke-dasharray:2 6;animation:bp-detail-flow-a 3.2s linear infinite}
-        .sbre-blueprint-side .bp-detail path:nth-child(even){animation-name:bp-detail-flow-b;animation-duration:3.8s;animation-delay:-1.6s}
-        .sbre-blueprint-side .bp-dimensions path{stroke-width:.70;opacity:.24;stroke-dasharray:3 5;animation:bp-dim-flow-a 4s linear infinite}
-        .sbre-blueprint-side .bp-dimensions path:nth-child(even){animation-name:bp-dim-flow-b;animation-duration:4.6s;animation-delay:-2.1s}
-        .sbre-blueprint-side.right .bp-plan-fragments path{animation-delay:-.9s}
-        .sbre-blueprint-side.right .bp-detail path{animation-delay:-1.3s}
-        .sbre-blueprint-side.right .bp-dimensions path{animation-delay:-1.8s}
-        .sbre-blueprint-side text{fill:#0a5c3d;font:500 7.5px/1 Inter,Arial,sans-serif;letter-spacing:.05em;opacity:.26;transition:fill .25s ease,opacity .25s ease}
-
-        .sbre-architectural-margins.is-dark .sbre-blueprint-side{opacity:.86}
-        .sbre-architectural-margins.is-dark .sbre-blueprint-side path{stroke:#fff!important}
-        .sbre-architectural-margins.is-dark .sbre-blueprint-side .bp-plan-fragments path{opacity:.56}
-        .sbre-architectural-margins.is-dark .sbre-blueprint-side .bp-detail path{opacity:.42}
-        .sbre-architectural-margins.is-dark .sbre-blueprint-side .bp-dimensions path{opacity:.48}
-        .sbre-architectural-margins.is-dark .sbre-blueprint-side text{fill:#fff!important;opacity:.50}
-
-        @keyframes bp-plan-flow-a{from{stroke-dashoffset:0}to{stroke-dashoffset:-24}}
-        @keyframes bp-plan-flow-b{from{stroke-dashoffset:-24}to{stroke-dashoffset:0}}
-        @keyframes bp-detail-flow-a{from{stroke-dashoffset:0}to{stroke-dashoffset:16}}
-        @keyframes bp-detail-flow-b{from{stroke-dashoffset:16}to{stroke-dashoffset:0}}
-        @keyframes bp-dim-flow-a{from{stroke-dashoffset:0}to{stroke-dashoffset:-16}}
-        @keyframes bp-dim-flow-b{from{stroke-dashoffset:-16}to{stroke-dashoffset:0}}
-
-        @media(max-width:767px){.sbre-architectural-margins{display:none!important}}
-        @media(prefers-reduced-motion:reduce){.sbre-blueprint-side path{animation-duration:8s!important}}
+        .sbre-hex-margins{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
+        .sbre-hex-side{position:absolute;top:0;height:100vh;overflow:hidden;perspective:900px;transition:width .25s ease,opacity .25s ease}
+        .sbre-hex-side.left{left:0}
+        .sbre-hex-side.right{right:0}
+        .sbre-hex-grid{position:absolute;inset:-5vh -10px;transform-style:preserve-3d}
+        .sbre-hex-cell{position:absolute;width:var(--hex-size);height:calc(var(--hex-size) * .866);transform-style:preserve-3d;will-change:transform,filter,opacity}
+        .sbre-hex-face{position:absolute;inset:0;clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%);background:linear-gradient(145deg,rgba(6,93,61,.035),rgba(6,93,61,.01));border:1px solid rgba(6,93,61,.22);box-shadow:inset 0 0 18px rgba(6,93,61,.025);transform:translateZ(var(--lift,0px)) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));opacity:var(--alpha,.42);filter:drop-shadow(0 0 calc(var(--glow,0) * 14px) rgba(0,151,96,calc(var(--glow,0) * .45)));transition:transform .18s ease-out,opacity .18s ease-out,border-color .18s ease-out,background .25s ease}
+        .sbre-hex-face::after{content:"";position:absolute;inset:2px;clip-path:inherit;border:1px solid rgba(69,214,151,.07);background:radial-gradient(circle at 50% 46%,rgba(49,199,132,calc(var(--glow,0) * .13)),transparent 68%)}
+        .sbre-hex-margins.is-dark .sbre-hex-face{background:linear-gradient(145deg,rgba(255,255,255,.018),rgba(11,44,33,.02));border-color:rgba(103,255,185,.20);box-shadow:inset 0 0 18px rgba(38,255,166,.025)}
+        .sbre-hex-margins.is-dark .sbre-hex-face::after{border-color:rgba(122,255,196,.10)}
+        @media(max-width:900px){.sbre-hex-margins{display:none!important}}
+        @media(prefers-reduced-motion:reduce){.sbre-hex-face{transition:none!important}}
       </style>
-      <div class="sbre-blueprint-side left">${LEFT_SVG}</div>
-      <div class="sbre-blueprint-side right">${RIGHT_SVG}</div>
+      <div class="sbre-hex-side left"><div class="sbre-hex-grid"></div></div>
+      <div class="sbre-hex-side right"><div class="sbre-hex-grid"></div></div>
     `;
 
     document.body.appendChild(root);
 
-    let themeObserver: MutationObserver | null = null;
+    const leftSide = root.querySelector<HTMLElement>(".sbre-hex-side.left");
+    const rightSide = root.querySelector<HTMLElement>(".sbre-hex-side.right");
+    const leftGrid = leftSide?.querySelector<HTMLElement>(".sbre-hex-grid") ?? null;
+    const rightGrid = rightSide?.querySelector<HTMLElement>(".sbre-hex-grid") ?? null;
     const themeHost = document.querySelector<HTMLElement>(".sbre-theme");
+    let themeObserver: MutationObserver | null = null;
+    let cells: HTMLElement[] = [];
+    let raf = 0;
+    let pointerX = -9999;
+    let pointerY = -9999;
+
     const syncTheme = () => {
       const dark = themeHost?.classList.contains("theme-dark") ?? false;
       root.classList.toggle("is-dark", dark);
     };
 
-    syncTheme();
-    if (themeHost) {
-      themeObserver = new MutationObserver(syncTheme);
-      themeObserver.observe(themeHost, { attributes: true, attributeFilter: ["class"] });
-    }
+    const buildGrid = (grid: HTMLElement, sideWidth: number, isRight: boolean) => {
+      grid.innerHTML = "";
+      const size = Math.max(48, Math.min(78, sideWidth * .34));
+      const cellH = size * .866;
+      const xStep = size * .76;
+      const yStep = cellH * .86;
+      const cols = Math.max(2, Math.ceil(sideWidth / xStep) + 1);
+      const rows = Math.ceil(window.innerHeight / yStep) + 3;
 
-    const leftSide = root.querySelector<HTMLElement>(".sbre-blueprint-side.left");
-    const rightSide = root.querySelector<HTMLElement>(".sbre-blueprint-side.right");
+      grid.style.setProperty("--hex-size", `${size}px`);
+
+      for (let row = -1; row < rows; row += 1) {
+        for (let col = -1; col < cols; col += 1) {
+          const cell = document.createElement("div");
+          cell.className = "sbre-hex-cell";
+          const stagger = row % 2 === 0 ? 0 : xStep / 2;
+          const x = col * xStep + stagger - (isRight ? xStep * .18 : xStep * .08);
+          const y = row * yStep;
+          cell.style.left = `${x}px`;
+          cell.style.top = `${y}px`;
+          cell.innerHTML = `<div class="sbre-hex-face"></div>`;
+          grid.appendChild(cell);
+        }
+      }
+    };
 
     const sizeSides = () => {
       const hero = document.querySelector<HTMLElement>(".premium-site .hero");
@@ -152,22 +80,74 @@ export default function LeftBlueprintScroll() {
       const leftGap = rect ? Math.max(0, rect.left) : Math.max(0, (vw - 1180) / 2);
       const rightGap = rect ? Math.max(0, vw - rect.right) : leftGap;
 
-      if (leftSide) {
+      if (leftSide && leftGrid) {
         leftSide.style.width = `${leftGap}px`;
-        leftSide.style.display = leftGap >= 90 ? "block" : "none";
+        leftSide.style.display = leftGap >= 72 ? "block" : "none";
+        if (leftGap >= 72) buildGrid(leftGrid, leftGap, false);
       }
-      if (rightSide) {
+      if (rightSide && rightGrid) {
         rightSide.style.width = `${rightGap}px`;
-        rightSide.style.display = rightGap >= 90 ? "block" : "none";
+        rightSide.style.display = rightGap >= 72 ? "block" : "none";
+        if (rightGap >= 72) buildGrid(rightGrid, rightGap, true);
       }
+      cells = Array.from(root.querySelectorAll<HTMLElement>(".sbre-hex-cell"));
     };
+
+    const renderInteraction = () => {
+      raf = 0;
+      const radius = 190;
+
+      cells.forEach((cell) => {
+        const face = cell.firstElementChild as HTMLElement | null;
+        if (!face) return;
+        const rect = cell.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = pointerX - cx;
+        const dy = pointerY - cy;
+        const dist = Math.hypot(dx, dy);
+        const influence = Math.max(0, 1 - dist / radius);
+        const eased = influence * influence * (3 - 2 * influence);
+
+        face.style.setProperty("--lift", `${eased * 30}px`);
+        face.style.setProperty("--rx", `${(-dy / radius) * eased * 11}deg`);
+        face.style.setProperty("--ry", `${(dx / radius) * eased * 11}deg`);
+        face.style.setProperty("--glow", `${eased}`);
+        face.style.setProperty("--alpha", `${0.28 + eased * 0.58}`);
+      });
+    };
+
+    const onPointerMove = (event: PointerEvent) => {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+      if (!raf) raf = requestAnimationFrame(renderInteraction);
+    };
+
+    const resetInteraction = () => {
+      pointerX = -9999;
+      pointerY = -9999;
+      if (!raf) raf = requestAnimationFrame(renderInteraction);
+    };
+
+    syncTheme();
+    if (themeHost) {
+      themeObserver = new MutationObserver(syncTheme);
+      themeObserver.observe(themeHost, { attributes: true, attributeFilter: ["class"] });
+    }
 
     sizeSides();
     window.addEventListener("resize", sizeSides, { passive: true });
+    window.addEventListener("pointermove", onPointerMove, { passive: true });
+    window.addEventListener("blur", resetInteraction);
+    document.addEventListener("mouseleave", resetInteraction);
 
     return () => {
       themeObserver?.disconnect();
+      if (raf) cancelAnimationFrame(raf);
       window.removeEventListener("resize", sizeSides);
+      window.removeEventListener("pointermove", onPointerMove);
+      window.removeEventListener("blur", resetInteraction);
+      document.removeEventListener("mouseleave", resetInteraction);
       root.remove();
     };
   }, [pathname]);
