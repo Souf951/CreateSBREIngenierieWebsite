@@ -56,6 +56,16 @@ export default function HomeCopyGuard() {
         home.querySelector<HTMLElement>("#expertises .section-heading > p:last-child"),
         "Nous épaulons maîtres d’ouvrage et architectes sur le terrain. De l’appel d’offres à la levée des réserves, nous sécurisons les coûts, les délais et la qualité d’exécution.",
       );
+
+      setTextIfChanged(
+        home.querySelector<HTMLElement>("#réalisations .section-heading .eyebrow"),
+        "04 / SÉLECTION DE RÉFÉRENCES",
+      );
+
+      setTextIfChanged(
+        home.querySelector<HTMLElement>("#réalisations .section-heading > p:last-child"),
+        "Trois opérations représentatives, sélectionnées parmi plusieurs expériences de direction et de suivi de travaux. Elles illustrent des typologies et des enjeux différents ; le détail des missions et collaborations figure dans chaque fiche projet.",
+      );
     };
 
     apply();
