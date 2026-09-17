@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const LEFT_SVG = `
-<svg viewBox="0 0 140 1000" preserveAspectRatio="none" aria-hidden="true">
+<svg viewBox="0 0 140 1000" preserveAspectRatio="xMinYMid meet" aria-hidden="true">
   <g class="bp-plan-fragments">
     <path d="M18 42 H82 V98" />
     <path d="M112 92 V168 H54" />
@@ -40,7 +40,7 @@ const LEFT_SVG = `
 </svg>`;
 
 const RIGHT_SVG = `
-<svg viewBox="0 0 140 1000" preserveAspectRatio="none" aria-hidden="true">
+<svg viewBox="0 0 140 1000" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
   <g class="bp-plan-fragments">
     <path d="M120 36 H62 V86" />
     <path d="M28 118 V188 H92" />
