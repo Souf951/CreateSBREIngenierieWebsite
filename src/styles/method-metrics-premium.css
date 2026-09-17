@@ -2,12 +2,21 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   grid-template-areas:
+    "eyebrow eyebrow"
     "metrics metrics"
     "intro list";
-  gap: 34px clamp(34px, 5vw, 72px);
+  gap: 20px clamp(34px, 5vw, 72px);
   align-items: start;
   padding-top: clamp(62px, 6vw, 86px);
   padding-bottom: clamp(64px, 6vw, 92px);
+}
+
+.premium-site .method-section.method-metrics-ready > .method-eyebrow-promoted {
+  grid-area: eyebrow;
+  position: relative;
+  z-index: 6;
+  justify-self: start;
+  margin: 0 0 2px 0 !important;
 }
 
 .premium-site .method-section.method-metrics-ready .method-metrics {
@@ -213,6 +222,7 @@
   .premium-site .method-section.method-metrics-ready {
     grid-template-columns: 1fr;
     grid-template-areas:
+      "eyebrow"
       "metrics"
       "intro"
       "list";
@@ -231,6 +241,7 @@
   .premium-site .method-section.method-metrics-ready {
     padding-top: 48px;
     padding-bottom: 56px;
+    gap: 16px;
   }
 
   .premium-site .method-section.method-metrics-ready .method-metrics {
