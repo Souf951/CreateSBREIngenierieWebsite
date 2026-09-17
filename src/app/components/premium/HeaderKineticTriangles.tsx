@@ -69,6 +69,7 @@ export default function HeaderKineticTriangles() {
         if (cancelled || !layer.isConnected) return;
         cycle += 1;
 
+        layer.classList.remove("is-full-green");
         triangles.forEach((triangle) => triangle.classList.remove("is-green"));
 
         const onOrder = seededShuffle(total, 1709 + cycle * 97);
@@ -87,6 +88,18 @@ export default function HeaderKineticTriangles() {
 
         const allGreenAt = startDelay + total * onStep;
         const holdGreen = 1050;
+
+        timers.push(
+          window.setTimeout(() => {
+            layer.classList.add("is-full-green");
+          }, allGreenAt - 120),
+        );
+
+        timers.push(
+          window.setTimeout(() => {
+            layer.classList.remove("is-full-green");
+          }, allGreenAt + holdGreen - 80),
+        );
 
         offOrder.forEach((triangleIndex, orderIndex) => {
           timers.push(
