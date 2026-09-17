@@ -33,10 +33,8 @@ export default function HomeCopyGuard() {
       setHtmlIfChanged(heroActions[0] ?? null, 'Discuter de votre projet <span>↗</span>');
       setHtmlIfChanged(heroActions[1] ?? null, 'Nos références <span>↗</span>');
 
-      // Remove the old technical strip above the interactive building.
       home.querySelector<HTMLElement>(".visual-heading")?.remove();
 
-      // Present the 3D model facing the SBRE sign on first arrival.
       const building = home.querySelector<HTMLElement>(".building-canvas");
       if (building && building.dataset.frontAligned !== "true") {
         building.dataset.frontAligned = "true";
@@ -66,6 +64,34 @@ export default function HomeCopyGuard() {
         home.querySelector<HTMLElement>("#réalisations .section-heading > p:last-child"),
         "Trois opérations représentatives, sélectionnées parmi plusieurs expériences de direction et de suivi de travaux. Elles illustrent des typologies et des enjeux différents ; le détail des missions et collaborations figure dans chaque fiche projet.",
       );
+
+      setTextIfChanged(
+        home.querySelector<HTMLElement>("#equipe .section-heading h2"),
+        "Une direction impliquée sur chaque chantier.",
+      );
+
+      setTextIfChanged(
+        home.querySelector<HTMLElement>("#equipe .section-heading > p:last-child"),
+        "Soufiane SBRE, Yannick Müller et Zayd Haidar assurent le cadrage, la coordination et le suivi terrain de vos opérations.",
+      );
+
+      const teamRoles = home.querySelectorAll<HTMLElement>("#equipe .team-card .team-role");
+      const roles = [
+        ["MANAGING DIRECTOR & HEAD OF OPERATIONS", "Directeur"],
+        ["HEAD OF PROJECT MANAGEMENT", "Chef de projet"],
+        ["HEAD OF CONSTRUCTION MANAGEMENT", "Directeur de travaux"],
+      ];
+
+      teamRoles.forEach((role, index) => {
+        const item = roles[index];
+        if (!item) return;
+        const [roleEn, roleFr] = item;
+        setHtmlIfChanged(
+          role,
+          `<span class="team-role-en">${roleEn}</span><span class="team-role-fr">${roleFr}</span>`,
+        );
+        role.setAttribute("aria-label", `${roleEn} — ${roleFr}`);
+      });
     };
 
     apply();
