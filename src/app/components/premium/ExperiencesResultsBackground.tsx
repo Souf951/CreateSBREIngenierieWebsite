@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 // Real delivered-project photos already used by the three project pages.
 // Tertiaire — Genève
@@ -38,6 +39,8 @@ const HOLD_MS = 3800;
 const FADE_MS = 1250;
 
 export default function ExperiencesResultsBackground() {
+  const { pathname } = useLocation();
+
   useEffect(() => {
     let cleanupSection: (() => void) | null = null;
 
@@ -231,7 +234,7 @@ export default function ExperiencesResultsBackground() {
       observer.disconnect();
       cleanupSection?.();
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
