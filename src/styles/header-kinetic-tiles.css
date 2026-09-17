@@ -35,13 +35,24 @@
   overflow: hidden;
 }
 
-.premium-site .site-header .sbre-point {
+.premium-site .site-header .sbre-point,
+.premium-site .site-header .sbre-moving-point {
   position: absolute;
   border-radius: 999px;
   background: #155e49;
   transform: translate3d(0,0,0) scale(1);
   transform-origin: 50% 50%;
-  will-change: transform, opacity, filter, box-shadow;
+  will-change: transform, opacity, filter, box-shadow, left;
+}
+
+/* Slow guided particles: more visible than the static cloud, but never fast. */
+.premium-site .site-header .sbre-moving-point {
+  z-index: 2;
+  background: radial-gradient(circle, rgba(246,255,251,.98) 0 18%, rgba(48,127,96,.94) 40%, rgba(19,93,69,.82) 72%, rgba(19,93,69,.16) 100%);
+  box-shadow:
+    0 0 8px rgba(30,112,84,.30),
+    0 0 3px rgba(255,255,255,.48);
+  filter: brightness(1.05);
 }
 
 /* Rare, very fine shooting stars. They live inside the cloud layer so they
@@ -226,6 +237,10 @@
 
 .theme-dark .premium-site .site-header .sbre-point {
   background: #7fb7a3;
+}
+
+.theme-dark .premium-site .site-header .sbre-moving-point {
+  background: radial-gradient(circle, rgba(244,255,251,.98) 0 18%, rgba(121,188,163,.92) 40%, rgba(58,139,109,.78) 72%, rgba(58,139,109,.14) 100%);
 }
 
 .theme-dark .premium-site .site-header .sbre-shooting-star {
