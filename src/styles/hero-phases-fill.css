@@ -125,3 +125,60 @@
     font-size: clamp(11px, 1.45vw, 13px) !important;
   }
 }
+
+/* Project type selector: always contained inside the 3D hero on tablet/desktop. */
+@media (min-width: 621px) {
+  .architecture-kind-switch {
+    top: -10px !important;
+    left: 18px !important;
+    right: 18px !important;
+    width: auto !important;
+    max-width: none !important;
+    transform: none !important;
+    display: grid !important;
+    grid-template-columns: 1fr .72fr 1.72fr !important;
+    gap: 3px !important;
+    padding: 4px !important;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .architecture-kind-switch button {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 7px 8px !important;
+    font-size: clamp(7px, .72vw, 9px) !important;
+    letter-spacing: .055em !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    overflow: hidden;
+    text-overflow: clip;
+  }
+
+  .architecture-kind-switch button span {
+    margin-right: 5px !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .architecture-kind-switch {
+    top: 6px !important;
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    transform: none !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 4px !important;
+  }
+
+  .architecture-kind-switch button {
+    width: 100% !important;
+    min-width: 0 !important;
+    white-space: normal !important;
+  }
+
+  .architecture-kind-switch button:last-child {
+    grid-column: 1 / -1 !important;
+  }
+}
