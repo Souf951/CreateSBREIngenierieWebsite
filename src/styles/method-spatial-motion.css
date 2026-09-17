@@ -108,7 +108,8 @@
   z-index: 2;
 }
 
-.method-section.method-spatial-ready .method-list summary > span {
+/* Number badge only — do not style the word wrapper as a circle. */
+.method-section.method-spatial-ready .method-list summary > span:first-child {
   display: inline-grid;
   place-items: center;
   width: 28px;
@@ -118,11 +119,20 @@
   border: 1px solid rgba(255,255,255,.16);
 }
 
-.method-section.method-spatial-ready .method-list details.method-card-active summary > span {
+.method-section.method-spatial-ready .method-list details.method-card-active summary > span:first-child {
   background: rgba(255,255,255,.92);
   color: #173d31;
   border-color: rgba(255,255,255,.92);
   box-shadow: 0 0 0 5px rgba(255,255,255,.06);
+}
+
+.method-section.method-spatial-ready .method-list .method-step-word {
+  background: transparent !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  box-shadow: none !important;
 }
 
 .method-section.method-spatial-ready .method-intro .button {
