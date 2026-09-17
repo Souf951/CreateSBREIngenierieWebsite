@@ -1,0 +1,11 @@
+name = "sbre-contact"
+main = "contact-worker.js"
+compatibility_date = "2026-09-17"
+
+[vars]
+ALLOWED_ORIGIN = "https://sbre-ingenierie.ch"
+CONTACT_TO_EMAIL = "info@sbre-ingenierie.ch"
+CONTACT_FROM_EMAIL = "SBRE Ingénierie <contact@sbre-ingenierie.ch>"
+
+# Ne jamais mettre RESEND_API_KEY dans ce fichier.
+# Ajoutez-la comme Secret dans Cloudflare Workers.
