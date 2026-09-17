@@ -4,6 +4,7 @@ import { ArrowDown, ArrowUpRight, ArrowRight } from "lucide-react";
 import SEOHead from "./SEOHead";
 import PartnerArchitecture from "./premium/PartnerArchitecture";
 import PartnerScrollStory from "./premium/PartnerScrollStory";
+import PartnerProfileCards from "./premium/PartnerProfileCards";
 import logo from "../../media/Pr_sentation1_page-0001.webp";
 import "../../styles/partners-page.css";
 import "../../styles/partners-page-polish.css";
@@ -201,37 +202,19 @@ export default function PartnersPage() {
               <em>Notre point de rencontre.</em>
             </h2>
             <p>
-              Comment nous collaborons : un rôle précis pour chacun, une
-              exigence commune pour le projet.
+              Comment nous collaborons : choisissez un profil, puis cliquez sur
+              la carte pour découvrir notre manière de travailler ensemble.
             </p>
           </div>
 
-          <div className="pr-profile-list">
-            {profiles.map((profile, i) => (
-              <article className="pr-profile" key={profile.title}>
-                <span className="pr-profile-index">0{i + 1}</span>
-                <div className="pr-profile-title">
-                  <h3>{profile.title}</h3>
-                  <p>{profile.subtitle}</p>
-                </div>
-                <div className="pr-profile-copy">
-                  <p>{profile.text}</p>
-                  <span>{profile.services}</span>
-                  <a
-                    href="#partner-form"
-                    className="pr-link"
-                    onClick={(event) => {
-                      setSelected(profile.title);
-                      setDraftHref(null);
-                      jump(event, "partner-form");
-                    }}
-                  >
-                    Échanger sur une collaboration <ArrowUpRight size={16} />
-                  </a>
-                </div>
-              </article>
-            ))}
-          </div>
+          <PartnerProfileCards
+            profiles={profiles}
+            onSelect={(profile, event) => {
+              setSelected(profile.title);
+              setDraftHref(null);
+              jump(event, "partner-form");
+            }}
+          />
         </section>
 
         <section
