@@ -1,154 +1,141 @@
-/* Homepage header — kinetic architectural triangular skin */
+/* Homepage header — JS-driven kinetic triangular skin */
 .premium-site .site-header {
   isolation: isolate;
   overflow: hidden;
-  position: relative;
+  position: relative !important;
+  top: auto !important;
 }
 
-/* Static equilateral-triangle mesh, almost invisible at rest. */
+/* Remove the old CSS-only wave completely. */
+.premium-site .site-header::after {
+  display: none !important;
+  content: none !important;
+  animation: none !important;
+}
+
+/* Fine architectural guide mesh visible at rest. */
 .premium-site .site-header::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: .30;
+  opacity: .22;
   background-image:
     linear-gradient(30deg, transparent 24%, rgba(10,92,61,.08) 25%, rgba(10,92,61,.08) 26%, transparent 27%, transparent 74%, rgba(10,92,61,.08) 75%, rgba(10,92,61,.08) 76%, transparent 77%),
-    linear-gradient(-30deg, transparent 24%, rgba(10,92,61,.065) 25%, rgba(10,92,61,.065) 26%, transparent 27%, transparent 74%, rgba(10,92,61,.065) 75%, rgba(10,92,61,.065) 76%, transparent 77%);
+    linear-gradient(-30deg, transparent 24%, rgba(10,92,61,.06) 25%, rgba(10,92,61,.06) 26%, transparent 27%, transparent 74%, rgba(10,92,61,.06) 75%, rgba(10,92,61,.06) 76%, transparent 77%);
   background-size: 38px 66px;
   background-position: 0 0, 19px 33px;
 }
 
-/* Green triangular skin. It is revealed through several independent "activation islands". */
-.premium-site .site-header::after {
-  content: "";
+/* JavaScript inserts this layer directly into the homepage header. */
+.premium-site .site-header .sbre-kinetic-triangles {
   position: absolute;
-  inset: -1px;
-  z-index: 0;
+  inset: -8px -12px;
+  z-index: 1;
   pointer-events: none;
-  opacity: 1;
-
-  background-image:
-    linear-gradient(30deg, transparent 23%, rgba(9,96,66,.92) 24%, rgba(9,96,66,.92) 48%, transparent 49%, transparent 73%, rgba(15,119,81,.78) 74%, rgba(15,119,81,.78) 98%, transparent 99%),
-    linear-gradient(-30deg, transparent 23%, rgba(13,108,74,.72) 24%, rgba(13,108,74,.72) 48%, transparent 49%, transparent 73%, rgba(6,82,58,.90) 74%, rgba(6,82,58,.90) 98%, transparent 99%);
-  background-size: 38px 66px;
-  background-position: 0 0, 19px 33px;
-
-  -webkit-mask-image:
-    radial-gradient(circle at 8% 28%, #000 0 0, transparent 0),
-    radial-gradient(circle at 23% 74%, #000 0 0, transparent 0),
-    radial-gradient(circle at 38% 18%, #000 0 0, transparent 0),
-    radial-gradient(circle at 52% 68%, #000 0 0, transparent 0),
-    radial-gradient(circle at 67% 32%, #000 0 0, transparent 0),
-    radial-gradient(circle at 81% 76%, #000 0 0, transparent 0),
-    radial-gradient(circle at 94% 22%, #000 0 0, transparent 0);
-  mask-image:
-    radial-gradient(circle at 8% 28%, #000 0 0, transparent 0),
-    radial-gradient(circle at 23% 74%, #000 0 0, transparent 0),
-    radial-gradient(circle at 38% 18%, #000 0 0, transparent 0),
-    radial-gradient(circle at 52% 68%, #000 0 0, transparent 0),
-    radial-gradient(circle at 67% 32%, #000 0 0, transparent 0),
-    radial-gradient(circle at 81% 76%, #000 0 0, transparent 0),
-    radial-gradient(circle at 94% 22%, #000 0 0, transparent 0);
-
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-composite: source-over;
-  mask-composite: add;
-
-  filter: drop-shadow(0 7px 12px rgba(8,72,52,.05));
-  animation: sbreHeaderScatteredTiles 12.8s cubic-bezier(.42,0,.2,1) infinite;
+  overflow: hidden;
+  perspective: 760px;
 }
 
-/* Keep actual navigation above the animated architectural skin. */
-.premium-site .site-header > * {
+.premium-site .site-header .sbre-kinetic-triangle {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: clamp(42px, 4vw, 62px);
+  aspect-ratio: 1 / .866;
+  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+  background: rgba(247,247,240,.66);
+  opacity: .48;
+  transform-origin: 50% 55%;
+  transform:
+    translate(-18%, -16%)
+    rotate(calc(var(--flip) * 180deg))
+    rotateY(0deg)
+    scale(.985);
+  transition:
+    transform 520ms cubic-bezier(.22,.75,.2,1),
+    background-color 360ms ease,
+    opacity 360ms ease,
+    filter 520ms ease;
+  filter: drop-shadow(0 0 0 rgba(8,78,55,0));
+  will-change: transform, background-color, opacity;
+}
+
+/* Slightly stagger alternate rows so the triangles interlock like a façade. */
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 27),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 28),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 29),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 30),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 31),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 32),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 33),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 34),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 35),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 36),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 37),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 38),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 39),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 40),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 41),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 42),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 43),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 44),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 45),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 46),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 47),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 48),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 49),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 50),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 51),
+.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 52) {
+  margin-left: 1.9vw;
+}
+
+.premium-site .site-header .sbre-kinetic-triangle.is-green {
+  background: #0a694c;
+  opacity: .92;
+  transform:
+    translate(-18%, -16%)
+    rotate(calc(var(--flip) * 180deg))
+    rotateY(178deg)
+    scale(1.025);
+  filter: drop-shadow(0 5px 9px rgba(8,78,55,.12));
+}
+
+/* Four close SBRE tones prevent the full-green state from looking flat. */
+.premium-site .site-header .sbre-kinetic-triangle.is-green[style*="--tone: 1"] { background: #0d7554; }
+.premium-site .site-header .sbre-kinetic-triangle.is-green[style*="--tone: 2"] { background: #085c43; }
+.premium-site .site-header .sbre-kinetic-triangle.is-green[style*="--tone: 3"] { background: #12805b; }
+
+/* Navigation always remains above the kinetic façade. */
+.premium-site .site-header > *:not(.sbre-kinetic-triangles) {
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
-/*
-  Several centres bloom at different rates. The effect is deliberately non-linear:
-  upper-left / lower-right / centre / lower-left / upper-right, then total fill.
-  At the end the same islands contract at different speeds back to white.
-*/
-@keyframes sbreHeaderScatteredTiles {
-  0%, 7% {
-    -webkit-mask-size: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
-    mask-size: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
-    opacity: .98;
-    transform: perspective(500px) rotateX(0deg);
-  }
-
-  14% {
-    -webkit-mask-size: 27% 110%, 0 0, 0 0, 0 0, 18% 72%, 0 0, 0 0;
-    mask-size: 27% 110%, 0 0, 0 0, 0 0, 18% 72%, 0 0, 0 0;
-    transform: perspective(500px) rotateX(.8deg);
-  }
-
-  22% {
-    -webkit-mask-size: 38% 150%, 24% 98%, 0 0, 22% 86%, 29% 118%, 0 0, 0 0;
-    mask-size: 38% 150%, 24% 98%, 0 0, 22% 86%, 29% 118%, 0 0, 0 0;
-    transform: perspective(500px) rotateX(0deg);
-  }
-
-  31% {
-    -webkit-mask-size: 54% 190%, 38% 145%, 30% 118%, 37% 140%, 44% 160%, 25% 100%, 18% 74%;
-    mask-size: 54% 190%, 38% 145%, 30% 118%, 37% 140%, 44% 160%, 25% 100%, 18% 74%;
-  }
-
-  42% {
-    -webkit-mask-size: 74% 240%, 56% 205%, 49% 180%, 59% 210%, 63% 220%, 49% 182%, 42% 160%;
-    mask-size: 74% 240%, 56% 205%, 49% 180%, 59% 210%, 63% 220%, 49% 182%, 42% 160%;
-  }
-
-  51%, 61% {
-    -webkit-mask-size: 165% 480%, 165% 480%, 165% 480%, 165% 480%, 165% 480%, 165% 480%, 165% 480%;
-    mask-size: 165% 480%, 165% 480%, 165% 480%, 165% 480%, 165% 480%, 165% 480%, 165% 480%;
-    opacity: 1;
-    transform: perspective(500px) rotateX(0deg);
-  }
-
-  70% {
-    -webkit-mask-size: 130% 390%, 150% 450%, 124% 370%, 148% 440%, 118% 360%, 142% 420%, 126% 380%;
-    mask-size: 130% 390%, 150% 450%, 124% 370%, 148% 440%, 118% 360%, 142% 420%, 126% 380%;
-  }
-
-  79% {
-    -webkit-mask-size: 82% 270%, 101% 320%, 70% 240%, 96% 310%, 62% 220%, 90% 300%, 74% 250%;
-    mask-size: 82% 270%, 101% 320%, 70% 240%, 96% 310%, 62% 220%, 90% 300%, 74% 250%;
-  }
-
-  88% {
-    -webkit-mask-size: 34% 135%, 48% 170%, 25% 100%, 42% 158%, 18% 82%, 35% 142%, 28% 112%;
-    mask-size: 34% 135%, 48% 170%, 25% 100%, 42% 158%, 18% 82%, 35% 142%, 28% 112%;
-    opacity: .94;
-  }
-
-  96%, 100% {
-    -webkit-mask-size: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
-    mask-size: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
-    opacity: 0;
-  }
-}
-
-/* Dark mode: same architecture, slightly softer so the menu stays dominant. */
 .theme-dark .premium-site .site-header::before {
-  opacity: .16;
-  filter: brightness(1.35);
+  opacity: .12;
+  filter: brightness(1.25);
 }
 
-.theme-dark .premium-site .site-header::after {
-  filter: brightness(1.12) saturate(.88);
+.theme-dark .premium-site .site-header .sbre-kinetic-triangle {
+  background: rgba(18,34,28,.66);
+  opacity: .44;
+}
+
+.theme-dark .premium-site .site-header .sbre-kinetic-triangle.is-green {
+  background: #16845f;
+  opacity: .82;
 }
 
 @media (max-width: 900px), (prefers-reduced-motion: reduce) {
-  .premium-site .site-header::after {
+  .premium-site .site-header .sbre-kinetic-triangles {
     display: none;
   }
 
   .premium-site .site-header::before {
-    opacity: .14;
+    opacity: .12;
     background-size: 50px 86px;
     background-position: 0 0, 25px 43px;
   }
