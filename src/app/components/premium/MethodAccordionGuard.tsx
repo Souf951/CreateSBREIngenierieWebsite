@@ -65,8 +65,16 @@ export default function MethodAccordionGuard() {
             }
           });
 
+          summary.querySelector(".method-step-word")?.remove();
           summary.querySelector(".method-step-initial")?.remove();
           summary.querySelector(".method-step-rest")?.remove();
+
+          const word = document.createElement("span");
+          word.className = "method-step-word";
+          word.style.display = "inline-flex";
+          word.style.alignItems = "baseline";
+          word.style.gap = "2px";
+          word.style.whiteSpace = "nowrap";
 
           const initial = document.createElement("strong");
           initial.className = "method-step-initial";
@@ -77,13 +85,16 @@ export default function MethodAccordionGuard() {
           initial.style.lineHeight = "1";
           initial.style.textShadow = "0 0 16px rgba(57,185,128,.18)";
 
-          const rest = document.createTextNode(step.title.slice(1));
+          const rest = document.createElement("span");
+          rest.className = "method-step-rest";
+          rest.textContent = step.title.slice(1);
+
+          word.append(initial, rest);
 
           if (plus) {
-            summary.insertBefore(initial, plus);
-            summary.insertBefore(rest, plus);
+            summary.insertBefore(word, plus);
           } else {
-            summary.append(initial, rest);
+            summary.append(word);
           }
         }
         if (number) number.textContent = `0${index + 1}`;
