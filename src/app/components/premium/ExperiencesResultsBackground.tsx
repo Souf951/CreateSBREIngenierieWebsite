@@ -28,36 +28,34 @@ export default function ExperiencesResultsBackground() {
     const veil = document.createElement("div");
     veil.className = "projects-dynamic-veil";
     backdrop.appendChild(veil);
-
     section.prepend(backdrop);
 
     const cards = Array.from(section.querySelectorAll<HTMLElement>(".project-card"));
+    const handlers: Array<{ node: HTMLElement; type: string; fn: EventListener }> = [];
+
     const activate = (index: number) => {
       layers.forEach((layer, i) => layer.classList.toggle("is-active", i === index));
-      section.style.setProperty("--project-bg-index", String(index));
     };
 
     cards.forEach((card, index) => {
-      const enter = () => activate(index);
-      card.addEventListener("mouseenter", enter);
-      card.addEventListener("focusin", enter);
-      card.addEventListener("pointerdown", enter);
       card.dataset.sbreProjectIndex = String(index);
+      ["mouseenter", "focusin", "pointerdown"].forEach((type) => {
+        const fn: EventListener = () => activate(index);
+        card.addEventListener(type, fn);
+        handlers.push({ node: card, type, fn });
+      });
     });
 
-    const leave = () => activate(0);
+    const leave: EventListener = () => activate(0);
     section.addEventListener("mouseleave", leave);
 
     return () => {
-      cards.forEach((card) => {
-        const clone = card.cloneNode(true);
-        card.parentNode?.replaceChild(clone, card);
-      });
+      handlers.forEach(({ node, type, fn }) => node.removeEventListener(type, fn));
       section.removeEventListener("mouseleave", leave);
+      cards.forEach((card) => delete card.dataset.sbreProjectIndex);
       backdrop.remove();
       section.classList.remove("projects-bg-enhanced");
       delete section.dataset.sbreProjectBackgrounds;
-      section.style.removeProperty("--project-bg-index");
     };
   }, []);
 
