@@ -36,6 +36,7 @@ import PartnersNavLink from "./components/premium/PartnersNavLink";
 import PartnersSharedChrome from "./components/premium/PartnersSharedChrome";
 import FaqPunctuationGuard from "./components/premium/FaqPunctuationGuard";
 import FaqArchitecturalEnhancer from "./components/premium/FaqArchitecturalEnhancer";
+import HeaderKineticTriangles from "./components/premium/HeaderKineticTriangles";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
 import "../styles/dark-logo.css";
@@ -212,6 +213,7 @@ export default function App() {
         <Router>
           <RouteContact />
           <ScrollToTop />
+          <HeaderKineticTriangles />
           <HomeCopyGuard />
           <ExpertiseSpatialCards />
           <MethodAccordionGuard />
