@@ -53,14 +53,16 @@
 
 .architecture-kind-switch {
   position: absolute;
-  top: 14px;
-  left: 20px;
+  top: 2px;
+  left: 50%;
   z-index: 4;
   display: inline-flex;
-  flex-wrap: wrap;
-  max-width: calc(100% - 40px);
+  flex-wrap: nowrap;
+  width: max-content;
+  max-width: none;
   gap: 4px;
   padding: 4px;
+  transform: translateX(-50%);
   border: 1px solid rgba(23, 61, 49, 0.14);
   background: rgba(245, 245, 238, 0.86);
   backdrop-filter: blur(12px);
@@ -69,6 +71,7 @@
 }
 
 .architecture-kind-switch button {
+  flex: 0 0 auto;
   border: 0;
   background: transparent;
   color: #53645b;
@@ -202,9 +205,7 @@
 
 @media (max-width: 900px) {
   .architecture-kind-switch {
-    top: 8px;
-    left: 8px;
-    max-width: calc(100% - 16px);
+    top: -2px;
   }
 
   .architecture-kind-switch button {
@@ -232,6 +233,33 @@
   }
 }
 
+@media (max-width: 620px) {
+  .architecture-kind-switch {
+    top: 6px;
+    left: 10px;
+    right: 10px;
+    width: auto;
+    max-width: none;
+    transform: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    border-radius: 18px;
+  }
+
+  .architecture-kind-switch button {
+    width: 100%;
+    min-width: 0;
+    padding: 7px 8px;
+    white-space: normal;
+    text-align: left;
+  }
+
+  .architecture-kind-switch button:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-project-backgrounds img {
     transition: opacity 160ms linear;
@@ -239,7 +267,6 @@
   }
 }
 
-/* Rounded glassmorphism: softer, lighter, more architectural. */
 .hero {
   overflow: visible;
   padding-bottom: 16px;
