@@ -16,6 +16,7 @@ import {
 import { MotionConfig } from "motion/react";
 import { Moon, Sun } from "lucide-react";
 import HomePage from "./components/HomePage";
+import PartnersPage from "./components/PartnersPage";
 import IntroLoader from "./components/IntroLoader";
 import ControlBannerVideo from "./components/ControlBannerVideo";
 import FloatingContact from "./components/FloatingContact";
@@ -73,7 +74,6 @@ const ProjectMicroLogements = lazy(
 const ProjectVillaPrangins = lazy(
   () => import("./components/ProjectVillaPrangins"),
 );
-const PartnersPage = lazy(() => import("./components/PartnersPage"));
 
 function RouteContact() {
   const { pathname } = useLocation();
