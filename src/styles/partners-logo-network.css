@@ -15,20 +15,20 @@
 }
 
 .pr-logo-network-lines line {
-  stroke: color-mix(in srgb, var(--pr-accent) 42%, transparent);
-  stroke-width: 0.12;
+  stroke: color-mix(in srgb, var(--pr-accent) 58%, transparent);
+  stroke-width: 0.18;
   vector-effect: non-scaling-stroke;
-  stroke-dasharray: .045 .035;
+  stroke-dasharray: .032 .024;
   stroke-dashoffset: 0;
-  opacity: .5;
-  animation: pr-network-flow 7.5s linear infinite;
+  opacity: .68;
+  animation: pr-network-flow 4.8s linear infinite;
   animation-delay: var(--network-delay);
 }
 
 .pr-logo-network-node {
   position: absolute;
   transform: translate(-50%, -50%) scale(.96);
-  opacity: .72;
+  opacity: .78;
   filter: drop-shadow(0 8px 18px rgba(4, 32, 22, .14));
   animation: pr-logo-arrive 16s ease-in-out infinite;
   animation-delay: var(--logo-delay);
@@ -56,16 +56,16 @@
 }
 
 @keyframes pr-network-flow {
-  0% { stroke-dashoffset: 0; opacity: .34; }
-  50% { opacity: .68; }
-  100% { stroke-dashoffset: -1; opacity: .34; }
+  0% { stroke-dashoffset: 0; opacity: .58; }
+  50% { opacity: .82; }
+  100% { stroke-dashoffset: -1; opacity: .58; }
 }
 
 @keyframes pr-logo-arrive {
-  0%, 8% { opacity: .72; transform: translate(-50%, -50%) scale(.96); }
+  0%, 8% { opacity: .78; transform: translate(-50%, -50%) scale(.96); }
   18% { opacity: 1; transform: translate(-50%, -50%) scale(1.04); }
-  70% { opacity: .94; transform: translate(-50%, -50%) scale(1); }
-  100% { opacity: .72; transform: translate(-50%, -50%) scale(.98); }
+  70% { opacity: .96; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: .78; transform: translate(-50%, -50%) scale(.98); }
 }
 
 .pr-logo-network-node-featured {
@@ -78,8 +78,8 @@
 }
 
 .theme-dark .pr-logo-network-lines line {
-  stroke: color-mix(in srgb, var(--pr-accent) 64%, transparent);
-  opacity: .76;
+  stroke: color-mix(in srgb, var(--pr-accent) 76%, transparent);
+  opacity: .84;
 }
 
 .theme-dark .pr-logo-network-node,
@@ -105,14 +105,16 @@
   .pr-page .pr-hero-body {
     min-height: 0 !important;
     height: 100%;
+    align-items: center !important;
   }
 
+  /* Clear hierarchy: headline sits high, architectural model remains lower. */
   .pr-page .pr-hero-copy {
-    transform: translateY(-56px) !important;
+    transform: translateY(-128px) !important;
   }
 
   .pr-page .pr-hero-visual {
-    transform: none !important;
+    transform: translateY(44px) !important;
   }
 
   .pr-page .pr-hero-visual .pr-architecture {
@@ -121,10 +123,10 @@
 }
 
 @media (max-width: 1024px) {
-  .pr-logo-network-node { opacity: .6; }
+  .pr-logo-network-node { opacity: .64; }
   .pr-logo-network-node:nth-of-type(n+7) { display: none; }
   .pr-logo-network-lines line:nth-child(n+11) { display: none; }
-  .pr-logo-network-node-featured { display: block !important; opacity: .9; }
+  .pr-logo-network-node-featured { display: block !important; opacity: .94; }
 }
 
 @media (max-width: 720px) {
@@ -133,7 +135,7 @@
   .pr-logo-network-node img { height: 36px; }
   .pr-logo-network-node-featured { width: 88px !important; }
   .pr-logo-network-node-featured img { height: 48px; }
-  .pr-logo-network-lines line { opacity: .34; }
+  .pr-logo-network-lines line { opacity: .46; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -141,12 +143,12 @@
     animation: none;
     stroke-dasharray: none;
     stroke-dashoffset: 0;
-    opacity: .32;
+    opacity: .38;
   }
   .pr-logo-network-node,
   .pr-logo-network-node-featured {
     animation: none;
-    opacity: .78;
+    opacity: .82;
     transform: translate(-50%, -50%);
   }
 }
