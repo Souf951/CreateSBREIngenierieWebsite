@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 
 const metrics = [
-  { value: 20, suffix: "%", label: "d’économie moyenne", note: "par rapport à une entreprise générale" },
-  { value: 8, suffix: "+ ans", label: "d’expérience", note: "en direction de travaux" },
-  { value: 30, suffix: "+", label: "partenaires", note: "en Suisse romande" },
+  { value: 20, prefix: "", suffix: "%", label: "d’économie moyenne", note: "par rapport à une entreprise générale" },
+  { value: 8, prefix: "+ ", suffix: " ans", label: "d’expérience", note: "en direction de travaux" },
+  { value: 30, prefix: "+ ", suffix: "", label: "partenaires", note: "en Suisse romande" },
 ];
 
 export default function MethodSectionSpatialMotion() {
@@ -33,8 +33,8 @@ export default function MethodSectionSpatialMotion() {
         .map(
           (metric, index) => `
             <article class="method-metric" style="--metric-index:${index}">
-              <div class="method-metric-value" aria-label="${metric.value}${metric.suffix}">
-                <span class="method-counter" data-target="${metric.value}">0</span><span class="method-metric-suffix">${metric.suffix}</span>
+              <div class="method-metric-value" aria-label="${metric.prefix}${metric.value}${metric.suffix}">
+                ${metric.prefix ? `<span class="method-metric-prefix">${metric.prefix}</span>` : ""}<span class="method-counter" data-target="${metric.value}">0</span>${metric.suffix ? `<span class="method-metric-suffix">${metric.suffix}</span>` : ""}
               </div>
               <strong>${metric.label}</strong>
               <p>${metric.note}</p>
@@ -60,8 +60,8 @@ export default function MethodSectionSpatialMotion() {
 
         counters.forEach((counter, index) => {
           const target = Number(counter.dataset.target || 0);
-          const duration = 1000 + index * 150;
-          const delay = index * 100;
+          const duration = 1850 + index * 220;
+          const delay = index * 160;
           const startedAt = performance.now() + delay;
 
           const tick = (now: number) => {
