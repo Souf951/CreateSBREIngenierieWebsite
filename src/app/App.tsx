@@ -33,7 +33,6 @@ import PartnersShowcase from "./components/premium/PartnersShowcase";
 import PartnersNavLink from "./components/premium/PartnersNavLink";
 import PartnersSharedChrome from "./components/premium/PartnersSharedChrome";
 import FaqPunctuationGuard from "./components/premium/FaqPunctuationGuard";
-import ExpertiseStoryMotion from "./components/premium/ExpertiseStoryMotion";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
 import "../styles/dark-logo.css";
@@ -57,7 +56,6 @@ import "../styles/mobile-3d-cleanup.css";
 import "../styles/fluid-responsive-type.css";
 import "../styles/hero-phases-fill.css";
 import "../styles/partners-nav-link.css";
-import "../styles/expertise-story-motion.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
@@ -208,7 +206,6 @@ export default function App() {
           <RouteContact />
           <ScrollToTop />
           <HomeCopyGuard />
-          <ExpertiseStoryMotion />
           <MethodAccordionGuard />
           <TeamProfilesGuard />
           <FooterEnhancer />
