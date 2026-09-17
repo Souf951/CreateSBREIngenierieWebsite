@@ -71,7 +71,7 @@ export default function HeaderKineticTriangles() {
 
       const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
       const random = seededRandom(9512026);
-      const anglePool = [0, 0, 0, 30, -30, 45, -45, 90, 90];
+      const anglePool = [0, 0, 0, 0, 30, -30, 45, -45, 60, -60, 90, 90];
       let width = 1;
       let height = 1;
       let dpr = 1;
@@ -89,24 +89,27 @@ export default function HeaderKineticTriangles() {
         canvas.height = Math.round(height * dpr);
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-        const count = width < 900 ? 18 : 38;
+        const count = width < 900 ? 28 : 58;
         lines = Array.from({ length: count }, (_, index) => {
           const angle = anglePool[Math.floor(random() * anglePool.length)];
-          const accent = index % 7 === 0;
+          const accent = index % 6 === 0;
           return {
             x: random() * width,
             y: 7 + random() * Math.max(16, height - 14),
-            length: width < 900 ? 28 + random() * 66 : 42 + random() * 128,
+            length: width < 900 ? 44 + random() * 96 : 72 + random() * 190,
             angle,
             delay: (index / count) * cycleDuration + random() * 0.75,
             duration: 1.45 + random() * 1.8,
             hold: 1.0 + random() * 1.7,
-            opacity: accent ? 0.28 + random() * 0.12 : 0.12 + random() * 0.14,
-            width: accent ? 1.25 : 0.8 + random() * 0.45,
+            opacity: accent ? 0.3 + random() * 0.12 : 0.14 + random() * 0.15,
+            width: accent ? 1.4 : 0.9 + random() * 0.5,
             accent,
           };
         });
       };
+
+      const isDarkMode = () =>
+        document.querySelector(".sbre-theme")?.classList.contains("theme-dark") ?? false;
 
       const drawLine = (line: ArchitecturalLine, progress: number, alpha: number) => {
         const angle = (line.angle * Math.PI) / 180;
@@ -114,17 +117,22 @@ export default function HeaderKineticTriangles() {
         const fullY = Math.sin(angle) * line.length;
         const endX = line.x + fullX * progress;
         const endY = line.y + fullY * progress;
+        const dark = isDarkMode();
+        const stroke = dark ? `rgba(255, 255, 255, ${alpha})` : `rgba(18, 92, 68, ${alpha})`;
+        const tickStroke = dark
+          ? `rgba(255, 255, 255, ${alpha * 0.78})`
+          : `rgba(18, 92, 68, ${alpha * 0.72})`;
 
         ctx.beginPath();
         ctx.moveTo(line.x, line.y);
         ctx.lineTo(endX, endY);
         ctx.lineWidth = line.width;
         ctx.lineCap = "square";
-        ctx.strokeStyle = `rgba(18, 92, 68, ${alpha})`;
+        ctx.strokeStyle = stroke;
         ctx.stroke();
 
         if (progress > 0.96 && line.accent) {
-          const tickLength = 8;
+          const tickLength = 10;
           const perp = angle + Math.PI / 2;
           ctx.beginPath();
           ctx.moveTo(
@@ -135,8 +143,8 @@ export default function HeaderKineticTriangles() {
             endX + Math.cos(perp) * tickLength * 0.5,
             endY + Math.sin(perp) * tickLength * 0.5,
           );
-          ctx.lineWidth = 0.8;
-          ctx.strokeStyle = `rgba(18, 92, 68, ${alpha * 0.72})`;
+          ctx.lineWidth = 0.9;
+          ctx.strokeStyle = tickStroke;
           ctx.stroke();
         }
       };
