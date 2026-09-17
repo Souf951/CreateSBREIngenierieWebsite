@@ -16,7 +16,9 @@ export default function MethodSectionSpatialMotion() {
 
       const list = section.querySelector<HTMLElement>(".method-list");
       const intro = section.querySelector<HTMLElement>(".method-intro");
-      const initialEyebrow = intro?.querySelector<HTMLElement>(".eyebrow");
+      const initialEyebrow = intro
+        ? intro.querySelector<HTMLElement>(".eyebrow")
+        : null;
       const items = Array.from(section.querySelectorAll<HTMLDetailsElement>(".method-list details"));
       if (!list || !intro || !items.length) return false;
 
