@@ -95,6 +95,24 @@
   z-index: 2;
 }
 
+@media (min-width: 1001px) {
+  .pr-page .pr-hero {
+    min-height: calc(100svh - 102px) !important;
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    align-content: stretch;
+  }
+
+  .pr-page .pr-hero-body {
+    min-height: 0 !important;
+    height: 100%;
+  }
+
+  .pr-page .pr-hero-visual .pr-architecture {
+    max-height: min(58svh, 560px) !important;
+  }
+}
+
 @media (max-width: 1024px) {
   .pr-logo-network-node { opacity: .6; }
   .pr-logo-network-node:nth-of-type(n+7) { display: none; }
