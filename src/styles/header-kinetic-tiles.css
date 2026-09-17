@@ -44,6 +44,45 @@
   will-change: transform, opacity, filter, box-shadow;
 }
 
+/* Rare, very fine shooting stars. They live inside the cloud layer so they
+   always pass behind the real navigation and the logo capsules. */
+.premium-site .site-header .sbre-shooting-star {
+  position: absolute;
+  width: clamp(62px, 7vw, 108px);
+  height: 1px;
+  border-radius: 999px;
+  opacity: 0;
+  transform-origin: 100% 50%;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(84,145,121,.08) 18%,
+    rgba(48,121,92,.28) 62%,
+    rgba(236,252,244,.90) 94%,
+    rgba(255,255,255,1) 100%
+  );
+  box-shadow:
+    0 0 4px rgba(52,126,96,.18),
+    0 0 10px rgba(39,113,86,.10);
+  filter: blur(.08px);
+}
+
+.premium-site .site-header .sbre-shooting-star::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,.96);
+  box-shadow:
+    0 0 4px rgba(255,255,255,.95),
+    0 0 9px rgba(57,139,106,.45);
+}
+
 /* Keep all real navigation above the animated cloud. */
 .premium-site .site-header > *:not(.sbre-point-cloud) {
   position: relative;
@@ -187,6 +226,17 @@
 
 .theme-dark .premium-site .site-header .sbre-point {
   background: #7fb7a3;
+}
+
+.theme-dark .premium-site .site-header .sbre-shooting-star {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(125,183,163,.05) 18%,
+    rgba(125,183,163,.22) 62%,
+    rgba(232,249,242,.88) 94%,
+    rgba(255,255,255,.98) 100%
+  );
 }
 
 .theme-dark .premium-site .site-header .brand,
