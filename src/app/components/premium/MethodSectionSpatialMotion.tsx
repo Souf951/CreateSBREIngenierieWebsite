@@ -16,9 +16,13 @@ export default function MethodSectionSpatialMotion() {
 
       const list = section.querySelector<HTMLElement>(".method-list");
       const intro = section.querySelector<HTMLElement>(".method-intro");
-      const eyebrow = intro?.querySelector<HTMLElement>(".eyebrow");
+      const initialEyebrow = intro?.querySelector<HTMLElement>(".eyebrow");
       const items = Array.from(section.querySelectorAll<HTMLDetailsElement>(".method-list details"));
       if (!list || !intro || !items.length) return false;
+
+      let currentEyebrow: HTMLElement | null = initialEyebrow;
+      let isVisible = false;
+      let ensureScheduled = false;
 
       section.dataset.sbreSpatialMotion = "true";
       section.classList.add("method-spatial-ready", "method-metrics-ready");
@@ -43,13 +47,55 @@ export default function MethodSectionSpatialMotion() {
         )
         .join("");
 
-      if (eyebrow) {
-        eyebrow.classList.add("method-eyebrow-promoted");
-        section.insertBefore(eyebrow, intro);
-        eyebrow.insertAdjacentElement("afterend", metricsRow);
-      } else {
-        section.insertBefore(metricsRow, intro);
-      }
+      const ensureUi = () => {
+        if (!section.isConnected) return;
+
+        const liveIntro = section.querySelector<HTMLElement>(".method-intro");
+        const liveList = section.querySelector<HTMLElement>(".method-list");
+        const liveEyebrow =
+          liveIntro?.querySelector<HTMLElement>(".eyebrow") ??
+          section.querySelector<HTMLElement>(":scope > .method-eyebrow-promoted");
+
+        if (!liveIntro || !liveList) return;
+
+        section.dataset.sbreSpatialMotion = "true";
+        section.classList.add("method-spatial-ready", "method-metrics-ready");
+        if (isVisible) {
+          section.classList.add("method-spatial-visible", "method-metrics-visible");
+        }
+
+        items.forEach((item, index) => {
+          item.style.setProperty("--method-index", String(index));
+          item.classList.toggle("method-card-active", item.open);
+        });
+
+        if (liveEyebrow) {
+          currentEyebrow = liveEyebrow;
+          liveEyebrow.classList.add("method-eyebrow-promoted");
+          if (liveEyebrow.parentElement !== section) {
+            section.insertBefore(liveEyebrow, liveIntro);
+          }
+        }
+
+        if (!section.contains(metricsRow)) {
+          if (currentEyebrow?.parentElement === section) {
+            currentEyebrow.insertAdjacentElement("afterend", metricsRow);
+          } else {
+            section.insertBefore(metricsRow, liveIntro);
+          }
+        }
+      };
+
+      const scheduleEnsureUi = () => {
+        if (ensureScheduled) return;
+        ensureScheduled = true;
+        requestAnimationFrame(() => {
+          ensureScheduled = false;
+          ensureUi();
+        });
+      };
+
+      ensureUi();
 
       const counters = Array.from(metricsRow.querySelectorAll<HTMLElement>(".method-counter"));
       let metricsAnimated = false;
@@ -57,6 +103,7 @@ export default function MethodSectionSpatialMotion() {
       const animateCounters = () => {
         if (metricsAnimated) return;
         metricsAnimated = true;
+        isVisible = true;
         section.classList.add("method-metrics-visible");
 
         if (matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -90,13 +137,22 @@ export default function MethodSectionSpatialMotion() {
       const revealObserver = new IntersectionObserver(
         ([entry]) => {
           if (entry?.isIntersecting) {
-            section.classList.add("method-spatial-visible");
+            isVisible = true;
+            section.classList.add("method-spatial-visible", "method-metrics-visible");
             animateCounters();
           }
         },
         { threshold: 0.22 },
       );
       revealObserver.observe(section);
+
+      const persistenceObserver = new MutationObserver(scheduleEnsureUi);
+      persistenceObserver.observe(section, {
+        childList: true,
+        subtree: true,
+        attributes: true,
+        attributeFilter: ["class"],
+      });
 
       const onPointerMove = (event: PointerEvent) => {
         if (window.matchMedia("(max-width: 980px)").matches) return;
@@ -128,14 +184,18 @@ export default function MethodSectionSpatialMotion() {
 
       cleanup = () => {
         revealObserver.disconnect();
+        persistenceObserver.disconnect();
         section.removeEventListener("pointermove", onPointerMove);
         section.removeEventListener("pointerleave", onPointerLeave);
         items.forEach((item) => item.removeEventListener("toggle", onToggle));
         metricsRow.remove();
-        if (eyebrow) {
-          eyebrow.classList.remove("method-eyebrow-promoted");
-          intro.insertBefore(eyebrow, intro.firstChild);
+
+        const liveIntro = section.querySelector<HTMLElement>(".method-intro");
+        if (currentEyebrow && liveIntro && currentEyebrow.parentElement === section) {
+          currentEyebrow.classList.remove("method-eyebrow-promoted");
+          liveIntro.insertBefore(currentEyebrow, liveIntro.firstChild);
         }
+
         section.classList.remove("method-spatial-ready", "method-spatial-visible", "method-metrics-ready", "method-metrics-visible");
         section.style.removeProperty("--method-x");
         section.style.removeProperty("--method-y");
