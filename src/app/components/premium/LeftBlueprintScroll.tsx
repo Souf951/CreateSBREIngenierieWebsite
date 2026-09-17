@@ -1,53 +1,18 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-type Point = [number, number];
-type Stroke = {
-  points: Point[];
-  width?: number;
-  delay?: number;
-  color?: "main" | "soft";
+type Pt = [number, number];
+type Segment = {
+  points: Pt[];
+  start: number;
+  weight?: number;
+  soft?: boolean;
 };
 
-const blueprint: Stroke[] = [
-  { points: [[18, 10], [84, 10], [84, 24], [112, 24], [112, 74], [92, 74], [92, 96]], width: 2.3 },
-  { points: [[18, 10], [18, 46], [34, 46], [34, 72], [62, 72], [62, 98]], width: 2.3, delay: 0.03 },
-  { points: [[112, 24], [146, 24], [146, 52], [132, 52], [132, 96]], width: 2.15, delay: 0.08 },
-  { points: [[18, 28], [54, 28], [54, 46]], width: 1.8, delay: 0.10 },
-  { points: [[54, 10], [54, 28]], width: 1.8, delay: 0.12 },
-  { points: [[62, 24], [62, 54], [84, 54]], width: 1.8, delay: 0.14 },
-  { points: [[84, 24], [84, 54]], width: 1.8, delay: 0.16 },
-  { points: [[92, 42], [112, 42]], width: 1.8, delay: 0.18 },
-  { points: [[112, 42], [112, 74]], width: 1.8, delay: 0.20 },
-  { points: [[34, 72], [34, 96]], width: 1.8, delay: 0.23 },
-  { points: [[62, 72], [92, 72]], width: 1.8, delay: 0.26 },
-  { points: [[92, 72], [92, 96]], width: 1.8, delay: 0.29 },
-  { points: [[112, 74], [132, 74]], width: 1.8, delay: 0.31 },
-  { points: [[96, 50], [108, 50], [108, 66], [96, 66], [96, 50]], width: 1.45, color: "soft", delay: 0.34 },
-  { points: [[98, 52], [106, 52]], width: 1.25, color: "soft", delay: 0.35 },
-  { points: [[98, 55], [106, 55]], width: 1.25, color: "soft", delay: 0.36 },
-  { points: [[98, 58], [106, 58]], width: 1.25, color: "soft", delay: 0.37 },
-  { points: [[98, 61], [106, 61]], width: 1.25, color: "soft", delay: 0.38 },
-  { points: [[98, 64], [106, 64]], width: 1.25, color: "soft", delay: 0.39 },
-  { points: [[36, 14], [48, 14], [48, 24], [36, 24], [36, 14]], width: 1.4, color: "soft", delay: 0.42 },
-  { points: [[66, 42], [78, 42], [78, 52], [66, 52], [66, 42]], width: 1.4, color: "soft", delay: 0.45 },
-  { points: [[116, 28], [128, 28], [128, 40], [116, 40], [116, 28]], width: 1.4, color: "soft", delay: 0.47 },
-  { points: [[42, 78], [54, 78], [54, 90], [42, 90], [42, 78]], width: 1.4, color: "soft", delay: 0.50 },
-  { points: [[98, 78], [110, 78], [110, 90], [98, 90], [98, 78]], width: 1.4, color: "soft", delay: 0.52 },
-  { points: [[54, 36], [60, 30], [66, 36]], width: 1.3, color: "soft", delay: 0.56 },
-  { points: [[78, 54], [84, 48], [90, 54]], width: 1.3, color: "soft", delay: 0.58 },
-  { points: [[92, 64], [98, 58], [104, 64]], width: 1.3, color: "soft", delay: 0.60 },
-  { points: [[62, 82], [68, 76], [74, 82]], width: 1.3, color: "soft", delay: 0.63 },
-  { points: [[110, 82], [116, 76], [122, 82]], width: 1.3, color: "soft", delay: 0.65 },
-  { points: [[14, 102], [136, 102]], width: 1.2, color: "soft", delay: 0.68 },
-  { points: [[22, 99], [22, 105]], width: 1.2, color: "soft", delay: 0.70 },
-  { points: [[52, 99], [52, 105]], width: 1.2, color: "soft", delay: 0.72 },
-  { points: [[82, 99], [82, 105]], width: 1.2, color: "soft", delay: 0.74 },
-  { points: [[112, 99], [112, 105]], width: 1.2, color: "soft", delay: 0.76 },
-  { points: [[136, 99], [136, 105]], width: 1.2, color: "soft", delay: 0.78 },
-];
+const clamp01 = (v: number) => Math.max(0, Math.min(1, v));
+const ease = (t: number) => 1 - Math.pow(1 - clamp01(t), 3);
 
-function strokeLength(points: Point[]) {
+function pathLength(points: Pt[]) {
   let total = 0;
   for (let i = 1; i < points.length; i += 1) {
     total += Math.hypot(points[i][0] - points[i - 1][0], points[i][1] - points[i - 1][1]);
@@ -55,64 +20,77 @@ function strokeLength(points: Point[]) {
   return total;
 }
 
-function easeInOut(t: number) {
-  return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-}
-
 function drawPartial(
   ctx: CanvasRenderingContext2D,
-  stroke: Stroke,
+  points: Pt[],
   progress: number,
-  scale: number,
-  offsetX: number,
-  offsetY: number,
-  mainColor: string,
-  softColor: string,
-  alpha: number,
-  mirror = false,
+  mapX: (x: number) => number,
+  mapY: (y: number) => number,
 ) {
-  if (progress <= 0 || alpha <= 0) return;
-
-  const points = stroke.points;
-  const total = strokeLength(points);
-  const target = total * Math.min(1, progress);
+  if (progress <= 0) return;
+  const total = pathLength(points);
+  const target = total * clamp01(progress);
   let travelled = 0;
 
-  // Rotate the original floor plan 90° so it reads vertically inside the side gutter.
-  const tx = (x: number, y: number) => offsetX + (mirror ? y : 112 - y) * scale;
-  const ty = (x: number) => offsetY + x * scale;
-
   ctx.beginPath();
-  ctx.moveTo(tx(points[0][0], points[0][1]), ty(points[0][0]));
+  ctx.moveTo(mapX(points[0][0]), mapY(points[0][1]));
 
   for (let i = 1; i < points.length; i += 1) {
     const a = points[i - 1];
     const b = points[i];
-    const segment = Math.hypot(b[0] - a[0], b[1] - a[1]);
+    const len = Math.hypot(b[0] - a[0], b[1] - a[1]);
 
-    if (travelled + segment <= target) {
-      ctx.lineTo(tx(b[0], b[1]), ty(b[0]));
-      travelled += segment;
+    if (travelled + len <= target) {
+      ctx.lineTo(mapX(b[0]), mapY(b[1]));
+      travelled += len;
       continue;
     }
 
-    const remaining = Math.max(0, target - travelled);
-    const t = segment ? remaining / segment : 0;
-    const px = a[0] + (b[0] - a[0]) * t;
-    const py = a[1] + (b[1] - a[1]) * t;
-    ctx.lineTo(tx(px, py), ty(px));
+    const remaining = target - travelled;
+    const t = len > 0 ? clamp01(remaining / len) : 0;
+    ctx.lineTo(
+      mapX(a[0] + (b[0] - a[0]) * t),
+      mapY(a[1] + (b[1] - a[1]) * t),
+    );
     break;
   }
-
-  ctx.save();
-  ctx.globalAlpha = alpha;
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-  ctx.lineWidth = (stroke.width ?? 1.8) * Math.max(1.15, scale * 1.05);
-  ctx.strokeStyle = stroke.color === "soft" ? softColor : mainColor;
-  ctx.stroke();
-  ctx.restore();
 }
+
+function buildVerticalPlan(): Segment[] {
+  return [
+    // Main vertical architectural spine.
+    { points: [[50, 0], [50, 8], [38, 8], [38, 18], [58, 18], [58, 30], [44, 30], [44, 42], [62, 42], [62, 55], [40, 55], [40, 68], [56, 68], [56, 80], [46, 80], [46, 92], [54, 92], [54, 100]], start: 0.00, weight: 2.8 },
+
+    // Left/right wall returns that appear as the drawing head descends.
+    { points: [[38, 8], [18, 8], [18, 15], [30, 15]], start: 0.06, weight: 2.2 },
+    { points: [[58, 18], [80, 18], [80, 25], [68, 25]], start: 0.15, weight: 2.2 },
+    { points: [[44, 30], [22, 30], [22, 38], [34, 38]], start: 0.25, weight: 2.2 },
+    { points: [[62, 42], [84, 42], [84, 49], [70, 49]], start: 0.36, weight: 2.2 },
+    { points: [[40, 55], [16, 55], [16, 63], [30, 63]], start: 0.49, weight: 2.2 },
+    { points: [[56, 68], [82, 68], [82, 76], [68, 76]], start: 0.62, weight: 2.2 },
+    { points: [[46, 80], [24, 80], [24, 88], [36, 88]], start: 0.75, weight: 2.2 },
+    { points: [[54, 92], [78, 92], [78, 98], [66, 98]], start: 0.88, weight: 2.2 },
+
+    // Secondary technical lines / room subdivisions.
+    { points: [[24, 11], [24, 20], [34, 20]], start: 0.10, weight: 1.5, soft: true },
+    { points: [[66, 21], [66, 31], [56, 31]], start: 0.20, weight: 1.5, soft: true },
+    { points: [[28, 34], [28, 45], [40, 45]], start: 0.31, weight: 1.5, soft: true },
+    { points: [[72, 45], [72, 57], [60, 57]], start: 0.43, weight: 1.5, soft: true },
+    { points: [[24, 59], [24, 71], [38, 71]], start: 0.56, weight: 1.5, soft: true },
+    { points: [[70, 71], [70, 83], [58, 83]], start: 0.69, weight: 1.5, soft: true },
+    { points: [[30, 83], [30, 95], [44, 95]], start: 0.82, weight: 1.5, soft: true },
+
+    // Small construction marks, like door / axis / detail strokes.
+    { points: [[12, 26], [30, 26]], start: 0.22, weight: 1.25, soft: true },
+    { points: [[70, 36], [88, 36]], start: 0.32, weight: 1.25, soft: true },
+    { points: [[10, 51], [28, 51]], start: 0.46, weight: 1.25, soft: true },
+    { points: [[72, 64], [90, 64]], start: 0.59, weight: 1.25, soft: true },
+    { points: [[12, 77], [30, 77]], start: 0.72, weight: 1.25, soft: true },
+    { points: [[70, 89], [88, 89]], start: 0.85, weight: 1.25, soft: true },
+  ];
+}
+
+const PLAN = buildVerticalPlan();
 
 export default function LeftBlueprintScroll() {
   const { pathname } = useLocation();
@@ -130,7 +108,6 @@ export default function LeftBlueprintScroll() {
       height: "100vh",
       pointerEvents: "none",
       zIndex: "1",
-      opacity: "1",
     });
     document.body.appendChild(canvas);
 
@@ -138,135 +115,99 @@ export default function LeftBlueprintScroll() {
     if (!ctx) return () => canvas.remove();
 
     let raf = 0;
-    let viewportWidth = window.innerWidth;
-    let viewportHeight = window.innerHeight;
+    let vw = window.innerWidth;
+    let vh = window.innerHeight;
     let dpr = 1;
-    let leftGutter = 0;
-    let rightGutter = 0;
-    let contentRight = viewportWidth;
+    let left = 0;
+    let right = 0;
+    let contentRight = vw;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const startedAt = performance.now();
+    const started = performance.now();
 
-    // Slow premium loop: ~15s drawing, 5s hold, 3s fade.
-    const cycle = 24;
+    // Very slow top-to-bottom drawing.
+    const drawDuration = 21;
+    const holdDuration = 5;
+    const fadeDuration = 3;
+    const cycle = drawDuration + holdDuration + fadeDuration + 1;
 
     const measure = () => {
-      viewportWidth = window.innerWidth;
-      viewportHeight = window.innerHeight;
+      vw = window.innerWidth;
+      vh = window.innerHeight;
       dpr = Math.min(window.devicePixelRatio || 1, 2);
 
       const hero = document.querySelector<HTMLElement>(".premium-site .hero");
       const rect = hero?.getBoundingClientRect();
 
       if (rect) {
-        leftGutter = Math.max(0, rect.left);
-        contentRight = Math.min(viewportWidth, rect.right);
-        rightGutter = Math.max(0, viewportWidth - contentRight);
+        left = Math.max(0, rect.left);
+        contentRight = Math.min(vw, rect.right);
+        right = Math.max(0, vw - contentRight);
       } else {
-        const maxContent = Math.min(1180, viewportWidth * 0.72);
-        leftGutter = (viewportWidth - maxContent) / 2;
-        contentRight = leftGutter + maxContent;
-        rightGutter = viewportWidth - contentRight;
+        const contentWidth = Math.min(1180, vw * 0.72);
+        left = (vw - contentWidth) / 2;
+        contentRight = left + contentWidth;
+        right = vw - contentRight;
       }
 
-      canvas.style.display = Math.max(leftGutter, rightGutter) >= 125 ? "block" : "none";
-      canvas.width = Math.max(1, Math.round(viewportWidth * dpr));
-      canvas.height = Math.max(1, Math.round(viewportHeight * dpr));
+      canvas.style.display = Math.max(left, right) >= 120 ? "block" : "none";
+      canvas.width = Math.max(1, Math.round(vw * dpr));
+      canvas.height = Math.max(1, Math.round(vh * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    };
-
-    const drawHead = (x: number, y: number, color: string, pulse: number) => {
-      ctx.save();
-      ctx.globalAlpha = 0.55 + pulse * 0.28;
-      ctx.beginPath();
-      ctx.arc(x, y, 2.2 + pulse * 0.9, 0, Math.PI * 2);
-      ctx.fillStyle = color;
-      ctx.shadowBlur = 8 + pulse * 5;
-      ctx.shadowColor = color;
-      ctx.fill();
-      ctx.restore();
     };
 
     const drawStrip = (
       x: number,
-      stripWidth: number,
+      width: number,
       mirror: boolean,
-      localTime: number,
+      master: number,
+      alpha: number,
       mainColor: string,
       softColor: string,
+      headColor: string,
     ) => {
-      if (stripWidth < 125) return;
+      if (width < 120) return;
 
       ctx.save();
       ctx.beginPath();
-      ctx.rect(x, 0, stripWidth, viewportHeight);
+      ctx.rect(x, 0, width, vh);
       ctx.clip();
 
-      // Rotated plan dimensions are roughly 112 × 154.
-      const usableWidth = Math.max(96, stripWidth - 30);
-      const scaleByWidth = usableWidth / 112;
-      const scaleByHeight = (viewportHeight * 0.72) / 154;
-      const scale = Math.min(2.05, scaleByWidth, scaleByHeight);
-      const planWidth = 112 * scale;
-      const planHeight = 154 * scale;
-      const offsetX = x + Math.max(10, (stripWidth - planWidth) / 2);
-      const offsetY = Math.max(90, (viewportHeight - planHeight) * 0.46);
+      const inset = Math.max(14, width * 0.09);
+      const usable = Math.max(80, width - inset * 2);
+      const mapX = (n: number) => {
+        const px = inset + (n / 100) * usable;
+        return mirror ? x + width - px : x + px;
+      };
+      const mapY = (n: number) => 10 + (n / 100) * (vh - 20);
 
-      const drawStart = 0.8;
-      const drawEnd = 15.2;
-      const holdEnd = 20.0;
-      const fadeEnd = 23.2;
+      PLAN.forEach((segment) => {
+        const local = clamp01((master - segment.start) / 0.16);
+        if (local <= 0) return;
 
-      let master = 0;
-      let alpha = 1;
-
-      if (localTime < drawStart) {
-        master = 0;
-      } else if (localTime < drawEnd) {
-        master = (localTime - drawStart) / (drawEnd - drawStart);
-      } else {
-        master = 1;
-      }
-
-      if (localTime > holdEnd) {
-        alpha = Math.max(0, 1 - (localTime - holdEnd) / (fadeEnd - holdEnd));
-      }
-
-      blueprint.forEach((stroke, index) => {
-        const delay = stroke.delay ?? index / blueprint.length;
-        const local = Math.min(1, Math.max(0, (master - delay) / 0.28));
-        drawPartial(
-          ctx,
-          stroke,
-          easeInOut(local),
-          scale,
-          offsetX,
-          offsetY,
-          mainColor,
-          softColor,
-          alpha,
-          mirror,
-        );
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.lineCap = "round";
+        ctx.lineJoin = "round";
+        ctx.lineWidth = segment.weight ?? 2;
+        ctx.strokeStyle = segment.soft ? softColor : mainColor;
+        drawPartial(ctx, segment.points, ease(local), mapX, mapY);
+        ctx.stroke();
+        ctx.restore();
       });
 
-      if (master > 0 && master < 1 && alpha > 0.08) {
-        const heads = [
-          { start: 0.06, x: 20, y: 20 },
-          { start: 0.30, x: 62, y: 50 },
-          { start: 0.55, x: 108, y: 80 },
-        ];
-
-        heads.forEach((head, index) => {
-          const p = Math.min(1, Math.max(0, (master - head.start) / 0.26));
-          if (p <= 0 || p >= 1) return;
-
-          const originalX = head.x + p * 24;
-          const originalY = head.y + Math.sin(p * Math.PI) * 8 + p * 12;
-          const hx = offsetX + (mirror ? originalY : 112 - originalY) * scale;
-          const hy = offsetY + originalX * scale;
-          const pulse = 0.5 + 0.5 * Math.sin(localTime * 3.2 + index * 1.5);
-          drawHead(hx, hy, mainColor, pulse);
-        });
+      // Bright drawing head travels literally from top to bottom.
+      if (master > 0 && master < 1 && alpha > 0.1) {
+        const hy = mapY(master * 100);
+        const hx = mapX(50 + Math.sin(master * Math.PI * 8) * 4);
+        ctx.save();
+        ctx.globalAlpha = 0.9 * alpha;
+        ctx.beginPath();
+        ctx.arc(hx, hy, 2.8, 0, Math.PI * 2);
+        ctx.fillStyle = headColor;
+        ctx.shadowBlur = 13;
+        ctx.shadowColor = headColor;
+        ctx.fill();
+        ctx.restore();
       }
 
       ctx.restore();
@@ -278,38 +219,50 @@ export default function LeftBlueprintScroll() {
         return;
       }
 
-      ctx.clearRect(0, 0, viewportWidth, viewportHeight);
+      ctx.clearRect(0, 0, vw, vh);
 
       const dark = document.querySelector(".sbre-theme")?.classList.contains("theme-dark") ?? false;
-      const mainColor = dark ? "rgba(255,255,255,.72)" : "rgba(10,92,61,.50)";
-      const softColor = dark ? "rgba(255,255,255,.34)" : "rgba(10,92,61,.24)";
-      const elapsed = (now - startedAt) / 1000;
+      const mainColor = dark ? "rgba(255,255,255,.76)" : "rgba(10,92,61,.58)";
+      const softColor = dark ? "rgba(255,255,255,.40)" : "rgba(10,92,61,.30)";
+      const headColor = dark ? "rgba(255,255,255,.98)" : "rgba(16,112,78,.92)";
 
-      const leftTime = reduced ? 17 : elapsed % cycle;
-      const rightTime = reduced ? 17 : (elapsed + 2.4) % cycle;
+      const elapsed = reduced ? drawDuration + 1 : ((now - started) / 1000) % cycle;
+      let master = 1;
+      let alpha = 1;
 
-      drawStrip(0, leftGutter, false, leftTime, mainColor, softColor);
-      drawStrip(contentRight, rightGutter, true, rightTime, mainColor, softColor);
+      if (elapsed < drawDuration) {
+        master = elapsed / drawDuration;
+      } else if (elapsed < drawDuration + holdDuration) {
+        master = 1;
+      } else if (elapsed < drawDuration + holdDuration + fadeDuration) {
+        const f = (elapsed - drawDuration - holdDuration) / fadeDuration;
+        alpha = 1 - f;
+      } else {
+        master = 0;
+        alpha = 0;
+      }
+
+      // Left starts immediately. Right follows slightly later for a more natural composition.
+      drawStrip(0, left, false, master, alpha, mainColor, softColor, headColor);
+
+      const delayed = reduced ? 1 : clamp01(master - 0.055);
+      drawStrip(contentRight, right, true, delayed, alpha, mainColor, softColor, headColor);
 
       if (!reduced) raf = requestAnimationFrame(render);
     };
 
     measure();
-
-    const resizeObserver = new ResizeObserver(measure);
+    const ro = new ResizeObserver(measure);
     const hero = document.querySelector<HTMLElement>(".premium-site .hero");
-    if (hero) resizeObserver.observe(hero);
+    if (hero) ro.observe(hero);
     window.addEventListener("resize", measure, { passive: true });
 
-    if (reduced) {
-      render(startedAt + 17000);
-    } else {
-      raf = requestAnimationFrame(render);
-    }
+    if (reduced) render(started + (drawDuration + 1) * 1000);
+    else raf = requestAnimationFrame(render);
 
     return () => {
       cancelAnimationFrame(raf);
-      resizeObserver.disconnect();
+      ro.disconnect();
       window.removeEventListener("resize", measure);
       canvas.remove();
     };
