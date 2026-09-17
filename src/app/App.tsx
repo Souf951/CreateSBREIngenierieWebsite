@@ -20,6 +20,7 @@ import IntroLoader from "./components/IntroLoader";
 import ControlBannerVideo from "./components/ControlBannerVideo";
 import FloatingContact from "./components/FloatingContact";
 import MethodAccordionGuard from "./components/premium/MethodAccordionGuard";
+import MethodSectionSpatialMotion from "./components/premium/MethodSectionSpatialMotion";
 import TeamProfilesGuard from "./components/premium/TeamProfilesGuard";
 import FooterEnhancer from "./components/premium/FooterEnhancer";
 import CaseSectionVideoBackground from "./components/premium/CaseSectionVideoBackground";
@@ -47,6 +48,7 @@ import "../styles/case-video-background.css";
 import "../styles/case-top-cleanup.css";
 import "../styles/contact-section-photo.css";
 import "../styles/accordion-premium.css";
+import "../styles/method-spatial-motion.css";
 import "../styles/home-copy-polish.css";
 import "../styles/case-study-video.css";
 import "../styles/projects-method-transition.css";
@@ -210,6 +212,7 @@ export default function App() {
           <HomeCopyGuard />
           <ExpertiseSpatialCards />
           <MethodAccordionGuard />
+          <MethodSectionSpatialMotion />
           <TeamProfilesGuard />
           <FooterEnhancer />
           <ControlBannerVideo />
