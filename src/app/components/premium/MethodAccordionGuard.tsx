@@ -61,9 +61,27 @@ export default function MethodAccordionGuard() {
         if (summary) {
           Array.from(summary.childNodes).forEach((node) => {
             if (node.nodeType === Node.TEXT_NODE && node.textContent?.trim()) {
-              node.textContent = ` ${step.title} `;
+              node.remove();
             }
           });
+
+          summary.querySelector(".method-step-initial")?.remove();
+          summary.querySelector(".method-step-rest")?.remove();
+
+          const initial = document.createElement("strong");
+          initial.className = "method-step-initial";
+          initial.textContent = step.title.charAt(0);
+
+          const rest = document.createElement("span");
+          rest.className = "method-step-rest";
+          rest.textContent = step.title.slice(1);
+
+          if (plus) {
+            summary.insertBefore(initial, plus);
+            summary.insertBefore(rest, plus);
+          } else {
+            summary.append(initial, rest);
+          }
         }
         if (number) number.textContent = `0${index + 1}`;
         if (body) body.textContent = step.body;
