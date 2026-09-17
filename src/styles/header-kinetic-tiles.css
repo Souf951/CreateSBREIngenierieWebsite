@@ -66,44 +66,45 @@
   -webkit-backdrop-filter: blur(12px);
 }
 
-/* One rounded shell, like the 3D phase selector. */
+/* One rounded shell, inspired by the 3D construction phase selector. */
 .premium-site .site-header .desktop-nav {
   display: flex;
   align-items: stretch;
-  gap: 5px;
-  padding: 5px;
-  border: 1px solid rgba(16,63,49,.16);
-  border-radius: 24px;
+  gap: 7px;
+  padding: 6px;
+  border: 1px solid rgba(16,63,49,.18);
+  border-radius: 25px;
   background:
-    linear-gradient(145deg, rgba(255,255,255,.82), rgba(241,244,238,.72)),
+    linear-gradient(145deg, rgba(255,255,255,.82), rgba(238,242,236,.70)),
     rgba(255,255,255,.76);
   backdrop-filter: blur(14px) saturate(.9);
   -webkit-backdrop-filter: blur(14px) saturate(.9);
   box-shadow:
-    0 10px 26px rgba(5,48,35,.07),
+    0 12px 28px rgba(5,48,35,.075),
     inset 0 1px 0 rgba(255,255,255,.96),
-    inset 0 -1px 0 rgba(8,70,50,.04);
+    inset 0 -1px 0 rgba(8,70,50,.05);
 }
 
-/* Each navigation category is visually separated. */
+/* Each navigation category is a clearly separated rounded cell. */
 .premium-site .site-header .desktop-nav button,
 .premium-site .site-header .desktop-nav a {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 42px;
-  padding: 0 17px !important;
-  border: 1px solid rgba(16,63,49,.12) !important;
+  min-height: 44px;
+  padding: 0 18px !important;
+  border: 1px solid rgba(16,63,49,.15) !important;
   border-radius: 18px !important;
   background:
-    radial-gradient(circle at 18% 12%, rgba(255,255,255,.72), transparent 58%),
-    rgba(247,248,244,.56) !important;
+    radial-gradient(circle at 18% 12%, rgba(255,255,255,.78), transparent 58%),
+    linear-gradient(145deg, rgba(251,252,248,.72), rgba(238,243,237,.58)) !important;
   color: #103f31 !important;
-  text-shadow: 0 1px 0 rgba(255,255,255,.70);
+  text-shadow: 0 1px 0 rgba(255,255,255,.72);
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.86),
-    inset 0 -1px 0 rgba(9,69,50,.035);
+    0 2px 5px rgba(4,48,34,.035),
+    inset 0 1px 0 rgba(255,255,255,.92),
+    inset 0 -1px 0 rgba(9,69,50,.05);
   transition:
     transform 220ms cubic-bezier(.2,.8,.2,1),
     background-color 220ms ease,
@@ -112,27 +113,39 @@
   overflow: hidden;
 }
 
-/* Faint decorative wash inside each cell, inspired by the phase controls. */
+/* A very subtle graphic wash gives each cell depth without hurting readability. */
 .premium-site .site-header .desktop-nav button::before,
 .premium-site .site-header .desktop-nav a::before {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: .38;
+  opacity: .34;
   background:
-    radial-gradient(circle at 15% 50%, rgba(17,98,72,.12), transparent 34%),
-    linear-gradient(135deg, transparent 58%, rgba(17,98,72,.045) 59%, transparent 74%);
+    radial-gradient(circle at 14% 50%, rgba(17,98,72,.13), transparent 31%),
+    linear-gradient(135deg, transparent 57%, rgba(17,98,72,.05) 58%, transparent 74%);
+}
+
+/* Thin vertical glints further separate adjacent categories. */
+.premium-site .site-header .desktop-nav > * + *::after {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: 22%;
+  bottom: 22%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(16,63,49,.18), transparent);
+  pointer-events: none;
 }
 
 .premium-site .site-header .desktop-nav button:hover,
 .premium-site .site-header .desktop-nav a:hover {
-  transform: translateY(-1px);
-  border-color: rgba(16,92,63,.30) !important;
-  background: rgba(255,255,255,.80) !important;
+  transform: translateY(-2px);
+  border-color: rgba(16,92,63,.34) !important;
+  background: rgba(255,255,255,.86) !important;
   box-shadow:
-    0 5px 14px rgba(4,50,35,.07),
-    inset 0 1px 0 rgba(255,255,255,.94);
+    0 7px 16px rgba(4,50,35,.08),
+    inset 0 1px 0 rgba(255,255,255,.96);
 }
 
 .premium-site .site-header .desktop-nav button:focus-visible,
@@ -143,25 +156,28 @@
 
 /* CTA treated as its own premium rounded module. */
 .premium-site .site-header .header-contact {
-  min-height: 52px;
-  padding: 0 20px !important;
-  border: 1px solid rgba(16,63,49,.28) !important;
+  min-height: 54px;
+  padding: 0 21px !important;
+  border: 1px solid rgba(16,63,49,.30) !important;
   border-radius: 20px !important;
   background:
-    radial-gradient(circle at 20% 15%, rgba(255,255,255,.92), transparent 58%),
-    rgba(255,255,255,.80) !important;
+    radial-gradient(circle at 20% 15%, rgba(255,255,255,.94), transparent 58%),
+    linear-gradient(145deg, rgba(255,255,255,.88), rgba(239,244,238,.78)) !important;
   color: #103f31 !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow:
-    0 9px 24px rgba(5,48,35,.065),
-    inset 0 1px 0 rgba(255,255,255,.96);
+    0 10px 26px rgba(5,48,35,.075),
+    inset 0 1px 0 rgba(255,255,255,.96),
+    inset 0 -1px 0 rgba(8,70,50,.05);
+  transition: transform 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
 }
 
 .premium-site .site-header .header-contact:hover {
-  transform: translateY(-1px);
-  background: rgba(255,255,255,.90) !important;
-  border-color: rgba(16,83,58,.42) !important;
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.94) !important;
+  border-color: rgba(16,83,58,.46) !important;
+  box-shadow: 0 12px 28px rgba(5,48,35,.09);
 }
 
 .theme-dark .premium-site .site-header::before {
@@ -182,12 +198,12 @@
 .theme-dark .premium-site .site-header .desktop-nav button,
 .theme-dark .premium-site .site-header .desktop-nav a {
   background: rgba(248,248,243,.88) !important;
-  border-color: rgba(16,63,49,.14) !important;
+  border-color: rgba(16,63,49,.16) !important;
 }
 
 @media (max-width: 1100px) {
   .premium-site .site-header .desktop-nav {
-    gap: 3px;
+    gap: 4px;
     padding: 4px;
     border-radius: 20px;
   }
