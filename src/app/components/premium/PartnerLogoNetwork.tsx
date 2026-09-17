@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import type { CSSProperties } from "react";
 
 const partnerNodes = [
@@ -34,21 +35,100 @@ const links = [
 ] as const;
 
 export default function PartnerLogoNetwork() {
+  const svgRef = useRef<SVGSVGElement | null>(null);
+
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reducedMotion) return;
+
+    const flowLines = Array.from(svg.querySelectorAll<SVGLineElement>(".pr-network-flow-line"));
+    const pulses = Array.from(svg.querySelectorAll<SVGCircleElement>(".pr-network-pulse"));
+
+    let frame = 0;
+    const startedAt = performance.now();
+
+    const animate = (now: number) => {
+      const seconds = (now - startedAt) / 1000;
+
+      flowLines.forEach((line, index) => {
+        const offset = -((seconds * 0.22 + index * 0.085) % 1);
+        line.style.strokeDashoffset = String(offset);
+        line.style.opacity = String(0.48 + Math.sin(seconds * 1.8 + index * 0.6) * 0.16);
+      });
+
+      pulses.forEach((pulse, index) => {
+        const [x1, y1, x2, y2] = links[index];
+        const phase = (seconds * 0.095 + index * 0.083) % 1;
+        const eased = phase < 0.5
+          ? 2 * phase * phase
+          : 1 - Math.pow(-2 * phase + 2, 2) / 2;
+        const x = x1 + (x2 - x1) * eased;
+        const y = y1 + (y2 - y1) * eased;
+        const visibility = Math.sin(Math.PI * phase);
+
+        pulse.setAttribute("cx", x.toFixed(3));
+        pulse.setAttribute("cy", y.toFixed(3));
+        pulse.style.opacity = String(Math.max(0.08, visibility * 0.95));
+        pulse.setAttribute("r", (0.34 + visibility * 0.22).toFixed(3));
+      });
+
+      frame = requestAnimationFrame(animate);
+    };
+
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
   return (
     <div className="pr-logo-network" aria-hidden="true">
-      <svg className="pr-logo-network-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-        {links.map(([x1, y1, x2, y2, delay], index) => (
-          <line
-            key={index}
-            x1={x1}
-            y1={y1}
-            x2={x2}
-            y2={y2}
-            pathLength="1"
-            style={{ "--network-delay": `${delay}s` } as CSSProperties}
-          />
+      <svg
+        ref={svgRef}
+        className="pr-logo-network-lines"
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+      >
+        <defs>
+          <filter id="pr-network-glow" x="-300%" y="-300%" width="700%" height="700%">
+            <feGaussianBlur stdDeviation="0.7" result="blur" />
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+        </defs>
+
+        {links.map(([x1, y1, x2, y2], index) => (
+          <g key={`connection-${index}`}>
+            <line
+              className="pr-network-base-line"
+              x1={x1}
+              y1={y1}
+              x2={x2}
+              y2={y2}
+              pathLength="1"
+            />
+            <line
+              className="pr-network-flow-line"
+              x1={x1}
+              y1={y1}
+              x2={x2}
+              y2={y2}
+              pathLength="1"
+            />
+            <circle
+              className="pr-network-pulse"
+              cx={x1}
+              cy={y1}
+              r="0.42"
+              filter="url(#pr-network-glow)"
+            />
+          </g>
         ))}
       </svg>
+
       {partnerNodes.map((node) => (
         <div
           className={`pr-logo-network-node${"featured" in node && node.featured ? " pr-logo-network-node-featured" : ""}`}
