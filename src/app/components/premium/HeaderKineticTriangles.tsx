@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const POINTS = 170;
+const MOVING_POINTS = 9;
 
 function seededRandom(seed: number) {
   let state = seed >>> 0;
@@ -48,6 +49,14 @@ export default function HeaderKineticTriangles() {
         phase: number;
       }> = [];
 
+      const movingPoints: Array<{
+        el: HTMLSpanElement;
+        y: number;
+        speed: number;
+        offset: number;
+        phase: number;
+      }> = [];
+
       for (let index = 0; index < POINTS; index += 1) {
         const point = document.createElement("span");
         point.className = "sbre-point";
@@ -67,6 +76,25 @@ export default function HeaderKineticTriangles() {
 
         layer.appendChild(point);
         points.push({ el: point, x, y, base, phase });
+      }
+
+      for (let index = 0; index < MOVING_POINTS; index += 1) {
+        const movingPoint = document.createElement("span");
+        movingPoint.className = "sbre-moving-point";
+
+        const y = 14 + random() * 70;
+        const size = 2.6 + random() * 2.8;
+        const speed = 2.5 + random() * 2.4;
+        const offset = random() * 116;
+        const phase = random() * Math.PI * 2;
+
+        movingPoint.style.top = `${y}%`;
+        movingPoint.style.width = `${size}px`;
+        movingPoint.style.height = `${size}px`;
+        movingPoint.style.opacity = `${0.34 + random() * 0.26}`;
+
+        layer.appendChild(movingPoint);
+        movingPoints.push({ el: movingPoint, y, speed, offset, phase });
       }
 
       header.prepend(layer);
@@ -149,6 +177,18 @@ export default function HeaderKineticTriangles() {
           el.style.boxShadow = intensity > 0.04
             ? `0 0 ${3 + intensity * 13}px rgba(19, 102, 75, ${0.12 + intensity * 0.56}), 0 0 ${1 + intensity * 4}px rgba(255,255,255,${intensity * 0.42})`
             : "none";
+        });
+
+        movingPoints.forEach(({ el, y, speed, offset, phase }) => {
+          const x = ((time * speed + offset) % 116) - 8;
+          const driftY = Math.sin(time * 0.42 + phase) * 4.2;
+          const pulse = 0.84 + Math.sin(time * 1.05 + phase) * 0.16;
+
+          el.style.left = `${x}%`;
+          el.style.transform = `translate3d(0, ${driftY}px, 0) scale(${pulse})`;
+          el.style.filter = `brightness(${1.02 + pulse * 0.16})`;
+          el.style.boxShadow = `0 0 ${7 + pulse * 5}px rgba(28, 109, 82, ${0.18 + pulse * 0.18}), 0 0 3px rgba(255,255,255,.45)`;
+          el.style.top = `${y}%`;
         });
 
         raf = requestAnimationFrame(animate);
