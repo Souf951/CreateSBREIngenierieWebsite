@@ -2,8 +2,11 @@
 .premium-site .site-header {
   isolation: isolate;
   overflow: hidden;
-  position: relative !important;
-  top: auto !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 120 !important;
+  transform: translateZ(0);
+  box-shadow: 0 8px 28px rgba(5,48,35,.035);
 }
 
 /* Remove previous decorative pseudo animation. */
@@ -42,7 +45,7 @@
   background: #155e49;
   transform: translate3d(0,0,0) scale(1);
   transform-origin: 50% 50%;
-  will-change: transform, opacity, filter, box-shadow, left;
+  will-change: transform, opacity, filter, box-shadow, left, top;
 }
 
 /* Slow guided particles: more visible than the static cloud, but never fast. */
