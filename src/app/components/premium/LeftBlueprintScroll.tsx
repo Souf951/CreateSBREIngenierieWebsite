@@ -121,20 +121,21 @@ export default function LeftBlueprintScroll() {
     root.innerHTML = `
       <style>
         .sbre-architectural-margins{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-        .sbre-blueprint-side{position:absolute;top:0;height:100vh;overflow:hidden;opacity:.52}
+        .sbre-blueprint-side{position:absolute;top:0;height:100vh;overflow:hidden;opacity:.62}
         .sbre-blueprint-side.left{left:0}
         .sbre-blueprint-side.right{right:0}
         .sbre-blueprint-side svg{display:block;width:100%;height:100%}
         .sbre-blueprint-side path{fill:none;stroke:#0a5c3d;vector-effect:non-scaling-stroke;stroke-linecap:square;stroke-linejoin:miter}
-        .sbre-blueprint-side .bp-plan-fragments path{stroke-width:.9;opacity:.22;stroke-dasharray:5 7}
-        .sbre-blueprint-side .bp-detail path{stroke-width:.72;opacity:.16;stroke-dasharray:2 6}
-        .sbre-blueprint-side .bp-dimensions path{stroke-width:.68;opacity:.18;stroke-dasharray:3 5}
-        .sbre-blueprint-side text{fill:#0a5c3d;font:500 7.5px/1 Inter,Arial,sans-serif;letter-spacing:.05em;opacity:.20}
+        .sbre-blueprint-side .bp-plan-fragments path{stroke-width:.9;opacity:.28;stroke-dasharray:5 7}
+        .sbre-blueprint-side .bp-detail path{stroke-width:.72;opacity:.20;stroke-dasharray:2 6}
+        .sbre-blueprint-side .bp-dimensions path{stroke-width:.68;opacity:.22;stroke-dasharray:3 5}
+        .sbre-blueprint-side text{fill:#0a5c3d;font:500 7.5px/1 Inter,Arial,sans-serif;letter-spacing:.05em;opacity:.24}
+        .theme-dark .sbre-blueprint-side{opacity:.72}
         .theme-dark .sbre-blueprint-side path{stroke:#fff}
-        .theme-dark .sbre-blueprint-side .bp-plan-fragments path{opacity:.17}
-        .theme-dark .sbre-blueprint-side .bp-detail path{opacity:.12}
-        .theme-dark .sbre-blueprint-side .bp-dimensions path{opacity:.14}
-        .theme-dark .sbre-blueprint-side text{fill:#fff;opacity:.16}
+        .theme-dark .sbre-blueprint-side .bp-plan-fragments path{opacity:.34}
+        .theme-dark .sbre-blueprint-side .bp-detail path{opacity:.25}
+        .theme-dark .sbre-blueprint-side .bp-dimensions path{opacity:.29}
+        .theme-dark .sbre-blueprint-side text{fill:#fff;opacity:.30}
         @media(max-width:767px){.sbre-architectural-margins{display:none!important}}
       </style>
       <div class="sbre-blueprint-side left">${LEFT_SVG}</div>
@@ -187,7 +188,7 @@ export default function LeftBlueprintScroll() {
       paths.forEach((path) => {
         path.style.strokeDasharray = path.dataset.planDash || "5 7";
       });
-      labels.forEach((label) => (label.style.opacity = "0.20"));
+      labels.forEach((label) => (label.style.opacity = "0.24"));
       return () => {
         window.removeEventListener("resize", sizeSides);
         root.remove();
@@ -214,7 +215,7 @@ export default function LeftBlueprintScroll() {
         leftTl.to(leftFragments, { strokeDashoffset: 0, duration: 1.0, stagger: 0.18 }, 0.35);
         leftTl.to(leftDetail, { strokeDashoffset: 0, duration: 0.75, stagger: 0.16 }, 1.4);
         leftTl.to(leftDims, { strokeDashoffset: 0, duration: 0.65, stagger: 0.20 }, 2.4);
-        leftTl.to(leftLabels, { opacity: 0.20, duration: 0.45, stagger: 0.12 }, 3.0);
+        leftTl.to(leftLabels, { opacity: 0.24, duration: 0.45, stagger: 0.12 }, 3.0);
         leftTl.to(paths.filter((path) => path.closest(".left")), {
           strokeDasharray: (_index: number, target: SVGPathElement) => target.dataset.planDash || "5 7",
           duration: 0.45,
@@ -224,7 +225,7 @@ export default function LeftBlueprintScroll() {
         rightTl.to(rightFragments, { strokeDashoffset: 0, duration: 1.05, stagger: 0.19 }, 0.55);
         rightTl.to(rightDetail, { strokeDashoffset: 0, duration: 0.78, stagger: 0.17 }, 1.6);
         rightTl.to(rightDims, { strokeDashoffset: 0, duration: 0.68, stagger: 0.20 }, 2.65);
-        rightTl.to(rightLabels, { opacity: 0.20, duration: 0.45, stagger: 0.12 }, 3.2);
+        rightTl.to(rightLabels, { opacity: 0.24, duration: 0.45, stagger: 0.12 }, 3.2);
         rightTl.to(paths.filter((path) => path.closest(".right")), {
           strokeDasharray: (_index: number, target: SVGPathElement) => target.dataset.planDash || "5 7",
           duration: 0.45,
@@ -236,7 +237,7 @@ export default function LeftBlueprintScroll() {
           path.style.strokeDashoffset = "0";
           path.style.strokeDasharray = path.dataset.planDash || "5 7";
         });
-        labels.forEach((label) => (label.style.opacity = "0.20"));
+        labels.forEach((label) => (label.style.opacity = "0.24"));
       });
 
     return () => {
