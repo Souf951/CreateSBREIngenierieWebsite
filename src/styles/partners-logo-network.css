@@ -130,8 +130,9 @@
     align-items: center !important;
   }
 
+  /* Headline intentionally sits high in the hero while the model/network stay lower. */
   .pr-page .pr-hero-copy {
-    transform: translateY(-128px) !important;
+    transform: translateY(-245px) !important;
   }
 
   .pr-page .pr-hero-visual {
