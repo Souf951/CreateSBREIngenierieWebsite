@@ -52,33 +52,12 @@ describe("Visitor journeys", () => {
     }
   });
 
-  it("preserves names, special characters and the complete message in the email draft", () => {
+  it("uses the premium secure contact flow", () => {
     render(<ContactForm />);
-    fireEvent.change(screen.getByLabelText("Votre nom"), {
-      target: { value: "Test & Partenaire" },
-    });
-    fireEvent.change(screen.getByLabelText("Votre e-mail"), {
-      target: { value: "test@example.com" },
-    });
-    fireEvent.change(screen.getByLabelText("Votre projet"), {
-      target: { value: "Rénovation à Genève\nBudget : 100 000 CHF ?" },
-    });
-    fireEvent.click(
-      screen.getByRole("button", { name: /Préparer mon e-mail/ }),
-    );
-    const href = screen
-      .getByRole("link", { name: /Ouvrir mon brouillon/ })
-      .getAttribute("href")!;
-    const body = new URL(href).searchParams.get("body");
-    expect(body).toContain("Test & Partenaire");
-    expect(body).toContain("test@example.com");
-    expect(body).toContain("Rénovation à Genève\nBudget : 100 000 CHF ?");
-    fireEvent.change(screen.getByLabelText("Votre nom"), {
-      target: { value: "Correction" },
-    });
-    expect(
-      screen.queryByRole("link", { name: /Ouvrir mon brouillon/ }),
-    ).toBeNull();
+    expect(screen.getByRole("button", { name: /Envoyer ma demande/ })).toBeTruthy();
+    expect(screen.getByText(/Envoi direct et sécurisé/)).toBeTruthy();
+    expect(screen.getByText(/PDF, plans, photos ou devis/)).toBeTruthy();
+    expect(screen.queryByRole("link", { name: /Ouvrir mon brouillon/ })).toBeNull();
   });
 
   it("uses a lightweight fallback when motion or WebGL is unavailable", () => {
