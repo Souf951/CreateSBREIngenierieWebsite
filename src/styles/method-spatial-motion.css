@@ -135,6 +135,21 @@
   box-shadow: none !important;
 }
 
+/* Slightly larger descriptive copy for readability without changing hierarchy. */
+.method-section.method-spatial-ready .method-intro > p:not(.eyebrow) {
+  font-size: 15.5px !important;
+  line-height: 1.75;
+}
+
+.method-section.method-spatial-ready .method-list details > div {
+  font-size: 15px !important;
+  line-height: 1.72;
+}
+
+.method-section.method-spatial-ready .method-list details > div small {
+  font-size: 11px !important;
+}
+
 .method-section.method-spatial-ready .method-intro .button {
   box-shadow: 0 16px 36px rgba(0,0,0,.16);
 }
