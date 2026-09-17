@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import tertiaire from "../../../media/1721891231854__1_.webp";
 import logements from "../../../media/1741613187041.webp";
 import villa from "../../../media/3df6b3d580c913fd1f20bbd13b327fd4.webp";
+import "../../../styles/projects-dynamic-background.css";
 
 const backgrounds = [tertiaire, logements, villa];
 
