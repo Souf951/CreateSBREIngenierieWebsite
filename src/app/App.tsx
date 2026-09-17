@@ -37,6 +37,7 @@ import PartnersSharedChrome from "./components/premium/PartnersSharedChrome";
 import FaqPunctuationGuard from "./components/premium/FaqPunctuationGuard";
 import FaqArchitecturalEnhancer from "./components/premium/FaqArchitecturalEnhancer";
 import HeaderKineticTriangles from "./components/premium/HeaderKineticTriangles";
+import LeftBlueprintScroll from "./components/premium/LeftBlueprintScroll";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
 import "../styles/dark-logo.css";
@@ -214,6 +215,7 @@ export default function App() {
           <RouteContact />
           <ScrollToTop />
           <HeaderKineticTriangles />
+          <LeftBlueprintScroll />
           <HomeCopyGuard />
           <ExpertiseSpatialCards />
           <MethodAccordionGuard />
