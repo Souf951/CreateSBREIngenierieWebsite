@@ -4,7 +4,8 @@
   overflow: hidden;
   display: grid;
   grid-template-columns: minmax(250px, .82fr) minmax(520px, 1.45fr);
-  gap: clamp(20px, 2.4vw, 36px);
+  column-gap: clamp(20px, 2.4vw, 36px);
+  row-gap: 0;
   align-items: start;
   min-height: 0;
   padding: clamp(28px, 2.8vw, 42px) 4.5%;
@@ -183,7 +184,8 @@
 @media (max-width: 1050px) {
   .premium-site .faq-section.faq-architectural {
     grid-template-columns: minmax(230px, .78fr) minmax(0, 1.35fr);
-    gap: 22px;
+    column-gap: 22px;
+    row-gap: 0;
   }
 }
 
