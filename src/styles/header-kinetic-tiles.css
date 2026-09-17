@@ -1,4 +1,4 @@
-/* Homepage header — JS-driven kinetic triangular skin */
+/* Homepage header — JS-driven animated point cloud */
 .premium-site .site-header {
   isolation: isolate;
   overflow: hidden;
@@ -6,113 +6,66 @@
   top: auto !important;
 }
 
-/* Remove the old CSS-only wave completely. */
+/* Remove previous decorative pseudo animation. */
 .premium-site .site-header::after {
   display: none !important;
   content: none !important;
   animation: none !important;
 }
 
-/* Fine architectural guide mesh visible at rest. */
+/* Very subtle architectural base so the header never feels empty. */
 .premium-site .site-header::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: .16;
-  background-image:
-    linear-gradient(30deg, transparent 24%, rgba(8,72,52,.065) 25%, rgba(8,72,52,.065) 26%, transparent 27%, transparent 74%, rgba(8,72,52,.065) 75%, rgba(8,72,52,.065) 76%, transparent 77%),
-    linear-gradient(-30deg, transparent 24%, rgba(8,72,52,.05) 25%, rgba(8,72,52,.05) 26%, transparent 27%, transparent 74%, rgba(8,72,52,.05) 75%, rgba(8,72,52,.05) 76%, transparent 77%);
-  background-size: 28px 48px;
-  background-position: 0 0, 14px 24px;
+  opacity: .22;
+  background:
+    radial-gradient(circle at 18% 45%, rgba(12,82,60,.08), transparent 28%),
+    radial-gradient(circle at 82% 55%, rgba(12,82,60,.055), transparent 30%),
+    linear-gradient(90deg, rgba(255,255,255,.28), rgba(255,255,255,0));
 }
 
-/* JavaScript inserts this layer directly into the homepage header. */
-.premium-site .site-header .sbre-kinetic-triangles {
+.premium-site .site-header .sbre-point-cloud {
   position: absolute;
-  inset: -6px -8px;
+  inset: 0;
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
-  perspective: 760px;
-  background: transparent;
-  transition: background-color 220ms ease;
 }
 
-/* Once every facet is active, fill the tiny interstitial seams too. */
-.premium-site .site-header .sbre-kinetic-triangles.is-full-green {
-  background: #0b513d;
-}
-
-.premium-site .site-header .sbre-kinetic-triangle {
+.premium-site .site-header .sbre-point {
   position: absolute;
-  left: var(--x);
-  top: var(--y);
-  width: clamp(27px, 2.72vw, 41px);
-  aspect-ratio: 1 / .866;
-  clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-  background: rgba(249,249,244,.78);
-  opacity: .52;
-  transform-origin: 50% 55%;
-  transform:
-    translate(-14%, -14%)
-    rotate(calc(var(--flip) * 180deg))
-    rotateY(0deg)
-    scale(1.01);
-  transition:
-    transform 470ms cubic-bezier(.22,.75,.2,1),
-    background-color 320ms ease,
-    opacity 320ms ease,
-    filter 470ms ease;
-  filter: drop-shadow(0 0 0 rgba(5,54,39,0));
-  will-change: transform, background-color, opacity;
+  border-radius: 999px;
+  background: #155e49;
+  transform: translate3d(0,0,0) scale(1);
+  transform-origin: 50% 50%;
+  will-change: transform, opacity, filter, box-shadow;
 }
 
-/* Offset alternating rows so facets interlock more tightly. */
-.premium-site .site-header .sbre-kinetic-triangle[style*="--row: 1"],
-.premium-site .site-header .sbre-kinetic-triangle[style*="--row: 3"] {
-  margin-left: 1.22vw;
-}
-
-.premium-site .site-header .sbre-kinetic-triangle.is-green {
-  background: #0b513d;
-  opacity: .82;
-  transform:
-    translate(-14%, -14%)
-    rotate(calc(var(--flip) * 180deg))
-    rotateY(178deg)
-    scale(1.04);
-  filter: drop-shadow(0 3px 6px rgba(5,54,39,.06));
-}
-
-/* Four restrained SBRE tones: darker, less luminous, still dimensional. */
-.premium-site .site-header .sbre-kinetic-triangle.is-green[style*="--tone: 1"] { background: #0e5a43; }
-.premium-site .site-header .sbre-kinetic-triangle.is-green[style*="--tone: 2"] { background: #083f31; }
-.premium-site .site-header .sbre-kinetic-triangle.is-green[style*="--tone: 3"] { background: #116249; }
-
-/* Navigation always remains above the kinetic façade. */
-.premium-site .site-header > *:not(.sbre-kinetic-triangles) {
+/* Keep all real navigation above the animated cloud. */
+.premium-site .site-header > *:not(.sbre-point-cloud) {
   position: relative;
   z-index: 3;
 }
 
-/* Give the brand a clean architectural plaque so the logo never gets lost. */
+/* Clean white plaque for the logo. */
 .premium-site .site-header .brand {
   padding: 6px 10px;
-  border: 1px solid rgba(255,255,255,.92);
-  background: rgba(255,255,255,.92);
-  box-shadow: 0 5px 18px rgba(4,38,28,.06);
-  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255,255,255,.96);
+  background: rgba(255,255,255,.94);
+  box-shadow: 0 5px 18px rgba(4,38,28,.055);
+  backdrop-filter: blur(5px);
 }
 
-/* Keep navigation readable during the full-green phase. */
+/* Navigation stays readable while the illuminated cloud passes behind it. */
 .premium-site .site-header .desktop-nav {
   padding: 7px 10px;
-  border: 1px solid rgba(255,255,255,.72);
-  background: rgba(255,255,255,.78);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 4px 14px rgba(5,48,35,.045);
+  border: 1px solid rgba(255,255,255,.70);
+  background: rgba(255,255,255,.80);
+  backdrop-filter: blur(9px);
+  box-shadow: 0 4px 14px rgba(5,48,35,.04);
 }
 
 .premium-site .site-header .desktop-nav button,
@@ -123,28 +76,18 @@
 }
 
 .premium-site .site-header .header-contact {
-  background: rgba(255,255,255,.84) !important;
-  border-color: rgba(16,63,49,.45) !important;
-  backdrop-filter: blur(8px);
+  background: rgba(255,255,255,.86) !important;
+  border-color: rgba(16,63,49,.42) !important;
+  backdrop-filter: blur(9px);
 }
 
 .theme-dark .premium-site .site-header::before {
-  opacity: .10;
-  filter: brightness(1.18);
+  opacity: .12;
+  filter: brightness(1.1);
 }
 
-.theme-dark .premium-site .site-header .sbre-kinetic-triangle {
-  background: rgba(18,30,25,.70);
-  opacity: .40;
-}
-
-.theme-dark .premium-site .site-header .sbre-kinetic-triangle.is-green {
-  background: #0b503c;
-  opacity: .76;
-}
-
-.theme-dark .premium-site .site-header .sbre-kinetic-triangles.is-full-green {
-  background: #0b503c;
+.theme-dark .premium-site .site-header .sbre-point {
+  background: #7fb7a3;
 }
 
 .theme-dark .premium-site .site-header .brand,
@@ -154,14 +97,12 @@
 }
 
 @media (max-width: 900px), (prefers-reduced-motion: reduce) {
-  .premium-site .site-header .sbre-kinetic-triangles {
+  .premium-site .site-header .sbre-point-cloud {
     display: none;
   }
 
   .premium-site .site-header::before {
     opacity: .10;
-    background-size: 42px 72px;
-    background-position: 0 0, 21px 36px;
   }
 
   .premium-site .site-header .brand {
