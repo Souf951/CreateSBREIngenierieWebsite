@@ -1,0 +1,354 @@
+/* Stable visual polish for the Partners page. Pure CSS: no DOM mutation, no global JS. */
+
+.pr-collaboration {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-top: clamp(72px, 7vw, 108px);
+  padding-bottom: clamp(72px, 7vw, 108px);
+  background:
+    radial-gradient(circle at 18% 14%, rgba(20, 108, 72, 0.07), transparent 26%),
+    radial-gradient(circle at 82% 70%, rgba(20, 108, 72, 0.055), transparent 30%),
+    var(--pr-paper);
+}
+
+.pr-collaboration::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  opacity: 0.58;
+  background-image:
+    linear-gradient(rgba(17, 93, 61, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 93, 61, 0.07) 1px, transparent 1px),
+    linear-gradient(125deg, transparent 0 46%, rgba(17, 93, 61, 0.09) 47%, transparent 48% 100%);
+  background-size: 52px 52px, 52px 52px, 240px 240px;
+  animation: pr-blueprint-drift 24s linear infinite;
+}
+
+.pr-collaboration::after {
+  content: "RÉSEAU";
+  position: absolute;
+  right: clamp(24px, 6vw, 100px);
+  top: clamp(84px, 10vw, 150px);
+  z-index: -1;
+  font-size: clamp(90px, 15vw, 230px);
+  line-height: 0.8;
+  font-weight: 500;
+  letter-spacing: -0.07em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(18, 91, 60, 0.06);
+  pointer-events: none;
+  user-select: none;
+}
+
+@keyframes pr-blueprint-drift {
+  from { background-position: 0 0, 0 0, 0 0; }
+  to { background-position: 52px 52px, 52px 52px, 120px 120px; }
+}
+
+.pr-collaboration .pr-section-heading {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 42px;
+  grid-template-columns: 0.58fr 1.5fr 0.78fr;
+}
+
+.pr-collaboration .pr-section-heading h2 {
+  max-width: 760px;
+}
+
+.pr-profile-list {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.pr-profile {
+  position: relative;
+  overflow: hidden;
+  min-height: 260px;
+  display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
+  grid-template-areas:
+    "index title"
+    ". copy";
+  align-content: start;
+  gap: 22px 20px;
+  padding: clamp(24px, 2.5vw, 36px);
+  border: 1px solid transparent;
+  border-radius: 18px;
+  background:
+    linear-gradient(rgba(250, 250, 245, 0.92), rgba(250, 250, 245, 0.92)) padding-box,
+    linear-gradient(115deg, rgba(16, 96, 64, 0.12), rgba(16, 96, 64, 0.28), rgba(16, 96, 64, 0.08)) border-box;
+  box-shadow: 0 18px 45px rgba(18, 60, 42, 0.045);
+  transition:
+    box-shadow 260ms ease,
+    background-color 260ms ease,
+    border-color 260ms ease;
+}
+
+.theme-dark .pr-profile {
+  background:
+    linear-gradient(rgba(24, 48, 38, 0.92), rgba(24, 48, 38, 0.92)) padding-box,
+    linear-gradient(115deg, rgba(165, 217, 181, 0.18), rgba(165, 217, 181, 0.34), rgba(165, 217, 181, 0.09)) border-box;
+}
+
+.pr-profile:hover {
+  background:
+    linear-gradient(rgba(250, 250, 245, 0.96), rgba(250, 250, 245, 0.96)) padding-box,
+    linear-gradient(115deg,
+      rgba(30, 133, 86, 0.18) 0%,
+      rgba(82, 229, 155, 0.96) 18%,
+      rgba(17, 111, 72, 0.3) 33%,
+      rgba(16, 96, 64, 0.14) 48%,
+      rgba(87, 236, 163, 0.95) 68%,
+      rgba(18, 105, 69, 0.2) 83%,
+      rgba(30, 133, 86, 0.18) 100%) border-box;
+  background-size: 100% 100%, 260% 260%;
+  box-shadow:
+    0 22px 54px rgba(12, 87, 56, 0.1),
+    0 0 0 1px rgba(55, 219, 139, 0.12),
+    0 0 28px rgba(57, 221, 141, 0.08);
+  animation: pr-border-snake 2.8s linear infinite;
+}
+
+.theme-dark .pr-profile:hover {
+  background:
+    linear-gradient(rgba(24, 48, 38, 0.96), rgba(24, 48, 38, 0.96)) padding-box,
+    linear-gradient(115deg,
+      rgba(137, 255, 186, 0.15) 0%,
+      rgba(126, 255, 184, 0.98) 18%,
+      rgba(89, 202, 139, 0.34) 33%,
+      rgba(160, 224, 179, 0.12) 48%,
+      rgba(126, 255, 184, 0.96) 68%,
+      rgba(89, 202, 139, 0.22) 83%,
+      rgba(137, 255, 186, 0.15) 100%) border-box;
+  background-size: 100% 100%, 260% 260%;
+}
+
+@keyframes pr-border-snake {
+  0% { background-position: 0 0, 0% 0%; }
+  25% { background-position: 0 0, 100% 0%; }
+  50% { background-position: 0 0, 100% 100%; }
+  75% { background-position: 0 0, 0% 100%; }
+  100% { background-position: 0 0, 0% 0%; }
+}
+
+.pr-profile::after {
+  content: "";
+  position: absolute;
+  right: -60px;
+  bottom: -86px;
+  width: 190px;
+  height: 190px;
+  border: 1px solid rgba(18, 98, 65, 0.075);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.pr-profile-index {
+  grid-area: index;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(14, 105, 68, 0.3);
+  border-radius: 999px;
+  padding: 0;
+  color: var(--pr-accent);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.pr-profile-title {
+  grid-area: title;
+  min-width: 0;
+}
+
+.pr-profile-title h3 {
+  font-size: clamp(25px, 2.2vw, 36px);
+}
+
+.pr-profile-title p {
+  margin-top: 8px;
+}
+
+.pr-profile-copy {
+  grid-area: copy;
+  min-width: 0;
+}
+
+.pr-profile-copy > p {
+  max-width: 520px;
+}
+
+.pr-profile-copy > span {
+  width: fit-content;
+  max-width: 100%;
+  border: 1px solid var(--pr-line);
+  border-radius: 999px;
+  padding: 7px 10px;
+  margin: 18px 0 18px;
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.pr-profile-copy .pr-link {
+  margin-top: auto;
+}
+
+.pr-form-section {
+  position: relative;
+  overflow: hidden;
+  align-items: start;
+  gap: clamp(38px, 7vw, 100px);
+  background:
+    radial-gradient(circle at 78% 18%, rgba(18, 109, 72, 0.07), transparent 26%),
+    linear-gradient(180deg, rgba(23, 83, 54, 0.025), transparent 28%),
+    var(--pr-paper);
+}
+
+.pr-form-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.32;
+  background-image:
+    linear-gradient(rgba(18, 95, 62, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(18, 95, 62, 0.055) 1px, transparent 1px);
+  background-size: 70px 70px;
+}
+
+.pr-form-intro,
+.pr-form {
+  position: relative;
+  z-index: 1;
+}
+
+.pr-form-intro::after {
+  content: "01  PROFIL  ·  02  ÉTUDE SBRE  ·  03  MISE EN RELATION";
+  display: block;
+  margin-top: 42px;
+  padding-top: 20px;
+  border-top: 1px solid var(--pr-line);
+  font-size: 9px;
+  line-height: 1.7;
+  letter-spacing: 0.13em;
+  color: var(--pr-muted);
+}
+
+.pr-form-intro > .pr-form-aside {
+  margin-top: 34px !important;
+  padding: 16px 18px 16px 42px;
+  border: 1px solid var(--pr-line);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.3);
+  position: relative;
+}
+
+.pr-form-intro > .pr-form-aside::before {
+  content: "✓";
+  position: absolute;
+  left: 16px;
+  top: 14px;
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--pr-accent);
+  color: #fff;
+  font-size: 11px;
+}
+
+.pr-form {
+  padding: clamp(26px, 3vw, 44px);
+  border: 1px solid rgba(16, 96, 64, 0.18);
+  border-radius: 22px;
+  background: rgba(250, 250, 245, 0.86);
+  box-shadow: 0 24px 70px rgba(17, 64, 43, 0.08);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.theme-dark .pr-form {
+  background: rgba(20, 42, 33, 0.88);
+  border-color: rgba(166, 214, 181, 0.18);
+}
+
+.pr-form label {
+  gap: 7px;
+  font-weight: 500;
+}
+
+.pr-form :where(input, textarea, select) {
+  border: 1px solid rgba(18, 93, 61, 0.16);
+  border-radius: 12px;
+  padding: 13px 14px;
+  background: rgba(255, 255, 255, 0.48);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.theme-dark .pr-form :where(input, textarea, select) {
+  background: rgba(255, 255, 255, 0.035);
+  border-color: rgba(215, 235, 220, 0.14);
+}
+
+.pr-form :where(input, textarea, select):focus {
+  outline: none;
+  border-color: rgba(29, 143, 92, 0.72);
+  box-shadow: 0 0 0 3px rgba(57, 210, 132, 0.12), 0 0 22px rgba(52, 205, 126, 0.08);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.theme-dark .pr-form :where(input, textarea, select):focus {
+  background: rgba(255, 255, 255, 0.065);
+}
+
+.pr-form .pr-button {
+  align-self: stretch;
+  width: 100%;
+  min-height: 54px;
+  border-radius: 12px;
+}
+
+.pr-form-note {
+  padding-top: 4px;
+}
+
+@media (max-width: 899px) {
+  .pr-profile-list {
+    grid-template-columns: 1fr;
+  }
+
+  .pr-profile {
+    min-height: 0;
+  }
+
+  .pr-collaboration .pr-section-heading {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .pr-collaboration .pr-section-heading > p:last-child {
+    grid-column: auto;
+  }
+
+  .pr-form-section {
+    gap: 36px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-collaboration::before,
+  .pr-profile:hover {
+    animation: none !important;
+  }
+}
