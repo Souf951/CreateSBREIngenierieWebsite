@@ -14,7 +14,8 @@ declare global {
 const LEFT_SVG = `
 <svg viewBox="0 0 140 1000" preserveAspectRatio="none" aria-hidden="true">
   <g class="bp-serpentine">
-    <path d="M28 10 H104 V92 H62 V166 H116 V244 H46 V330 H96 V408 H34 V500 H108 V588 H58 V674 H118 V760 H42 V848 H94 V930 H30 V992" />
+    <path class="bp-serpentine-base" d="M28 10 H104 V92 H62 V166 H116 V244 H46 V330 H96 V408 H34 V500 H108 V588 H58 V674 H118 V760 H42 V848 H94 V930 H30 V992" />
+    <path class="bp-serpentine-wave" pathLength="100" d="M28 10 H104 V92 H62 V166 H116 V244 H46 V330 H96 V408 H34 V500 H108 V588 H58 V674 H118 V760 H42 V848 H94 V930 H30 V992" />
   </g>
   <g class="bp-structure">
     <path d="M62 92 V132 H96 V166" />
@@ -45,17 +46,18 @@ const LEFT_SVG = `
     <path d="M16 944 H120 M20 938 V950 M116 938 V950" />
   </g>
   <g class="bp-labels">
-    <text x="18" y="108">4.20</text>
-    <text x="18" y="378">6.80</text>
-    <text x="18" y="638">5.40</text>
-    <text x="20" y="932">3.60</text>
+    <text x="18" y="108">4.20 m</text>
+    <text x="18" y="378">6.80 m</text>
+    <text x="18" y="638">5.40 m</text>
+    <text x="20" y="932">3.60 m</text>
   </g>
 </svg>`;
 
 const RIGHT_SVG = `
 <svg viewBox="0 0 140 1000" preserveAspectRatio="none" aria-hidden="true">
   <g class="bp-serpentine">
-    <path data-direction="reverse" d="M108 12 V86 H54 V162 H118 V242 H72 V318 H24 V402 H88 V480 H40 V566 H112 V650 H66 V736 H20 V824 H84 V906 H44 V990" />
+    <path class="bp-serpentine-base" d="M108 12 V86 H54 V162 H118 V242 H72 V318 H24 V402 H88 V480 H40 V566 H112 V650 H66 V736 H20 V824 H84 V906 H44 V990" />
+    <path class="bp-serpentine-wave" pathLength="100" data-direction="reverse" d="M108 12 V86 H54 V162 H118 V242 H72 V318 H24 V402 H88 V480 H40 V566 H112 V650 H66 V736 H20 V824 H84 V906 H44 V990" />
   </g>
   <g class="bp-structure">
     <path data-direction="reverse" d="M54 86 H24 V128 H76" />
@@ -88,10 +90,10 @@ const RIGHT_SVG = `
     <path d="M18 882 H124 M22 876 V888 M120 876 V888" />
   </g>
   <g class="bp-labels">
-    <text x="84" y="132">5.75</text>
-    <text x="80" y="358">4.90</text>
-    <text x="84" y="608">7.10</text>
-    <text x="80" y="870">3.25</text>
+    <text x="80" y="132">5.75 m</text>
+    <text x="78" y="358">4.90 m</text>
+    <text x="80" y="608">7.10 m</text>
+    <text x="78" y="870">3.25 m</text>
   </g>
 </svg>`;
 
@@ -134,16 +136,26 @@ export default function LeftBlueprintScroll() {
         .sbre-blueprint-side.right{right:0}
         .sbre-blueprint-side svg{display:block;width:100%;height:100%}
         .sbre-blueprint-side path{fill:none;stroke:#0a5c3d;stroke-width:1.05;vector-effect:non-scaling-stroke;stroke-linecap:square;stroke-linejoin:miter;opacity:.37}
-        .sbre-blueprint-side .bp-serpentine path{stroke-width:1.28;opacity:.46}
+        .sbre-blueprint-side .bp-serpentine-base{stroke-width:1.05;opacity:.17}
+        .sbre-blueprint-side .bp-serpentine-wave{stroke-width:1.7;opacity:.72;stroke-linecap:round;stroke-dasharray:18 82;animation:bp-wave-left 7.2s linear infinite;filter:drop-shadow(0 0 2px rgba(10,92,61,.14))}
+        .sbre-blueprint-side.right .bp-serpentine-wave{animation-name:bp-wave-right;animation-duration:8.4s}
         .sbre-blueprint-side .bp-detail path{stroke-width:.88;opacity:.24}
-        .sbre-blueprint-side .bp-dimensions path{stroke-width:.72;opacity:.19}
-        .sbre-blueprint-side text{fill:#0a5c3d;font:500 8px/1 Inter,Arial,sans-serif;letter-spacing:.08em;opacity:0}
+        .sbre-blueprint-side .bp-dimensions path{stroke-width:.78;opacity:.30;animation:bp-dim-pulse 7.2s ease-in-out infinite}
+        .sbre-blueprint-side.right .bp-dimensions path{animation-duration:8.4s;animation-delay:1.2s}
+        .sbre-blueprint-side text{fill:#0a5c3d;font:600 8px/1 Inter,Arial,sans-serif;letter-spacing:.06em;opacity:.30;animation:bp-label-pulse 7.2s ease-in-out infinite}
+        .sbre-blueprint-side.right text{animation-duration:8.4s;animation-delay:1.2s}
         .theme-dark .sbre-blueprint-side path{stroke:#fff;opacity:.29}
-        .theme-dark .sbre-blueprint-side .bp-serpentine path{opacity:.38}
+        .theme-dark .sbre-blueprint-side .bp-serpentine-base{opacity:.12}
+        .theme-dark .sbre-blueprint-side .bp-serpentine-wave{opacity:.62;filter:drop-shadow(0 0 2px rgba(255,255,255,.12))}
         .theme-dark .sbre-blueprint-side .bp-detail path{opacity:.20}
-        .theme-dark .sbre-blueprint-side .bp-dimensions path{opacity:.16}
+        .theme-dark .sbre-blueprint-side .bp-dimensions path{opacity:.22}
         .theme-dark .sbre-blueprint-side text{fill:#fff}
+        @keyframes bp-wave-left{from{stroke-dashoffset:0}to{stroke-dashoffset:-100}}
+        @keyframes bp-wave-right{from{stroke-dashoffset:0}to{stroke-dashoffset:100}}
+        @keyframes bp-dim-pulse{0%,100%{opacity:.14}38%,58%{opacity:.42}76%{opacity:.22}}
+        @keyframes bp-label-pulse{0%,100%{opacity:.18}42%,62%{opacity:.42}80%{opacity:.26}}
         @media(max-width:767px){.sbre-architectural-margins{display:none!important}}
+        @media(prefers-reduced-motion:reduce){.sbre-blueprint-side .bp-serpentine-wave,.sbre-blueprint-side .bp-dimensions path,.sbre-blueprint-side text{animation:none!important}}
       </style>
       <div class="sbre-blueprint-side left">${LEFT_SVG}</div>
       <div class="sbre-blueprint-side right">${RIGHT_SVG}</div>
@@ -175,7 +187,7 @@ export default function LeftBlueprintScroll() {
     sizeSides();
     window.addEventListener("resize", sizeSides, { passive: true });
 
-    const paths = Array.from(root.querySelectorAll<SVGPathElement>("path"));
+    const paths = Array.from(root.querySelectorAll<SVGPathElement>("path:not(.bp-serpentine-wave)"));
     const labels = Array.from(root.querySelectorAll<SVGTextElement>("text"));
 
     paths.forEach((path) => {
@@ -205,39 +217,32 @@ export default function LeftBlueprintScroll() {
       .then(() => {
         if (disposed || !window.gsap) return;
 
-        const leftSnake = Array.from(root.querySelectorAll<SVGPathElement>(".left .bp-serpentine path"));
         const leftStructure = Array.from(root.querySelectorAll<SVGPathElement>(".left .bp-structure path"));
         const leftDetail = Array.from(root.querySelectorAll<SVGPathElement>(".left .bp-detail path"));
         const leftDims = Array.from(root.querySelectorAll<SVGPathElement>(".left .bp-dimensions path"));
         const leftLabels = Array.from(root.querySelectorAll<SVGTextElement>(".left text"));
 
-        const rightSnake = Array.from(root.querySelectorAll<SVGPathElement>(".right .bp-serpentine path"));
         const rightStructure = Array.from(root.querySelectorAll<SVGPathElement>(".right .bp-structure path"));
         const rightDetail = Array.from(root.querySelectorAll<SVGPathElement>(".right .bp-detail path"));
         const rightDims = Array.from(root.querySelectorAll<SVGPathElement>(".right .bp-dimensions path"));
         const rightLabels = Array.from(root.querySelectorAll<SVGTextElement>(".right text"));
 
-        // LEFT: one continuous serpentine stroke leads the composition from top to bottom.
         const leftTl = window.gsap.timeline({ defaults: { ease: "power1.inOut" } });
-        leftTl.to(leftSnake, { strokeDashoffset: 0, duration: 5.8 }, 0.15);
-        leftTl.to(leftStructure, { strokeDashoffset: 0, duration: 1.15, stagger: 0.26 }, 1.4);
-        leftTl.to(leftDetail, { strokeDashoffset: 0, duration: 0.95, stagger: 0.22 }, 3.8);
-        leftTl.to(leftDims, { strokeDashoffset: 0, duration: 0.72, stagger: 0.24 }, 6.0);
-        leftTl.to(leftLabels, { opacity: 0.30, duration: 0.55, stagger: 0.16 }, 6.75);
+        leftTl.to(leftStructure, { strokeDashoffset: 0, duration: 1.15, stagger: 0.26 }, 0.45);
+        leftTl.to(leftDetail, { strokeDashoffset: 0, duration: 0.95, stagger: 0.22 }, 2.6);
+        leftTl.to(leftDims, { strokeDashoffset: 0, duration: 0.72, stagger: 0.24 }, 4.7);
+        leftTl.to(leftLabels, { opacity: 0.30, duration: 0.55, stagger: 0.16 }, 5.4);
 
-        // RIGHT: deliberately different — it starts from the bottom, builds structural modules,
-        // then the reverse serpentine joins them into one technical drawing.
         const rightTl = window.gsap.timeline({ defaults: { ease: "power1.inOut" } });
-        rightTl.to(rightStructure, { strokeDashoffset: 0, duration: 1.25, stagger: 0.30 }, 0.55);
-        rightTl.to(rightDetail, { strokeDashoffset: 0, duration: 0.95, stagger: 0.24 }, 2.55);
-        rightTl.to(rightSnake, { strokeDashoffset: 0, duration: 6.4 }, 3.0);
-        rightTl.to(rightDims, { strokeDashoffset: 0, duration: 0.76, stagger: 0.26 }, 7.65);
-        rightTl.to(rightLabels, { opacity: 0.30, duration: 0.55, stagger: 0.16 }, 8.5);
+        rightTl.to(rightStructure, { strokeDashoffset: 0, duration: 1.25, stagger: 0.30 }, 0.75);
+        rightTl.to(rightDetail, { strokeDashoffset: 0, duration: 0.95, stagger: 0.24 }, 2.85);
+        rightTl.to(rightDims, { strokeDashoffset: 0, duration: 0.76, stagger: 0.26 }, 5.0);
+        rightTl.to(rightLabels, { opacity: 0.30, duration: 0.55, stagger: 0.16 }, 5.8);
       })
       .catch(() => {
         if (disposed) return;
         paths.forEach((path) => {
-          path.style.transition = "stroke-dashoffset 6s ease";
+          path.style.transition = "stroke-dashoffset 4.5s ease";
           path.style.strokeDashoffset = "0";
         });
         labels.forEach((label) => (label.style.opacity = "0.30"));
