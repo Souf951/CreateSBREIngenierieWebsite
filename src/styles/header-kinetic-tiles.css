@@ -1,104 +1,155 @@
-/* Homepage header — kinetic architectural tile experiment */
+/* Homepage header — kinetic architectural triangular skin */
 .premium-site .site-header {
   isolation: isolate;
   overflow: hidden;
+  position: relative;
 }
 
-/* Fine architectural tessellation, almost invisible at rest. */
+/* Static equilateral-triangle mesh, almost invisible at rest. */
 .premium-site .site-header::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: .34;
+  opacity: .30;
   background-image:
     linear-gradient(30deg, transparent 24%, rgba(10,92,61,.08) 25%, rgba(10,92,61,.08) 26%, transparent 27%, transparent 74%, rgba(10,92,61,.08) 75%, rgba(10,92,61,.08) 76%, transparent 77%),
-    linear-gradient(-30deg, transparent 24%, rgba(10,92,61,.06) 25%, rgba(10,92,61,.06) 26%, transparent 27%, transparent 74%, rgba(10,92,61,.06) 75%, rgba(10,92,61,.06) 76%, transparent 77%);
-  background-size: 42px 72px;
-  background-position: 0 0, 21px 36px;
+    linear-gradient(-30deg, transparent 24%, rgba(10,92,61,.065) 25%, rgba(10,92,61,.065) 26%, transparent 27%, transparent 74%, rgba(10,92,61,.065) 75%, rgba(10,92,61,.065) 76%, transparent 77%);
+  background-size: 38px 66px;
+  background-position: 0 0, 19px 33px;
 }
 
-/* Moving green 'flip wave'. The tessellation becomes visible only inside the travelling band. */
+/* Green triangular skin. It is revealed through several independent "activation islands". */
 .premium-site .site-header::after {
   content: "";
   position: absolute;
-  top: -38%;
-  bottom: -38%;
-  left: -6%;
-  width: 42%;
+  inset: -1px;
   z-index: 0;
   pointer-events: none;
-  opacity: 0;
-  transform-origin: 50% 50%;
+  opacity: 1;
+
   background-image:
-    linear-gradient(30deg, transparent 23%, rgba(7,88,63,.82) 24%, rgba(7,88,63,.82) 48%, transparent 49%, transparent 73%, rgba(13,112,77,.66) 74%, rgba(13,112,77,.66) 98%, transparent 99%),
-    linear-gradient(-30deg, transparent 23%, rgba(11,99,69,.48) 24%, rgba(11,99,69,.48) 48%, transparent 49%, transparent 73%, rgba(7,88,63,.72) 74%, rgba(7,88,63,.72) 98%, transparent 99%);
-  background-size: 42px 72px;
-  background-position: 0 0, 21px 36px;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 76%, transparent 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, #000 18%, #000 76%, transparent 100%);
-  filter: drop-shadow(0 10px 18px rgba(8,72,52,.08));
-  animation: sbreHeaderTileWave 9s cubic-bezier(.55,.08,.25,1) infinite;
+    linear-gradient(30deg, transparent 23%, rgba(9,96,66,.92) 24%, rgba(9,96,66,.92) 48%, transparent 49%, transparent 73%, rgba(15,119,81,.78) 74%, rgba(15,119,81,.78) 98%, transparent 99%),
+    linear-gradient(-30deg, transparent 23%, rgba(13,108,74,.72) 24%, rgba(13,108,74,.72) 48%, transparent 49%, transparent 73%, rgba(6,82,58,.90) 74%, rgba(6,82,58,.90) 98%, transparent 99%);
+  background-size: 38px 66px;
+  background-position: 0 0, 19px 33px;
+
+  -webkit-mask-image:
+    radial-gradient(circle at 8% 28%, #000 0 0, transparent 0),
+    radial-gradient(circle at 23% 74%, #000 0 0, transparent 0),
+    radial-gradient(circle at 38% 18%, #000 0 0, transparent 0),
+    radial-gradient(circle at 52% 68%, #000 0 0, transparent 0),
+    radial-gradient(circle at 67% 32%, #000 0 0, transparent 0),
+    radial-gradient(circle at 81% 76%, #000 0 0, transparent 0),
+    radial-gradient(circle at 94% 22%, #000 0 0, transparent 0);
+  mask-image:
+    radial-gradient(circle at 8% 28%, #000 0 0, transparent 0),
+    radial-gradient(circle at 23% 74%, #000 0 0, transparent 0),
+    radial-gradient(circle at 38% 18%, #000 0 0, transparent 0),
+    radial-gradient(circle at 52% 68%, #000 0 0, transparent 0),
+    radial-gradient(circle at 67% 32%, #000 0 0, transparent 0),
+    radial-gradient(circle at 81% 76%, #000 0 0, transparent 0),
+    radial-gradient(circle at 94% 22%, #000 0 0, transparent 0);
+
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-composite: source-over;
+  mask-composite: add;
+
+  filter: drop-shadow(0 7px 12px rgba(8,72,52,.05));
+  animation: sbreHeaderScatteredTiles 12.8s cubic-bezier(.42,0,.2,1) infinite;
 }
 
-/* Keep actual navigation above the animated skin. */
+/* Keep actual navigation above the animated architectural skin. */
 .premium-site .site-header > * {
   position: relative;
   z-index: 2;
 }
 
-@keyframes sbreHeaderTileWave {
+/*
+  Several centres bloom at different rates. The effect is deliberately non-linear:
+  upper-left / lower-right / centre / lower-left / upper-right, then total fill.
+  At the end the same islands contract at different speeds back to white.
+*/
+@keyframes sbreHeaderScatteredTiles {
   0%, 7% {
-    opacity: 0;
-    transform: translateX(-120%) skewX(-8deg) rotateY(68deg) scaleY(.84);
+    -webkit-mask-size: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+    mask-size: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+    opacity: .98;
+    transform: perspective(500px) rotateX(0deg);
   }
-  12% {
-    opacity: .74;
+
+  14% {
+    -webkit-mask-size: 27% 110%, 0 0, 0 0, 0 0, 18% 72%, 0 0, 0 0;
+    mask-size: 27% 110%, 0 0, 0 0, 0 0, 18% 72%, 0 0, 0 0;
+    transform: perspective(500px) rotateX(.8deg);
   }
-  34% {
-    opacity: .88;
-    transform: translateX(245%) skewX(5deg) rotateY(0deg) scaleY(1);
+
+  22% {
+    -webkit-mask-size: 38% 150%, 24% 98%, 0 0, 22% 86%, 29% 118%, 0 0, 0 0;
+    mask-size: 38% 150%, 24% 98%, 0 0, 22% 86%, 29% 118%, 0 0, 0 0;
+    transform: perspective(500px) rotateX(0deg);
   }
-  43% {
-    opacity: .18;
-    transform: translateX(270%) skewX(3deg) rotateY(-20deg) scaleY(.92);
+
+  31% {
+    -webkit-mask-size: 54% 190%, 38% 145%, 30% 118%, 37% 140%, 44% 160%, 25% 100%, 18% 74%;
+    mask-size: 54% 190%, 38% 145%, 30% 118%, 37% 140%, 44% 160%, 25% 100%, 18% 74%;
   }
-  57% {
-    opacity: 0;
-    transform: translateX(270%) skewX(3deg) rotateY(-20deg) scaleY(.92);
+
+  42% {
+    -webkit-mask-size: 74% 240%, 56% 205%, 49% 180%, 59% 210%, 63% 220%, 49% 182%, 42% 160%;
+    mask-size: 74% 240%, 56% 205%, 49% 180%, 59% 210%, 63% 220%, 49% 182%, 42% 160%;
   }
-  64% {
-    opacity: .18;
+
+  51%, 61% {
+    -webkit-mask-size: 165% 480%, 165% 480%, 165% 480%, 165% 480%, 165% 480%, 165% 480%, 165% 480%;
+    mask-size: 165% 480%, 165% 480%, 165% 480%, 165% 480%, 165% 480%, 165% 480%, 165% 480%;
+    opacity: 1;
+    transform: perspective(500px) rotateX(0deg);
   }
+
+  70% {
+    -webkit-mask-size: 130% 390%, 150% 450%, 124% 370%, 148% 440%, 118% 360%, 142% 420%, 126% 380%;
+    mask-size: 130% 390%, 150% 450%, 124% 370%, 148% 440%, 118% 360%, 142% 420%, 126% 380%;
+  }
+
+  79% {
+    -webkit-mask-size: 82% 270%, 101% 320%, 70% 240%, 96% 310%, 62% 220%, 90% 300%, 74% 250%;
+    mask-size: 82% 270%, 101% 320%, 70% 240%, 96% 310%, 62% 220%, 90% 300%, 74% 250%;
+  }
+
   88% {
-    opacity: .68;
-    transform: translateX(-120%) skewX(-6deg) rotateY(22deg) scaleY(.9);
+    -webkit-mask-size: 34% 135%, 48% 170%, 25% 100%, 42% 158%, 18% 82%, 35% 142%, 28% 112%;
+    mask-size: 34% 135%, 48% 170%, 25% 100%, 42% 158%, 18% 82%, 35% 142%, 28% 112%;
+    opacity: .94;
   }
-  94%, 100% {
+
+  96%, 100% {
+    -webkit-mask-size: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+    mask-size: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
     opacity: 0;
-    transform: translateX(-138%) skewX(-8deg) rotateY(68deg) scaleY(.84);
   }
 }
 
-/* Dark mode: the same wave is more restrained and lighter. */
+/* Dark mode: same architecture, slightly softer so the menu stays dominant. */
 .theme-dark .premium-site .site-header::before {
-  opacity: .18;
+  opacity: .16;
   filter: brightness(1.35);
 }
 
 .theme-dark .premium-site .site-header::after {
-  opacity: 0;
-  filter: brightness(1.18) saturate(.9);
+  filter: brightness(1.12) saturate(.88);
 }
 
 @media (max-width: 900px), (prefers-reduced-motion: reduce) {
   .premium-site .site-header::after {
     display: none;
   }
+
   .premium-site .site-header::before {
-    opacity: .16;
-    background-size: 54px 92px;
-    background-position: 0 0, 27px 46px;
+    opacity: .14;
+    background-size: 50px 86px;
+    background-position: 0 0, 25px 43px;
   }
 }
