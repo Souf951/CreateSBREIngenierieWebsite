@@ -1,0 +1,83 @@
+.projects-section.projects-bg-enhanced {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #082d23;
+}
+
+.projects-section.projects-bg-enhanced > *:not(.projects-dynamic-backdrop) {
+  position: relative;
+  z-index: 2;
+}
+
+.projects-dynamic-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background: #082d23;
+}
+
+.projects-dynamic-layer {
+  position: absolute;
+  inset: -4%;
+  background-position: center;
+  background-size: cover;
+  opacity: 0;
+  transform: scale(1.045);
+  filter: saturate(.78) contrast(1.02) brightness(.62);
+  transition:
+    opacity 900ms cubic-bezier(.2,.8,.2,1),
+    transform 1800ms cubic-bezier(.2,.8,.2,1);
+  will-change: opacity, transform;
+}
+
+.projects-dynamic-layer.is-active {
+  opacity: .52;
+  transform: scale(1.015);
+}
+
+.projects-dynamic-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(4,34,26,.88) 0%, rgba(5,39,30,.72) 42%, rgba(5,39,30,.78) 100%),
+    linear-gradient(180deg, rgba(5,34,27,.24), rgba(4,27,22,.72));
+  box-shadow: inset 0 0 150px rgba(2,20,15,.32);
+}
+
+.projects-section.projects-bg-enhanced .section-heading,
+.projects-section.projects-bg-enhanced .projects-grid {
+  position: relative;
+  z-index: 2;
+}
+
+.projects-section.projects-bg-enhanced .project-card {
+  transition:
+    transform .5s cubic-bezier(.2,.8,.2,1),
+    box-shadow .5s ease,
+    opacity .35s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .projects-section.projects-bg-enhanced .projects-grid:hover .project-card:not(:hover) {
+    opacity: .84;
+  }
+
+  .projects-section.projects-bg-enhanced .project-card:hover {
+    transform: translateY(-8px) scale(1.012);
+    box-shadow: 0 28px 60px rgba(0,0,0,.22);
+  }
+}
+
+@media (max-width: 800px), (prefers-reduced-motion: reduce) {
+  .projects-dynamic-layer {
+    transition: opacity .45s ease;
+    transform: none !important;
+  }
+
+  .projects-dynamic-layer.is-active {
+    opacity: .42;
+  }
+}
