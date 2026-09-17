@@ -50,35 +50,118 @@
   z-index: 3;
 }
 
-/* Clean white plaque for the logo. */
+/* Rounded architectural plaque for the logo. */
 .premium-site .site-header .brand {
-  padding: 6px 10px;
+  padding: 7px 12px;
   border: 1px solid rgba(255,255,255,.96);
-  background: rgba(255,255,255,.94);
-  box-shadow: 0 5px 18px rgba(4,38,28,.055);
-  backdrop-filter: blur(5px);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 22% 18%, rgba(255,255,255,.98), rgba(255,255,255,.90) 72%),
+    rgba(255,255,255,.92);
+  box-shadow:
+    0 10px 28px rgba(4,38,28,.08),
+    inset 0 1px 0 rgba(255,255,255,.96),
+    inset 0 -1px 0 rgba(8,70,50,.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
-/* Navigation stays readable while the illuminated cloud passes behind it. */
+/* One rounded shell, like the 3D phase selector. */
 .premium-site .site-header .desktop-nav {
-  padding: 7px 10px;
-  border: 1px solid rgba(255,255,255,.70);
-  background: rgba(255,255,255,.80);
-  backdrop-filter: blur(9px);
-  box-shadow: 0 4px 14px rgba(5,48,35,.04);
+  display: flex;
+  align-items: stretch;
+  gap: 5px;
+  padding: 5px;
+  border: 1px solid rgba(16,63,49,.16);
+  border-radius: 24px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.82), rgba(241,244,238,.72)),
+    rgba(255,255,255,.76);
+  backdrop-filter: blur(14px) saturate(.9);
+  -webkit-backdrop-filter: blur(14px) saturate(.9);
+  box-shadow:
+    0 10px 26px rgba(5,48,35,.07),
+    inset 0 1px 0 rgba(255,255,255,.96),
+    inset 0 -1px 0 rgba(8,70,50,.04);
 }
 
+/* Each navigation category is visually separated. */
 .premium-site .site-header .desktop-nav button,
-.premium-site .site-header .desktop-nav a,
-.premium-site .site-header .header-contact {
+.premium-site .site-header .desktop-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 17px !important;
+  border: 1px solid rgba(16,63,49,.12) !important;
+  border-radius: 18px !important;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(255,255,255,.72), transparent 58%),
+    rgba(247,248,244,.56) !important;
   color: #103f31 !important;
-  text-shadow: 0 1px 0 rgba(255,255,255,.65);
+  text-shadow: 0 1px 0 rgba(255,255,255,.70);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.86),
+    inset 0 -1px 0 rgba(9,69,50,.035);
+  transition:
+    transform 220ms cubic-bezier(.2,.8,.2,1),
+    background-color 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+  overflow: hidden;
 }
 
+/* Faint decorative wash inside each cell, inspired by the phase controls. */
+.premium-site .site-header .desktop-nav button::before,
+.premium-site .site-header .desktop-nav a::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .38;
+  background:
+    radial-gradient(circle at 15% 50%, rgba(17,98,72,.12), transparent 34%),
+    linear-gradient(135deg, transparent 58%, rgba(17,98,72,.045) 59%, transparent 74%);
+}
+
+.premium-site .site-header .desktop-nav button:hover,
+.premium-site .site-header .desktop-nav a:hover {
+  transform: translateY(-1px);
+  border-color: rgba(16,92,63,.30) !important;
+  background: rgba(255,255,255,.80) !important;
+  box-shadow:
+    0 5px 14px rgba(4,50,35,.07),
+    inset 0 1px 0 rgba(255,255,255,.94);
+}
+
+.premium-site .site-header .desktop-nav button:focus-visible,
+.premium-site .site-header .desktop-nav a:focus-visible {
+  outline: 2px solid rgba(11,81,61,.58);
+  outline-offset: 2px;
+}
+
+/* CTA treated as its own premium rounded module. */
 .premium-site .site-header .header-contact {
-  background: rgba(255,255,255,.86) !important;
-  border-color: rgba(16,63,49,.42) !important;
-  backdrop-filter: blur(9px);
+  min-height: 52px;
+  padding: 0 20px !important;
+  border: 1px solid rgba(16,63,49,.28) !important;
+  border-radius: 20px !important;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(255,255,255,.92), transparent 58%),
+    rgba(255,255,255,.80) !important;
+  color: #103f31 !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow:
+    0 9px 24px rgba(5,48,35,.065),
+    inset 0 1px 0 rgba(255,255,255,.96);
+}
+
+.premium-site .site-header .header-contact:hover {
+  transform: translateY(-1px);
+  background: rgba(255,255,255,.90) !important;
+  border-color: rgba(16,83,58,.42) !important;
 }
 
 .theme-dark .premium-site .site-header::before {
@@ -96,6 +179,33 @@
   background: rgba(245,245,238,.92) !important;
 }
 
+.theme-dark .premium-site .site-header .desktop-nav button,
+.theme-dark .premium-site .site-header .desktop-nav a {
+  background: rgba(248,248,243,.88) !important;
+  border-color: rgba(16,63,49,.14) !important;
+}
+
+@media (max-width: 1100px) {
+  .premium-site .site-header .desktop-nav {
+    gap: 3px;
+    padding: 4px;
+    border-radius: 20px;
+  }
+
+  .premium-site .site-header .desktop-nav button,
+  .premium-site .site-header .desktop-nav a {
+    padding: 0 12px !important;
+    min-height: 39px;
+    border-radius: 15px !important;
+  }
+
+  .premium-site .site-header .header-contact {
+    min-height: 46px;
+    padding: 0 15px !important;
+    border-radius: 17px !important;
+  }
+}
+
 @media (max-width: 900px), (prefers-reduced-motion: reduce) {
   .premium-site .site-header .sbre-point-cloud {
     display: none;
@@ -106,6 +216,7 @@
   }
 
   .premium-site .site-header .brand {
-    padding: 4px 7px;
+    padding: 5px 8px;
+    border-radius: 16px;
   }
 }
