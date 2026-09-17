@@ -1,20 +1,68 @@
 import { useState, type FormEvent } from "react";
+
+type SubmitState = "idle" | "sending" | "success" | "error";
+
+const CONTACT_API_URL = import.meta.env.VITE_CONTACT_API_URL?.trim();
+
 export default function ContactForm() {
-  const [draft, setDraft] = useState("");
-  function submit(e: FormEvent<HTMLFormElement>) {
+  const [state, setState] = useState<SubmitState>("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const f = new FormData(e.currentTarget);
-    const body = `Bonjour Soufiane,\n\nJe souhaite échanger sur mon projet.\n\nNom : ${f.get("name")}\nE-mail : ${f.get("email")}\nMission : ${f.get("service")}\n\n${f.get("message")}\n`;
-    setDraft(
-      `mailto:info@sbre-ingenierie.ch?subject=${encodeURIComponent("Parlons de mon projet — SBRE")}&body=${encodeURIComponent(body)}`,
-    );
+    setErrorMessage("");
+
+    if (!CONTACT_API_URL) {
+      setState("error");
+      setErrorMessage(
+        "Le formulaire n’est pas encore relié au service d’envoi. Contactez-nous à info@sbre-ingenierie.ch.",
+      );
+      return;
+    }
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    // Honeypot anti-spam : un visiteur normal ne remplit jamais ce champ.
+    if (formData.get("companyWebsite")) return;
+
+    setState("sending");
+
+    try {
+      const response = await fetch(CONTACT_API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: formData.get("name"),
+          email: formData.get("email"),
+          service: formData.get("service"),
+          message: formData.get("message"),
+          companyWebsite: formData.get("companyWebsite"),
+        }),
+      });
+
+      const data = (await response.json().catch(() => null)) as
+        | { ok?: boolean; error?: string }
+        | null;
+
+      if (!response.ok || !data?.ok) {
+        throw new Error(data?.error || "L’envoi a échoué.");
+      }
+
+      form.reset();
+      setState("success");
+    } catch (error) {
+      setState("error");
+      setErrorMessage(
+        error instanceof Error
+          ? error.message
+          : "Impossible d’envoyer la demande pour le moment.",
+      );
+    }
   }
+
   return (
-    <form
-      className="contact-form"
-      onSubmit={submit}
-      onChange={() => setDraft("")}
-    >
+    <form className="contact-form" onSubmit={submit}>
       <div className="form-pair">
         <label>
           Votre nom
@@ -38,15 +86,17 @@ export default function ContactForm() {
           />
         </label>
       </div>
+
       <label>
         Votre besoin
-        <select name="service">
+        <select name="service" required defaultValue="Direction de travaux">
           <option>Direction de travaux</option>
           <option>Assistance au maître d’ouvrage</option>
           <option>Pilotage global / entreprise générale</option>
           <option>Reprise d’un chantier en cours</option>
         </select>
       </label>
+
       <label>
         Votre projet
         <textarea
@@ -57,19 +107,41 @@ export default function ContactForm() {
           placeholder="Lieu, nature des travaux, stade du projet, difficultés rencontrées…"
         />
       </label>
-      <button className="button button-green" type="submit">
-        Préparer mon e-mail <span>↗</span>
+
+      <div
+        aria-hidden="true"
+        style={{ position: "absolute", left: "-10000px", width: 1, height: 1, overflow: "hidden" }}
+      >
+        <label>
+          Site internet de l’entreprise
+          <input name="companyWebsite" type="text" tabIndex={-1} autoComplete="off" />
+        </label>
+      </div>
+
+      <button
+        className="button button-green"
+        type="submit"
+        disabled={state === "sending"}
+        aria-busy={state === "sending"}
+      >
+        {state === "sending" ? "Envoi en cours…" : "Envoyer ma demande"} <span>↗</span>
       </button>
+
       <p className="form-note">
-        Vos informations sont reprises dans un brouillon à envoyer depuis votre
-        messagerie. Aucun envoi automatique.
+        Votre demande est transmise directement et de façon sécurisée à SBRE Ingénierie.
       </p>
-      {draft && (
-        <div className="draft-ready" role="status">
-          <p>Votre message est prêt.</p>
-          <a className="text-link" href={draft}>
-            Ouvrir mon brouillon dans la messagerie ↗
-          </a>
+
+      {state === "success" && (
+        <div className="draft-ready" role="status" aria-live="polite">
+          <p>✓ Votre demande a bien été envoyée.</p>
+          <small>Nous reviendrons vers vous dans les meilleurs délais.</small>
+        </div>
+      )}
+
+      {state === "error" && (
+        <div className="draft-ready" role="alert">
+          <p>Impossible d’envoyer la demande.</p>
+          <small>{errorMessage}</small>
         </div>
       )}
     </form>
