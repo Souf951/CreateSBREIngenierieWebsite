@@ -2,36 +2,142 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  background: transparent;
+  background:
+    radial-gradient(circle at 18% 22%, rgba(34, 143, 94, .18), transparent 26%),
+    radial-gradient(circle at 82% 78%, rgba(103, 190, 141, .10), transparent 28%),
+    linear-gradient(135deg, #062f24 0%, #0a4a36 48%, #062c22 100%);
   min-height: 820px;
   perspective: 1500px;
+  color: #f5f7f1;
 }
 
 .premium-site .team-section::before {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -3;
-  background-image: var(--team-bg);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  z-index: -5;
+  background:
+    linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: .55;
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,.95), rgba(0,0,0,.45));
 }
 
 .premium-site .team-section::after {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: -2;
+  z-index: -4;
   background:
-    radial-gradient(circle at 50% 56%, rgba(21,102,72,.08), transparent 34%),
-    linear-gradient(90deg, rgba(246,246,239,.95) 0%, rgba(246,246,239,.88) 45%, rgba(246,246,239,.76) 100%);
-  backdrop-filter: blur(1.5px);
+    linear-gradient(120deg, rgba(255,255,255,.03), transparent 20%, transparent 74%, rgba(255,255,255,.02)),
+    radial-gradient(circle at center, rgba(255,255,255,.04), transparent 56%);
+  pointer-events: none;
 }
+
+.premium-site .team-royal-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.premium-site .team-royal-glow {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: .16;
+  background: #7dd8a7;
+}
+
+.premium-site .team-royal-glow-a {
+  left: -120px;
+  top: 80px;
+  animation: teamGlowFloatA 10s ease-in-out infinite alternate;
+}
+
+.premium-site .team-royal-glow-b {
+  right: -140px;
+  bottom: 40px;
+  animation: teamGlowFloatB 12s ease-in-out infinite alternate;
+}
+
+.premium-site .team-royal-diamond {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(221, 242, 228, .13);
+  transform: rotate(45deg);
+  box-shadow: 0 0 60px rgba(151, 216, 176, .025) inset;
+}
+
+.premium-site .team-royal-diamond::before,
+.premium-site .team-royal-diamond::after {
+  content: "";
+  position: absolute;
+  inset: 20%;
+  border: 1px solid rgba(221, 242, 228, .06);
+}
+
+.premium-site .team-royal-diamond::after {
+  inset: 38%;
+}
+
+.premium-site .team-royal-diamond-a { left: 7%; top: 16%; animation: teamDiamondDrift 14s ease-in-out infinite; }
+.premium-site .team-royal-diamond-b { right: 8%; top: 10%; width: 300px; height: 300px; animation: teamDiamondDrift 17s 1s ease-in-out infinite reverse; }
+.premium-site .team-royal-diamond-c { left: 37%; bottom: -110px; width: 340px; height: 340px; animation: teamDiamondDrift 18s 2s ease-in-out infinite; }
+.premium-site .team-royal-diamond-d { right: 28%; top: 34%; width: 150px; height: 150px; opacity: .7; animation: teamDiamondDrift 11s .5s ease-in-out infinite reverse; }
+
+.premium-site .team-royal-line {
+  position: absolute;
+  height: 1px;
+  width: 38%;
+  background: linear-gradient(90deg, transparent, rgba(245,247,241,.78), transparent);
+  transform: scaleX(0);
+  opacity: 0;
+  transform-origin: left center;
+}
+
+.premium-site .team-royal-line-a { top: 21%; left: 4%; }
+.premium-site .team-royal-line-b { top: 31%; right: 3%; transform-origin: right center; }
+.premium-site .team-royal-line-c { bottom: 24%; left: 9%; width: 30%; }
+.premium-site .team-royal-line-d { bottom: 15%; right: 8%; width: 34%; transform-origin: right center; }
+
+.premium-site .team-3d-ready .team-royal-line-a { animation: teamRoyalLineDraw 1.5s .15s ease forwards; }
+.premium-site .team-3d-ready .team-royal-line-b { animation: teamRoyalLineDraw 1.7s .35s ease forwards; }
+.premium-site .team-3d-ready .team-royal-line-c { animation: teamRoyalLineDraw 1.45s .55s ease forwards; }
+.premium-site .team-3d-ready .team-royal-line-d { animation: teamRoyalLineDraw 1.65s .75s ease forwards; }
+
+.premium-site .team-royal-orbit {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #dff3b5;
+  box-shadow: 0 0 0 5px rgba(223,243,181,.08), 0 0 18px rgba(223,243,181,.42);
+  opacity: .78;
+}
+
+.premium-site .team-royal-orbit-a { left: 20%; top: 21%; animation: teamOrbitPulse 3.8s ease-in-out infinite; }
+.premium-site .team-royal-orbit-b { right: 22%; bottom: 15%; animation: teamOrbitPulse 4.4s .8s ease-in-out infinite; }
 
 .premium-site .team-section .section-heading {
   position: relative;
   z-index: 3;
+  color: #f7f8f2;
+}
+
+.premium-site .team-section .section-heading h2,
+.premium-site .team-section .section-heading p,
+.premium-site .team-section .section-heading span {
+  color: inherit;
+}
+
+.premium-site .team-section .section-heading > p:last-child {
+  color: rgba(247,248,242,.72);
 }
 
 .premium-site .team-grid {
@@ -54,8 +160,8 @@
   right: 6%;
   top: 54%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(14,91,62,.18) 14%, rgba(14,91,62,.26) 50%, rgba(14,91,62,.18) 86%, transparent);
-  box-shadow: 0 0 20px rgba(14,91,62,.12);
+  background: linear-gradient(90deg, transparent, rgba(230,244,232,.12) 14%, rgba(230,244,232,.32) 50%, rgba(230,244,232,.12) 86%, transparent);
+  box-shadow: 0 0 20px rgba(221,239,225,.12);
   pointer-events: none;
 }
 
@@ -72,8 +178,8 @@
   height: 1px;
   width: 29%;
   transform-origin: left center;
-  background: linear-gradient(90deg, rgba(13,111,73,.08), rgba(13,111,73,.58), rgba(13,111,73,.08));
-  filter: drop-shadow(0 0 8px rgba(19,123,84,.22));
+  background: linear-gradient(90deg, rgba(233,245,236,.04), rgba(233,245,236,.6), rgba(233,245,236,.04));
+  filter: drop-shadow(0 0 8px rgba(210,239,220,.20));
   opacity: 0;
   transform: scaleX(.05);
 }
@@ -87,8 +193,8 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #0b6c49;
-  box-shadow: 0 0 0 5px rgba(11,108,73,.08), 0 0 18px rgba(11,108,73,.35);
+  background: #d9f0b4;
+  box-shadow: 0 0 0 5px rgba(217,240,180,.08), 0 0 18px rgba(217,240,180,.35);
   opacity: 0;
   transform: scale(.2);
 }
@@ -116,17 +222,17 @@
   width: 100%;
   margin-inline: auto;
   padding: 14px 14px 20px;
-  border: 1px solid rgba(255,255,255,.62);
+  border: 1px solid rgba(255,255,255,.24);
   border-radius: 24px;
   background:
-    radial-gradient(circle at var(--team-mx) var(--team-my), rgba(255,255,255,.65), transparent 26%),
-    linear-gradient(145deg, rgba(255,255,255,.66), rgba(240,244,238,.44));
+    radial-gradient(circle at var(--team-mx) var(--team-my), rgba(255,255,255,.15), transparent 28%),
+    linear-gradient(145deg, rgba(255,255,255,.14), rgba(241,247,242,.08));
   box-shadow:
-    0 24px 60px rgba(7,45,33,.12),
-    0 3px 0 rgba(255,255,255,.52) inset,
-    0 -1px 0 rgba(7,65,44,.08) inset;
-  backdrop-filter: blur(16px) saturate(120%);
-  -webkit-backdrop-filter: blur(16px) saturate(120%);
+    0 26px 70px rgba(0,0,0,.26),
+    0 1px 0 rgba(255,255,255,.28) inset,
+    0 -1px 0 rgba(0,0,0,.18) inset;
+  backdrop-filter: blur(18px) saturate(125%);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
   transform-style: preserve-3d;
   transform: translateY(46px) translateZ(-70px) rotateX(8deg) scale(.965);
   opacity: 0;
@@ -147,7 +253,7 @@
   font-size: 11px;
   font-weight: 700;
   letter-spacing: .18em;
-  color: rgba(9,75,52,.48);
+  color: rgba(230,245,233,.55);
 }
 
 .premium-site .team-card::after {
@@ -155,9 +261,23 @@
   position: absolute;
   inset: 8px;
   border-radius: 18px;
-  border: 1px solid rgba(10,92,61,.06);
+  border: 1px solid rgba(244,250,245,.08);
   pointer-events: none;
   transform: translateZ(10px);
+}
+
+.premium-site .team-card h3,
+.premium-site .team-card .team-role,
+.premium-site .team-card > p:last-child {
+  color: #f6f8f3;
+}
+
+.premium-site .team-card .team-role {
+  color: #d7efb0;
+}
+
+.premium-site .team-card > p:last-child {
+  color: rgba(246,248,243,.72);
 }
 
 .premium-site .team-3d-ready .team-card {
@@ -168,11 +288,11 @@
 
 .premium-site .team-3d-ready .team-card:hover {
   transform: perspective(950px) translateY(-12px) translateZ(38px) rotateX(var(--team-rx)) rotateY(var(--team-ry)) scale(1.025);
-  border-color: rgba(18,120,82,.30);
+  border-color: rgba(223,243,181,.36);
   box-shadow:
-    0 38px 80px rgba(7,45,33,.19),
-    0 8px 24px rgba(12,105,72,.08),
-    0 3px 0 rgba(255,255,255,.62) inset;
+    0 42px 90px rgba(0,0,0,.32),
+    0 8px 24px rgba(201,236,211,.08),
+    0 1px 0 rgba(255,255,255,.34) inset;
 }
 
 .premium-site .team-card > div:first-child {
@@ -180,9 +300,9 @@
   position: relative;
   border-radius: 18px;
   aspect-ratio: 4 / 5;
-  background: rgba(9,48,35,.08);
+  background: rgba(2,26,19,.36);
   transform: translateZ(26px);
-  box-shadow: 0 10px 28px rgba(7,45,33,.12);
+  box-shadow: 0 12px 32px rgba(0,0,0,.28);
 }
 
 .premium-site .team-card > div:first-child::after {
@@ -191,8 +311,8 @@
   inset: 0;
   pointer-events: none;
   background:
-    linear-gradient(120deg, transparent 20%, rgba(255,255,255,.17) 42%, transparent 58%),
-    linear-gradient(to top, rgba(6,47,32,.10), transparent 30%);
+    linear-gradient(120deg, transparent 20%, rgba(255,255,255,.16) 42%, transparent 58%),
+    linear-gradient(to top, rgba(3,28,21,.20), transparent 34%);
   transform: translateX(-120%);
   transition: transform .65s cubic-bezier(.2,.7,.2,1);
 }
@@ -238,22 +358,8 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #0a6b48;
-  box-shadow: 0 0 0 4px rgba(10,107,72,.08);
-}
-
-.theme-dark .premium-site .team-section::after {
-  background:
-    radial-gradient(circle at 50% 56%, rgba(40,164,113,.08), transparent 36%),
-    linear-gradient(90deg, rgba(5,20,15,.94) 0%, rgba(5,20,15,.86) 48%, rgba(5,20,15,.72) 100%);
-}
-
-.theme-dark .premium-site .team-card {
-  background:
-    radial-gradient(circle at var(--team-mx) var(--team-my), rgba(72,171,124,.12), transparent 28%),
-    linear-gradient(145deg, rgba(13,43,32,.82), rgba(7,28,21,.62));
-  border-color: rgba(255,255,255,.12);
-  box-shadow: 0 24px 60px rgba(0,0,0,.28);
+  background: #dff3b5;
+  box-shadow: 0 0 0 4px rgba(223,243,181,.08);
 }
 
 @keyframes teamCardArrive {
@@ -270,6 +376,32 @@
   to { opacity: 1; transform: scale(1); }
 }
 
+@keyframes teamRoyalLineDraw {
+  0% { opacity: 0; transform: scaleX(0); }
+  25% { opacity: .92; }
+  100% { opacity: .34; transform: scaleX(1); }
+}
+
+@keyframes teamDiamondDrift {
+  0%, 100% { transform: rotate(45deg) translate3d(0,0,0); }
+  50% { transform: rotate(45deg) translate3d(14px,-10px,0); }
+}
+
+@keyframes teamGlowFloatA {
+  from { transform: translate3d(0,0,0) scale(1); }
+  to { transform: translate3d(70px,34px,0) scale(1.08); }
+}
+
+@keyframes teamGlowFloatB {
+  from { transform: translate3d(0,0,0) scale(1); }
+  to { transform: translate3d(-56px,-28px,0) scale(1.1); }
+}
+
+@keyframes teamOrbitPulse {
+  0%, 100% { opacity: .34; transform: scale(.75); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
+
 @media (max-width: 900px) {
   .premium-site .team-section { min-height: auto; perspective: none; }
   .premium-site .team-grid { grid-template-columns: 1fr; max-width: 430px; gap: 24px; padding-inline: 0; }
@@ -277,8 +409,11 @@
   .premium-site .team-link-network { display: none; }
   .premium-site .team-card { max-width: 360px; transform: translateY(26px); }
   .premium-site .team-3d-ready .team-card:hover { transform: none; }
-  .premium-site .team-section::after { background: rgba(246,246,239,.88); }
-  .theme-dark .premium-site .team-section::after { background: rgba(5,20,15,.88); }
+  .premium-site .team-royal-diamond-b,
+  .premium-site .team-royal-diamond-c,
+  .premium-site .team-royal-line-c,
+  .premium-site .team-royal-line-d { display: none; }
+  .premium-site .team-section .section-heading > p:last-child { color: rgba(247,248,242,.74); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -290,5 +425,14 @@
     transition: none;
   }
   .premium-site .team-link-line,
-  .premium-site .team-link-node { opacity: .5; transform: none; animation: none; }
+  .premium-site .team-link-node,
+  .premium-site .team-royal-line,
+  .premium-site .team-royal-diamond,
+  .premium-site .team-royal-glow,
+  .premium-site .team-royal-orbit {
+    animation: none;
+  }
+  .premium-site .team-link-line,
+  .premium-site .team-link-node { opacity: .5; transform: none; }
+  .premium-site .team-royal-line { opacity: .24; transform: scaleX(1); }
 }
