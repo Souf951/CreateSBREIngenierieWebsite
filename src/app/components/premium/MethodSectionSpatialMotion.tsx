@@ -16,6 +16,7 @@ export default function MethodSectionSpatialMotion() {
 
       const list = section.querySelector<HTMLElement>(".method-list");
       const intro = section.querySelector<HTMLElement>(".method-intro");
+      const eyebrow = intro?.querySelector<HTMLElement>(".eyebrow");
       const items = Array.from(section.querySelectorAll<HTMLDetailsElement>(".method-list details"));
       if (!list || !intro || !items.length) return false;
 
@@ -41,7 +42,14 @@ export default function MethodSectionSpatialMotion() {
             </article>`,
         )
         .join("");
-      section.insertBefore(metricsRow, intro);
+
+      if (eyebrow) {
+        eyebrow.classList.add("method-eyebrow-promoted");
+        section.insertBefore(eyebrow, intro);
+        eyebrow.insertAdjacentElement("afterend", metricsRow);
+      } else {
+        section.insertBefore(metricsRow, intro);
+      }
 
       const counters = Array.from(metricsRow.querySelectorAll<HTMLElement>(".method-counter"));
       let metricsAnimated = false;
@@ -124,6 +132,10 @@ export default function MethodSectionSpatialMotion() {
         section.removeEventListener("pointerleave", onPointerLeave);
         items.forEach((item) => item.removeEventListener("toggle", onToggle));
         metricsRow.remove();
+        if (eyebrow) {
+          eyebrow.classList.remove("method-eyebrow-promoted");
+          intro.insertBefore(eyebrow, intro.firstChild);
+        }
         section.classList.remove("method-spatial-ready", "method-spatial-visible", "method-metrics-ready", "method-metrics-visible");
         section.style.removeProperty("--method-x");
         section.style.removeProperty("--method-y");
