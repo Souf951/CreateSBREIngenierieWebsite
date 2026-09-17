@@ -2,7 +2,7 @@ import { useEffect } from "react";
 
 const faqCopy = [
   [
-    "Sur quels types d’opérations SBRE peut intervenir ?",
+    "Sur quels types d’opérations l’équipe SBRE Ingenierie peut intervenir ?",
     "Nous accompagnons des rénovations, transformations, projets résidentiels et opérations tertiaires, depuis la préparation du dossier jusqu’au suivi d’exécution et à la livraison.",
   ],
   [
