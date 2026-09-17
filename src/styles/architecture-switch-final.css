@@ -10,7 +10,7 @@
     max-width: none !important;
     transform: none !important;
     display: grid !important;
-    grid-template-columns: 1fr 0.85fr 1.7fr !important;
+    grid-template-columns: 0.95fr 0.72fr 2.15fr !important;
     gap: 0 !important;
     padding: 5px !important;
     overflow: hidden;
@@ -27,15 +27,15 @@
     width: 100% !important;
     min-width: 0 !important;
     min-height: 42px !important;
-    padding: 9px 12px !important;
+    padding: 9px 10px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
     white-space: nowrap !important;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: clamp(9px, 0.82vw, 11px) !important;
-    letter-spacing: 0.075em !important;
+    font-size: clamp(8.5px, 0.78vw, 10.5px) !important;
+    letter-spacing: 0.065em !important;
     border-radius: 14px !important;
   }
 
@@ -54,13 +54,14 @@
     top: 8px !important;
     left: 12px !important;
     right: 12px !important;
+    grid-template-columns: 0.9fr 0.7fr 2.2fr !important;
   }
 
   .architecture-kind-switch button {
     min-height: 40px !important;
-    padding: 8px 8px !important;
-    font-size: 8px !important;
-    letter-spacing: 0.055em !important;
+    padding: 8px 6px !important;
+    font-size: 7.7px !important;
+    letter-spacing: 0.045em !important;
   }
 }
 
