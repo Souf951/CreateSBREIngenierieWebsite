@@ -35,11 +35,10 @@ function createHexWave(section: HTMLElement) {
   canvas.style.height = "100%";
   canvas.style.pointerEvents = "none";
   canvas.style.zIndex = "0";
-  canvas.style.opacity = "0.92";
+  canvas.style.opacity = "0.58";
   canvas.style.mixBlendMode = "screen";
 
-  const oldCanvas = section.querySelector(".team-hex-wave-canvas");
-  oldCanvas?.remove();
+  section.querySelector(".team-hex-wave-canvas")?.remove();
   section.prepend(canvas);
 
   const ctx = canvas.getContext("2d");
@@ -73,25 +72,29 @@ function createHexWave(section: HTMLElement) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
     const mobile = width < 780;
-    const radius = mobile ? 34 : 48;
+    const radius = mobile ? 22 : 30;
     const horizontal = Math.sqrt(3) * radius;
     const vertical = radius * 1.5;
-    const cols = Math.ceil(width / horizontal) + 3;
-    const rows = Math.ceil(height / vertical) + 3;
+    const cols = Math.ceil(width / horizontal) + 4;
+    const rows = Math.ceil(height / vertical) + 4;
 
+    const maxDiagonal = Math.max(width + height, 1);
     const next: Hex[] = [];
-    for (let row = -1; row < rows; row += 1) {
-      for (let col = -1; col < cols; col += 1) {
+    for (let row = -2; row < rows; row += 1) {
+      for (let col = -2; col < cols; col += 1) {
         const x = col * horizontal + (row % 2 ? horizontal / 2 : 0);
         const y = row * vertical;
-        const diagonal = x * 0.72 + y * 0.18;
-        const jitter = ((row * 17 + col * 29) % 13) * 0.032;
+
+        // Vague diagonale : départ coin bas-gauche vers haut-droite.
+        const diagonal = x + (height - y) * 0.92;
+        const jitter = Math.sin(row * 0.9 + col * 0.72) * 0.045;
+
         next.push({
           x,
           y,
           r: radius,
-          delay: diagonal / Math.max(width, 1) + jitter,
-          phase: ((row * 11 + col * 7) % 19) / 19,
+          delay: diagonal / maxDiagonal + jitter,
+          phase: ((row * 11 + col * 7) % 23) / 23,
         });
       }
     }
@@ -132,11 +135,10 @@ function createHexWave(section: HTMLElement) {
       );
     }
 
-    const glowAlpha = alpha * 0.75;
-    ctx.lineWidth = width < 780 ? 1.4 : 1.8;
-    ctx.strokeStyle = `rgba(238, 249, 242, ${alpha})`;
-    ctx.shadowColor = `rgba(188, 239, 207, ${glowAlpha})`;
-    ctx.shadowBlur = width < 780 ? 6 : 10;
+    ctx.lineWidth = width < 780 ? 0.8 : 1.05;
+    ctx.strokeStyle = `rgba(232, 244, 236, ${alpha})`;
+    ctx.shadowColor = `rgba(185, 229, 201, ${alpha * 0.35})`;
+    ctx.shadowBlur = width < 780 ? 2 : 4;
     ctx.stroke();
     ctx.shadowBlur = 0;
   };
@@ -145,30 +147,32 @@ function createHexWave(section: HTMLElement) {
     ctx.clearRect(0, 0, width, height);
 
     const elapsed = (now - startTime) / 1000;
-    const cycleDuration = 8.5;
+    const cycleDuration = 10.8;
     const cycle = (elapsed % cycleDuration) / cycleDuration;
 
     for (const hex of hexes) {
-      const wavePosition = cycle * 1.8 - 0.35;
-      const local = wavePosition - hex.delay;
+      // Front de vague court et doux, légèrement sinusoïdal.
+      const ripple = Math.sin(hex.x * 0.012 + elapsed * 0.75) * 0.028;
+      const wavePosition = cycle * 1.72 - 0.28;
+      const local = wavePosition - hex.delay + ripple;
 
       let drawProgress = 0;
       let alpha = 0;
 
       if (prefersReducedMotion) {
         drawProgress = 1;
-        alpha = 0.12 + hex.phase * 0.08;
-      } else if (local >= 0 && local < 0.34) {
-        drawProgress = Math.min(1, local / 0.16);
-        const fadeIn = Math.min(1, local / 0.08);
-        const fadeOut = Math.max(0, 1 - (local - 0.20) / 0.14);
-        alpha = 0.18 + 0.62 * Math.min(fadeIn, fadeOut);
-      } else if (local >= 0.34 && local < 0.62) {
+        alpha = 0.08 + hex.phase * 0.035;
+      } else if (local >= 0 && local < 0.23) {
+        drawProgress = Math.min(1, local / 0.12);
+        const fadeIn = Math.min(1, local / 0.05);
+        const fadeOut = Math.max(0, 1 - (local - 0.13) / 0.10);
+        alpha = 0.08 + 0.24 * Math.min(fadeIn, fadeOut);
+      } else if (local >= 0.23 && local < 0.40) {
         drawProgress = 1;
-        alpha = Math.max(0, 0.18 * (1 - (local - 0.34) / 0.28));
+        alpha = Math.max(0, 0.08 * (1 - (local - 0.23) / 0.17));
       }
 
-      const breathe = prefersReducedMotion ? 1 : 0.88 + Math.sin(elapsed * 1.35 + hex.phase * 6) * 0.12;
+      const breathe = prefersReducedMotion ? 1 : 0.94 + Math.sin(elapsed * 0.8 + hex.phase * 5) * 0.06;
       drawHex(hex, drawProgress, alpha * breathe);
     }
 
