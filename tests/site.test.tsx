@@ -62,12 +62,17 @@ describe("Visitor journeys", () => {
       screen.getByRole("button", { name: /Envoyer ma demande/ }),
     );
 
-    expect(screen.getByRole("alert")).toHaveTextContent(
-      /Le formulaire n’est pas encore relié au service d’envoi/,
+    const alert = screen.getByRole("alert");
+    expect(alert.textContent).toContain(
+      "Le formulaire n’est pas encore relié au service d’envoi",
     );
-    expect(screen.getByLabelText("Votre nom")).toHaveValue("Test & Partenaire");
-    expect(screen.getByLabelText("Votre e-mail")).toHaveValue("test@example.com");
-    expect(screen.getByLabelText("Votre projet")).toHaveValue(
+    expect((screen.getByLabelText("Votre nom") as HTMLInputElement).value).toBe(
+      "Test & Partenaire",
+    );
+    expect((screen.getByLabelText("Votre e-mail") as HTMLInputElement).value).toBe(
+      "test@example.com",
+    );
+    expect((screen.getByLabelText("Votre projet") as HTMLTextAreaElement).value).toBe(
       "Rénovation à Genève\nBudget : 100 000 CHF ?",
     );
   });
