@@ -43,6 +43,7 @@ import "../styles/small-text-pass.css";
 import "../styles/project-gallery-premium.css";
 import "../styles/footer-premium.css";
 import "../styles/team-section-premium.css";
+import "../styles/team-section-motion-loop.css";
 import "../styles/responsive-pass.css";
 import "../styles/principles-center.css";
 import "../styles/case-video-background.css";
