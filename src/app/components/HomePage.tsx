@@ -12,8 +12,8 @@ import conducteur from "../../media/conducteur-provisoire.webp";
 import chantier from "../../media/1748964038069-1.webp";
 const nav = [
   ["expertises", "Expertises"],
-  ["réalisations", "Réalisations"],
   ["methode", "Méthode"],
+  ["réalisations", "Réalisations"],
   ["equipe", "Équipe"],
 ];
 export default function HomePage() {
@@ -301,43 +301,9 @@ export default function HomePage() {
             </div>
           </article>
         </section>
-        <section className="section projects-section" id="réalisations">
-          <div className="section-heading">
-            <p className="eyebrow">03 / EXPÉRIENCES PROJET</p>
-            <h2>
-              La maîtrise se voit
-              <br />
-              <em>dans le résultat.</em>
-            </h2>
-            <p>
-              Une sélection d’expériences de direction et de suivi de travaux.
-              Les collaborations et contextes sont précisés dans chaque fiche
-              projet.
-            </p>
-          </div>
-          <div className="projects-grid">
-            {projects.map((p, i) => (
-              <Link className="project-card" key={p.link} to={p.link}>
-                <div>
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <span className="project-arrow">↗</span>
-                </div>
-                <p className="eyebrow">
-                  0{i + 1} / {p.type}
-                </p>
-                <h3>{p.title}</h3>
-              </Link>
-            ))}
-          </div>
-        </section>
         <section className="section method-section" id="methode">
           <div className="method-intro">
-            <p className="eyebrow">04 / UNE MÉTHODE, DU DÉBUT À LA FIN</p>
+            <p className="eyebrow">03 / UNE MÉTHODE, DU DÉBUT À LA FIN</p>
             <h2>
               Rien d’implicite.
               <br />
@@ -388,6 +354,40 @@ export default function HomePage() {
                   <small>{foot}</small>
                 </div>
               </details>
+            ))}
+          </div>
+        </section>
+        <section className="section projects-section" id="réalisations">
+          <div className="section-heading">
+            <p className="eyebrow">04 / EXPÉRIENCES PROJET</p>
+            <h2>
+              La maîtrise se voit
+              <br />
+              <em>dans le résultat.</em>
+            </h2>
+            <p>
+              Une sélection d’expériences de direction et de suivi de travaux.
+              Les collaborations et contextes sont précisés dans chaque fiche
+              projet.
+            </p>
+          </div>
+          <div className="projects-grid">
+            {projects.map((p, i) => (
+              <Link className="project-card" key={p.link} to={p.link}>
+                <div>
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <span className="project-arrow">↗</span>
+                </div>
+                <p className="eyebrow">
+                  0{i + 1} / {p.type}
+                </p>
+                <h3>{p.title}</h3>
+              </Link>
             ))}
           </div>
         </section>
