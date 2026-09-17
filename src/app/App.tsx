@@ -26,6 +26,7 @@ import CaseSectionVideoBackground from "./components/premium/CaseSectionVideoBac
 import MethodSectionVideoBackground from "./components/premium/MethodSectionVideoBackground";
 import ContactSectionPhotoGuard from "./components/premium/ContactSectionPhotoGuard";
 import HomeCopyGuard from "./components/premium/HomeCopyGuard";
+import ExpertiseSpatialCards from "./components/premium/ExpertiseSpatialCards";
 import CaseStudyVideo from "./components/premium/CaseStudyVideo";
 import ExperiencesResultsBackground from "./components/premium/ExperiencesResultsBackground";
 import ProjectsMethodTransition from "./components/premium/ProjectsMethodTransition";
@@ -56,6 +57,7 @@ import "../styles/mobile-3d-cleanup.css";
 import "../styles/fluid-responsive-type.css";
 import "../styles/hero-phases-fill.css";
 import "../styles/partners-nav-link.css";
+import "../styles/expertise-spatial-cards.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
@@ -206,6 +208,7 @@ export default function App() {
           <RouteContact />
           <ScrollToTop />
           <HomeCopyGuard />
+          <ExpertiseSpatialCards />
           <MethodAccordionGuard />
           <TeamProfilesGuard />
           <FooterEnhancer />
