@@ -1,8 +1,23 @@
 .premium-site .team-card .team-role {
+  position: relative;
   display: grid;
   gap: 3px;
   margin-top: 6px;
+  padding-left: 14px;
   line-height: 1.2;
+}
+
+.premium-site .team-card .team-role::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.48rem;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #dff3b5;
+  box-shadow: 0 0 0 4px rgba(223, 243, 181, 0.08), 0 0 12px rgba(223, 243, 181, 0.45);
+  transform: translateY(-50%);
 }
 
 .premium-site .team-card .team-role-en {
@@ -23,6 +38,16 @@
 }
 
 @media (max-width: 780px) {
+  .premium-site .team-card .team-role {
+    padding-left: 13px;
+  }
+
+  .premium-site .team-card .team-role::before {
+    top: 0.45rem;
+    width: 5px;
+    height: 5px;
+  }
+
   .premium-site .team-card .team-role-en {
     font-size: 0.68rem;
   }
