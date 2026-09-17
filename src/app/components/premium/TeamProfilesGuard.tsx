@@ -3,24 +3,27 @@ import { useEffect } from "react";
 const profiles = [
   {
     name: "Soufiane SBRE",
-    role: "Directeur",
+    roleEn: "Managing Director & Head of Operations",
+    roleFr: "Directeur",
     description: "Cadrage du mandat, arbitrages et direction des opérations.",
     image: null,
     alt: "Soufiane SBRE, directeur de SBRE Ingénierie",
   },
   {
     name: "Yannick Müller",
-    role: "Chef de projet",
+    roleEn: "Head of Project Management",
+    roleFr: "Chef de projet",
     description: "Organisation, planification et coordination des intervenants.",
     image: `${import.meta.env.BASE_URL}team-zayd-haidar.webp`,
     alt: "Yannick Müller, chef de projet chez SBRE Ingénierie",
   },
   {
     name: "Zayd Haidar",
-    role: "Conducteur de travaux",
+    roleEn: "Head of Construction Management",
+    roleFr: "Directeur de travaux",
     description: "Suivi terrain, contrôle de l’exécution et préparation des réceptions.",
     image: `${import.meta.env.BASE_URL}team-yannick-muller.webp`,
-    alt: "Zayd Haidar, conducteur de travaux chez SBRE Ingénierie",
+    alt: "Zayd Haidar, directeur de travaux chez SBRE Ingénierie",
   },
 ];
 
@@ -85,7 +88,6 @@ function createHexWave(section: HTMLElement) {
         const x = col * horizontal + (row % 2 ? horizontal / 2 : 0);
         const y = row * vertical;
 
-        // Vague diagonale : départ coin bas-gauche vers haut-droite.
         const diagonal = x + (height - y) * 0.92;
         const jitter = Math.sin(row * 0.9 + col * 0.72) * 0.045;
 
@@ -151,7 +153,6 @@ function createHexWave(section: HTMLElement) {
     const cycle = (elapsed % cycleDuration) / cycleDuration;
 
     for (const hex of hexes) {
-      // Front de vague court et doux, légèrement sinusoïdal.
       const ripple = Math.sin(hex.x * 0.012 + elapsed * 0.75) * 0.028;
       const wavePosition = cycle * 1.72 - 0.28;
       const local = wavePosition - hex.delay + ripple;
@@ -245,6 +246,11 @@ export default function TeamProfilesGuard() {
 
       cleanups.push(createHexWave(section));
 
+      const heading = section.querySelector<HTMLElement>(".section-heading h2");
+      if (heading) {
+        heading.textContent = "Une direction impliquée sur chaque chantier.";
+      }
+
       const intro = section.querySelector<HTMLElement>(".section-heading > p:last-child");
       if (intro) {
         intro.textContent =
@@ -281,7 +287,10 @@ export default function TeamProfilesGuard() {
           img.alt = profile.alt;
         }
         if (name) name.textContent = profile.name;
-        if (role) role.textContent = profile.role;
+        if (role) {
+          role.innerHTML = `<span class="team-role-en">${profile.roleEn}</span><span class="team-role-fr">${profile.roleFr}</span>`;
+          role.setAttribute("aria-label", `${profile.roleEn} — ${profile.roleFr}`);
+        }
         if (description) description.textContent = profile.description;
 
         card.querySelector(".provisional")?.remove();
