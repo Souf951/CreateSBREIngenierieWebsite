@@ -3,21 +3,21 @@ import { ArrowLeft, CheckCircle, X, ChevronLeft, ChevronRight } from 'lucide-rea
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import SEOHead from './SEOHead';
-import logoImage from '../../imports/Pr_sentation1_page-0001.png';
-import heroImage from '../../imports/1721891231854__1_.jpg';
-import gallery1 from '../../imports/1721891230963.jpg';
-import gallery2 from '../../imports/1721891231094.jpg';
-import gallery3 from '../../imports/1721891230808.jpg';
-import gallery4 from '../../imports/1748964038069.jpg';
-import gallery5 from '../../imports/IMG_2957.jpg';
-import gallery6 from '../../imports/IMG_0582.jpeg';
-import gallery7 from '../../imports/IMG_0593.jpeg';
-import chantier1 from '../../imports/IMG_1276.jpeg';
-import chantier2 from '../../imports/IMG_1260.jpeg';
-import chantier3 from '../../imports/IMG_0994.jpeg';
-import chantier4 from '../../imports/IMG_0987.jpeg';
-import chantier5 from '../../imports/IMG_1279.jpeg';
-import chantier6 from '../../imports/IMG_0786.jpeg';
+import logoImage from '../../media/Pr_sentation1_page-0001.webp';
+import heroImage from '../../media/1721891231854__1_.webp';
+import gallery1 from '../../media/1721891230963.webp';
+import gallery2 from '../../media/1721891231094.webp';
+import gallery3 from '../../media/1721891230808.webp';
+import gallery4 from '../../media/1748964038069.webp';
+import gallery5 from '../../media/IMG_2957.webp';
+import gallery6 from '../../media/IMG_0582.webp';
+import gallery7 from '../../media/IMG_0593.webp';
+import chantier1 from '../../media/IMG_1276.webp';
+import chantier2 from '../../media/IMG_1260.webp';
+import chantier3 from '../../media/IMG_0994.webp';
+import chantier4 from '../../media/IMG_0987.webp';
+import chantier5 from '../../media/IMG_1279.webp';
+import chantier6 from '../../media/IMG_0786.webp';
 
 export default function ProjectTertiaire() {
   const navigate = useNavigate();
@@ -109,7 +109,7 @@ export default function ProjectTertiaire() {
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
-      <SEOHead title="Rénovation tertiaire Genève – Direction de travaux | SBRE Ingénierie" description="SBRE Ingénierie assure la direction de travaux et la coordination TCE pour la rénovation d'espaces tertiaires à Genève : suivi de chantier, gestion des entreprises, suivi qualité et réception des travaux." canonical="https://sbre-ingenierie.ch/projet/tertiaire-geneve" />
+      <SEOHead title="Rénovation tertiaire Genève – Direction de travaux | SBRE Ingénierie" description="SBRE Ingénierie assure la direction de travaux et la coordination TCE pour la rénovation d'espaces tertiaires à Genève : suivi de chantier, gestion des entreprises, suivi qualité et réception des travaux." />
       {/* Navigation */}
       <header>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
@@ -117,13 +117,14 @@ export default function ProjectTertiaire() {
           <div className="flex justify-between items-center h-20 md:h-24 lg:h-28">
             <Link to="/" aria-label="Retourner à l’accueil SBRE Ingénierie" className="flex items-center">
               <img
+                    loading="lazy" decoding="async"
                 src={logoImage}
                 alt="SBRE Ingénierie"
                 className="h-16 md:h-20 lg:h-24 w-auto"
               />
             </Link>
             <button
-              onClick={() => { navigate('/'); setTimeout(() => { document.getElementById('réalisations')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }}
+              onClick={() => { navigate('/#réalisations'); }}
               className="flex items-center gap-2 px-5 py-2.5 bg-[#0a5c3d] text-white rounded-full font-medium hover:bg-[#0d7a52] active:scale-95 transition-all duration-200 shadow-md"
             >
               <ArrowLeft size={18} />
@@ -139,6 +140,7 @@ export default function ProjectTertiaire() {
       <section className="relative h-[45vh] sm:h-[60vh] mt-20 md:mt-24 lg:mt-28 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-black/40 z-10" />
         <img
+                    loading="lazy" decoding="async"
           src={heroImage}
           alt="Bâtiment tertiaire Genève"
           className="absolute inset-0 w-full h-full object-cover"
@@ -251,7 +253,7 @@ export default function ProjectTertiaire() {
                 className="relative h-56 sm:h-80 rounded-lg overflow-hidden shadow-lg group cursor-pointer"
               >
                 <img
-                  loading="lazy"
+                    loading="lazy" decoding="async"
                   src={image.src}
                   alt={image.alt}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -293,7 +295,7 @@ export default function ProjectTertiaire() {
                 className="relative h-56 sm:h-80 rounded-lg overflow-hidden shadow-lg group cursor-pointer"
               >
                 <img
-                  loading="lazy"
+                    loading="lazy" decoding="async"
                   src={image.src}
                   alt={image.alt}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -438,7 +440,7 @@ export default function ProjectTertiaire() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <img
-                  loading="lazy"
+                    loading="lazy" decoding="async"
               src={logoImage}
               alt="SBRE Ingénierie"
               className="h-16 md:h-20 w-auto mb-4 brightness-0 invert mx-auto"

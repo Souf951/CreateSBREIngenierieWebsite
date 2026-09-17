@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
-Sitemap: https://sbre-ingenierie.ch/sitemap.xml
+Sitemap: https://souf951.github.io/CreateSBREIngenierieWebsite/sitemap.xml

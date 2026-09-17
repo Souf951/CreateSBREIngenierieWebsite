@@ -3,19 +3,19 @@ import { motion } from 'motion/react';
 import { ArrowLeft, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import SEOHead from './SEOHead';
-import logoImage from '../../imports/Pr_sentation1_page-0001.png';
-import chantier1 from '../../imports/IMG_0258.jpeg';
-import chantier2 from '../../imports/IMG_0305.jpeg';
-import chantier3 from '../../imports/IMG_0307.jpeg';
-import chantier4 from '../../imports/IMG_0259.jpeg';
-import chantier5 from '../../imports/IMG_0179.jpeg';
-import chantier6 from '../../imports/IMG_0786-1.jpeg';
-import final1 from '../../imports/3df6b3d580c913fd1f20bbd13b327fd4.jpg';
-import final2 from '../../imports/35854ac3a0ce421ef049bcb9d3957c41.jpg';
-import final3 from '../../imports/7e3be6433a7e5d0459af5cf69e48117e.jpg';
-import final4 from '../../imports/d8af3db0023b39dd112975781ef26207.jpg';
-import final5 from '../../imports/e41d075ba383a83cb08a62743f4a0b71.jpg';
-import final6 from '../../imports/94185f87db7ea4001f5d640651271683.jpg';
+import logoImage from '../../media/Pr_sentation1_page-0001.webp';
+import chantier1 from '../../media/IMG_0258.webp';
+import chantier2 from '../../media/IMG_0305.webp';
+import chantier3 from '../../media/IMG_0307.webp';
+import chantier4 from '../../media/IMG_0259.webp';
+import chantier5 from '../../media/IMG_0179.webp';
+import chantier6 from '../../media/IMG_0786-1.webp';
+import final1 from '../../media/3df6b3d580c913fd1f20bbd13b327fd4.webp';
+import final2 from '../../media/35854ac3a0ce421ef049bcb9d3957c41.webp';
+import final3 from '../../media/7e3be6433a7e5d0459af5cf69e48117e.webp';
+import final4 from '../../media/d8af3db0023b39dd112975781ef26207.webp';
+import final5 from '../../media/e41d075ba383a83cb08a62743f4a0b71.webp';
+import final6 from '../../media/94185f87db7ea4001f5d640651271683.webp';
 
 export default function ProjectVillaPrangins() {
   const navigate = useNavigate();
@@ -77,7 +77,7 @@ export default function ProjectVillaPrangins() {
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
-      <SEOHead title="Transformation villa Prangins – AMO et pilotage TCE | SBRE Ingénierie" description="SBRE Ingénierie assure l'assistance maître d'ouvrage (AMO) pour la transformation et rénovation d'une villa à Prangins (Vaud) : pilotage TCE, suivi qualité et réception des travaux selon normes SIA." canonical="https://sbre-ingenierie.ch/projet/villa-prangins" />
+      <SEOHead title="Transformation villa Prangins – AMO et pilotage TCE | SBRE Ingénierie" description="SBRE Ingénierie assure l'assistance maître d'ouvrage (AMO) pour la transformation et rénovation d'une villa à Prangins (Vaud) : pilotage TCE, suivi qualité et réception des travaux selon normes SIA." />
       {/* Navigation */}
       <header>
       <motion.nav
@@ -89,13 +89,14 @@ export default function ProjectVillaPrangins() {
           <div className="flex justify-between items-center h-20 md:h-24 lg:h-28">
             <button onClick={() => navigate('/')} aria-label="Retourner à l’accueil SBRE Ingénierie" className="flex items-center">
               <img
+                    loading="lazy" decoding="async"
                 src={logoImage}
                 alt="SBRE Ingénierie"
                 className="h-18 md:h-24 lg:h-28 w-auto transition-all duration-300"
               />
             </button>
             <button
-              onClick={() => { navigate('/'); setTimeout(() => { document.getElementById('réalisations')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }}
+              onClick={() => { navigate('/#réalisations'); }}
               className="flex items-center gap-2 px-5 py-2.5 bg-[#0a5c3d] text-white rounded-full font-medium hover:bg-[#0d7a52] active:scale-95 transition-all duration-200 shadow-md"
             >
               <ArrowLeft size={18} />
@@ -111,6 +112,7 @@ export default function ProjectVillaPrangins() {
       <section className="relative h-[50vh] sm:h-[70vh] flex items-center justify-center overflow-hidden mt-20 md:mt-24 lg:mt-28">
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 to-black/50 z-10" />
         <img
+                    loading="lazy" decoding="async"
           src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=1920"
           alt="Villa haut de gamme"
           className="absolute inset-0 w-full h-full object-cover"
@@ -253,7 +255,7 @@ export default function ProjectVillaPrangins() {
                 onClick={() => setSelectedChantier(index)}
               >
                 <img
-                  loading="lazy"
+                    loading="lazy" decoding="async"
                   src={image.src}
                   alt={image.alt}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -294,7 +296,7 @@ export default function ProjectVillaPrangins() {
                   onClick={() => setSelectedFinal(index)}
                 >
                   <img
-                  loading="lazy"
+                    loading="lazy" decoding="async"
                     src={image.src}
                     alt={image.alt}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -330,7 +332,7 @@ export default function ProjectVillaPrangins() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <img
-                  loading="lazy"
+                    loading="lazy" decoding="async"
               src={logoImage}
               alt="SBRE Ingénierie"
               className="h-16 md:h-20 w-auto mb-4 brightness-0 invert mx-auto"
@@ -364,7 +366,7 @@ export default function ProjectVillaPrangins() {
             <ChevronRight size={48} />
           </button>
           <img
-                  loading="lazy"
+                    loading="lazy" decoding="async"
             src={chantierImages[selectedChantier].src}
             alt={chantierImages[selectedChantier].alt}
             className="max-w-[90vw] max-h-[90vh] object-contain"
@@ -392,7 +394,7 @@ export default function ProjectVillaPrangins() {
             <ChevronRight size={48} />
           </button>
           <img
-                  loading="lazy"
+                    loading="lazy" decoding="async"
             src={finalImages[selectedFinal].src}
             alt={finalImages[selectedFinal].alt}
             className="max-w-[90vw] max-h-[90vh] object-contain"

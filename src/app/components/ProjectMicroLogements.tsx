@@ -3,16 +3,16 @@ import { ArrowLeft, CheckCircle, X, ChevronLeft, ChevronRight } from 'lucide-rea
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import SEOHead from './SEOHead';
-import logoImage from '../../imports/Pr_sentation1_page-0001.png';
-import heroImage from '../../imports/1741613187041-2.jpg';
-import chantier1 from '../../imports/563BF4ED-0D3E-40DE-9842-E41CBCC58358.JPG';
-import chantier2 from '../../imports/IMG_4094.jpeg';
-import chantier3 from '../../imports/IMG_4120.jpeg';
-import chantier4 from '../../imports/IMG_4109.jpeg';
-import final1 from '../../imports/1746172633498-2.jpg';
-import final2 from '../../imports/1746172634781-2.jpg';
-import final3 from '../../imports/1746172642405-2.jpg';
-import final4 from '../../imports/cabbfb516d4a0a7b2efdcd36ad672d45.jpg';
+import logoImage from '../../media/Pr_sentation1_page-0001.webp';
+import heroImage from '../../media/1741613187041-2.webp';
+import chantier1 from '../../media/563BF4ED-0D3E-40DE-9842-E41CBCC58358.webp';
+import chantier2 from '../../media/IMG_4094.webp';
+import chantier3 from '../../media/IMG_4120.webp';
+import chantier4 from '../../media/IMG_4109.webp';
+import final1 from '../../media/1746172633498-2.webp';
+import final2 from '../../media/1746172634781-2.webp';
+import final3 from '../../media/1746172642405-2.webp';
+import final4 from '../../media/cabbfb516d4a0a7b2efdcd36ad672d45.webp';
 
 export default function ProjectMicroLogements() {
   const navigate = useNavigate();
@@ -100,7 +100,7 @@ export default function ProjectMicroLogements() {
 
   return (
     <div className="min-h-screen bg-white overflow-x-hidden">
-      <SEOHead title="Pilotage de chantier résidentiel Lancy – Micro-logements | SBRE Ingénierie" description="SBRE Ingénierie pilote le chantier résidentiel de micro-logements à Lancy en Suisse romande : suivi technique, coordination TCE, contrôle des reprises et interface exploitation." canonical="https://sbre-ingenierie.ch/projet/micro-logements-lancy" />
+      <SEOHead title="Pilotage de chantier résidentiel Lancy – Micro-logements | SBRE Ingénierie" description="SBRE Ingénierie pilote le chantier résidentiel de micro-logements à Lancy en Suisse romande : suivi technique, coordination TCE, contrôle des reprises et interface exploitation." />
       {/* Navigation */}
       <header>
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
@@ -108,13 +108,14 @@ export default function ProjectMicroLogements() {
           <div className="flex justify-between items-center h-20 md:h-24 lg:h-28">
             <Link to="/" aria-label="Retourner à l’accueil SBRE Ingénierie" className="flex items-center">
               <img
+                    loading="lazy" decoding="async"
                 src={logoImage}
                 alt="SBRE Ingénierie"
                 className="h-16 md:h-20 lg:h-24 w-auto"
               />
             </Link>
             <button
-              onClick={() => { navigate('/'); setTimeout(() => { document.getElementById('réalisations')?.scrollIntoView({ behavior: 'smooth' }); }, 100); }}
+              onClick={() => { navigate('/#réalisations'); }}
               className="flex items-center gap-2 px-5 py-2.5 bg-[#0a5c3d] text-white rounded-full font-medium hover:bg-[#0d7a52] active:scale-95 transition-all duration-200 shadow-md"
             >
               <ArrowLeft size={18} />
@@ -130,6 +131,7 @@ export default function ProjectMicroLogements() {
       <section className="relative h-[45vh] sm:h-[60vh] mt-20 md:mt-24 lg:mt-28 flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-black/60 to-black/40 z-10" />
         <img
+                    loading="lazy" decoding="async"
           src={heroImage}
           alt="Micro-logements CityPop Lancy"
           className="absolute inset-0 w-full h-full object-cover"
@@ -251,7 +253,7 @@ export default function ProjectMicroLogements() {
                   className="relative h-56 sm:h-80 rounded-lg overflow-hidden shadow-lg group cursor-pointer"
                 >
                   <img
-                  loading="lazy"
+                    loading="lazy" decoding="async"
                     src={image.src}
                     alt={image.alt}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -295,7 +297,7 @@ export default function ProjectMicroLogements() {
                   className="relative h-56 sm:h-80 rounded-lg overflow-hidden shadow-lg group cursor-pointer"
                 >
                   <img
-                  loading="lazy"
+                    loading="lazy" decoding="async"
                     src={image.src}
                     alt={image.alt}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
@@ -435,7 +437,7 @@ export default function ProjectMicroLogements() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <img
-                  loading="lazy"
+                    loading="lazy" decoding="async"
               src={logoImage}
               alt="SBRE Ingénierie"
               className="h-16 md:h-20 w-auto mb-4 brightness-0 invert mx-auto"

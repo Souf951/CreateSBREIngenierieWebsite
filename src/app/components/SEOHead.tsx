@@ -6,8 +6,8 @@ interface SEOHeadProps {
   canonical?: string;
 }
 
-const SITE_URL = "https://sbre-ingenierie.ch/";
-const OG_IMAGE = `${SITE_URL}og-sbre-ingenierie.png`;
+const SITE_URL = "https://souf951.github.io/CreateSBREIngenierieWebsite/";
+const OG_IMAGE = `${SITE_URL}og-sbre-ingenierie.jpg`;
 
 export default function SEOHead({
   title = "SBRE Ingenierie & Direction de travaux",
@@ -41,15 +41,15 @@ export default function SEOHead({
 
     setMeta({ name: "description", content: description });
     setMeta({ name: "robots", content: "index, follow, max-image-preview:large" });
-    setLink("canonical", canonical);
-    setLink("icon", `${SITE_URL}favicon-sbre.png`);
+    setLink("canonical", SITE_URL);
+    setLink("icon", `${SITE_URL}favicon-sbre.svg`);
 
     setMeta({ property: "og:type", content: "website" });
     setMeta({ property: "og:locale", content: "fr_CH" });
     setMeta({ property: "og:site_name", content: "SBRE Ingénierie" });
     setMeta({ property: "og:title", content: title });
     setMeta({ property: "og:description", content: "Direction de travaux, suivi de chantier, planification et coordination des entreprises en Suisse romande." });
-    setMeta({ property: "og:url", content: canonical });
+    setMeta({ property: "og:url", content: SITE_URL });
     setMeta({ property: "og:image", content: OG_IMAGE });
     setMeta({ property: "og:image:alt", content: "SBRE Ingénierie — direction de travaux en Suisse romande" });
 
@@ -73,7 +73,7 @@ export default function SEOHead({
         "@id": `${SITE_URL}#business`,
         name: "SBRE Ingénierie",
         url: SITE_URL,
-        logo: `${SITE_URL}favicon-sbre.png`,
+        logo: `${SITE_URL}favicon-sbre.svg`,
         image: OG_IMAGE,
         telephone: "+41783076029",
         email: "info@sbre-ingenierie.ch",
