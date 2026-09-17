@@ -74,11 +74,11 @@ describe("Partner collaboration", () => {
     });
     fireEvent.submit(
       screen
-        .getByRole("button", { name: /Préparer ma demande/ })
+        .getByRole("button", { name: /Préparer ma candidature/ })
         .closest("form")!,
     );
     const href = screen
-      .getByRole("link", { name: /Ouvrir mon e-mail/ })
+      .getByRole("link", { name: /Ouvrir ma candidature/ })
       .getAttribute("href")!;
     expect(new URL(href).searchParams.get("body")).toContain("René & Associés");
     expect(new URL(href).searchParams.get("body")).toContain(
@@ -88,7 +88,7 @@ describe("Partner collaboration", () => {
       target: { value: "Entreprises" },
     });
     expect(
-      screen.queryByRole("link", { name: /Ouvrir mon e-mail/ }),
+      screen.queryByRole("link", { name: /Ouvrir ma candidature/ }),
     ).toBeNull();
   });
 });
