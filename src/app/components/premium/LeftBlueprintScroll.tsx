@@ -13,87 +13,77 @@ declare global {
 
 const LEFT_SVG = `
 <svg viewBox="0 0 140 1000" preserveAspectRatio="none" aria-hidden="true">
-  <g class="bp-serpentine">
-    <path class="bp-serpentine-base" d="M28 10 H104 V92 H62 V166 H116 V244 H46 V330 H96 V408 H34 V500 H108 V588 H58 V674 H118 V760 H42 V848 H94 V930 H30 V992" />
-    <path class="bp-serpentine-wave" pathLength="100" d="M28 10 H104 V92 H62 V166 H116 V244 H46 V330 H96 V408 H34 V500 H108 V588 H58 V674 H118 V760 H42 V848 H94 V930 H30 V992" />
-  </g>
-  <g class="bp-structure">
-    <path d="M62 92 V132 H96 V166" />
-    <path d="M46 244 H22 V286 H64" />
-    <path d="M96 330 H122 V372 H76" />
-    <path d="M34 408 H16 V458 H64" />
-    <path d="M108 500 H126 V548 H82" />
-    <path d="M58 588 H24 V630 H72" />
-    <path d="M118 674 H92 V716 H54" />
-    <path d="M42 760 H18 V810 H70" />
-    <path d="M94 848 H122 V892 H66" />
+  <g class="bp-plan-fragments">
+    <path d="M18 42 H82 V98" />
+    <path d="M112 92 V168 H54" />
+    <path d="M28 205 H74 V252 H120" />
+    <path d="M96 294 V354 H42" />
+    <path d="M18 424 H68 V388" />
+    <path d="M114 468 H76 V536 H34" />
+    <path d="M24 604 H88 V650" />
+    <path d="M118 690 H70 V742" />
+    <path d="M30 792 H78 V836 H110" />
+    <path d="M96 914 H46 V972" />
   </g>
   <g class="bp-detail">
-    <path d="M36 54 H72 V78 H100" />
-    <path d="M28 274 H52 V304" />
-    <path d="M76 352 H104 V388" />
-    <path d="M26 442 H56 V474" />
-    <path d="M78 522 H108 V558" />
-    <path d="M34 612 H62 V646" />
-    <path d="M78 694 H104 V732" />
-    <path d="M28 792 H58 V824" />
-    <path d="M68 872 H100 V910" />
+    <path d="M38 132 H68 V158" />
+    <path d="M86 236 H112" />
+    <path d="M24 326 H54 V366" />
+    <path d="M82 414 H112 V442" />
+    <path d="M44 560 H76 V588" />
+    <path d="M82 676 H108" />
+    <path d="M28 756 H58 V782" />
+    <path d="M76 872 H112 V898" />
   </g>
   <g class="bp-dimensions">
-    <path d="M14 120 H120 M18 114 V126 M116 114 V126" />
-    <path d="M14 390 H126 M18 384 V396 M122 384 V396" />
-    <path d="M14 650 H124 M18 644 V656 M120 644 V656" />
-    <path d="M16 944 H120 M20 938 V950 M116 938 V950" />
+    <path d="M14 120 H102 M18 114 V126 M98 114 V126" />
+    <path d="M32 378 H124 M36 372 V384 M120 372 V384" />
+    <path d="M16 646 H112 M20 640 V652 M108 640 V652" />
+    <path d="M28 936 H122 M32 930 V942 M118 930 V942" />
   </g>
   <g class="bp-labels">
     <text x="18" y="108">4.20 m</text>
-    <text x="18" y="378">6.80 m</text>
-    <text x="18" y="638">5.40 m</text>
-    <text x="20" y="932">3.60 m</text>
+    <text x="36" y="366">6.80 m</text>
+    <text x="20" y="634">5.40 m</text>
+    <text x="32" y="924">3.60 m</text>
   </g>
 </svg>`;
 
 const RIGHT_SVG = `
 <svg viewBox="0 0 140 1000" preserveAspectRatio="none" aria-hidden="true">
-  <g class="bp-serpentine">
-    <path class="bp-serpentine-base" d="M108 12 V86 H54 V162 H118 V242 H72 V318 H24 V402 H88 V480 H40 V566 H112 V650 H66 V736 H20 V824 H84 V906 H44 V990" />
-    <path class="bp-serpentine-wave" pathLength="100" data-direction="reverse" d="M108 12 V86 H54 V162 H118 V242 H72 V318 H24 V402 H88 V480 H40 V566 H112 V650 H66 V736 H20 V824 H84 V906 H44 V990" />
-  </g>
-  <g class="bp-structure">
-    <path data-direction="reverse" d="M54 86 H24 V128 H76" />
-    <path data-direction="reverse" d="M118 162 H92 V204 H58" />
-    <path data-direction="reverse" d="M72 242 H104 V282 H52" />
-    <path data-direction="reverse" d="M24 318 H50 V360 H94" />
-    <path data-direction="reverse" d="M88 402 H120 V444 H68" />
-    <path data-direction="reverse" d="M40 480 H18 V524 H70" />
-    <path data-direction="reverse" d="M112 566 H86 V610 H54" />
-    <path data-direction="reverse" d="M66 650 H98 V692 H48" />
-    <path data-direction="reverse" d="M20 736 H48 V780 H92" />
-    <path data-direction="reverse" d="M84 824 H116 V866 H60" />
+  <g class="bp-plan-fragments">
+    <path data-direction="reverse" d="M120 36 H62 V86" />
+    <path data-direction="reverse" d="M28 118 V188 H92" />
+    <path data-direction="reverse" d="M116 230 H72 V280 H34" />
+    <path data-direction="reverse" d="M42 326 H104 V370" />
+    <path data-direction="reverse" d="M122 438 H76 V408" />
+    <path data-direction="reverse" d="M24 486 H62 V548 H108" />
+    <path data-direction="reverse" d="M118 614 H56 V658" />
+    <path data-direction="reverse" d="M34 708 H84 V752" />
+    <path data-direction="reverse" d="M116 808 H72 V850 H28" />
+    <path data-direction="reverse" d="M44 928 H98 V974" />
   </g>
   <g class="bp-detail">
-    <path d="M78 48 H108 V72" />
-    <path d="M34 190 H64 V222 H94" />
-    <path d="M82 268 H112 V300" />
-    <path d="M30 344 H58 V378" />
-    <path d="M76 430 H106 V462" />
-    <path d="M26 506 H56 V542" />
-    <path d="M82 594 H110 V626" />
-    <path d="M34 680 H62 V714" />
-    <path d="M72 766 H104 V804" />
-    <path d="M34 852 H64 V888" />
+    <path d="M70 140 H106 V166" />
+    <path d="M28 252 H54" />
+    <path d="M82 344 H116" />
+    <path d="M30 418 H58 V448" />
+    <path d="M76 574 H108 V598" />
+    <path d="M36 674 H62" />
+    <path d="M78 774 H110 V800" />
+    <path d="M34 886 H66 V912" />
   </g>
   <g class="bp-dimensions">
-    <path d="M18 144 H126 M22 138 V150 M122 138 V150" />
-    <path d="M16 370 H124 M20 364 V376 M120 364 V376" />
-    <path d="M18 620 H126 M22 614 V626 M122 614 V626" />
-    <path d="M18 882 H124 M22 876 V888 M120 876 V888" />
+    <path d="M28 146 H124 M32 140 V152 M120 140 V152" />
+    <path d="M16 362 H106 M20 356 V368 M102 356 V368" />
+    <path d="M30 628 H124 M34 622 V634 M120 622 V634" />
+    <path d="M18 896 H110 M22 890 V902 M106 890 V902" />
   </g>
   <g class="bp-labels">
-    <text x="80" y="132">5.75 m</text>
-    <text x="78" y="358">4.90 m</text>
-    <text x="80" y="608">7.10 m</text>
-    <text x="78" y="870">3.25 m</text>
+    <text x="82" y="134">5.75 m</text>
+    <text x="22" y="350">4.90 m</text>
+    <text x="82" y="616">7.10 m</text>
+    <text x="24" y="884">3.25 m</text>
   </g>
 </svg>`;
 
@@ -131,31 +121,21 @@ export default function LeftBlueprintScroll() {
     root.innerHTML = `
       <style>
         .sbre-architectural-margins{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden}
-        .sbre-blueprint-side{position:absolute;top:0;height:100vh;overflow:hidden;opacity:.78}
+        .sbre-blueprint-side{position:absolute;top:0;height:100vh;overflow:hidden;opacity:.52}
         .sbre-blueprint-side.left{left:0}
         .sbre-blueprint-side.right{right:0}
         .sbre-blueprint-side svg{display:block;width:100%;height:100%}
-        .sbre-blueprint-side path{fill:none;stroke:#0a5c3d;stroke-width:1.05;vector-effect:non-scaling-stroke;stroke-linecap:square;stroke-linejoin:miter;opacity:.37}
-        .sbre-blueprint-side .bp-serpentine-base{stroke-width:1.05;opacity:.17}
-        .sbre-blueprint-side .bp-serpentine-wave{stroke-width:1.7;opacity:.72;stroke-linecap:round;stroke-dasharray:18 82;animation:bp-wave-left 7.2s linear infinite;filter:drop-shadow(0 0 2px rgba(10,92,61,.14))}
-        .sbre-blueprint-side.right .bp-serpentine-wave{animation-name:bp-wave-right;animation-duration:8.4s}
-        .sbre-blueprint-side .bp-detail path{stroke-width:.88;opacity:.24}
-        .sbre-blueprint-side .bp-dimensions path{stroke-width:.78;opacity:.30;animation:bp-dim-pulse 7.2s ease-in-out infinite}
-        .sbre-blueprint-side.right .bp-dimensions path{animation-duration:8.4s;animation-delay:1.2s}
-        .sbre-blueprint-side text{fill:#0a5c3d;font:600 8px/1 Inter,Arial,sans-serif;letter-spacing:.06em;opacity:.30;animation:bp-label-pulse 7.2s ease-in-out infinite}
-        .sbre-blueprint-side.right text{animation-duration:8.4s;animation-delay:1.2s}
-        .theme-dark .sbre-blueprint-side path{stroke:#fff;opacity:.29}
-        .theme-dark .sbre-blueprint-side .bp-serpentine-base{opacity:.12}
-        .theme-dark .sbre-blueprint-side .bp-serpentine-wave{opacity:.62;filter:drop-shadow(0 0 2px rgba(255,255,255,.12))}
-        .theme-dark .sbre-blueprint-side .bp-detail path{opacity:.20}
-        .theme-dark .sbre-blueprint-side .bp-dimensions path{opacity:.22}
-        .theme-dark .sbre-blueprint-side text{fill:#fff}
-        @keyframes bp-wave-left{from{stroke-dashoffset:0}to{stroke-dashoffset:-100}}
-        @keyframes bp-wave-right{from{stroke-dashoffset:0}to{stroke-dashoffset:100}}
-        @keyframes bp-dim-pulse{0%,100%{opacity:.14}38%,58%{opacity:.42}76%{opacity:.22}}
-        @keyframes bp-label-pulse{0%,100%{opacity:.18}42%,62%{opacity:.42}80%{opacity:.26}}
+        .sbre-blueprint-side path{fill:none;stroke:#0a5c3d;vector-effect:non-scaling-stroke;stroke-linecap:square;stroke-linejoin:miter}
+        .sbre-blueprint-side .bp-plan-fragments path{stroke-width:.9;opacity:.22;stroke-dasharray:5 7}
+        .sbre-blueprint-side .bp-detail path{stroke-width:.72;opacity:.16;stroke-dasharray:2 6}
+        .sbre-blueprint-side .bp-dimensions path{stroke-width:.68;opacity:.18;stroke-dasharray:3 5}
+        .sbre-blueprint-side text{fill:#0a5c3d;font:500 7.5px/1 Inter,Arial,sans-serif;letter-spacing:.05em;opacity:.20}
+        .theme-dark .sbre-blueprint-side path{stroke:#fff}
+        .theme-dark .sbre-blueprint-side .bp-plan-fragments path{opacity:.17}
+        .theme-dark .sbre-blueprint-side .bp-detail path{opacity:.12}
+        .theme-dark .sbre-blueprint-side .bp-dimensions path{opacity:.14}
+        .theme-dark .sbre-blueprint-side text{fill:#fff;opacity:.16}
         @media(max-width:767px){.sbre-architectural-margins{display:none!important}}
-        @media(prefers-reduced-motion:reduce){.sbre-blueprint-side .bp-serpentine-wave,.sbre-blueprint-side .bp-dimensions path,.sbre-blueprint-side text{animation:none!important}}
       </style>
       <div class="sbre-blueprint-side left">${LEFT_SVG}</div>
       <div class="sbre-blueprint-side right">${RIGHT_SVG}</div>
@@ -187,24 +167,27 @@ export default function LeftBlueprintScroll() {
     sizeSides();
     window.addEventListener("resize", sizeSides, { passive: true });
 
-    const paths = Array.from(root.querySelectorAll<SVGPathElement>("path:not(.bp-serpentine-wave)"));
+    const paths = Array.from(root.querySelectorAll<SVGPathElement>("path"));
     const labels = Array.from(root.querySelectorAll<SVGTextElement>("text"));
 
     paths.forEach((path) => {
       if (typeof path.getTotalLength !== "function") {
-        path.style.strokeDasharray = "none";
         path.style.strokeDashoffset = "0";
         return;
       }
 
       const length = path.getTotalLength();
       const reverse = path.dataset.direction === "reverse";
+      path.dataset.planDash = path.closest(".bp-detail") ? "2 6" : path.closest(".bp-dimensions") ? "3 5" : "5 7";
       path.style.strokeDasharray = `${length}`;
       path.style.strokeDashoffset = reduced ? "0" : `${reverse ? -length : length}`;
     });
 
     if (reduced) {
-      labels.forEach((label) => (label.style.opacity = "0.34"));
+      paths.forEach((path) => {
+        path.style.strokeDasharray = path.dataset.planDash || "5 7";
+      });
+      labels.forEach((label) => (label.style.opacity = "0.20"));
       return () => {
         window.removeEventListener("resize", sizeSides);
         root.remove();
@@ -217,35 +200,43 @@ export default function LeftBlueprintScroll() {
       .then(() => {
         if (disposed || !window.gsap) return;
 
-        const leftStructure = Array.from(root.querySelectorAll<SVGPathElement>(".left .bp-structure path"));
+        const leftFragments = Array.from(root.querySelectorAll<SVGPathElement>(".left .bp-plan-fragments path"));
         const leftDetail = Array.from(root.querySelectorAll<SVGPathElement>(".left .bp-detail path"));
         const leftDims = Array.from(root.querySelectorAll<SVGPathElement>(".left .bp-dimensions path"));
         const leftLabels = Array.from(root.querySelectorAll<SVGTextElement>(".left text"));
 
-        const rightStructure = Array.from(root.querySelectorAll<SVGPathElement>(".right .bp-structure path"));
+        const rightFragments = Array.from(root.querySelectorAll<SVGPathElement>(".right .bp-plan-fragments path"));
         const rightDetail = Array.from(root.querySelectorAll<SVGPathElement>(".right .bp-detail path"));
         const rightDims = Array.from(root.querySelectorAll<SVGPathElement>(".right .bp-dimensions path"));
         const rightLabels = Array.from(root.querySelectorAll<SVGTextElement>(".right text"));
 
         const leftTl = window.gsap.timeline({ defaults: { ease: "power1.inOut" } });
-        leftTl.to(leftStructure, { strokeDashoffset: 0, duration: 1.15, stagger: 0.26 }, 0.45);
-        leftTl.to(leftDetail, { strokeDashoffset: 0, duration: 0.95, stagger: 0.22 }, 2.6);
-        leftTl.to(leftDims, { strokeDashoffset: 0, duration: 0.72, stagger: 0.24 }, 4.7);
-        leftTl.to(leftLabels, { opacity: 0.30, duration: 0.55, stagger: 0.16 }, 5.4);
+        leftTl.to(leftFragments, { strokeDashoffset: 0, duration: 1.0, stagger: 0.18 }, 0.35);
+        leftTl.to(leftDetail, { strokeDashoffset: 0, duration: 0.75, stagger: 0.16 }, 1.4);
+        leftTl.to(leftDims, { strokeDashoffset: 0, duration: 0.65, stagger: 0.20 }, 2.4);
+        leftTl.to(leftLabels, { opacity: 0.20, duration: 0.45, stagger: 0.12 }, 3.0);
+        leftTl.to(paths.filter((path) => path.closest(".left")), {
+          strokeDasharray: (_index: number, target: SVGPathElement) => target.dataset.planDash || "5 7",
+          duration: 0.45,
+        }, 3.25);
 
         const rightTl = window.gsap.timeline({ defaults: { ease: "power1.inOut" } });
-        rightTl.to(rightStructure, { strokeDashoffset: 0, duration: 1.25, stagger: 0.30 }, 0.75);
-        rightTl.to(rightDetail, { strokeDashoffset: 0, duration: 0.95, stagger: 0.24 }, 2.85);
-        rightTl.to(rightDims, { strokeDashoffset: 0, duration: 0.76, stagger: 0.26 }, 5.0);
-        rightTl.to(rightLabels, { opacity: 0.30, duration: 0.55, stagger: 0.16 }, 5.8);
+        rightTl.to(rightFragments, { strokeDashoffset: 0, duration: 1.05, stagger: 0.19 }, 0.55);
+        rightTl.to(rightDetail, { strokeDashoffset: 0, duration: 0.78, stagger: 0.17 }, 1.6);
+        rightTl.to(rightDims, { strokeDashoffset: 0, duration: 0.68, stagger: 0.20 }, 2.65);
+        rightTl.to(rightLabels, { opacity: 0.20, duration: 0.45, stagger: 0.12 }, 3.2);
+        rightTl.to(paths.filter((path) => path.closest(".right")), {
+          strokeDasharray: (_index: number, target: SVGPathElement) => target.dataset.planDash || "5 7",
+          duration: 0.45,
+        }, 3.45);
       })
       .catch(() => {
         if (disposed) return;
         paths.forEach((path) => {
-          path.style.transition = "stroke-dashoffset 4.5s ease";
           path.style.strokeDashoffset = "0";
+          path.style.strokeDasharray = path.dataset.planDash || "5 7";
         });
-        labels.forEach((label) => (label.style.opacity = "0.30"));
+        labels.forEach((label) => (label.style.opacity = "0.20"));
       });
 
     return () => {
