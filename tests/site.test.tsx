@@ -46,7 +46,7 @@ describe("Visitor journeys", () => {
     ])
       expect(document.querySelector(`a[href="/projet/${slug}"]`)).toBeTruthy();
   });
-  it("preserves names, special characters and the complete message in the email draft", () => {
+  it("uses the secure direct-send contact flow and fails safely before configuration", () => {
     render(<ContactForm />);
     fireEvent.change(screen.getByLabelText("Votre nom"), {
       target: { value: "Test & Partenaire" },
@@ -57,22 +57,19 @@ describe("Visitor journeys", () => {
     fireEvent.change(screen.getByLabelText("Votre projet"), {
       target: { value: "Rénovation à Genève\nBudget : 100 000 CHF ?" },
     });
+
     fireEvent.click(
-      screen.getByRole("button", { name: /Préparer mon e-mail/ }),
+      screen.getByRole("button", { name: /Envoyer ma demande/ }),
     );
-    const href = screen
-      .getByRole("link", { name: /Ouvrir mon brouillon/ })
-      .getAttribute("href")!;
-    const body = new URL(href).searchParams.get("body");
-    expect(body).toContain("Test & Partenaire");
-    expect(body).toContain("test@example.com");
-    expect(body).toContain("Rénovation à Genève\nBudget : 100 000 CHF ?");
-    fireEvent.change(screen.getByLabelText("Votre nom"), {
-      target: { value: "Correction" },
-    });
-    expect(
-      screen.queryByRole("link", { name: /Ouvrir mon brouillon/ }),
-    ).toBeNull();
+
+    expect(screen.getByRole("alert")).toHaveTextContent(
+      /Le formulaire n’est pas encore relié au service d’envoi/,
+    );
+    expect(screen.getByLabelText("Votre nom")).toHaveValue("Test & Partenaire");
+    expect(screen.getByLabelText("Votre e-mail")).toHaveValue("test@example.com");
+    expect(screen.getByLabelText("Votre projet")).toHaveValue(
+      "Rénovation à Genève\nBudget : 100 000 CHF ?",
+    );
   });
   it("renders a lightweight image without a WebGL canvas on mobile", () => {
     render(<Architecture />);
