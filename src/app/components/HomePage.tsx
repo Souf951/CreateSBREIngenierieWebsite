@@ -477,22 +477,38 @@ export default function HomePage() {
           <ContactForm />
         </section>
         <section className="section faq-section">
-          <p className="eyebrow">LES QUESTIONS ESSENTIELLES</p>
+          <p className="eyebrow">QUESTIONS FRÉQUENTES</p>
           {[
             [
-              "À quel moment faire intervenir SBRE ?",
-              "Dès la préparation du projet pour organiser les consultations et le planning, ou en cours de travaux pour clarifier une situation et redéfinir les priorités. Le périmètre est fixé au début du mandat.",
+              "Quel type de projets accompagnez-vous ?",
+              "Nous intervenons sur des rénovations, transformations, projets résidentiels et opérations tertiaires, aussi bien en phase de préparation qu’en phase d’exécution.",
             ],
             [
-              "Travaillez-vous avec mon architecte ?",
-              "Oui. La direction de travaux se coordonne avec l’architecte et les mandataires techniques, dans le respect des responsabilités de chacun.",
+              "À quel moment peut-on vous consulter ?",
+              "Idéalement dès la préparation du projet pour structurer les consultations, le budget et le planning. Nous pouvons également intervenir sur un chantier déjà engagé pour reprendre le pilotage d’une situation.",
+            ],
+            [
+              "Travaillez-vous avec des architectes externes ?",
+              "Oui. Nous collaborons avec l’architecte, les ingénieurs et les mandataires techniques en respectant clairement les responsabilités de chacun.",
+            ],
+            [
+              "Pouvez-vous gérer les appels d’offres et les adjudications ?",
+              "Oui. Selon le mandat, nous pouvons préparer les soumissions, consulter les entreprises, analyser les offres, conduire les clarifications et préparer les adjudications.",
+            ],
+            [
+              "Pouvez-vous estimer les coûts de construction ?",
+              "Nous pouvons établir des estimations et des comparatifs sur la base des informations disponibles, puis affiner les coûts au fur et à mesure des consultations et des décisions de projet.",
+            ],
+            [
+              "Êtes-vous présents pendant le chantier ?",
+              "Oui. La fréquence de présence est définie selon le besoin du projet : séances, contrôles ciblés, coordination des entreprises, suivi des points critiques et préparation des réceptions.",
             ],
             [
               "Comment sont définis vos honoraires ?",
-              "Sur la base du périmètre, de la durée, de la complexité et de la présence terrain nécessaire. Une offre précise les prestations, les livrables et les conditions du mandat.",
+              "Ils dépendent du périmètre, de la durée, de la complexité et du niveau de présence demandé. Une offre précise les prestations, les livrables et les conditions du mandat.",
             ],
-          ].map(([q, a]) => (
-            <details key={q}>
+          ].map(([q, a], i) => (
+            <details key={q} open={i === 0}>
               <summary>
                 {q}
                 <span>+</span>
