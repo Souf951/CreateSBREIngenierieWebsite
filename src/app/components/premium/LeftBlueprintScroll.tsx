@@ -55,6 +55,10 @@ function strokeLength(points: Point[]) {
   return total;
 }
 
+function easeOutCubic(t: number) {
+  return 1 - Math.pow(1 - t, 3);
+}
+
 function drawPartial(
   ctx: CanvasRenderingContext2D,
   stroke: Stroke,
@@ -64,9 +68,11 @@ function drawPartial(
   offsetY: number,
   mainColor: string,
   softColor: string,
+  alpha: number,
   mirror = false,
 ) {
-  if (progress <= 0) return;
+  if (progress <= 0 || alpha <= 0) return;
+
   const points = stroke.points;
   const total = strokeLength(points);
   const target = total * Math.min(1, progress);
@@ -81,6 +87,7 @@ function drawPartial(
     const a = points[i - 1];
     const b = points[i];
     const segment = Math.hypot(b[0] - a[0], b[1] - a[1]);
+
     if (travelled + segment <= target) {
       ctx.lineTo(tx(b[0]), ty(b[1]));
       travelled += segment;
@@ -96,11 +103,14 @@ function drawPartial(
     break;
   }
 
+  ctx.save();
+  ctx.globalAlpha = alpha;
   ctx.lineCap = "square";
   ctx.lineJoin = "miter";
-  ctx.lineWidth = (stroke.width ?? 0.9) * Math.max(0.9, scale * 0.92);
+  ctx.lineWidth = (stroke.width ?? 0.9) * Math.max(0.95, scale * 0.92);
   ctx.strokeStyle = stroke.color === "soft" ? softColor : mainColor;
   ctx.stroke();
+  ctx.restore();
 }
 
 export default function LeftBlueprintScroll() {
@@ -132,11 +142,10 @@ export default function LeftBlueprintScroll() {
     let dpr = 1;
     let leftGutter = 0;
     let rightGutter = 0;
-    let contentLeft = 0;
     let contentRight = viewportWidth;
-    let targetProgress = 0.16;
-    let displayProgress = 0.16;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const startedAt = performance.now();
+    const cycle = 13.5;
 
     const measure = () => {
       viewportWidth = window.innerWidth;
@@ -144,123 +153,179 @@ export default function LeftBlueprintScroll() {
       dpr = Math.min(window.devicePixelRatio || 1, 2);
 
       const hero = document.querySelector<HTMLElement>(".premium-site .hero");
-      const projects = document.querySelector<HTMLElement>(".premium-site .projects-section");
-      const reference = hero ?? projects;
-      const rect = reference?.getBoundingClientRect();
+      const rect = hero?.getBoundingClientRect();
 
       if (rect) {
-        contentLeft = Math.max(0, rect.left);
+        leftGutter = Math.max(0, rect.left);
         contentRight = Math.min(viewportWidth, rect.right);
+        rightGutter = Math.max(0, viewportWidth - contentRight);
       } else {
         const maxContent = Math.min(1180, viewportWidth * 0.72);
-        contentLeft = (viewportWidth - maxContent) / 2;
-        contentRight = contentLeft + maxContent;
+        leftGutter = (viewportWidth - maxContent) / 2;
+        contentRight = leftGutter + maxContent;
+        rightGutter = viewportWidth - contentRight;
       }
 
-      leftGutter = Math.max(0, contentLeft);
-      rightGutter = Math.max(0, viewportWidth - contentRight);
-
-      canvas.style.display = Math.max(leftGutter, rightGutter) >= 135 ? "block" : "none";
+      canvas.style.display = Math.max(leftGutter, rightGutter) >= 125 ? "block" : "none";
       canvas.width = Math.max(1, Math.round(viewportWidth * dpr));
       canvas.height = Math.max(1, Math.round(viewportHeight * dpr));
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
 
-    const onScroll = () => {
-      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const scrollRatio = Math.min(1, Math.max(0, window.scrollY / max));
-      targetProgress = 0.16 + scrollRatio * 0.84;
+    const drawHead = (
+      x: number,
+      y: number,
+      color: string,
+      pulse: number,
+    ) => {
+      ctx.save();
+      ctx.globalAlpha = 0.55 + pulse * 0.35;
+      ctx.beginPath();
+      ctx.arc(x, y, 1.7 + pulse * 0.7, 0, Math.PI * 2);
+      ctx.fillStyle = color;
+      ctx.shadowBlur = 7 + pulse * 4;
+      ctx.shadowColor = color;
+      ctx.fill();
+      ctx.restore();
     };
 
     const drawStrip = (
       x: number,
       stripWidth: number,
       mirror: boolean,
+      localTime: number,
       mainColor: string,
       softColor: string,
-      phaseOffset: number,
     ) => {
-      if (stripWidth < 135) return;
+      if (stripWidth < 125) return;
 
       ctx.save();
       ctx.beginPath();
       ctx.rect(x, 0, stripWidth, viewportHeight);
       ctx.clip();
 
-      const usableWidth = Math.max(110, stripWidth - 44);
-      const scale = Math.min(1.52, usableWidth / 164);
+      const usableWidth = Math.max(108, stripWidth - 32);
+      const scale = Math.min(1.72, usableWidth / 164);
       const planHeight = 112 * scale;
-      const blockGap = Math.max(95, viewportHeight * 0.11);
-      const blockHeight = Math.max(planHeight + blockGap, viewportHeight * 0.34);
-      const scrollTravel = displayProgress * blockHeight * 5.0;
+      const offsetX = x + Math.max(10, (stripWidth - 154 * scale) / 2);
+      const offsetY = Math.max(92, (viewportHeight - planHeight) * 0.34);
 
-      for (let block = -2; block < 6; block += 1) {
-        const y = block * blockHeight - (scrollTravel % blockHeight) + 18;
-        if (y > viewportHeight + planHeight || y + planHeight < -80) continue;
+      const drawStart = 0.4;
+      const drawEnd = 7.7;
+      const holdEnd = 10.7;
+      const fadeEnd = 12.7;
 
-        const sequence = Math.min(1, Math.max(0, displayProgress * 1.16 - block * 0.055 + phaseOffset));
-        const offsetX = x + Math.max(16, (stripWidth - 154 * scale) / 2);
+      let master = 0;
+      let alpha = 1;
 
-        blueprint.forEach((stroke, index) => {
-          const delay = stroke.delay ?? index / blueprint.length;
-          const local = (sequence - delay) / 0.26;
-          const progress = Math.min(1, Math.max(0, local));
-          drawPartial(ctx, stroke, progress, scale, offsetX, y, mainColor, softColor, mirror);
-        });
+      if (localTime < drawStart) {
+        master = 0;
+      } else if (localTime < drawEnd) {
+        master = (localTime - drawStart) / (drawEnd - drawStart);
+      } else {
+        master = 1;
+      }
 
-        const heads = [0.22, 0.50, 0.77];
-        heads.forEach((head, i) => {
-          const p = Math.min(1, Math.max(0, (sequence - head + 0.11) / 0.16));
+      if (localTime > holdEnd) {
+        alpha = Math.max(0, 1 - (localTime - holdEnd) / (fadeEnd - holdEnd));
+      }
+
+      blueprint.forEach((stroke, index) => {
+        const delay = stroke.delay ?? index / blueprint.length;
+        const local = Math.min(1, Math.max(0, (master - delay) / 0.23));
+        const progress = easeOutCubic(local);
+        drawPartial(
+          ctx,
+          stroke,
+          progress,
+          scale,
+          offsetX,
+          offsetY,
+          mainColor,
+          softColor,
+          alpha,
+          mirror,
+        );
+      });
+
+      if (master > 0 && master < 1 && alpha > 0.08) {
+        const heads = [
+          { start: 0.08, x: 28, y: 18 },
+          { start: 0.34, x: 78, y: 50 },
+          { start: 0.58, x: 112, y: 80 },
+        ];
+
+        heads.forEach((head, index) => {
+          const p = Math.min(1, Math.max(0, (master - head.start) / 0.24));
           if (p <= 0 || p >= 1) return;
-          const localX = 26 + i * 45 + p * 20;
-          const hx = offsetX + (mirror ? 154 - localX : localX) * scale;
-          const hy = y + (20 + i * 28 + p * 16) * scale;
-          ctx.beginPath();
-          ctx.arc(hx, hy, 1.5, 0, Math.PI * 2);
-          ctx.fillStyle = mainColor;
-          ctx.fill();
+          const driftX = head.x + p * 22;
+          const driftY = head.y + Math.sin(p * Math.PI) * 10 + p * 10;
+          const hx = offsetX + (mirror ? 154 - driftX : driftX) * scale;
+          const hy = offsetY + driftY * scale;
+          const pulse = 0.5 + 0.5 * Math.sin(localTime * 5 + index * 1.7);
+          drawHead(hx, hy, mainColor, pulse);
         });
+      }
+
+      // Very light datum marks keep the sides alive while the plan is complete.
+      if (alpha > 0.15 && master > 0.82) {
+        ctx.save();
+        ctx.globalAlpha = alpha * 0.28;
+        ctx.strokeStyle = softColor;
+        ctx.lineWidth = 0.7;
+        const y1 = offsetY - 24;
+        const y2 = offsetY + planHeight + 28;
+        ctx.beginPath();
+        ctx.moveTo(x + stripWidth * 0.18, y1);
+        ctx.lineTo(x + stripWidth * 0.42, y1);
+        ctx.moveTo(x + stripWidth * 0.58, y2);
+        ctx.lineTo(x + stripWidth * 0.82, y2);
+        ctx.stroke();
+        ctx.restore();
       }
 
       ctx.restore();
     };
 
-    const render = () => {
+    const render = (now: number) => {
       if (canvas.style.display === "none") {
         raf = requestAnimationFrame(render);
         return;
       }
 
-      displayProgress += (targetProgress - displayProgress) * 0.07;
-      if (reduced) displayProgress = targetProgress;
-
       ctx.clearRect(0, 0, viewportWidth, viewportHeight);
 
       const dark = document.querySelector(".sbre-theme")?.classList.contains("theme-dark") ?? false;
-      const mainColor = dark ? "rgba(255,255,255,.48)" : "rgba(10,92,61,.34)";
-      const softColor = dark ? "rgba(255,255,255,.22)" : "rgba(10,92,61,.15)";
+      const mainColor = dark ? "rgba(255,255,255,.58)" : "rgba(10,92,61,.38)";
+      const softColor = dark ? "rgba(255,255,255,.25)" : "rgba(10,92,61,.17)";
+      const elapsed = (now - startedAt) / 1000;
 
-      drawStrip(0, leftGutter, false, mainColor, softColor, 0);
-      drawStrip(contentRight, rightGutter, true, mainColor, softColor, -0.08);
+      const leftTime = reduced ? 8.5 : elapsed % cycle;
+      const rightTime = reduced ? 8.5 : (elapsed + 1.55) % cycle;
 
-      raf = requestAnimationFrame(render);
+      drawStrip(0, leftGutter, false, leftTime, mainColor, softColor);
+      drawStrip(contentRight, rightGutter, true, rightTime, mainColor, softColor);
+
+      if (!reduced) raf = requestAnimationFrame(render);
     };
 
     measure();
-    onScroll();
 
     const resizeObserver = new ResizeObserver(measure);
     const hero = document.querySelector<HTMLElement>(".premium-site .hero");
     if (hero) resizeObserver.observe(hero);
     window.addEventListener("resize", measure, { passive: true });
-    window.addEventListener("scroll", onScroll, { passive: true });
-    raf = requestAnimationFrame(render);
+
+    if (reduced) {
+      render(startedAt + 8500);
+    } else {
+      raf = requestAnimationFrame(render);
+    }
 
     return () => {
       cancelAnimationFrame(raf);
       resizeObserver.disconnect();
       window.removeEventListener("resize", measure);
-      window.removeEventListener("scroll", onScroll);
       canvas.remove();
     };
   }, [pathname]);
