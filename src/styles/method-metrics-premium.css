@@ -16,7 +16,22 @@
   position: relative;
   z-index: 6;
   justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  width: auto;
   margin: 0 0 2px 0 !important;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: #0a6b49;
+  border: 1px solid rgba(140, 214, 177, .18);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(3, 35, 24, .18);
+  font-family: Inter, Arial, sans-serif;
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
 }
 
 .premium-site .method-section.method-metrics-ready .method-metrics {
@@ -242,6 +257,11 @@
     padding-top: 48px;
     padding-bottom: 56px;
     gap: 16px;
+  }
+
+  .premium-site .method-section.method-metrics-ready > .method-eyebrow-promoted {
+    padding: 8px 13px;
+    font-size: 9px;
   }
 
   .premium-site .method-section.method-metrics-ready .method-metrics {
