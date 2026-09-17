@@ -1,20 +1,19 @@
 import { useState, type FormEvent } from "react";
+
 export default function ContactForm() {
-  const [draft, setDraft] = useState("");
+  const [files, setFiles] = useState<string[]>([]);
+
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
-    const body = `Bonjour Soufiane,\n\nJe souhaite échanger sur mon projet.\n\nNom : ${f.get("name")}\nE-mail : ${f.get("email")}\nMission : ${f.get("service")}\n\n${f.get("message")}\n`;
-    setDraft(
-      `mailto:info@sbre-ingenierie.ch?subject=${encodeURIComponent("Parlons de mon projet — SBRE")}&body=${encodeURIComponent(body)}`,
-    );
+    const selectedFiles = files.length ? `\nPièces sélectionnées : ${files.join(", ")}\n` : "";
+    const body = `Bonjour Soufiane,\n\nJe souhaite échanger sur mon projet.\n\nNom : ${f.get("name")}\nE-mail : ${f.get("email")}\nMission : ${f.get("service")}\n\n${f.get("message")}\n${selectedFiles}\nMerci.`;
+    const mailto = `mailto:info@sbre-ingenierie.ch?subject=${encodeURIComponent("Parlons de mon projet — SBRE")}&body=${encodeURIComponent(body)}`;
+    window.location.href = mailto;
   }
+
   return (
-    <form
-      className="contact-form"
-      onSubmit={submit}
-      onChange={() => setDraft("")}
-    >
+    <form className="contact-form" onSubmit={submit}>
       <div className="form-pair">
         <label>
           Votre nom
@@ -38,6 +37,7 @@ export default function ContactForm() {
           />
         </label>
       </div>
+
       <label>
         Votre besoin
         <select name="service">
@@ -47,6 +47,7 @@ export default function ContactForm() {
           <option>Reprise d’un chantier en cours</option>
         </select>
       </label>
+
       <label>
         Votre projet
         <textarea
@@ -57,21 +58,27 @@ export default function ContactForm() {
           placeholder="Lieu, nature des travaux, stade du projet, difficultés rencontrées…"
         />
       </label>
+
+      <label className="contact-file-upload">
+        <span>Ajouter des fichiers</span>
+        <input
+          name="files"
+          type="file"
+          multiple
+          accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.webp"
+          onChange={(event) =>
+            setFiles(Array.from(event.currentTarget.files ?? []).map((file) => file.name))
+          }
+        />
+        <strong>{files.length ? `${files.length} fichier${files.length > 1 ? "s" : ""} sélectionné${files.length > 1 ? "s" : ""}` : "PDF, plans, photos, devis…"}</strong>
+      </label>
+
       <button className="button button-green" type="submit">
-        Préparer mon e-mail <span>↗</span>
+        Ouvrir l’e-mail <span>↗</span>
       </button>
       <p className="form-note">
-        Vos informations sont reprises dans un brouillon à envoyer depuis votre
-        messagerie. Aucun envoi automatique.
+        Votre messagerie s’ouvre directement avec le message prérempli. Pour des raisons de sécurité du navigateur, les fichiers sélectionnés devront être joints dans votre messagerie avant l’envoi.
       </p>
-      {draft && (
-        <div className="draft-ready" role="status">
-          <p>Votre message est prêt.</p>
-          <a className="text-link" href={draft}>
-            Ouvrir mon brouillon dans la messagerie ↗
-          </a>
-        </div>
-      )}
     </form>
   );
 }
