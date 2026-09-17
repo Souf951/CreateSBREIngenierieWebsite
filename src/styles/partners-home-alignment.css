@@ -1,0 +1,553 @@
+/* Alignment pass for the complete Partners experience.
+   This file intentionally styles the existing page without removing any section,
+   including the scroll-driven construction story. */
+
+.pr-page {
+  --pr-paper: var(--paper, #f5f5ee);
+  --pr-soft: #eef0e7;
+  --pr-ink: var(--ink, #173d31);
+  --pr-muted: var(--muted, #65736c);
+  --pr-line: var(--line, #d9ded4);
+  --pr-accent: var(--forest, #0a5c3d);
+  width: min(1600px, 100%);
+  margin: 0 auto;
+  min-height: 100vh;
+  border-left: 1px solid var(--pr-line);
+  border-right: 1px solid var(--pr-line);
+  background: var(--pr-paper);
+  color: var(--pr-ink);
+  font-family: Inter, Arial, sans-serif;
+}
+
+.pr-page em {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+}
+
+.pr-header {
+  height: 102px !important;
+  padding: 0 4.5% !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 35px !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 80 !important;
+  background: color-mix(in srgb, var(--pr-paper) 96%, transparent) !important;
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--pr-line) !important;
+}
+
+.pr-brand {
+  width: 174px !important;
+  margin-right: auto !important;
+  flex: 0 0 auto;
+}
+
+.pr-brand img {
+  width: 100% !important;
+  height: 70px !important;
+  object-fit: contain !important;
+}
+
+.pr-header nav {
+  display: flex !important;
+  align-items: center !important;
+  gap: 28px !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+.pr-header nav a {
+  padding: 11px 0 !important;
+  border-bottom: 1px solid transparent;
+}
+
+.pr-header nav a:hover {
+  color: var(--pr-accent);
+  border-bottom-color: currentColor;
+  text-decoration: none !important;
+}
+
+.pr-header-contact {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 24px !important;
+  border: 1px solid var(--pr-ink) !important;
+  padding: 11px 18px !important;
+  font-size: 12px !important;
+  line-height: 1.4;
+  background: transparent;
+}
+
+.pr-page main {
+  position: relative;
+}
+
+.pr-hero {
+  position: relative !important;
+  padding: 36px 4.5% 0 !important;
+  min-height: 690px !important;
+  overflow: hidden;
+  background-image:
+    linear-gradient(#6d87620d 1px, transparent 1px),
+    linear-gradient(90deg, #6d87620d 1px, transparent 1px);
+  background-size: 38px 38px;
+}
+
+.pr-hero::before,
+.pr-hero::after {
+  position: absolute;
+  top: 116px;
+  bottom: 92px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  border-inline: 1px solid color-mix(in srgb, var(--pr-line) 70%, transparent);
+  color: color-mix(in srgb, var(--pr-muted) 48%, transparent);
+  font-size: 8px;
+  letter-spacing: .18em;
+  writing-mode: vertical-rl;
+  pointer-events: none;
+}
+
+.pr-hero::before {
+  content: "SBRE / RÉSEAU   01 — 05";
+  left: 1.5%;
+  transform: rotate(180deg);
+}
+
+.pr-hero::after {
+  content: "DIRECTION DE TRAVAUX   SUISSE ROMANDE";
+  right: 1.5%;
+}
+
+.pr-hero-top,
+.pr-hero-body,
+.pr-hero-bottom {
+  position: relative;
+  z-index: 2;
+}
+
+.pr-hero-top {
+  padding: 0 3.5%;
+  font-size: 10px;
+}
+
+.pr-hero-body {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-items: center !important;
+  gap: 24px !important;
+  min-height: 590px !important;
+  padding: 0 3.5%;
+}
+
+.pr-hero-copy {
+  padding: 20px 0 54px !important;
+  max-width: 650px;
+}
+
+.pr-hero-overline {
+  margin-bottom: 32px !important;
+  color: var(--pr-ink) !important;
+  opacity: .8;
+}
+
+.pr-hero h1 {
+  margin: 0 !important;
+  font-size: clamp(56px, 6.3vw, 98px) !important;
+  font-weight: 500 !important;
+  letter-spacing: -.065em !important;
+  line-height: 1.06 !important;
+}
+
+.pr-hero h1 em {
+  color: var(--pr-accent) !important;
+}
+
+.pr-lead {
+  max-width: 455px !important;
+  margin-top: 30px !important;
+  color: var(--pr-muted) !important;
+  opacity: 1 !important;
+  font-size: 15px !important;
+  line-height: 1.9 !important;
+}
+
+.pr-actions {
+  margin-top: 30px !important;
+  gap: 24px !important;
+}
+
+.pr-page .pr-button {
+  min-height: 50px;
+  padding: 17px 23px !important;
+  background: var(--pr-accent) !important;
+  color: white !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+}
+
+.pr-page .pr-button:hover {
+  background: #084b32 !important;
+}
+
+.pr-link {
+  font-size: 12px !important;
+}
+
+.pr-hero-visual {
+  min-width: 0;
+  margin: 0 !important;
+  padding: 10px 0 20px !important;
+}
+
+.pr-hero-visual .pr-architecture {
+  width: 100% !important;
+  max-height: 480px;
+}
+
+.pr-drawing-note {
+  top: 1% !important;
+  right: 3% !important;
+  color: var(--pr-muted) !important;
+  opacity: .85;
+}
+
+.pr-hero-visual figcaption {
+  margin: 4px 4% 0 !important;
+  border-top: 1px solid var(--pr-line) !important;
+  padding-top: 12px !important;
+  color: var(--pr-muted) !important;
+  font-size: 9px !important;
+}
+
+.pr-hero-bottom {
+  margin: 0 3.5%;
+  min-height: 76px !important;
+  border-top: 1px solid var(--pr-line) !important;
+  color: var(--pr-muted) !important;
+}
+
+/* Keep the original scroll-driven building story intact and simply bring its
+   typography and gutters into the same system as the homepage. */
+.pr-story {
+  margin: 0 4.5%;
+  border-left: 1px solid var(--pr-line);
+  border-right: 1px solid var(--pr-line);
+  background: var(--pr-soft) !important;
+}
+
+.pr-story-sticky {
+  padding-left: 5.5% !important;
+  padding-right: 5.5% !important;
+}
+
+.pr-story-heading h2 {
+  font-weight: 500 !important;
+  letter-spacing: -.045em !important;
+}
+
+.pr-story-panel h3 {
+  font-weight: 500 !important;
+  letter-spacing: -.06em !important;
+}
+
+.pr-story-message,
+.pr-story-detail,
+.pr-story-instruction,
+.pr-model-caption {
+  color: var(--pr-muted) !important;
+}
+
+.pr-section {
+  padding: 100px 4.5% !important;
+}
+
+.pr-section-heading {
+  display: grid !important;
+  grid-template-columns: 1.3fr 1fr !important;
+  column-gap: 70px !important;
+  align-items: end !important;
+  margin-bottom: 52px !important;
+}
+
+.pr-section-heading .pr-eyebrow {
+  grid-column: 1 / -1;
+  margin-bottom: 22px !important;
+}
+
+.pr-section-heading h2 {
+  font-size: clamp(37px, 4.2vw, 65px) !important;
+  font-weight: 500 !important;
+  letter-spacing: -.065em !important;
+  line-height: 1.06 !important;
+}
+
+.pr-section-heading > p:last-child {
+  max-width: 400px;
+  justify-self: end;
+  color: var(--pr-muted) !important;
+  font-size: 14px !important;
+  line-height: 1.9 !important;
+}
+
+.pr-collaboration {
+  background: #fff;
+}
+
+.pr-profile-list {
+  border-top: 1px solid var(--pr-line);
+}
+
+.pr-profile {
+  display: grid !important;
+  grid-template-columns: 56px minmax(230px, .9fr) 150px minmax(280px, 1.1fr) !important;
+  gap: 28px !important;
+  align-items: center !important;
+  padding: 30px 0 !important;
+  border-bottom: 1px solid var(--pr-line) !important;
+}
+
+.pr-profile-index {
+  font: 10px monospace;
+  color: var(--pr-muted) !important;
+}
+
+.pr-profile-title h3 {
+  margin: 0 0 7px !important;
+  font-size: clamp(23px, 2vw, 30px) !important;
+  font-weight: 500 !important;
+  letter-spacing: -.035em !important;
+}
+
+.pr-profile-title p,
+.pr-profile-copy > p {
+  color: var(--pr-muted) !important;
+}
+
+.pr-profile-copy > p {
+  font-size: 13px !important;
+  line-height: 1.85 !important;
+}
+
+.pr-profile-copy > span {
+  display: block;
+  margin-top: 12px;
+  font-size: 10px !important;
+  color: var(--pr-ink) !important;
+}
+
+.pr-profile-drawing {
+  width: 130px;
+  max-width: 100%;
+  color: var(--pr-accent) !important;
+  opacity: .72;
+}
+
+.pr-value {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 100px !important;
+  background: var(--pr-ink) !important;
+  color: var(--pr-paper) !important;
+}
+
+.pr-value-intro h2 {
+  margin: 24px 0 !important;
+  font-size: clamp(37px, 4.2vw, 65px) !important;
+  font-weight: 500 !important;
+  letter-spacing: -.065em !important;
+  line-height: 1.06 !important;
+}
+
+.pr-value-intro h2 em {
+  color: var(--lime, #d6e6b0) !important;
+}
+
+.pr-value-intro > p:not(.pr-eyebrow) {
+  max-width: 390px;
+  color: #c0cdbf !important;
+  font-size: 14px !important;
+  line-height: 1.9 !important;
+}
+
+.pr-value-signature {
+  display: block;
+  margin-top: 34px;
+  color: var(--lime, #d6e6b0) !important;
+  font-size: 10px !important;
+  letter-spacing: .08em;
+}
+
+.pr-values article {
+  display: grid !important;
+  grid-template-columns: 45px 1fr !important;
+  gap: 18px !important;
+  padding: 22px 0 !important;
+  border-top: 1px solid rgba(255,255,255,.16) !important;
+}
+
+.pr-values article:last-child {
+  border-bottom: 1px solid rgba(255,255,255,.16) !important;
+}
+
+.pr-values article > span {
+  color: #a6b5a7 !important;
+  font: 10px monospace;
+}
+
+.pr-values h3 {
+  margin: 0 0 6px !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+}
+
+.pr-values p {
+  color: #b9c6ba !important;
+  font-size: 12px !important;
+  line-height: 1.75 !important;
+}
+
+.pr-form-section {
+  display: grid !important;
+  grid-template-columns: .9fr 1.1fr !important;
+  gap: 90px !important;
+  background: #f0f1e8 !important;
+}
+
+.pr-form-intro h2 {
+  margin: 22px 0 !important;
+  font-size: clamp(37px, 4vw, 60px) !important;
+  font-weight: 500 !important;
+  letter-spacing: -.06em !important;
+  line-height: 1.08 !important;
+}
+
+.pr-form-intro > p:not(.pr-eyebrow):not(.pr-form-aside) {
+  max-width: 430px;
+  color: var(--pr-muted) !important;
+  font-size: 14px !important;
+  line-height: 1.9 !important;
+}
+
+.pr-form {
+  padding: 34px !important;
+  border: 1px solid var(--pr-line) !important;
+  background: rgba(255,255,255,.48) !important;
+}
+
+.pr-form label {
+  font-size: 11px !important;
+}
+
+.pr-form input,
+.pr-form select,
+.pr-form textarea {
+  color: var(--pr-ink) !important;
+  font-family: Inter, Arial, sans-serif !important;
+}
+
+.pr-form-note,
+.pr-form-aside {
+  color: var(--pr-muted) !important;
+}
+
+@media (max-width: 1000px) {
+  .pr-page {
+    border-inline: 0;
+  }
+
+  .pr-header {
+    padding-inline: 24px !important;
+  }
+
+  .pr-header nav {
+    display: none !important;
+  }
+
+  .pr-hero::before,
+  .pr-hero::after {
+    display: none;
+  }
+
+  .pr-hero {
+    padding-inline: 24px !important;
+  }
+
+  .pr-hero-top,
+  .pr-hero-body,
+  .pr-hero-bottom {
+    padding-inline: 0;
+    margin-inline: 0;
+  }
+
+  .pr-hero-body {
+    grid-template-columns: 1fr !important;
+  }
+
+  .pr-story {
+    margin-inline: 24px;
+  }
+
+  .pr-section {
+    padding: 76px 24px !important;
+  }
+
+  .pr-section-heading,
+  .pr-value,
+  .pr-form-section {
+    grid-template-columns: 1fr !important;
+    gap: 44px !important;
+  }
+
+  .pr-section-heading > p:last-child {
+    justify-self: start;
+  }
+
+  .pr-profile {
+    grid-template-columns: 44px 1fr !important;
+  }
+
+  .pr-profile-drawing,
+  .pr-profile-copy {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 640px) {
+  .pr-header-contact {
+    display: none !important;
+  }
+
+  .pr-brand {
+    width: 150px !important;
+  }
+
+  .pr-hero h1 {
+    font-size: clamp(48px, 14vw, 72px) !important;
+  }
+
+  .pr-story {
+    margin-inline: 0;
+    border-inline: 0;
+  }
+
+  .pr-profile {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .pr-profile-index,
+  .pr-profile-drawing,
+  .pr-profile-copy {
+    grid-column: 1;
+  }
+}
