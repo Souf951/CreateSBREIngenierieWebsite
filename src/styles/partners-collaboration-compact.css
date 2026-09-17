@@ -1,0 +1,194 @@
+/* Compact, stable collaboration cards.
+   This layer intentionally disables the previous pointer-tilt treatment and
+   replaces it with a calm architectural hover plus a moving green perimeter. */
+
+@property --sbre-border-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes sbre-border-run {
+  to { --sbre-border-angle: 360deg; }
+}
+
+.pr-collaboration.pr-collab-premium {
+  padding-top: clamp(72px, 6vw, 96px) !important;
+  padding-bottom: clamp(78px, 6vw, 104px) !important;
+}
+
+.pr-collaboration.pr-collab-premium .pr-section-heading {
+  margin-bottom: clamp(36px, 3.5vw, 54px) !important;
+  gap: clamp(28px, 4vw, 64px) !important;
+}
+
+.pr-collaboration.pr-collab-premium .pr-section-heading h2 {
+  max-width: 720px;
+  font-size: clamp(42px, 4.35vw, 66px) !important;
+  line-height: 1 !important;
+}
+
+.pr-collaboration.pr-collab-premium .pr-section-heading > p:last-child {
+  max-width: 320px;
+  padding-top: 12px;
+  padding-bottom: 0;
+}
+
+.pr-collaboration.pr-collab-premium .pr-profile-list {
+  width: min(1080px, 100%);
+  margin-inline: auto;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  grid-auto-rows: minmax(248px, auto) !important;
+  gap: 18px !important;
+  perspective: none !important;
+}
+
+.pr-collaboration.pr-collab-premium .pr-profile {
+  --rx: 0deg !important;
+  --ry: 0deg !important;
+  position: relative;
+  min-height: 248px !important;
+  grid-template-columns: 42px minmax(0, 1fr) !important;
+  grid-template-rows: auto 1fr !important;
+  column-gap: 20px !important;
+  row-gap: 14px !important;
+  padding: 25px 27px 24px !important;
+  border: 1px solid rgba(10, 92, 60, 0.17) !important;
+  border-radius: 7px !important;
+  background: rgba(255, 255, 252, 0.88) !important;
+  box-shadow: 0 10px 26px rgba(31, 63, 47, 0.045) !important;
+  backdrop-filter: blur(10px);
+  transform: translate3d(0, 0, 0) !important;
+  transform-origin: center !important;
+  transition:
+    transform 190ms cubic-bezier(.2,.75,.25,1),
+    border-color 190ms ease,
+    box-shadow 190ms ease,
+    background-color 190ms ease !important;
+  will-change: auto !important;
+  overflow: visible !important;
+}
+
+/* Remove the mouse-position spotlight that was causing the card to feel unstable. */
+.pr-collaboration.pr-collab-premium .pr-profile::before {
+  content: "" !important;
+  position: absolute !important;
+  inset: -2px !important;
+  z-index: 4 !important;
+  padding: 2px;
+  border-radius: 9px !important;
+  pointer-events: none;
+  opacity: 0;
+  background: conic-gradient(
+    from var(--sbre-border-angle),
+    transparent 0deg 205deg,
+    rgba(44, 164, 103, 0.08) 224deg,
+    rgba(78, 235, 148, 0.95) 244deg,
+    #0a6a43 260deg,
+    rgba(50, 183, 112, 0.28) 282deg,
+    transparent 305deg 360deg
+  ) !important;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  transition: opacity 160ms ease !important;
+}
+
+.pr-collaboration.pr-collab-premium .pr-profile::after {
+  display: none !important;
+}
+
+.pr-collaboration.pr-collab-premium .pr-profile:hover,
+.pr-collaboration.pr-collab-premium .pr-profile:focus-within {
+  transform: translate3d(0, -3px, 0) !important;
+  border-color: rgba(11, 111, 70, 0.34) !important;
+  background: rgba(255, 255, 252, 0.96) !important;
+  box-shadow:
+    0 16px 34px rgba(27, 70, 49, 0.09),
+    0 0 0 1px rgba(69, 207, 128, 0.06),
+    0 0 28px rgba(53, 194, 116, 0.10) !important;
+}
+
+.pr-collaboration.pr-collab-premium .pr-profile:hover::before,
+.pr-collaboration.pr-collab-premium .pr-profile:focus-within::before {
+  opacity: 1;
+  animation: sbre-border-run 2.25s linear infinite;
+}
+
+.pr-collaboration.pr-collab-premium .pr-profile-index {
+  width: 34px;
+  height: 34px;
+  font-size: 9px !important;
+}
+
+.pr-collaboration.pr-collab-premium .pr-profile-title {
+  padding-right: 0;
+}
+
+.pr-collaboration.pr-collab-premium .pr-profile-title h3 {
+  margin-bottom: 6px !important;
+  font-size: clamp(25px, 2.15vw, 34px) !important;
+  line-height: 1.02 !important;
+}
+
+.pr-collaboration.pr-collab-premium .pr-profile-title p {
+  font-size: 10.5px !important;
+}
+
+.pr-collaboration.pr-collab-premium .pr-profile-copy {
+  padding-top: 13px !important;
+}
+
+.pr-collaboration.pr-collab-premium .pr-profile-copy > p {
+  max-width: 470px;
+  font-size: 11.5px !important;
+  line-height: 1.68 !important;
+}
+
+.pr-collaboration.pr-collab-premium .pr-profile-copy > span {
+  margin-top: 12px !important;
+  padding: 6px 9px !important;
+  font-size: 8px !important;
+}
+
+.pr-collaboration.pr-collab-premium .pr-profile-copy .pr-link {
+  margin-top: 15px !important;
+  padding: 8px 0 6px !important;
+  font-size: 10px !important;
+}
+
+.theme-dark .pr-collaboration.pr-collab-premium .pr-profile {
+  background: rgba(22, 43, 34, 0.91) !important;
+  border-color: rgba(186, 218, 191, 0.16) !important;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16) !important;
+}
+
+.theme-dark .pr-collaboration.pr-collab-premium .pr-profile:hover,
+.theme-dark .pr-collaboration.pr-collab-premium .pr-profile:focus-within {
+  border-color: rgba(105, 224, 148, 0.36) !important;
+  background: rgba(25, 49, 38, 0.97) !important;
+  box-shadow:
+    0 18px 36px rgba(0, 0, 0, 0.22),
+    0 0 30px rgba(71, 212, 130, 0.10) !important;
+}
+
+@media (max-width: 900px) {
+  .pr-collaboration.pr-collab-premium .pr-profile-list {
+    grid-template-columns: 1fr !important;
+    width: min(650px, 100%);
+  }
+
+  .pr-collaboration.pr-collab-premium .pr-profile {
+    min-height: 225px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-collaboration.pr-collab-premium .pr-profile:hover::before,
+  .pr-collaboration.pr-collab-premium .pr-profile:focus-within::before {
+    animation: none;
+    background: rgba(26, 132, 83, 0.62) !important;
+  }
+}
