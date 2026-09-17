@@ -20,18 +20,18 @@
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  opacity: .22;
+  opacity: .16;
   background-image:
-    linear-gradient(30deg, transparent 24%, rgba(10,92,61,.08) 25%, rgba(10,92,61,.08) 26%, transparent 27%, transparent 74%, rgba(10,92,61,.08) 75%, rgba(10,92,61,.08) 76%, transparent 77%),
-    linear-gradient(-30deg, transparent 24%, rgba(10,92,61,.06) 25%, rgba(10,92,61,.06) 26%, transparent 27%, transparent 74%, rgba(10,92,61,.06) 75%, rgba(10,92,61,.06) 76%, transparent 77%);
-  background-size: 38px 66px;
-  background-position: 0 0, 19px 33px;
+    linear-gradient(30deg, transparent 24%, rgba(8,72,52,.065) 25%, rgba(8,72,52,.065) 26%, transparent 27%, transparent 74%, rgba(8,72,52,.065) 75%, rgba(8,72,52,.065) 76%, transparent 77%),
+    linear-gradient(-30deg, transparent 24%, rgba(8,72,52,.05) 25%, rgba(8,72,52,.05) 26%, transparent 27%, transparent 74%, rgba(8,72,52,.05) 75%, rgba(8,72,52,.05) 76%, transparent 77%);
+  background-size: 28px 48px;
+  background-position: 0 0, 14px 24px;
 }
 
 /* JavaScript inserts this layer directly into the homepage header. */
 .premium-site .site-header .sbre-kinetic-triangles {
   position: absolute;
-  inset: -8px -12px;
+  inset: -6px -8px;
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
@@ -42,11 +42,11 @@
   position: absolute;
   left: var(--x);
   top: var(--y);
-  width: clamp(42px, 4vw, 62px);
+  width: clamp(26px, 2.65vw, 40px);
   aspect-ratio: 1 / .866;
   clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
-  background: rgba(247,247,240,.66);
-  opacity: .48;
+  background: rgba(249,249,244,.78);
+  opacity: .52;
   transform-origin: 50% 55%;
   transform:
     translate(-18%, -16%)
@@ -54,59 +54,35 @@
     rotateY(0deg)
     scale(.985);
   transition:
-    transform 520ms cubic-bezier(.22,.75,.2,1),
-    background-color 360ms ease,
-    opacity 360ms ease,
-    filter 520ms ease;
-  filter: drop-shadow(0 0 0 rgba(8,78,55,0));
+    transform 470ms cubic-bezier(.22,.75,.2,1),
+    background-color 320ms ease,
+    opacity 320ms ease,
+    filter 470ms ease;
+  filter: drop-shadow(0 0 0 rgba(5,54,39,0));
   will-change: transform, background-color, opacity;
 }
 
-/* Slightly stagger alternate rows so the triangles interlock like a façade. */
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 27),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 28),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 29),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 30),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 31),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 32),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 33),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 34),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 35),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 36),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 37),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 38),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 39),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 40),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 41),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 42),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 43),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 44),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 45),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 46),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 47),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 48),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 49),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 50),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 51),
-.premium-site .site-header .sbre-kinetic-triangle:nth-child(52n + 52) {
-  margin-left: 1.9vw;
+/* Offset alternating rows for a tighter architectural tessellation. */
+.premium-site .site-header .sbre-kinetic-triangle[style*="--row: 1"],
+.premium-site .site-header .sbre-kinetic-triangle[style*="--row: 3"] {
+  margin-left: 1.25vw;
 }
 
 .premium-site .site-header .sbre-kinetic-triangle.is-green {
-  background: #0a694c;
-  opacity: .92;
+  background: #0b513d;
+  opacity: .78;
   transform:
     translate(-18%, -16%)
     rotate(calc(var(--flip) * 180deg))
     rotateY(178deg)
-    scale(1.025);
-  filter: drop-shadow(0 5px 9px rgba(8,78,55,.12));
+    scale(1.015);
+  filter: drop-shadow(0 3px 6px rgba(5,54,39,.07));
 }
 
-/* Four close SBRE tones prevent the full-green state from looking flat. */
-.premium-site .site-header .sbre-kinetic-triangle.is-green[style*="--tone: 1"] { background: #0d7554; }
-.premium-site .site-header .sbre-kinetic-triangle.is-green[style*="--tone: 2"] { background: #085c43; }
-.premium-site .site-header .sbre-kinetic-triangle.is-green[style*="--tone: 3"] { background: #12805b; }
+/* Four restrained SBRE tones: darker, less luminous, still dimensional. */
+.premium-site .site-header .sbre-kinetic-triangle.is-green[style*="--tone: 1"] { background: #0e5a43; }
+.premium-site .site-header .sbre-kinetic-triangle.is-green[style*="--tone: 2"] { background: #083f31; }
+.premium-site .site-header .sbre-kinetic-triangle.is-green[style*="--tone: 3"] { background: #116249; }
 
 /* Navigation always remains above the kinetic façade. */
 .premium-site .site-header > *:not(.sbre-kinetic-triangles) {
@@ -114,19 +90,56 @@
   z-index: 3;
 }
 
+/* Give the brand a clean architectural plaque so the logo never gets lost. */
+.premium-site .site-header .brand {
+  padding: 6px 10px;
+  border: 1px solid rgba(255,255,255,.92);
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 5px 18px rgba(4,38,28,.06);
+  backdrop-filter: blur(4px);
+}
+
+/* Keep navigation readable during the full-green phase. */
+.premium-site .site-header .desktop-nav {
+  padding: 7px 10px;
+  border: 1px solid rgba(255,255,255,.72);
+  background: rgba(255,255,255,.78);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 14px rgba(5,48,35,.045);
+}
+
+.premium-site .site-header .desktop-nav button,
+.premium-site .site-header .desktop-nav a,
+.premium-site .site-header .header-contact {
+  color: #103f31 !important;
+  text-shadow: 0 1px 0 rgba(255,255,255,.65);
+}
+
+.premium-site .site-header .header-contact {
+  background: rgba(255,255,255,.84) !important;
+  border-color: rgba(16,63,49,.45) !important;
+  backdrop-filter: blur(8px);
+}
+
 .theme-dark .premium-site .site-header::before {
-  opacity: .12;
-  filter: brightness(1.25);
+  opacity: .10;
+  filter: brightness(1.18);
 }
 
 .theme-dark .premium-site .site-header .sbre-kinetic-triangle {
-  background: rgba(18,34,28,.66);
-  opacity: .44;
+  background: rgba(18,30,25,.70);
+  opacity: .40;
 }
 
 .theme-dark .premium-site .site-header .sbre-kinetic-triangle.is-green {
-  background: #16845f;
-  opacity: .82;
+  background: #0b503c;
+  opacity: .74;
+}
+
+.theme-dark .premium-site .site-header .brand,
+.theme-dark .premium-site .site-header .desktop-nav,
+.theme-dark .premium-site .site-header .header-contact {
+  background: rgba(245,245,238,.92) !important;
 }
 
 @media (max-width: 900px), (prefers-reduced-motion: reduce) {
@@ -135,8 +148,12 @@
   }
 
   .premium-site .site-header::before {
-    opacity: .12;
-    background-size: 50px 86px;
-    background-position: 0 0, 25px 43px;
+    opacity: .10;
+    background-size: 42px 72px;
+    background-position: 0 0, 21px 36px;
+  }
+
+  .premium-site .site-header .brand {
+    padding: 4px 7px;
   }
 }
