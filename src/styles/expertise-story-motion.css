@@ -1,0 +1,207 @@
+/* Scroll storytelling — homepage / 01 NOTRE RÔLE */
+#expertises {
+  --expertise-progress: 0;
+  perspective: 1400px;
+  transform-style: preserve-3d;
+  position: relative;
+}
+
+#expertises .section-heading,
+#expertises .expertise-grid {
+  position: relative;
+  z-index: 1;
+}
+
+/* Heading reveal: clean typewriter / drafting feel without breaking line wrapping. */
+#expertises .section-heading .eyebrow,
+#expertises .section-heading h2,
+#expertises .section-heading > p:last-child {
+  opacity: 0;
+  transform: translateY(18px);
+  clip-path: inset(0 100% 0 0);
+  transition:
+    clip-path 0.9s cubic-bezier(.2,.75,.2,1),
+    opacity 0.4s ease,
+    transform 0.8s cubic-bezier(.2,.75,.2,1);
+}
+
+#expertises[data-story-stage="1"] .section-heading .eyebrow,
+#expertises[data-story-stage="2"] .section-heading .eyebrow,
+#expertises[data-story-stage="3"] .section-heading .eyebrow,
+#expertises[data-story-stage="4"] .section-heading .eyebrow {
+  opacity: 1;
+  transform: translateY(0);
+  clip-path: inset(0 0 0 0);
+  transition-delay: 0s;
+}
+
+#expertises[data-story-stage="1"] .section-heading h2,
+#expertises[data-story-stage="2"] .section-heading h2,
+#expertises[data-story-stage="3"] .section-heading h2,
+#expertises[data-story-stage="4"] .section-heading h2 {
+  opacity: 1;
+  transform: translateY(0);
+  clip-path: inset(0 0 0 0);
+  transition-delay: 0.12s;
+}
+
+#expertises[data-story-stage="1"] .section-heading > p:last-child,
+#expertises[data-story-stage="2"] .section-heading > p:last-child,
+#expertises[data-story-stage="3"] .section-heading > p:last-child,
+#expertises[data-story-stage="4"] .section-heading > p:last-child {
+  opacity: 1;
+  transform: translateY(0);
+  clip-path: inset(0 0 0 0);
+  transition-delay: 0.24s;
+}
+
+/* Small blinking drafting caret on the title while it appears. */
+#expertises .section-heading h2::after {
+  content: "";
+  display: inline-block;
+  width: 2px;
+  height: .9em;
+  margin-left: 8px;
+  vertical-align: -.08em;
+  background: var(--forest);
+  opacity: 0;
+}
+
+#expertises[data-story-stage="1"] .section-heading h2::after {
+  opacity: .9;
+  animation: sbreCaret .72s steps(1, end) infinite;
+}
+
+#expertises[data-story-stage="2"] .section-heading h2::after,
+#expertises[data-story-stage="3"] .section-heading h2::after,
+#expertises[data-story-stage="4"] .section-heading h2::after {
+  opacity: 0;
+  animation: none;
+}
+
+@keyframes sbreCaret {
+  0%, 48% { opacity: .9; }
+  49%, 100% { opacity: 0; }
+}
+
+/* Cards start recessed and slightly rotated, like sheets coming forward. */
+#expertises .expertise-grid {
+  overflow: visible;
+  background: color-mix(in srgb, var(--paper) 94%, transparent);
+}
+
+#expertises .expertise-card {
+  opacity: .08;
+  transform-origin: 50% 100%;
+  transform: translate3d(0, 56px, -70px) rotateX(7deg) scale(.965);
+  filter: blur(2px);
+  transition:
+    transform .82s cubic-bezier(.16,.82,.2,1),
+    opacity .5s ease,
+    filter .55s ease,
+    box-shadow .65s ease,
+    background-color .65s ease;
+  will-change: transform, opacity;
+}
+
+/* Stage 2 = card 1 */
+#expertises[data-story-stage="2"] .expertise-card:nth-child(1),
+#expertises[data-story-stage="3"] .expertise-card:nth-child(1),
+#expertises[data-story-stage="4"] .expertise-card:nth-child(1) {
+  opacity: 1;
+  transform: translate3d(0, 0, 18px) rotateX(0deg) scale(1);
+  filter: blur(0);
+}
+
+/* Stage 3 = card 2 */
+#expertises[data-story-stage="3"] .expertise-card:nth-child(2),
+#expertises[data-story-stage="4"] .expertise-card:nth-child(2) {
+  opacity: 1;
+  transform: translate3d(0, 0, 26px) rotateX(0deg) scale(1);
+  filter: blur(0);
+}
+
+/* Stage 4 = card 3 */
+#expertises[data-story-stage="4"] .expertise-card:nth-child(3) {
+  opacity: 1;
+  transform: translate3d(0, 0, 34px) rotateX(0deg) scale(1);
+  filter: blur(0);
+}
+
+/* Current card gets a restrained premium depth cue. */
+#expertises[data-story-stage="2"] .expertise-card:nth-child(1),
+#expertises[data-story-stage="3"] .expertise-card:nth-child(2),
+#expertises[data-story-stage="4"] .expertise-card:nth-child(3) {
+  background: color-mix(in srgb, var(--paper) 88%, white 12%);
+  box-shadow: 0 24px 56px rgba(20, 61, 49, .10);
+  z-index: 2;
+}
+
+/* Internal content reveals in sequence for a typed / assembled feeling. */
+#expertises .expertise-card > * {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .38s ease, transform .5s cubic-bezier(.2,.75,.2,1);
+}
+
+#expertises[data-story-stage="2"] .expertise-card:nth-child(1) > *,
+#expertises[data-story-stage="3"] .expertise-card:nth-child(1) > *,
+#expertises[data-story-stage="3"] .expertise-card:nth-child(2) > *,
+#expertises[data-story-stage="4"] .expertise-card > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#expertises .expertise-card > *:nth-child(1) { transition-delay: .10s; }
+#expertises .expertise-card > *:nth-child(2) { transition-delay: .20s; }
+#expertises .expertise-card > *:nth-child(3) { transition-delay: .30s; }
+#expertises .expertise-card > *:nth-child(4) { transition-delay: .40s; }
+#expertises .expertise-card > *:nth-child(5) { transition-delay: .50s; }
+
+/* A subtle architectural line travels behind the blocks as progress advances. */
+#expertises::before {
+  content: "";
+  position: absolute;
+  left: 4.5%;
+  right: 4.5%;
+  top: 54%;
+  height: 1px;
+  transform-origin: left center;
+  transform: scaleX(var(--expertise-progress));
+  background: linear-gradient(90deg, transparent, rgba(10,92,61,.28) 12%, rgba(10,92,61,.28) 88%, transparent);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (max-width: 900px) {
+  #expertises {
+    perspective: none;
+  }
+  #expertises .expertise-card {
+    transform: translateY(24px);
+    filter: none;
+  }
+  #expertises[data-story-stage="2"] .expertise-card:nth-child(1),
+  #expertises[data-story-stage="3"] .expertise-card:nth-child(-n+2),
+  #expertises[data-story-stage="4"] .expertise-card {
+    transform: translateY(0);
+  }
+  #expertises::before { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #expertises .section-heading .eyebrow,
+  #expertises .section-heading h2,
+  #expertises .section-heading > p:last-child,
+  #expertises .expertise-card,
+  #expertises .expertise-card > * {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+    filter: none !important;
+    transition: none !important;
+    animation: none !important;
+  }
+  #expertises .section-heading h2::after,
+  #expertises::before { display: none !important; }
+}
