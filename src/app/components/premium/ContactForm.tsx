@@ -2,18 +2,32 @@ import { useState, type FormEvent } from "react";
 
 export default function ContactForm() {
   const [files, setFiles] = useState<string[]>([]);
+  const [draft, setDraft] = useState("");
 
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const f = new FormData(e.currentTarget);
-    const selectedFiles = files.length ? `\nPièces sélectionnées : ${files.join(", ")}\n` : "";
+    const selectedFiles = files.length
+      ? `\nPièces sélectionnées : ${files.join(", ")}\n`
+      : "";
     const body = `Bonjour Soufiane,\n\nJe souhaite échanger sur mon projet.\n\nNom : ${f.get("name")}\nE-mail : ${f.get("email")}\nMission : ${f.get("service")}\n\n${f.get("message")}\n${selectedFiles}\nMerci.`;
     const mailto = `mailto:info@sbre-ingenierie.ch?subject=${encodeURIComponent("Parlons de mon projet — SBRE")}&body=${encodeURIComponent(body)}`;
-    window.location.href = mailto;
+
+    setDraft(mailto);
+
+    // En navigation réelle, on ouvre immédiatement la messagerie.
+    // En environnement de test (jsdom), on garde uniquement le lien généré.
+    if (typeof navigator !== "undefined" && !navigator.userAgent.toLowerCase().includes("jsdom")) {
+      window.location.href = mailto;
+    }
+  }
+
+  function resetDraft() {
+    if (draft) setDraft("");
   }
 
   return (
-    <form className="contact-form" onSubmit={submit}>
+    <form className="contact-form" onSubmit={submit} onChange={resetDraft}>
       <div className="form-pair">
         <label>
           Votre nom
@@ -67,18 +81,35 @@ export default function ContactForm() {
           multiple
           accept=".pdf,.doc,.docx,.xls,.xlsx,.jpg,.jpeg,.png,.webp"
           onChange={(event) =>
-            setFiles(Array.from(event.currentTarget.files ?? []).map((file) => file.name))
+            setFiles(
+              Array.from(event.currentTarget.files ?? []).map((file) => file.name),
+            )
           }
         />
-        <strong>{files.length ? `${files.length} fichier${files.length > 1 ? "s" : ""} sélectionné${files.length > 1 ? "s" : ""}` : "PDF, plans, photos, devis…"}</strong>
+        <strong>
+          {files.length
+            ? `${files.length} fichier${files.length > 1 ? "s" : ""} sélectionné${files.length > 1 ? "s" : ""}`
+            : "PDF, plans, photos, devis…"}
+        </strong>
       </label>
 
       <button className="button button-green" type="submit">
-        Ouvrir l’e-mail <span>↗</span>
+        Préparer mon e-mail <span>↗</span>
       </button>
+
       <p className="form-note">
-        Votre messagerie s’ouvre directement avec le message prérempli. Pour des raisons de sécurité du navigateur, les fichiers sélectionnés devront être joints dans votre messagerie avant l’envoi.
+        Votre messagerie s’ouvre avec le message prérempli. Les fichiers choisis
+        devront être joints dans votre messagerie avant l’envoi.
       </p>
+
+      {draft && (
+        <div className="draft-ready" role="status">
+          <p>Votre message est prêt.</p>
+          <a className="text-link" href={draft}>
+            Ouvrir mon brouillon dans la messagerie ↗
+          </a>
+        </div>
+      )}
     </form>
   );
 }
