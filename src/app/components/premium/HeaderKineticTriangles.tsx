@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const POINTS = 170;
-const MOVING_POINTS = 9;
+const MOVING_POINTS = 11;
 
 function seededRandom(seed: number) {
   let state = seed >>> 0;
@@ -51,10 +51,15 @@ export default function HeaderKineticTriangles() {
 
       const movingPoints: Array<{
         el: HTMLSpanElement;
-        y: number;
+        baseY: number;
         speed: number;
         offset: number;
         phase: number;
+        yAmplitude: number;
+        yFrequency: number;
+        xWobble: number;
+        xFrequency: number;
+        driftBias: number;
       }> = [];
 
       for (let index = 0; index < POINTS; index += 1) {
@@ -82,19 +87,35 @@ export default function HeaderKineticTriangles() {
         const movingPoint = document.createElement("span");
         movingPoint.className = "sbre-moving-point";
 
-        const y = 14 + random() * 70;
-        const size = 2.6 + random() * 2.8;
-        const speed = 2.5 + random() * 2.4;
-        const offset = random() * 116;
+        const baseY = 10 + random() * 78;
+        const size = 2.4 + random() * 3.2;
+        const speed = 1.55 + random() * 2.35;
+        const offset = random() * 132;
         const phase = random() * Math.PI * 2;
+        const yAmplitude = 5 + random() * 16;
+        const yFrequency = 0.18 + random() * 0.42;
+        const xWobble = 0.6 + random() * 3.4;
+        const xFrequency = 0.22 + random() * 0.48;
+        const driftBias = -4 + random() * 8;
 
-        movingPoint.style.top = `${y}%`;
+        movingPoint.style.top = `${baseY}%`;
         movingPoint.style.width = `${size}px`;
         movingPoint.style.height = `${size}px`;
-        movingPoint.style.opacity = `${0.34 + random() * 0.26}`;
+        movingPoint.style.opacity = `${0.3 + random() * 0.3}`;
 
         layer.appendChild(movingPoint);
-        movingPoints.push({ el: movingPoint, y, speed, offset, phase });
+        movingPoints.push({
+          el: movingPoint,
+          baseY,
+          speed,
+          offset,
+          phase,
+          yAmplitude,
+          yFrequency,
+          xWobble,
+          xFrequency,
+          driftBias,
+        });
       }
 
       header.prepend(layer);
@@ -179,16 +200,37 @@ export default function HeaderKineticTriangles() {
             : "none";
         });
 
-        movingPoints.forEach(({ el, y, speed, offset, phase }) => {
-          const x = ((time * speed + offset) % 116) - 8;
-          const driftY = Math.sin(time * 0.42 + phase) * 4.2;
-          const pulse = 0.84 + Math.sin(time * 1.05 + phase) * 0.16;
+        movingPoints.forEach(({
+          el,
+          baseY,
+          speed,
+          offset,
+          phase,
+          yAmplitude,
+          yFrequency,
+          xWobble,
+          xFrequency,
+          driftBias,
+        }) => {
+          const linearX = ((time * speed + offset) % 132) - 16;
+          const horizontalCurve =
+            Math.sin(time * xFrequency + phase) * xWobble +
+            Math.sin(time * (xFrequency * 0.43) + phase * 1.7) * (xWobble * 0.48);
+
+          const verticalCurve =
+            Math.sin(time * yFrequency + phase) * yAmplitude +
+            Math.cos(time * (yFrequency * 0.57) + phase * 0.72) * (yAmplitude * 0.36) +
+            Math.sin((linearX + phase * 9) * 0.045) * driftBias;
+
+          const y = Math.max(4, Math.min(94, baseY + verticalCurve));
+          const x = linearX + horizontalCurve;
+          const pulse = 0.82 + Math.sin(time * (0.72 + yFrequency) + phase) * 0.18;
 
           el.style.left = `${x}%`;
-          el.style.transform = `translate3d(0, ${driftY}px, 0) scale(${pulse})`;
+          el.style.top = `${y}%`;
+          el.style.transform = `translate3d(0, 0, 0) scale(${pulse})`;
           el.style.filter = `brightness(${1.02 + pulse * 0.16})`;
           el.style.boxShadow = `0 0 ${7 + pulse * 5}px rgba(28, 109, 82, ${0.18 + pulse * 0.18}), 0 0 3px rgba(255,255,255,.45)`;
-          el.style.top = `${y}%`;
         });
 
         raf = requestAnimationFrame(animate);
