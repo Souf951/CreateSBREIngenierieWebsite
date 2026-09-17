@@ -16,22 +16,22 @@ const transitions: TransitionConfig[] = [
     label: "DE NOTRE RÔLE À REPRENDRE LA MAÎTRISE",
   },
   {
-    target: "#réalisations",
+    target: ".method-section",
     from: "02",
     to: "03",
-    label: "DE REPRENDRE LA MAÎTRISE AUX EXPÉRIENCES PROJET",
+    label: "DE REPRENDRE LA MAÎTRISE À NOTRE MÉTHODE",
   },
   {
-    target: ".method-section",
+    target: "#réalisations",
     from: "03",
     to: "04",
-    label: "DES EXPÉRIENCES PROJET À NOTRE MÉTHODE",
+    label: "DE NOTRE MÉTHODE AUX EXPÉRIENCES PROJET",
   },
   {
     target: ".team-section",
     from: "04",
     to: "05",
-    label: "DE NOTRE MÉTHODE AU PLUS PRÈS DU TERRAIN",
+    label: "DES EXPÉRIENCES PROJET AU PLUS PRÈS DU TERRAIN",
   },
   {
     target: "#contact",
