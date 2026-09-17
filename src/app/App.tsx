@@ -35,6 +35,7 @@ import PartnersShowcase from "./components/premium/PartnersShowcase";
 import PartnersNavLink from "./components/premium/PartnersNavLink";
 import PartnersSharedChrome from "./components/premium/PartnersSharedChrome";
 import FaqPunctuationGuard from "./components/premium/FaqPunctuationGuard";
+import FaqArchitecturalEnhancer from "./components/premium/FaqArchitecturalEnhancer";
 import "../styles/premium.css";
 import "../styles/contrast-fixes.css";
 import "../styles/dark-logo.css";
@@ -60,6 +61,7 @@ import "../styles/fluid-responsive-type.css";
 import "../styles/hero-phases-fill.css";
 import "../styles/partners-nav-link.css";
 import "../styles/expertise-spatial-cards.css";
+import "../styles/faq-architectural.css";
 
 const ProjectTertiaire = lazy(() => import("./components/ProjectTertiaire"));
 const ProjectMicroLogements = lazy(
@@ -226,6 +228,7 @@ export default function App() {
           <PartnersNavLink />
           <PartnersSharedChrome />
           <FaqPunctuationGuard />
+          <FaqArchitecturalEnhancer />
           <Suspense
             fallback={
               <div style={{ padding: "15vh 8%", color: "#0a5c3d" }}>
