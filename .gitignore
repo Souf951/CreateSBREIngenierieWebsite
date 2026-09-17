@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.prerender/
+*.log
+.DS_Store
+
+# Local environment and credentials
+.env
+.env.*
+!.env.example
+
+# Local editor / OS metadata
+.idea/
+.vscode/
+Thumbs.db

@@ -1,0 +1,122 @@
+.pr-page .partners-site-header {
+  height: 102px;
+  padding: 0 4.5%;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(245,245,238,.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #d9ded4;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.pr-page .partners-site-header .brand {
+  width: 188px;
+  height: 78px;
+  margin-right: auto;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+}
+
+.pr-page .partners-site-header .brand::after {
+  display: none;
+}
+
+.pr-page .partners-site-header .brand img {
+  width: 188px;
+  height: 78px;
+  object-fit: contain;
+  transform: scale(1.28);
+  transform-origin: center;
+  mix-blend-mode: normal;
+}
+
+.pr-page .partners-site-header .desktop-nav {
+  display: flex;
+  gap: 28px;
+  font-family: Inter, Arial, sans-serif;
+}
+
+.pr-page .partners-site-header .desktop-nav button {
+  font-family: Inter, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 540;
+  line-height: 1.2;
+  letter-spacing: 0;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+}
+
+.pr-page .partners-site-header .header-contact {
+  font-family: Inter, Arial, sans-serif;
+  font-size: 13.5px !important;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0;
+  border: 1px solid #173d31;
+  padding: 12px 20px;
+  background: transparent;
+  color: inherit;
+}
+
+.pr-page .site-footer {
+  background: #112e24;
+  color: #d8e0d4;
+  padding: 55px 4.5% 20px;
+}
+
+.theme-dark .pr-page .partners-site-header {
+  background: rgba(10,23,18,.97);
+  border-color: rgba(255,255,255,.08);
+  color: #f5f5ee;
+}
+
+.theme-dark .pr-page .partners-site-header .brand {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.theme-dark .pr-page .partners-site-header .brand::after {
+  display: none !important;
+}
+
+.theme-dark .pr-page .partners-site-header .brand img {
+  background: transparent !important;
+  padding: 0 !important;
+  filter: brightness(0) invert(1) !important;
+  opacity: 1 !important;
+}
+
+.theme-dark .pr-page .partners-site-header .desktop-nav button,
+.theme-dark .pr-page .partners-site-header .header-contact {
+  color: #f5f5ee !important;
+}
+
+.theme-dark .pr-page .partners-site-header .header-contact {
+  border-color: rgba(245,245,238,.72);
+}
+
+@media (max-width: 900px) {
+  .pr-page .partners-site-header {
+    height: 82px;
+  }
+  .pr-page .partners-site-header .brand {
+    width: 154px;
+    height: 66px;
+  }
+  .pr-page .partners-site-header .brand img {
+    width: 154px;
+    height: 66px;
+    transform: scale(1.22);
+  }
+}

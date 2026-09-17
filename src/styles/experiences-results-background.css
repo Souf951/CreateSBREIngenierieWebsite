@@ -1,0 +1,113 @@
+/* Section 03 — rotating project-results background */
+.projects-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #08281f;
+}
+
+.projects-section > :not(.experiences-results-bg) {
+  position: relative;
+  z-index: 2;
+}
+
+.experiences-results-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: #08281f;
+}
+
+.experiences-results-bg img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0;
+  transform: scale(1.025);
+  transition: opacity .9s ease, transform 4s ease;
+}
+
+.experiences-results-bg img.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.experiences-results-shade {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(4,30,22,.58), rgba(4,30,22,.72)),
+    linear-gradient(90deg, rgba(4,30,22,.28), rgba(4,30,22,.08) 48%, rgba(4,30,22,.30));
+}
+
+.experiences-results-counter {
+  position: absolute;
+  right: 4.5%;
+  bottom: 34px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 11px;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 999px;
+  background: rgba(6,34,25,.46);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: rgba(255,255,255,.78);
+  font: 700 9px/1 Inter, Arial, sans-serif;
+  letter-spacing: .08em;
+}
+
+.experiences-results-counter i {
+  width: 30px;
+  height: 1px;
+  background: rgba(255,255,255,.42);
+}
+
+.projects-section .section-heading,
+.projects-section .section-heading h2,
+.projects-section .section-heading p,
+.projects-section .project-card h3,
+.projects-section .project-card .eyebrow {
+  color: #f5f7f2;
+}
+
+.projects-section .section-heading > p:last-child {
+  color: rgba(245,247,242,.84);
+}
+
+.projects-section .project-card {
+  color: #173d31;
+}
+
+.projects-section .project-card > div {
+  background: rgba(245,245,238,.14);
+}
+
+@media (max-width: 1024px) {
+  .experiences-results-bg img {
+    object-position: center center;
+  }
+}
+
+@media (max-width: 640px) {
+  .experiences-results-bg img {
+    object-position: 50% 42%;
+  }
+
+  .experiences-results-shade {
+    background: linear-gradient(180deg, rgba(4,30,22,.66), rgba(4,30,22,.80));
+  }
+
+  .experiences-results-counter {
+    right: 14px;
+    bottom: 18px;
+    font-size: 8px;
+  }
+}

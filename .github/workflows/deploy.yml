@@ -18,6 +18,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      SBRE_CUSTOM_DOMAIN: "true"
 
     steps:
       - name: Checkout
@@ -26,19 +28,25 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
         with:
-          version: 10
+          version: 10.32.1
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 20
-
+          cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck and test
+        run: pnpm typecheck && pnpm test
 
       - name: Build website
         run: pnpm build
+
+      - name: Verify production artifact
+        run: node scripts/verify-build.mjs
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

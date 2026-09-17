@@ -1,0 +1,204 @@
+/* Targeted small-text readability pass. Intentionally leaves large titles,
+   cards and hero typography untouched. */
+
+.premium-site .principles {
+  font-size: 14px;
+  font-weight: 520;
+}
+
+.premium-site .principles > span::before {
+  color: #0b6f4a;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+/* Header: slightly stronger presence without changing the overall layout. */
+.premium-site .desktop-nav button {
+  font-size: 14px;
+  font-weight: 540;
+}
+
+.premium-site .header-contact {
+  font-size: 13.5px !important;
+  padding: 12px 20px;
+}
+
+/* Crop the white breathing room baked into the logo image and enlarge the mark. */
+.premium-site .brand {
+  width: 188px;
+  height: 78px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.premium-site .brand img {
+  width: 188px;
+  height: 78px;
+  object-fit: contain;
+  transform: scale(1.28);
+  transform-origin: center;
+}
+
+.premium-site .hero-location,
+.premium-site .architecture-note,
+.premium-site .architecture-scale,
+.premium-site .model-caption,
+.premium-site .phase-controls button span,
+.premium-site .card-footer,
+.premium-site .team-role,
+.premium-site .team-note,
+.premium-site .form-note,
+.premium-site .image-caption,
+.premium-site .step-index,
+.premium-site .case-deliverable,
+.premium-site .method-list small {
+  font-size: 11px;
+}
+
+/* Small label above the 3D visual. */
+.premium-site .visual-heading {
+  font-size: 12px;
+  font-weight: 560;
+  letter-spacing: 0.13em;
+}
+
+.premium-site .eyebrow {
+  font-size: 12px;
+}
+
+/* Introductory copy on section headings: easier to read at desktop distance. */
+.premium-site .section-heading > p:last-child {
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 430px;
+}
+
+/* Readability pass requested for the lower sections. */
+.premium-site .team-card h3 {
+  font-size: 22px;
+  line-height: 1.12;
+}
+
+.premium-site .team-card .team-role,
+.premium-site .team-card small {
+  font-size: 13px !important;
+  line-height: 1.45;
+}
+
+.premium-site .team-card .team-note,
+.premium-site .team-card p {
+  font-size: 15px !important;
+  line-height: 1.65;
+}
+
+.premium-site .contact-section > div:first-of-type > p,
+.premium-site .contact-section > div:first-of-type p {
+  font-size: 16px;
+  line-height: 1.65;
+}
+
+.premium-site .contact-section label {
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.premium-site .contact-section input,
+.premium-site .contact-section select,
+.premium-site .contact-section textarea {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.premium-site .contact-section .contact-form button,
+.premium-site .contact-section button[type="submit"] {
+  font-size: 15px;
+  min-height: 52px;
+}
+
+.premium-site .contact-section .form-note {
+  font-size: 12.5px !important;
+  line-height: 1.55;
+}
+
+.partners-showcase .partners-note {
+  font-size: 17px;
+  line-height: 1.75;
+  max-width: 460px;
+}
+
+.partners-showcase .partners-footer {
+  font-size: 11px;
+}
+
+.theme-dark .premium-site .principles {
+  color: #f2f6f3;
+}
+
+.theme-dark .premium-site .principles > span::before {
+  color: #77d39c;
+  text-shadow: 0 0 10px rgba(119, 211, 156, 0.24);
+}
+
+.theme-dark .premium-site .hero-location,
+.theme-dark .premium-site .visual-heading,
+.theme-dark .premium-site .architecture-note,
+.theme-dark .premium-site .architecture-scale,
+.theme-dark .premium-site .model-caption,
+.theme-dark .premium-site .phase-controls button span,
+.theme-dark .premium-site .card-footer,
+.theme-dark .premium-site .team-role,
+.theme-dark .premium-site .team-note,
+.theme-dark .premium-site .form-note,
+.theme-dark .premium-site .image-caption,
+.theme-dark .premium-site .step-index,
+.theme-dark .premium-site .case-deliverable,
+.theme-dark .premium-site .method-list small,
+.theme-dark .premium-site .eyebrow {
+  color: #d6e0da;
+}
+
+@media (max-width: 800px) {
+  .premium-site .principles {
+    font-size: 13px;
+  }
+
+  .premium-site .eyebrow {
+    font-size: 11px;
+  }
+
+  .premium-site .brand {
+    width: 154px;
+    height: 66px;
+  }
+
+  .premium-site .brand img {
+    width: 154px;
+    height: 66px;
+    transform: scale(1.22);
+  }
+
+  .premium-site .section-heading > p:last-child {
+    font-size: 15px;
+  }
+
+  .premium-site .team-card h3 {
+    font-size: 21px;
+  }
+
+  .premium-site .team-card .team-note,
+  .premium-site .team-card p,
+  .premium-site .contact-section > div:first-of-type p {
+    font-size: 15px !important;
+  }
+
+  .premium-site .contact-section input,
+  .premium-site .contact-section select,
+  .premium-site .contact-section textarea {
+    font-size: 16px;
+  }
+
+  .partners-showcase .partners-note {
+    font-size: 15px;
+  }
+}

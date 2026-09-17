@@ -7,14 +7,23 @@ interface SEOHeadProps {
 }
 
 const SITE_URL = "https://sbre-ingenierie.ch/";
-const OG_IMAGE = `${SITE_URL}og-sbre-ingenierie.png`;
+const OG_IMAGE = `${SITE_URL}og-sbre-ingenierie.jpg`;
+
+function resolveCanonical(value: string) {
+  try {
+    return new URL(value, SITE_URL).toString();
+  } catch {
+    return SITE_URL;
+  }
+}
 
 export default function SEOHead({
-  title = "SBRE Ingenierie & Direction de travaux",
-  description = "SBRE Ingénierie accompagne maîtres d’ouvrage, architectes et entreprises en direction de travaux, suivi de chantier et coordination en Suisse romande.",
+  title = "SBRE Ingénierie | Direction de travaux en Suisse romande",
+  description = "SBRE Ingénierie accompagne maîtres d’ouvrage, architectes et propriétaires en direction de travaux, suivi de chantier et coordination des entreprises en Suisse romande.",
   canonical = SITE_URL,
 }: SEOHeadProps) {
   useEffect(() => {
+    const canonicalUrl = resolveCanonical(canonical);
     document.documentElement.lang = "fr-CH";
     document.title = title;
 
@@ -26,7 +35,9 @@ export default function SEOHead({
         element = document.createElement("meta");
         document.head.appendChild(element);
       }
-      Object.entries(attrs).forEach(([attribute, content]) => element!.setAttribute(attribute, content));
+      Object.entries(attrs).forEach(([attribute, content]) =>
+        element!.setAttribute(attribute, content),
+      );
     };
 
     const setLink = (rel: string, href: string) => {
@@ -41,21 +52,24 @@ export default function SEOHead({
 
     setMeta({ name: "description", content: description });
     setMeta({ name: "robots", content: "index, follow, max-image-preview:large" });
-    setLink("canonical", canonical);
-    setLink("icon", `${SITE_URL}favicon-sbre.png`);
+    setLink("canonical", canonicalUrl);
+    setLink("icon", `${SITE_URL}favicon-sbre.svg`);
 
     setMeta({ property: "og:type", content: "website" });
     setMeta({ property: "og:locale", content: "fr_CH" });
     setMeta({ property: "og:site_name", content: "SBRE Ingénierie" });
     setMeta({ property: "og:title", content: title });
-    setMeta({ property: "og:description", content: "Direction de travaux, suivi de chantier, planification et coordination des entreprises en Suisse romande." });
-    setMeta({ property: "og:url", content: canonical });
+    setMeta({ property: "og:description", content: description });
+    setMeta({ property: "og:url", content: canonicalUrl });
     setMeta({ property: "og:image", content: OG_IMAGE });
-    setMeta({ property: "og:image:alt", content: "SBRE Ingénierie — direction de travaux en Suisse romande" });
+    setMeta({
+      property: "og:image:alt",
+      content: "SBRE Ingénierie — direction de travaux en Suisse romande",
+    });
 
     setMeta({ name: "twitter:card", content: "summary_large_image" });
     setMeta({ name: "twitter:title", content: title });
-    setMeta({ name: "twitter:description", content: "Direction de travaux, suivi de chantier et coordination en Suisse romande." });
+    setMeta({ name: "twitter:description", content: description });
     setMeta({ name: "twitter:image", content: OG_IMAGE });
 
     const jsonLdId = "sbre-json-ld";
@@ -73,11 +87,12 @@ export default function SEOHead({
         "@id": `${SITE_URL}#business`,
         name: "SBRE Ingénierie",
         url: SITE_URL,
-        logo: `${SITE_URL}favicon-sbre.png`,
+        logo: `${SITE_URL}favicon-sbre.svg`,
         image: OG_IMAGE,
         telephone: "+41783076029",
         email: "info@sbre-ingenierie.ch",
-        description: "Direction de travaux, suivi de chantier, coordination des entreprises, planification de chantier et réception des travaux en Suisse romande.",
+        description:
+          "Direction de travaux, suivi de chantier, coordination des entreprises, planification et réception des travaux en Suisse romande.",
         areaServed: [
           { "@type": "AdministrativeArea", name: "Suisse romande" },
           { "@type": "City", name: "Lausanne" },
@@ -88,8 +103,10 @@ export default function SEOHead({
           name: "Services de direction de travaux",
           itemListElement: [
             "Direction de travaux",
+            "Assistance au maître d’ouvrage",
             "Suivi de chantier",
             "Coordination des entreprises",
+            "Appels d’offres et consultation des entreprises",
             "Planification de chantier",
             "Réception des travaux",
           ].map((name) => ({

@@ -1,0 +1,377 @@
+:root {
+  --muted-readable: #4f6057;
+}
+
+/* Accessibility pass: preserve the premium palette while improving
+   legibility of secondary copy on the light SBRE surfaces. */
+.premium-site .hero-description,
+.premium-site .hero-location span + span,
+.premium-site .phase-controls button,
+.premium-site .model-caption,
+.premium-site .section-heading > p:last-child,
+.premium-site .expertise-card p,
+.premium-site .team-card > p:last-child,
+.premium-site .team-note,
+.premium-site .contact-section > div > p:not(.eyebrow),
+.premium-site .form-note,
+.premium-site .faq-section details p {
+  color: var(--muted-readable);
+}
+
+/* Small architectural labels need slightly stronger contrast because of
+   their compact type size. */
+.premium-site .visual-heading,
+.premium-site .architecture-note,
+.premium-site .architecture-scale,
+.premium-site .phase-controls button,
+.premium-site .model-caption {
+  color: #43564d;
+}
+
+/* Keep the selected construction phase unmistakably active. */
+.premium-site .phase-controls button[aria-pressed="true"] {
+  color: var(--forest);
+}
+
+/* On pure-white project sections, use the same readable secondary tone. */
+.premium-site .projects-section .eyebrow,
+.premium-site .projects-section p {
+  color: #4f6057;
+}
+
+/* Preserve intentionally light text over dark photographic / forest areas. */
+.premium-site .control-banner,
+.premium-site .case-image > div,
+.premium-site .method-section,
+.premium-site .site-footer {
+  --muted-readable: #d4ddd2;
+}
+
+/* Readability pass: keep the airy premium layout, but make small copy
+   comfortably readable on desktop and laptop displays. */
+.premium-site {
+  font-size: 16px;
+}
+
+.premium-site .brand {
+  width: 210px;
+}
+
+.premium-site .brand img {
+  height: 82px;
+}
+
+.premium-site .desktop-nav button,
+.premium-site .header-contact,
+.premium-site .button,
+.premium-site .text-link {
+  font-size: 13px !important;
+}
+
+.premium-site .eyebrow {
+  font-size: 11px;
+}
+
+.premium-site .hero-description {
+  font-size: 16px;
+}
+
+.premium-site .hero-location {
+  font-size: 10px;
+}
+
+.premium-site .visual-heading,
+.premium-site .architecture-note {
+  font-size: 9px;
+}
+
+.premium-site .architecture-scale,
+.premium-site .phase-controls button {
+  font-size: 11px;
+}
+
+.premium-site .phase-controls button span,
+.premium-site .model-caption {
+  font-size: 9px;
+}
+
+.premium-site .principles {
+  font-size: 13px;
+}
+
+.premium-site .section-heading > p:last-child {
+  font-size: 15px;
+}
+
+.premium-site .expertise-card strong {
+  font-size: 14px;
+}
+
+.premium-site .expertise-card p,
+.premium-site .team-card > p:last-child,
+.premium-site .case-tabs button,
+.premium-site .faq-section details p,
+.premium-site .contact-section > div > p:not(.eyebrow) {
+  font-size: 14px;
+}
+
+.premium-site .card-footer,
+.premium-site .team-role,
+.premium-site .team-note,
+.premium-site .form-note {
+  font-size: 11px;
+}
+
+.premium-site .case-steps p {
+  font-size: 13px;
+}
+
+.premium-site .method-intro > p:not(.eyebrow),
+.premium-site .method-list details > div {
+  font-size: 14px;
+}
+
+.premium-site .faq-section summary {
+  font-size: 16px;
+}
+
+/* Persistent premium day / night control. */
+.sbre-theme {
+  min-height: 100vh;
+  background: #f5f5ee;
+  color: #173d31;
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+.theme-toggle {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 8px 12px 8px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(23, 61, 49, 0.18);
+  background: rgba(245, 245, 238, 0.88);
+  color: #173d31;
+  box-shadow: 0 10px 30px rgba(14, 32, 25, 0.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  font: 500 11px/1 Inter, Arial, sans-serif;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: transform 180ms ease, background-color 220ms ease,
+    color 220ms ease, border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(14, 32, 25, 0.16);
+}
+
+.theme-toggle:focus-visible {
+  outline: 3px solid #89ac44;
+  outline-offset: 4px;
+}
+
+.theme-toggle-icon {
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #173d31;
+  color: #f5f5ee;
+}
+
+.theme-dark {
+  background: #0b100e;
+  color: #eef2ec;
+  --muted-readable: #b8c3bc;
+}
+
+.theme-dark .premium-site,
+.theme-dark .premium-intro,
+.theme-dark .mobile-nav {
+  background: #0b100e;
+  color: #eef2ec;
+}
+
+.theme-dark .site-header {
+  background: rgba(11, 16, 14, 0.93);
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+.theme-dark .desktop-nav button,
+.theme-dark .header-contact,
+.theme-dark .menu-toggle,
+.theme-dark .text-link,
+.theme-dark .principles button,
+.theme-dark .intro-skip {
+  color: #eef2ec;
+  border-color: rgba(255, 255, 255, 0.34);
+}
+
+.theme-dark .premium-site .hero-description,
+.theme-dark .premium-site .hero-location span + span,
+.theme-dark .premium-site .visual-heading,
+.theme-dark .premium-site .architecture-note,
+.theme-dark .premium-site .architecture-scale,
+.theme-dark .premium-site .phase-controls button,
+.theme-dark .premium-site .model-caption,
+.theme-dark .premium-site .section-heading > p:last-child,
+.theme-dark .premium-site .expertise-card p,
+.theme-dark .premium-site .team-card > p:last-child,
+.theme-dark .premium-site .team-note,
+.theme-dark .premium-site .contact-section > div > p:not(.eyebrow),
+.theme-dark .premium-site .form-note,
+.theme-dark .premium-site .faq-section details p,
+.theme-dark .premium-site .projects-section .eyebrow,
+.theme-dark .premium-site .projects-section p {
+  color: #b8c3bc;
+}
+
+.theme-dark .premium-site .phase-controls button[aria-pressed="true"],
+.theme-dark .team-role {
+  color: #9bcfae;
+}
+
+.theme-dark .projects-section,
+.theme-dark .contact-section,
+.theme-dark .case-study {
+  background: #101713;
+}
+
+.theme-dark .expertise-grid,
+.theme-dark .expertise-card,
+.theme-dark .faq-section details,
+.theme-dark .principles,
+.theme-dark .case-tabs button,
+.theme-dark .method-list details {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.theme-dark .project-arrow {
+  background: #121a16;
+  color: #eef2ec;
+}
+
+.theme-dark .contact-section,
+.theme-dark .contact-form input,
+.theme-dark .contact-form select,
+.theme-dark .contact-form textarea {
+  color: #eef2ec;
+}
+
+.theme-dark .contact-form input,
+.theme-dark .contact-form select,
+.theme-dark .contact-form textarea {
+  border-bottom-color: rgba(255, 255, 255, 0.28);
+}
+
+/* Legacy project pages use Tailwind utility colors; override them gently
+   so the same switch works everywhere without rebuilding those pages. */
+.theme-dark .bg-white {
+  background-color: #0b100e !important;
+}
+
+.theme-dark .bg-gray-50 {
+  background-color: #111814 !important;
+}
+
+.theme-dark .text-gray-900,
+.theme-dark .text-gray-800,
+.theme-dark .text-gray-700 {
+  color: #eef2ec !important;
+}
+
+.theme-dark .text-gray-600,
+.theme-dark .text-gray-500 {
+  color: #b8c3bc !important;
+}
+
+.theme-dark nav.bg-white {
+  background-color: rgba(11, 16, 14, 0.94) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.theme-dark .shadow-sm,
+.theme-dark .shadow-md,
+.theme-dark .shadow-lg {
+  --tw-shadow-color: rgba(0, 0, 0, 0.34);
+}
+
+.theme-dark .theme-toggle {
+  background: rgba(16, 23, 19, 0.88);
+  color: #eef2ec;
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.32);
+}
+
+.theme-dark .theme-toggle-icon {
+  background: #eef2ec;
+  color: #0b100e;
+}
+
+@media (max-width: 800px) {
+  .premium-site .brand {
+    width: 160px;
+  }
+
+  .premium-site .brand img {
+    height: 62px;
+  }
+
+  .premium-site .hero-description,
+  .premium-site .section-heading > p:last-child,
+  .premium-site .expertise-card p,
+  .premium-site .team-card > p:last-child {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 540px) {
+  .premium-site .brand {
+    width: 138px;
+  }
+
+  .premium-site .brand img {
+    height: 56px;
+  }
+
+  .premium-site .eyebrow {
+    font-size: 9px;
+  }
+
+  .premium-site .visual-heading,
+  .premium-site .architecture-note,
+  .premium-site .model-caption {
+    font-size: 8px;
+  }
+
+  .premium-site .phase-controls button {
+    font-size: 10px;
+  }
+
+  .theme-toggle {
+    right: 14px;
+    bottom: 14px;
+    min-height: 40px;
+    padding-right: 10px;
+  }
+
+  .theme-toggle-label {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sbre-theme,
+  .theme-toggle {
+    transition: none;
+  }
+}

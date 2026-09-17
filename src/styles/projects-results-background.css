@@ -1,0 +1,103 @@
+.projects-section.projects-results-background {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: #f4f5ef;
+}
+
+.projects-section.projects-results-background > *:not(.projects-results-mosaic) {
+  position: relative;
+  z-index: 2;
+}
+
+.projects-results-mosaic {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: grid;
+  grid-template-columns: 1.08fr .92fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 12px;
+  padding: 18px;
+  pointer-events: none;
+}
+
+.projects-results-mosaic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(.82) contrast(.94) brightness(1.03);
+  opacity: .34;
+}
+
+.projects-results-mosaic img:nth-child(1) {
+  border-radius: 28px 10px 10px 28px;
+}
+
+.projects-results-mosaic img:nth-child(2) {
+  border-radius: 10px 28px 28px 10px;
+}
+
+.projects-results-mosaic img:nth-child(3) {
+  border-radius: 28px 10px 10px 28px;
+}
+
+.projects-results-mosaic img:nth-child(4) {
+  border-radius: 10px 28px 28px 10px;
+}
+
+.projects-results-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(247,248,242,.88) 0%, rgba(247,248,242,.72) 20%, rgba(247,248,242,.63) 52%, rgba(247,248,242,.78) 100%),
+    linear-gradient(90deg, rgba(246,247,241,.82) 0%, rgba(246,247,241,.53) 50%, rgba(246,247,241,.76) 100%);
+}
+
+.projects-section.projects-results-background .section-heading,
+.projects-section.projects-results-background .projects-grid {
+  backdrop-filter: blur(1.6px);
+  -webkit-backdrop-filter: blur(1.6px);
+}
+
+.projects-section.projects-results-background .project-card {
+  background: rgba(248,249,244,.90);
+  border: 1px solid rgba(10,92,61,.12);
+  box-shadow: 0 22px 54px rgba(16,52,40,.10);
+  padding: 10px 10px 18px;
+  border-radius: 18px;
+}
+
+.theme-dark .projects-section.projects-results-background {
+  background: #0d1c17;
+}
+
+.theme-dark .projects-results-mosaic img {
+  opacity: .30;
+  filter: saturate(.72) contrast(1.02) brightness(.62);
+}
+
+.theme-dark .projects-results-veil {
+  background:
+    linear-gradient(180deg, rgba(8,20,15,.80), rgba(8,20,15,.58) 48%, rgba(8,20,15,.76)),
+    linear-gradient(90deg, rgba(8,20,15,.74), rgba(8,20,15,.46), rgba(8,20,15,.70));
+}
+
+.theme-dark .projects-section.projects-results-background .project-card {
+  background: rgba(10,26,20,.86);
+  border-color: rgba(255,255,255,.10);
+}
+
+@media (max-width: 800px) {
+  .projects-results-mosaic {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, minmax(180px, 1fr));
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .projects-results-mosaic img {
+    opacity: .26;
+    border-radius: 16px !important;
+  }
+}

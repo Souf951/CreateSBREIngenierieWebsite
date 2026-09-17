@@ -1,0 +1,57 @@
+name: Validate SBRE website
+
+on:
+  push:
+    branches: [feat/contrast-fixes]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10.32.1
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build GitHub Pages preview
+        run: pnpm build
+
+      - name: Verify GitHub Pages preview
+        run: node scripts/verify-build.mjs
+
+      - name: Build production custom domain
+        env:
+          SBRE_CUSTOM_DOMAIN: "true"
+        run: pnpm build
+
+      - name: Verify production custom domain
+        env:
+          SBRE_CUSTOM_DOMAIN: "true"
+        run: node scripts/verify-build.mjs
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: sbre-website-production-preview
+          path: dist
+          retention-days: 7

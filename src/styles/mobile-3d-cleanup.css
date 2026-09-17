@@ -1,0 +1,6 @@
+@media (max-width: 1024px) {
+  .premium-site .architecture-interaction-hint,
+  .premium-site .architecture-note {
+    display: none !important;
+  }
+}

@@ -1,0 +1,179 @@
+@import "./experiences-results-background.css";
+
+/* Fluid responsive typography and spacing for tablet/phone only.
+   Desktop is intentionally untouched. */
+
+@media (max-width: 1024px) {
+  .premium-site {
+    --fs-eyebrow: clamp(10px, 1.25vw, 12px);
+    --fs-body: clamp(14px, 1.8vw, 16px);
+    --fs-card-title: clamp(20px, 2.6vw, 28px);
+    --fs-section-title: clamp(42px, 6.2vw, 64px);
+  }
+
+  .premium-site .eyebrow,
+  .premium-site .image-caption,
+  .premium-site .card-number,
+  .premium-site .step-index,
+  .premium-site .case-deliverable,
+  .premium-site .team-role,
+  .premium-site .footer-premium-kicker {
+    font-size: var(--fs-eyebrow) !important;
+  }
+
+  .premium-site .section-heading h2,
+  .premium-site .method-intro h2,
+  .premium-site .contact-section h2,
+  .premium-site .control-banner h2,
+  .premium-site .partners-heading h2 {
+    font-size: var(--fs-section-title) !important;
+    line-height: .98 !important;
+    letter-spacing: -.035em !important;
+    max-width: 12ch;
+  }
+
+  .premium-site .section-heading > p:last-child,
+  .premium-site .method-intro > p,
+  .premium-site .contact-section p,
+  .premium-site .partners-note,
+  .premium-site .expertise-card p,
+  .premium-site .case-steps p,
+  .premium-site .team-note,
+  .premium-site .team-card p {
+    font-size: var(--fs-body) !important;
+    line-height: 1.55 !important;
+  }
+
+  .premium-site .expertise-card h3,
+  .premium-site .case-image h3,
+  .premium-site .team-card h3,
+  .premium-site .project-card h3 {
+    font-size: var(--fs-card-title) !important;
+    line-height: 1.08 !important;
+  }
+
+  .premium-site .control-banner {
+    min-height: clamp(430px, 65vw, 600px) !important;
+  }
+
+  .premium-site .control-banner > div {
+    max-width: min(620px, 88%);
+  }
+
+  .premium-site .control-banner .image-caption {
+    max-width: 42ch;
+    line-height: 1.35 !important;
+  }
+
+  .premium-site .projects-method-transition,
+  .premium-site .section-transition {
+    font-size: clamp(9px, 1.15vw, 11px) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .premium-site {
+    --fs-eyebrow: 10px;
+    --fs-body: clamp(13px, 3.55vw, 15px);
+    --fs-card-title: clamp(20px, 5.5vw, 24px);
+    --fs-section-title: clamp(34px, 9.6vw, 46px);
+  }
+
+  .premium-site .hero-copy h1 {
+    font-size: clamp(38px, 10.2vw, 48px) !important;
+    line-height: .94 !important;
+    max-width: 9.7ch !important;
+  }
+
+  .premium-site .hero-description {
+    font-size: clamp(13px, 3.5vw, 15px) !important;
+    line-height: 1.55 !important;
+  }
+
+  .premium-site .section-heading h2,
+  .premium-site .method-intro h2,
+  .premium-site .contact-section h2,
+  .premium-site .control-banner h2,
+  .premium-site .partners-heading h2 {
+    max-width: none;
+  }
+
+  .premium-site .control-banner {
+    min-height: 430px !important;
+    margin-inline: 8px !important;
+  }
+
+  .premium-site .control-banner > div {
+    max-width: 100%;
+    padding: 24px 18px !important;
+  }
+
+  .premium-site .control-banner h2 {
+    font-size: clamp(34px, 9.4vw, 44px) !important;
+    line-height: .96 !important;
+  }
+
+  .premium-site .control-banner .eyebrow {
+    max-width: 24ch;
+    line-height: 1.45 !important;
+  }
+
+  .premium-site .control-banner .image-caption {
+    position: static !important;
+    display: block !important;
+    margin-top: 12px !important;
+    max-width: 26ch !important;
+    font-size: 9px !important;
+    line-height: 1.35 !important;
+  }
+
+  .premium-site .case-section .section-heading h2 {
+    font-size: clamp(34px, 9.2vw, 44px) !important;
+    line-height: .98 !important;
+  }
+
+  .premium-site .case-tabs button {
+    font-size: 13px !important;
+  }
+
+  .premium-site .expertise-card,
+  .premium-site .case-steps > div,
+  .premium-site .team-card {
+    font-size: 14px;
+  }
+
+  .premium-site .floating-contact {
+    right: 8px !important;
+    bottom: 72px !important;
+  }
+
+  .premium-site .floating-contact a {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .premium-site .projects-method-transition,
+  .premium-site .section-transition {
+    font-size: 8px !important;
+    letter-spacing: .10em !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .premium-site .hero-copy h1 {
+    font-size: clamp(36px, 10.8vw, 44px) !important;
+  }
+
+  .premium-site .section-heading h2,
+  .premium-site .method-intro h2,
+  .premium-site .contact-section h2,
+  .premium-site .control-banner h2,
+  .premium-site .partners-heading h2,
+  .premium-site .case-section .section-heading h2 {
+    font-size: clamp(32px, 9.2vw, 40px) !important;
+  }
+
+  .premium-site .control-banner {
+    min-height: 410px !important;
+  }
+}

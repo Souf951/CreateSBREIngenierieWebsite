@@ -1,0 +1,301 @@
+.pr-profile-deck {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  perspective: 1800px;
+}
+
+.pr-flip-card {
+  position: relative;
+  min-height: 330px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 22px;
+  perspective: 1600px;
+}
+
+.pr-flip-card:focus-visible {
+  outline: 2px solid var(--pr-accent);
+  outline-offset: 6px;
+}
+
+.pr-flip-card-inner {
+  position: relative;
+  width: 100%;
+  min-height: 330px;
+  transform-style: preserve-3d;
+  transition: transform 720ms cubic-bezier(.2,.72,.18,1), filter 320ms ease;
+}
+
+.pr-flip-card.is-flipped .pr-flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.pr-flip-face {
+  position: absolute;
+  inset: 0;
+  min-height: 330px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid rgba(16, 96, 64, .18);
+  border-radius: 22px;
+  padding: clamp(28px, 3vw, 42px);
+}
+
+.pr-flip-front {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background:
+    radial-gradient(circle at 88% 12%, rgba(29, 143, 92, .08), transparent 25%),
+    linear-gradient(145deg, rgba(255,255,250,.97), rgba(246,248,241,.91));
+  box-shadow: 0 18px 50px rgba(17,64,43,.07);
+}
+
+.theme-dark .pr-flip-front {
+  background:
+    radial-gradient(circle at 88% 12%, rgba(120, 228, 164, .09), transparent 25%),
+    linear-gradient(145deg, rgba(26,49,39,.98), rgba(19,39,31,.94));
+}
+
+.pr-flip-back {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  transform: rotateY(180deg);
+  color: #f2f4e9;
+  background:
+    linear-gradient(rgba(11,57,39,.95), rgba(11,57,39,.95)),
+    linear-gradient(135deg, #0d5137, #082f22);
+  border-color: rgba(153, 236, 186, .25);
+  box-shadow: 0 28px 70px rgba(8,47,34,.18);
+}
+
+.pr-flip-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 24px;
+  z-index: -1;
+  opacity: 0;
+  background: conic-gradient(from 0deg, transparent 0 16%, rgba(61,229,143,.9) 23%, transparent 30% 64%, rgba(61,229,143,.75) 72%, transparent 80% 100%);
+  filter: blur(7px);
+  transition: opacity 220ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pr-flip-card:not(.is-flipped):hover::before,
+  .pr-flip-card:focus-visible::before {
+    opacity: .55;
+    animation: pr-flip-ring 4.5s linear infinite;
+  }
+
+  .pr-flip-card:not(.is-flipped):hover .pr-flip-card-inner {
+    transform: translateY(-5px) rotateX(1.2deg) rotateY(-1.2deg);
+    filter: drop-shadow(0 22px 26px rgba(10,78,50,.1));
+  }
+}
+
+@keyframes pr-flip-ring {
+  to { transform: rotate(360deg); }
+}
+
+.pr-flip-meta,
+.pr-flip-back-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.pr-flip-meta > span:last-child,
+.pr-flip-back-top p {
+  font-size: 9px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  opacity: .68;
+}
+
+.pr-flip-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(11,99,66,.08);
+  border: 1px solid rgba(11,99,66,.22);
+  color: var(--pr-accent);
+  font: 600 10px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  letter-spacing: .14em;
+}
+
+.pr-flip-number::before {
+  content: "SBRE ";
+  margin-right: 4px;
+  opacity: .5;
+  font-size: 7px;
+}
+
+.pr-flip-number-light {
+  color: #dff3df;
+  border-color: rgba(220,247,226,.28);
+  background: rgba(255,255,255,.06);
+}
+
+.pr-flip-front-copy {
+  align-self: center;
+  position: relative;
+  z-index: 2;
+}
+
+.pr-flip-kicker {
+  margin-bottom: 14px !important;
+  font-size: 9px !important;
+  line-height: 1.4;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--pr-muted);
+}
+
+.pr-flip-front h3,
+.pr-flip-back h3 {
+  margin: 0;
+  font-size: clamp(34px, 3.2vw, 54px);
+  line-height: .98;
+  letter-spacing: -.055em;
+  font-weight: 500;
+}
+
+.pr-flip-front-copy > p:last-child {
+  margin-top: 16px !important;
+  max-width: 360px;
+  font-size: 13px;
+  color: var(--pr-muted);
+}
+
+.pr-flip-blueprint {
+  position: absolute;
+  right: -12%;
+  bottom: -8%;
+  width: 52%;
+  aspect-ratio: 1;
+  opacity: .22;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.pr-flip-blueprint span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid color-mix(in srgb, var(--pr-accent) 48%, transparent);
+}
+
+.pr-flip-blueprint span:nth-child(2) { inset: 18%; }
+.pr-flip-blueprint span:nth-child(3) { inset: 36%; }
+
+.pr-flip-hint {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding-top: 16px;
+  border-top: 1px solid var(--pr-line);
+  font-size: 10px;
+  color: var(--pr-muted);
+}
+
+.pr-flip-back-top {
+  align-items: flex-start;
+}
+
+.pr-flip-back-top > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.pr-flip-back-copy {
+  align-self: center;
+  max-width: 520px;
+}
+
+.pr-flip-back .pr-flip-kicker {
+  color: #b9d7c2;
+}
+
+.pr-flip-back-copy > p:not(.pr-flip-kicker) {
+  margin-top: 20px !important;
+  max-width: 500px;
+  color: rgba(242,244,233,.8);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+.pr-flip-services {
+  display: inline-flex;
+  margin-top: 22px;
+  padding: 8px 11px;
+  border: 1px solid rgba(219,243,222,.2);
+  border-radius: 999px;
+  color: #dcebdd;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.pr-flip-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: fit-content;
+  min-width: 230px;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(232,246,234,.55);
+  color: #eef6ed !important;
+  font-size: 11px;
+}
+
+.pr-flip-cta svg {
+  transition: transform 180ms ease;
+}
+
+.pr-flip-cta:hover svg {
+  transform: translate(2px,-2px);
+}
+
+@media (max-width: 899px) {
+  .pr-profile-deck {
+    grid-template-columns: 1fr;
+  }
+  .pr-flip-card,
+  .pr-flip-card-inner,
+  .pr-flip-face {
+    min-height: 300px;
+  }
+}
+
+@media (max-width: 560px) {
+  .pr-flip-face {
+    padding: 24px;
+  }
+  .pr-flip-front h3,
+  .pr-flip-back h3 {
+    font-size: clamp(30px, 10vw, 42px);
+  }
+  .pr-flip-cta {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-flip-card-inner {
+    transition-duration: 1ms;
+  }
+  .pr-flip-card::before {
+    animation: none !important;
+  }
+}

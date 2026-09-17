@@ -1,0 +1,184 @@
+/* Fill the lower hero controls area on tablet/desktop without changing phone layout. */
+
+@media (min-width: 641px) {
+  .hero-visual {
+    display: grid;
+    /* Keep every hero row at its natural height. Using a flexible 1fr row here
+       created a large artificial gap below the 3D model on tall viewports. */
+    grid-template-rows: auto auto auto auto;
+    align-content: center;
+    min-width: 0;
+  }
+
+  .architecture {
+    height: clamp(390px, 39vw, 455px) !important;
+  }
+
+  /* Give the project switch breathing room before the 3D model starts. */
+  .architecture .building-canvas {
+    transform: translateY(24px);
+  }
+
+  .phase-controls {
+    width: calc(100% + 24px) !important;
+    max-width: none !important;
+    margin: 4px -12px 10px !important;
+    padding: 12px !important;
+    gap: 9px !important;
+    border-radius: 22px !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    background: rgba(7, 28, 21, .72) !important;
+    border: 1px solid rgba(255,255,255,.18) !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    box-shadow: 0 18px 45px rgba(0,0,0,.18);
+  }
+
+  .phase-controls button {
+    min-width: 0 !important;
+    min-height: 104px !important;
+    padding: 18px 16px !important;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px !important;
+    border: 1px solid rgba(255,255,255,.10) !important;
+    border-top: 2px solid rgba(255,255,255,.38) !important;
+    border-radius: 14px !important;
+    background: rgba(255,255,255,.035) !important;
+    color: rgba(245,247,242,.82) !important;
+    font-size: clamp(14px, 1.35vw, 18px) !important;
+    line-height: 1.15 !important;
+    transition: transform .22s ease, background .22s ease, border-color .22s ease, color .22s ease;
+  }
+
+  .phase-controls button:hover {
+    transform: translateY(-3px);
+    background: rgba(255,255,255,.075) !important;
+    border-color: rgba(61,187,142,.45) !important;
+  }
+
+  .phase-controls button span {
+    font-size: clamp(12px, 1vw, 14px) !important;
+    font-weight: 750 !important;
+    letter-spacing: .04em;
+  }
+
+  .phase-controls button[aria-pressed="true"] {
+    color: #dff8eb !important;
+    background: linear-gradient(180deg, rgba(15,112,77,.34), rgba(10,73,52,.22)) !important;
+    border-color: rgba(61,187,142,.62) !important;
+    border-top-color: #29b57f !important;
+    box-shadow: inset 0 0 0 1px rgba(61,187,142,.10), 0 10px 28px rgba(0,0,0,.14);
+  }
+
+  .model-caption {
+    width: calc(100% + 24px) !important;
+    max-width: none !important;
+    min-height: 64px;
+    margin: 0 -12px 8px !important;
+    padding: 16px 20px !important;
+    display: flex;
+    align-items: center;
+    border-radius: 20px !important;
+    border: 1px solid rgba(255,255,255,.16) !important;
+    background: rgba(7,28,21,.68) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    color: rgba(245,247,242,.92) !important;
+    font-size: clamp(13px, 1.12vw, 16px) !important;
+    font-weight: 600;
+    line-height: 1.4 !important;
+    box-shadow: 0 14px 34px rgba(0,0,0,.14);
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .architecture {
+    height: 410px !important;
+  }
+
+  .architecture .building-canvas {
+    transform: translateY(18px);
+  }
+
+  .phase-controls {
+    width: calc(100% + 12px) !important;
+    margin-left: -6px !important;
+    margin-right: -6px !important;
+  }
+
+  .phase-controls button {
+    min-height: 88px !important;
+    padding: 14px 11px !important;
+    font-size: clamp(12px, 1.7vw, 15px) !important;
+  }
+
+  .phase-controls button span {
+    font-size: clamp(10px, 1.35vw, 12px) !important;
+  }
+
+  .model-caption {
+    width: calc(100% + 12px) !important;
+    margin-left: -6px !important;
+    margin-right: -6px !important;
+    min-height: 60px;
+    font-size: clamp(11px, 1.45vw, 13px) !important;
+  }
+}
+
+/* Project type selector: always contained inside the 3D hero on tablet/desktop. */
+@media (min-width: 621px) {
+  .architecture-kind-switch {
+    top: -10px !important;
+    left: 18px !important;
+    right: 18px !important;
+    width: auto !important;
+    max-width: none !important;
+    transform: none !important;
+    display: grid !important;
+    grid-template-columns: 1fr .72fr 1.72fr !important;
+    gap: 3px !important;
+    padding: 4px !important;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .architecture-kind-switch button {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 7px 8px !important;
+    font-size: clamp(7px, .72vw, 9px) !important;
+    letter-spacing: .055em !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    overflow: hidden;
+    text-overflow: clip;
+  }
+
+  .architecture-kind-switch button span {
+    margin-right: 5px !important;
+  }
+}
+
+@media (max-width: 620px) {
+  .architecture-kind-switch {
+    top: 6px !important;
+    left: 10px !important;
+    right: 10px !important;
+    width: auto !important;
+    transform: none !important;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 4px !important;
+  }
+
+  .architecture-kind-switch button {
+    width: 100% !important;
+    min-width: 0 !important;
+    white-space: normal !important;
+  }
+
+  .architecture-kind-switch button:last-child {
+    grid-column: 1 / -1 !important;
+  }
+}

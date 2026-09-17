@@ -1,0 +1,179 @@
+.pr-logo-network {
+  position: absolute;
+  inset: 86px 0 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.pr-logo-network-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.pr-network-base-line,
+.pr-network-flow-line {
+  vector-effect: non-scaling-stroke;
+  fill: none;
+}
+
+.pr-network-base-line {
+  stroke: color-mix(in srgb, var(--pr-accent) 34%, transparent);
+  stroke-width: 1.1px;
+  opacity: .42;
+}
+
+.pr-network-flow-line {
+  stroke: color-mix(in srgb, var(--pr-accent) 90%, white 10%);
+  stroke-width: 1.8px;
+  stroke-linecap: round;
+  stroke-dasharray: .075 .055;
+  stroke-dashoffset: 0;
+  opacity: .62;
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--pr-accent) 60%, transparent));
+}
+
+.pr-network-pulse {
+  fill: color-mix(in srgb, var(--pr-accent) 78%, white 22%);
+  stroke: rgba(255, 255, 255, .72);
+  stroke-width: .1;
+  vector-effect: non-scaling-stroke;
+  opacity: .9;
+}
+
+.pr-logo-network-node {
+  position: absolute;
+  transform: translate(-50%, -50%) scale(.96);
+  opacity: .78;
+  filter: drop-shadow(0 8px 18px rgba(4, 32, 22, .14));
+  animation: pr-logo-arrive 16s ease-in-out infinite;
+  animation-delay: var(--logo-delay);
+}
+
+.pr-logo-network-node img {
+  display: block;
+  width: 100%;
+  height: 56px;
+  object-fit: contain;
+  filter: none;
+}
+
+.pr-logo-network-node-featured {
+  z-index: 3;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.08);
+  filter:
+    drop-shadow(0 12px 28px rgba(4, 32, 22, .22))
+    drop-shadow(0 0 18px color-mix(in srgb, var(--pr-accent) 28%, transparent));
+}
+
+.pr-logo-network-node-featured img {
+  height: 72px;
+}
+
+@keyframes pr-logo-arrive {
+  0%, 8% { opacity: .78; transform: translate(-50%, -50%) scale(.96); }
+  18% { opacity: 1; transform: translate(-50%, -50%) scale(1.04); }
+  70% { opacity: .96; transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: .78; transform: translate(-50%, -50%) scale(.98); }
+}
+
+.pr-logo-network-node-featured {
+  animation-name: pr-logo-featured;
+}
+
+@keyframes pr-logo-featured {
+  0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1.06); }
+  50% { opacity: 1; transform: translate(-50%, -50%) scale(1.13); }
+}
+
+.theme-dark .pr-network-base-line {
+  stroke: color-mix(in srgb, var(--pr-accent) 58%, transparent);
+  opacity: .58;
+}
+
+.theme-dark .pr-network-flow-line {
+  stroke: color-mix(in srgb, var(--pr-accent) 88%, white 12%);
+  opacity: .82;
+}
+
+.theme-dark .pr-network-pulse {
+  fill: color-mix(in srgb, var(--pr-accent) 68%, white 32%);
+}
+
+.theme-dark .pr-logo-network-node,
+.theme-dark .pr-logo-network-node img {
+  filter: none;
+}
+
+.pr-page .pr-hero-top,
+.pr-page .pr-hero-body,
+.pr-page .pr-hero-bottom {
+  position: relative;
+  z-index: 2;
+}
+
+@media (min-width: 1001px) {
+  .pr-page .pr-hero {
+    min-height: calc(100svh - 102px) !important;
+    display: grid !important;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    align-content: stretch;
+  }
+
+  .pr-page .pr-hero-body {
+    min-height: 0 !important;
+    height: 100%;
+    align-items: center !important;
+  }
+
+  /* Headline intentionally sits high in the hero while the model/network stay lower. */
+  .pr-page .pr-hero-copy {
+    transform: translateY(-245px) !important;
+  }
+
+  .pr-page .pr-hero-visual {
+    transform: translateY(44px) !important;
+  }
+
+  .pr-page .pr-hero-visual .pr-architecture {
+    max-height: min(58svh, 560px) !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .pr-logo-network-node { opacity: .64; }
+  .pr-logo-network-node:nth-of-type(n+7) { display: none; }
+  .pr-logo-network-lines > g:nth-of-type(n+11) { display: none; }
+  .pr-logo-network-node-featured { display: block !important; opacity: .94; }
+}
+
+@media (max-width: 720px) {
+  .pr-logo-network { inset: 70px 0 0; }
+  .pr-logo-network-node { width: 64px !important; }
+  .pr-logo-network-node img { height: 36px; }
+  .pr-logo-network-node-featured { width: 88px !important; }
+  .pr-logo-network-node-featured img { height: 48px; }
+  .pr-network-base-line { opacity: .34; }
+  .pr-network-flow-line { opacity: .56; stroke-width: 1.4px; }
+  .pr-network-pulse { opacity: .78; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pr-network-flow-line {
+    stroke-dasharray: none;
+    opacity: .48 !important;
+  }
+  .pr-network-pulse {
+    opacity: 0 !important;
+  }
+  .pr-logo-network-node,
+  .pr-logo-network-node-featured {
+    animation: none;
+    opacity: .82;
+    transform: translate(-50%, -50%);
+  }
+}

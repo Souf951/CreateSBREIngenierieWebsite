@@ -1,0 +1,190 @@
+/* Premium editorial galleries for project pages. */
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5),
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) {
+  position: relative;
+  padding-top: 5.5rem !important;
+  padding-bottom: 6.5rem !important;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) {
+  background:
+    radial-gradient(circle at 88% 12%, rgba(10, 92, 61, 0.08), transparent 28%),
+    #f3f5f1 !important;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) {
+  background: #ffffff !important;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div,
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div {
+  max-width: 1320px !important;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:first-child,
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:first-child {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 2rem;
+  margin-bottom: 2.5rem !important;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(18, 59, 46, 0.14);
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:first-child h2,
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:first-child h2 {
+  margin-bottom: 0 !important;
+  letter-spacing: -0.04em;
+  color: #123b2e;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:first-child p,
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:first-child p {
+  max-width: 360px;
+  margin: 0;
+  text-align: right;
+  color: #65736c;
+  line-height: 1.65;
+}
+
+/* Existing second div is the image grid. Turn it into an editorial mosaic. */
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2),
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) {
+  display: grid !important;
+  grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+  grid-auto-rows: 205px;
+  gap: 14px !important;
+  counter-reset: project-photo;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2) > div,
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) > div {
+  counter-increment: project-photo;
+  position: relative;
+  height: auto !important;
+  min-height: 0 !important;
+  border-radius: 18px !important;
+  overflow: hidden;
+  background: #dfe5df;
+  box-shadow: 0 16px 45px rgba(16, 45, 35, 0.09) !important;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  transform: none !important;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2) > div:nth-child(1),
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) > div:nth-child(1) {
+  grid-column: span 7;
+  grid-row: span 2;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2) > div:nth-child(2),
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) > div:nth-child(2),
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2) > div:nth-child(3),
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) > div:nth-child(3) {
+  grid-column: span 5;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2) > div:nth-child(n+4),
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) > div:nth-child(n+4) {
+  grid-column: span 4;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2) > div::before,
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) > div::before {
+  content: counter(project-photo, decimal-leading-zero);
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 4;
+  min-width: 38px;
+  height: 30px;
+  padding: 0 10px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(245, 247, 242, 0.82);
+  color: #123b2e;
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font: 700 10px/1 Inter, Arial, sans-serif;
+  letter-spacing: 0.08em;
+  pointer-events: none;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2) img,
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.002);
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), filter 500ms ease !important;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2) > div:hover img,
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) > div:hover img {
+  transform: scale(1.045) !important;
+  filter: saturate(1.04) contrast(1.02);
+}
+
+/* Replace the generic dark hover with a softer architectural overlay. */
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2) > div > div,
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) > div > div {
+  align-items: flex-end !important;
+  justify-content: flex-start !important;
+  padding: 18px;
+  background: linear-gradient(180deg, transparent 48%, rgba(5, 23, 17, 0.58)) !important;
+  opacity: 0;
+  transition: opacity 350ms ease !important;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2) > div:hover > div,
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) > div:hover > div {
+  opacity: 1;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2) > div > div span,
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) > div > div span {
+  opacity: 1 !important;
+  transform: translateY(8px);
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: rgba(245, 247, 242, 0.91);
+  color: #123b2e !important;
+  font-size: 12px !important;
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+}
+
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2) > div:hover > div span,
+.min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) > div:hover > div span {
+  transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:first-child,
+  .min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:first-child {
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+  }
+
+  .min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:first-child p,
+  .min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:first-child p {
+    text-align: left;
+  }
+
+  .min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2),
+  .min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) {
+    grid-template-columns: 1fr !important;
+    grid-auto-rows: 265px;
+    gap: 12px !important;
+  }
+
+  .min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(5) > div > div:nth-child(2) > div,
+  .min-h-screen.bg-white.overflow-x-hidden main > section:nth-of-type(6) > div > div:nth-child(2) > div {
+    grid-column: 1 !important;
+    grid-row: auto !important;
+  }
+}

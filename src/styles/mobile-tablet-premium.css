@@ -1,0 +1,576 @@
+/* Dedicated mobile + tablet composition pass.
+   Loaded after the legacy responsive rules so the small screens feel designed,
+   not like a compressed desktop page. */
+
+@media (max-width: 1024px) {
+  .premium-site {
+    width: 100%;
+    overflow-x: clip;
+  }
+
+  .site-header {
+    position: relative;
+    min-height: 82px;
+    padding: 10px 22px !important;
+  }
+
+  .premium-site .brand {
+    width: 158px !important;
+    height: 66px !important;
+  }
+
+  .premium-site .brand img {
+    width: 158px !important;
+    height: 66px !important;
+    transform: scale(1.16) !important;
+  }
+
+  .desktop-nav,
+  .header-contact {
+    display: none !important;
+  }
+
+  .menu-toggle {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 10px 4px !important;
+    font-size: 13px !important;
+    font-weight: 650;
+  }
+
+  .mobile-nav {
+    position: absolute;
+    z-index: 60;
+    left: 14px;
+    right: 14px;
+    top: 78px;
+    padding: 10px;
+    border-radius: 20px;
+    background: rgba(8, 21, 16, .96);
+    border: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 22px 60px rgba(0,0,0,.30);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .mobile-nav button {
+    width: 100%;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    color: #f5f7f2;
+    text-align: left;
+  }
+
+  .hero {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    padding: 12px 14px 0 !important;
+  }
+
+  .hero-copy {
+    width: 100%;
+    max-width: none;
+    margin: 0 !important;
+    padding: 28px 28px 30px !important;
+    border-radius: 26px !important;
+  }
+
+  .hero-copy h1 {
+    max-width: 11ch;
+    font-size: clamp(48px, 7.5vw, 68px) !important;
+    line-height: .93 !important;
+    letter-spacing: -.045em;
+  }
+
+  .hero-description {
+    max-width: 55ch;
+    font-size: 16px !important;
+    line-height: 1.65 !important;
+  }
+
+  .hero-actions {
+    gap: 10px !important;
+  }
+
+  .hero-actions .button,
+  .hero-actions .text-link {
+    min-height: 48px;
+  }
+
+  .hero-visual {
+    width: 100%;
+    min-width: 0;
+    display: grid;
+  }
+
+  .hero-visual .visual-heading {
+    order: 0;
+    margin: 0 0 8px !important;
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px !important;
+  }
+
+  .architecture {
+    order: 1;
+    width: 100%;
+    min-height: 430px !important;
+    border-radius: 24px;
+    overflow: hidden;
+  }
+
+  .architecture-kind-switch {
+    position: absolute !important;
+    z-index: 8 !important;
+    top: 12px !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    max-width: none !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 5px !important;
+    padding: 5px !important;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .architecture-kind-switch::-webkit-scrollbar { display: none; }
+
+  .architecture-kind-switch button,
+  .architecture-kind-switch button:last-child {
+    grid-column: auto !important;
+    flex: 0 0 auto;
+    min-height: 38px;
+    padding: 9px 12px !important;
+    white-space: nowrap !important;
+    font-size: 9px !important;
+    text-align: center;
+  }
+
+  .building-canvas,
+  .architecture-static-placeholder {
+    width: 100%;
+    height: 430px !important;
+    min-height: 430px !important;
+  }
+
+  .architecture-interaction-hint {
+    left: 50% !important;
+    right: auto !important;
+    bottom: 18px !important;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  .phase-controls {
+    order: 2;
+    margin: 8px 0 8px !important;
+    padding: 8px !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 6px !important;
+  }
+
+  .phase-controls button {
+    min-height: 56px;
+    padding: 9px 8px !important;
+  }
+
+  .model-caption {
+    order: 3;
+    margin: 0 0 18px !important;
+    padding: 10px 12px !important;
+  }
+
+  .principles {
+    width: calc(100% - 28px) !important;
+    margin: 0 14px 18px !important;
+    padding: 18px !important;
+    grid-template-columns: repeat(3, 1fr) auto !important;
+    gap: 12px !important;
+  }
+
+  .section {
+    width: 100%;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .section-heading {
+    grid-template-columns: 1.25fr .75fr !important;
+    column-gap: 36px !important;
+  }
+
+  .section-heading .eyebrow,
+  .section-heading h2 {
+    grid-column: 1;
+  }
+
+  .section-heading > p:last-child {
+    grid-column: 2;
+    align-self: end;
+  }
+
+  .expertise-grid,
+  .projects-grid,
+  .team-grid {
+    gap: 16px !important;
+  }
+
+  .team-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    max-width: none !important;
+  }
+
+  .team-card {
+    min-width: 0;
+  }
+
+  .contact-section {
+    gap: 14px !important;
+  }
+
+  .footer-premium-top,
+  .footer-premium-bottom {
+    width: calc(100% - 48px) !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .site-header {
+    min-height: 72px;
+    padding: 7px 14px !important;
+  }
+
+  .premium-site .brand {
+    width: 146px !important;
+    height: 58px !important;
+  }
+
+  .premium-site .brand img {
+    width: 146px !important;
+    height: 58px !important;
+    transform: scale(1.14) !important;
+  }
+
+  .menu-toggle {
+    font-size: 12px !important;
+  }
+
+  .mobile-nav {
+    top: 70px;
+  }
+
+  .hero {
+    gap: 10px !important;
+    padding: 10px 8px 0 !important;
+  }
+
+  .hero-copy {
+    padding: 22px 18px 22px !important;
+    border-radius: 22px !important;
+  }
+
+  .hero-copy .eyebrow {
+    font-size: 10px !important;
+    letter-spacing: .10em;
+  }
+
+  .hero-copy h1 {
+    max-width: 9.3ch;
+    margin-top: 26px !important;
+    font-size: clamp(42px, 12vw, 54px) !important;
+    line-height: .91 !important;
+  }
+
+  .hero-description {
+    margin-top: 22px !important;
+    font-size: 14px !important;
+    line-height: 1.62 !important;
+  }
+
+  .hero-actions {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+  }
+
+  .hero-actions .button,
+  .hero-actions .text-link {
+    width: 100% !important;
+    min-height: 50px;
+    justify-content: center;
+  }
+
+  .hero-location {
+    margin-top: 18px !important;
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 6px !important;
+    font-size: 9px !important;
+  }
+
+  .hero-visual .visual-heading {
+    min-height: 38px;
+    margin: 0 0 6px !important;
+    padding: 8px 10px !important;
+    border-radius: 14px;
+    font-size: 9px !important;
+  }
+
+  .architecture {
+    min-height: 350px !important;
+    border-radius: 20px;
+  }
+
+  .architecture-kind-switch {
+    top: 8px !important;
+    left: 8px !important;
+    right: 8px !important;
+    border-radius: 15px !important;
+  }
+
+  .architecture-kind-switch button,
+  .architecture-kind-switch button:last-child {
+    min-height: 36px;
+    padding: 8px 10px !important;
+    font-size: 8px !important;
+    letter-spacing: .035em !important;
+  }
+
+  .building-canvas,
+  .architecture-static-placeholder {
+    height: 350px !important;
+    min-height: 350px !important;
+  }
+
+  .architecture-watermark,
+  .architecture-watermark-center {
+    display: none !important;
+  }
+
+  .architecture-note {
+    left: 14px !important;
+    bottom: 62px !important;
+    font-size: 8px !important;
+  }
+
+  .architecture-scale {
+    right: 14px !important;
+    bottom: 62px !important;
+    font-size: 8px !important;
+  }
+
+  .architecture-interaction-hint {
+    bottom: 14px !important;
+    max-width: calc(100% - 28px);
+    padding: 8px 11px !important;
+    font-size: 9px !important;
+  }
+
+  .phase-controls {
+    margin: 7px 0 !important;
+    padding: 6px !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: 3px !important;
+    border-radius: 14px !important;
+  }
+
+  .phase-controls button {
+    min-height: 50px;
+    padding: 7px 4px !important;
+    font-size: 9px !important;
+    text-align: center !important;
+  }
+
+  .phase-controls button span {
+    display: block;
+    margin: 0 0 3px !important;
+    font-size: 8px !important;
+  }
+
+  .model-caption {
+    margin: 0 0 12px !important;
+    padding: 9px 10px !important;
+    font-size: 9px !important;
+    text-align: center;
+  }
+
+  .principles {
+    width: calc(100% - 16px) !important;
+    margin: 0 8px 18px !important;
+    padding: 13px 14px !important;
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+    border-radius: 18px !important;
+  }
+
+  .principles > span {
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    font-size: 13px !important;
+  }
+
+  .principles button {
+    display: none !important;
+  }
+
+  .section {
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  .section-heading {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+    margin-bottom: 28px !important;
+  }
+
+  .section-heading .eyebrow,
+  .section-heading h2,
+  .section-heading > p:last-child {
+    grid-column: 1 !important;
+  }
+
+  .section-heading > p:last-child {
+    max-width: none !important;
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+
+  .expertise-grid,
+  .projects-grid,
+  .team-grid {
+    grid-template-columns: 1fr !important;
+    gap: 12px !important;
+  }
+
+  .expertise-card {
+    min-height: auto !important;
+    padding: 22px 18px !important;
+  }
+
+  .control-banner {
+    margin-left: 8px !important;
+    margin-right: 8px !important;
+    min-height: 520px !important;
+  }
+
+  .control-banner > div {
+    padding: 28px 20px !important;
+  }
+
+  .case-tabs {
+    display: flex !important;
+    gap: 8px !important;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .case-tabs::-webkit-scrollbar { display: none; }
+
+  .case-tabs button {
+    flex: 0 0 82%;
+    min-height: 58px;
+  }
+
+  .case-study {
+    grid-template-columns: 1fr !important;
+  }
+
+  .case-image {
+    min-height: 360px !important;
+  }
+
+  .case-steps {
+    padding: 14px !important;
+  }
+
+  .case-steps > div {
+    padding: 14px !important;
+  }
+
+  .method-section,
+  .contact-section {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+
+  .team-grid {
+    max-width: 430px !important;
+    margin-inline: auto;
+  }
+
+  .team-card {
+    max-width: 390px !important;
+    padding: 10px 10px 16px !important;
+  }
+
+  .team-card > div:first-child {
+    aspect-ratio: 4 / 4.4 !important;
+  }
+
+  .team-card h3 {
+    font-size: 21px !important;
+  }
+
+  .partners-heading {
+    width: calc(100% - 28px) !important;
+  }
+
+  .partners-logo-card {
+    flex-basis: 180px !important;
+    height: 104px !important;
+  }
+
+  .contact-section > div:first-of-type,
+  .contact-section .contact-form {
+    padding: 22px 18px !important;
+    border-radius: 20px !important;
+  }
+
+  .contact-section h2 {
+    font-size: clamp(42px, 12vw, 56px) !important;
+  }
+
+  .floating-contact {
+    top: auto !important;
+    right: 10px !important;
+    bottom: 72px !important;
+    transform: none !important;
+    z-index: 70;
+  }
+
+  .floating-contact a,
+  .floating-contact button {
+    width: 44px !important;
+    height: 44px !important;
+  }
+
+  .theme-toggle {
+    left: 10px !important;
+    right: auto !important;
+    bottom: 12px !important;
+    z-index: 70;
+  }
+
+  .footer-premium-top,
+  .footer-premium-bottom {
+    width: calc(100% - 28px) !important;
+  }
+
+  .footer-premium-brand img {
+    width: 176px !important;
+  }
+}

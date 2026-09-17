@@ -1,0 +1,149 @@
+/* SBRE proprietary methodology — visual copy layer kept scoped to the method section. */
+.method-section .method-intro .eyebrow {
+  font-size: 0;
+}
+
+.method-section .method-intro .eyebrow::after {
+  content: "04 / LA MÉTHODE SBRE";
+  font: 700 11px/1.7 Inter, Arial, sans-serif;
+  letter-spacing: 0.14em;
+}
+
+.method-section .method-intro h2 {
+  font-size: 0;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.method-section .method-intro h2 br,
+.method-section .method-intro h2 em {
+  display: none;
+}
+
+.method-section .method-intro h2::before {
+  content: "La méthode SBRE.";
+  display: block;
+  font: 500 clamp(37px, 4.2vw, 65px)/1.02 Inter, Arial, sans-serif;
+  letter-spacing: -0.065em;
+  color: var(--paper);
+}
+
+.method-section .method-intro h2::after {
+  content: "Structurer. Budgéter. Réaliser. Exiger.";
+  display: block;
+  margin-top: 8px;
+  max-width: 650px;
+  font: 400 clamp(29px, 3.3vw, 52px)/1.06 Georgia, "Times New Roman", serif;
+  letter-spacing: -0.045em;
+  color: var(--lime);
+}
+
+.method-section .method-intro > p:not(.eyebrow) {
+  font-size: 0;
+}
+
+.method-section .method-intro > p:not(.eyebrow)::after {
+  content: "Une méthode simple pour garder la maîtrise du projet : structurer avant d'agir, budgéter avant d'engager, réaliser avec rigueur et exiger la qualité jusqu'à la remise des clés.";
+  display: block;
+  max-width: 440px;
+  color: #c0cdbf;
+  font: 400 14px/1.75 Inter, Arial, sans-serif;
+}
+
+.method-section .method-intro .button {
+  font-size: 0 !important;
+}
+
+.method-section .method-intro .button::after {
+  content: "Découvrir notre méthode ↗";
+  font-size: 12px;
+}
+
+.method-section .method-list summary {
+  font-size: 0;
+}
+
+.method-section .method-list summary > span {
+  order: 1;
+}
+
+.method-section .method-list summary::before {
+  order: 2;
+  font: 500 26px/1.2 Inter, Arial, sans-serif;
+  letter-spacing: -0.035em;
+  color: var(--paper);
+}
+
+.method-section .method-list summary b {
+  order: 3;
+}
+
+.method-section .method-list details:nth-child(1) summary::before {
+  content: "Structurer";
+}
+.method-section .method-list details:nth-child(2) summary::before {
+  content: "Budgéter";
+}
+.method-section .method-list details:nth-child(3) summary::before {
+  content: "Réaliser";
+}
+.method-section .method-list details:nth-child(4) summary::before {
+  content: "Exiger";
+}
+
+.method-section .method-list details > div p,
+.method-section .method-list details > div small {
+  font-size: 0;
+}
+
+.method-section .method-list details > div p::after {
+  display: block;
+  font: 400 13px/1.75 Inter, Arial, sans-serif;
+  color: #c0cdbf;
+}
+
+.method-section .method-list details > div small::after {
+  display: block;
+  margin-top: 15px;
+  font: 600 10px/1.5 Inter, Arial, sans-serif;
+  letter-spacing: 0.02em;
+  color: var(--lime);
+}
+
+.method-section .method-list details:nth-child(1) > div p::after {
+  content: "Clarifier le besoin, analyser le dossier, définir les responsabilités, anticiper les risques et construire un planning cohérent avant le démarrage. Chaque décision importante doit avoir un cadre clair.";
+}
+.method-section .method-list details:nth-child(1) > div small::after {
+  content: "Analyse · Organisation · Planning · Responsabilités";
+}
+
+.method-section .method-list details:nth-child(2) > div p::after {
+  content: "Métrer, consulter les entreprises, comparer les offres et suivre les coûts. Les engagements sont arbitrés avant adjudication pour préserver le budget et limiter les mauvaises surprises en cours de chantier.";
+}
+.method-section .method-list details:nth-child(2) > div small::after {
+  content: "Métrés · Soumissions · Comparatifs · Adjudications · Coûts";
+}
+
+.method-section .method-list details:nth-child(3) > div p::after {
+  content: "Coordonner les CFC, piloter les entreprises, contrôler l'avancement, la qualité et les délais, traiter les modifications et documenter les décisions. Le chantier avance avec une direction présente sur le terrain.";
+}
+.method-section .method-list details:nth-child(3) > div small::after {
+  content: "Coordination · Exécution · Qualité · Délais · Reporting";
+}
+
+.method-section .method-list details:nth-child(4) > div p::after {
+  content: "Ne pas simplement terminer : exiger une finition conforme au niveau attendu. Organiser les réceptions, relever les défauts, suivre chaque réserve jusqu'à sa levée, vérifier les documents de clôture et accompagner la remise finale des clés.";
+}
+.method-section .method-list details:nth-child(4) > div small::after {
+  content: "Réception · Finitions · Levée des réserves · Dossier final · Remise des clés";
+}
+
+@media (max-width: 800px) {
+  .method-section .method-list summary::before {
+    font-size: 22px;
+  }
+
+  .method-section .method-intro h2::after {
+    font-size: clamp(27px, 8vw, 42px);
+  }
+}
